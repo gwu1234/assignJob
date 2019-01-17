@@ -1,0 +1,110 @@
+import React from "react";
+import firebase from "../../firebase";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../actions";
+import { Menu, Icon } from "semantic-ui-react";
+import "./UserList.css";
+
+class UserList extends React.Component {
+  state = {
+    user: this.props.currentUser,
+    activeUser: "", // it is a user tag only
+    users: [],      // user object
+    userName: "",
+    userDetails: "",
+    usersRef: firebase.database().ref("users"),
+    modal: false,
+    firstLoad: true
+  };
+
+  componentDidMount() {
+    this.addListeners();
+  }
+
+  componentWillUnmount() {
+    this.removeListeners();
+  }
+
+  addListeners = () => {
+    let loadedUsers = [];
+    this.state.usersRef.on("child_added", snap => {
+      loadedUsers.push(snap.val());
+      this.setState({ users: loadedUsers }, () => this.setFirstUser());
+    });
+  };
+
+  removeListeners = () => {
+    this.state.usersRef.off();
+  };
+
+  setFirstUser = () => {
+    const firstUser = this.state.users[0];
+    if (this.state.firstLoad && this.state.users.length > 0) {
+      this.props.setCurrentUser(firstUser);
+      this.setActiveUser(firstUser);
+    }
+    this.setState({ firstLoad: false });
+  };
+
+  changeUser = user => {
+    this.setActiveUser(user);
+    this.props.setCurrentUser(user);
+  };
+
+  setActiveUser = user => {
+    this.setState({ activeUser: user.tag });
+  };
+
+  displayUsers = users =>
+    users.length > 0 &&
+    users.map(user => (
+      <Menu.Item
+        key={user.tag}
+        onClick={() => this.changeUser(user)}
+        name = {user.name}
+        style= {{
+          opacity: 1.0,
+          fontSize: "0.8em",
+          top: "0.0em",
+        }}
+        active={user.tag === this.state.activeUser}
+      >
+        {user.name}
+      </Menu.Item>
+    ));
+
+  render() {
+    const { users} = this.state;
+    /*const MenuMenu = {
+       bottom: "1.0em" ,
+       top: "0.1em",
+       overflow: 'scroll',
+       border: "1px dotted black",
+       height: '420px',
+       position: 'relative',
+    }*/
+
+    /*const MenuItem = {
+      opacity: 1.0,
+      fontSize: "1.0rem",
+      padding: "0.3em",
+    }*/
+
+    return (
+      <React.Fragment>
+         <h4 className = "h4header">
+            <Icon name="address book" /> <span> Company List
+         {"  "} </span> ({users.length}) </h4>
+
+        <Menu.Menu className = "menumenu" >
+          {this.displayUsers(users)}
+        </Menu.Menu>
+      </React.Fragment>
+    );
+  }
+}
+
+export default connect(
+  null,
+  { setCurrentUser }
+)(UserList);
