@@ -63,11 +63,12 @@ class UserList extends React.Component {
         key={user.tag}
         onClick={() => this.changeUser(user)}
         name = {user.name}
-        style= {{
-          opacity: 1.0,
-          fontSize: "0.8em",
-          top: "0.0em",
-        }}
+        style={
+          {
+            opacity: "1.0",
+            fontSize: "0.8em",
+          }
+        }
         active={user.tag === this.state.activeUser}
       >
         {user.name}
@@ -76,17 +77,15 @@ class UserList extends React.Component {
 
   render() {
     const { users} = this.state;
-    
-    return (
-      <React.Fragment>
-         <h4 className = "h4header">
-            <Icon name="address book" /> <span> Company List
-         {"  "} </span> ({users.length}) </h4>
 
-        <Menu.Menu className = "menumenu" >
-          {this.displayUsers(users)}
+    return (
+        <Menu.Menu className = "MenuMenu" >
+           <Menu.Header as="h4" className="MenuHeader">
+              <Icon name="address book" /> <span> Company &nbsp; List
+                  &nbsp;  </span> ({users.length})
+           </Menu.Header>
+           {this.displayUsers(users)}
         </Menu.Menu>
-      </React.Fragment>
     );
   }
 }
