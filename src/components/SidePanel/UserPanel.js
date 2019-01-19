@@ -1,6 +1,8 @@
 import React from "react";
 import firebase from "../../firebase";
-import { Grid, Header, Icon, Dropdown, Image } from "semantic-ui-react";
+//import { connect } from "react-redux";
+import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
+import "./UserPanel.css";
 
 class UserPanel extends React.Component {
   state = {
@@ -36,32 +38,33 @@ class UserPanel extends React.Component {
 
   render() {
     const { user } = this.state;
+    console.log ("userPanel User displayName = ", user.displayName);
 
     return (
-      <Grid style={{ background: "#4c3c4c" }}>
-          <Grid.Row >
-            {/* App Header */}
-            <Header inverted floated="left" as="h1" style={{paddingTop:"0.6em",paddingLeft:"0.6em"}}>
-              <Icon name="truck" />
-              <Header.Content>AssignJobs</Header.Content>
-            </Header>
+      <Menu.Menu className="UserPanelMenuMenu">
+            <Menu.Header as="h1" className="UserPanelMenuHeader">
+              <Icon name="truck" /> AssignJobs
+            </Menu.Header>
 
-            {/* User Dropdown  */}
-            <Header style={{ paddingLeft: "1.5em" }} as="h4" inverted>
               <Dropdown
                 trigger={
-                  <span>
+                  <span style = {{color: "white"}}>
                     <Image src={user.photoURL} spaced="right" avatar />
-                    {user.displayName}
+                    &nbsp; &nbsp; {user.displayName}
                   </span>
                 }
                 options={this.dropdownOptions()}
               />
-            </Header>
-          </Grid.Row>
-      </Grid>
+
+      </Menu.Menu>
     );
   }
 }
+
+//const mapStateToProps = state => ({
+//  currentUser: state.user.currentUser
+//});
+
+//export default connect(mapStateToProps)(UserPanel);
 
 export default UserPanel;
