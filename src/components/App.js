@@ -9,15 +9,15 @@ import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 
 const App = ({ currentUser}) => (
-  <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-    <ColorPanel />
-    <SidePanel currentUser={currentUser} />
-
-    <Grid.Column style={{ marginLeft: 320 }}>
+  <Grid columns={3}  className="app" style={{ background: "#eee" }}>
+    <Grid.Column >
+         <SidePanel currentUser={currentUser} />
+    </Grid.Column >
+    <Grid.Column >
       <Messages />
     </Grid.Column>
 
-    <Grid.Column width={4}>
+    <Grid.Column width={5}>
       <MetaPanel />
     </Grid.Column>
   </Grid>

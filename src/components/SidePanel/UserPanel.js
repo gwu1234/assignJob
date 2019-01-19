@@ -40,7 +40,7 @@ class UserPanel extends React.Component {
     return (
       <Grid style={{ background: "#4c3c4c" }}>
         <Grid.Column>
-          <Grid.Row style={{ topPadding: "0.2em", bottomPadding: "0.0em", margin: 0 }}>
+          <Grid.Row style={{ topPadding: "0.1em", bottomPadding: "0.1em", margin: 0 }}>
             {/* App Header */}
             <Header inverted floated="left" as="h2">
               <Icon name="truck" />
@@ -48,7 +48,7 @@ class UserPanel extends React.Component {
             </Header>
 
             {/* User Dropdown  */}
-            <Header style={{ padding: "0.25em" }} as="h4" inverted>
+            <Header style={{ padding: "0.0em" }} as="h4" inverted>
               <Dropdown
                 trigger={
                   <span>

@@ -33,7 +33,7 @@ const user_reducer = (state = initialUserState, action) => {
         currentUser: action.payload.currentUser
     };
     case actionTypes.SET_TAG:
-        //console.log ("reducer = " + action.payload.usertag);
+        console.log ("reducer = " + action.payload.usertag);
         return {
           ...state,
           usertag: action.payload.usertag

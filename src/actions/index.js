@@ -26,7 +26,7 @@ export const setAdmin = admin => {
 };
 
 export const setUserTag = tag => {
-  //console.log("action tag = " + tag);
+  console.log("action usertag = " + tag);
   return {
     type: actionTypes.SET_TAG,
     payload: {

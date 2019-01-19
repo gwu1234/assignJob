@@ -1,0 +1,26 @@
+.contactmenu {
+   bottom: 1.0em ;
+   top: 0.1em;
+   border: 1px dotted black;
+   height: 420px;
+   position: relative;
+}
+
+.contactitem {
+  opacity: 1.0;
+  fontSize: 1.0 em;
+  top: 1.0 em;
+  bottom: 1.0 em;
+  color: white;
+}
+
+.h4header{
+    paddingTop: 0.0em;
+    color: white;
+ }
+
+ .h5header{
+     paddingTop: 0.0em;
+     color: white;
+     text-align: center;
+  }

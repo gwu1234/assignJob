@@ -16,7 +16,7 @@ class DialogModal extends React.Component {
     //console.log ("modal = " + modal);
 
     return (
-      <Modal basic open={modal} onClose={this.closeModal}>
+      <Modal size="Tiny"  open={modal} onClose={this.closeModal}>
           <Modal.Header>Succesful Registration</Modal.Header>
           <Modal.Content>
              you can login into the system in 3 minutes

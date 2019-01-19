@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser } from "../../actions";
+import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
 
@@ -49,6 +49,7 @@ class UserList extends React.Component {
   changeUser = user => {
     this.setActiveUser(user);
     this.props.setCurrentUser(user);
+    this.props.setUserTag(user.tag);
   };
 
   setActiveUser = user => {
@@ -75,21 +76,7 @@ class UserList extends React.Component {
 
   render() {
     const { users} = this.state;
-    /*const MenuMenu = {
-       bottom: "1.0em" ,
-       top: "0.1em",
-       overflow: 'scroll',
-       border: "1px dotted black",
-       height: '420px',
-       position: 'relative',
-    }*/
-
-    /*const MenuItem = {
-      opacity: 1.0,
-      fontSize: "1.0rem",
-      padding: "0.3em",
-    }*/
-
+    
     return (
       <React.Fragment>
          <h4 className = "h4header">
@@ -106,5 +93,5 @@ class UserList extends React.Component {
 
 export default connect(
   null,
-  { setCurrentUser }
+  { setCurrentUser, setUserTag }
 )(UserList);
