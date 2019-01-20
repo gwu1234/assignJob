@@ -19,7 +19,7 @@ class Contact extends React.Component {
         key={email}
         style={{
             opacity: "1.0",
-            fontSize: "0.6em",
+            fontSize: "0.7em",
             color: "white",
             marginLeft: "2.0em",
             visibility: this.state.visibility
@@ -35,7 +35,7 @@ class Contact extends React.Component {
         >
           <Header
               as='h4'
-              style={{opacity: 1.0, fontSize: "0.7em",fontStyle: "bold", color: "white"}}
+              style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
           >
               emails:
           </Header>
@@ -48,7 +48,7 @@ class Contact extends React.Component {
           >
             <Header
                 as='h4'
-                style={{opacity: 1.0, fontSize: "0.7em",fontStyle: "bold", color: "white"}}
+                style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
             >
                 phones
             </Header>
@@ -62,7 +62,7 @@ class Contact extends React.Component {
           key={phone}
           style={{
               opacity: "1.0",
-              fontSize: "0.6em",
+              fontSize: "0.7em",
               color: "white",
               marginLeft: "2.0em"
           }}
@@ -77,7 +77,7 @@ class Contact extends React.Component {
             >
               <Header
                   as='h4'
-                  style={{opacity: 1.0, fontSize: "0.7em",fontStyle: "bold", color: "white"}}
+                  style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
               >
                   cells:
               </Header>
@@ -91,7 +91,7 @@ class Contact extends React.Component {
             key={cell}
             style={{
                 opacity: "1.0",
-                fontSize: "0.6em",
+                fontSize: "0.7em",
                 color: "white",
                 marginLeft: "2.0em"
             }}
@@ -136,11 +136,11 @@ onButtonClick = () => {
 
     return (
       <Menu.Menu className="ContactMenuMenu" >
-            <Menu.Header as="h4" style={{textAlign:"center"}}>
-                <Button icon onClick={this.onButtonClick}> <Icon name='eye' /> </Button> Company Contact Info
+            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+                <Button icon size="mini" onClick={this.onButtonClick}> <Icon name='eye' size ="small"/> </Button> &nbsp; Company &nbsp; Contact &nbsp; Info
             </Menu.Header>
           <Menu.Menu style = {this.state.contactStyle}>
-          <Menu.Item style={{opacity: 1.0, fontSize: "0.7em",color: "white"}}>
+          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
                {contact && address}
           </Menu.Item>
             {contact && contact.emails.length>0 && this.displayEmailHeader ()}
@@ -149,8 +149,6 @@ onButtonClick = () => {
             {contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
             {contact && contact.cells.length>0 && this.displayCellHeader ()}
             {contact && contact.cells.length>0 && this.displayCells (contact.cells)}
-
-          <Menu.Item />
           </Menu.Menu>
       </Menu.Menu>
     );
