@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag } from "../../actions";
+import { setCurrentUser, setUserTag, setUserContact } from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
 
@@ -14,7 +14,8 @@ class UserList extends React.Component {
     userDetails: "",
     usersRef: firebase.database().ref("users"),
     modal: false,
-    firstLoad: true
+    firstLoad: true,
+    userContact: null,
   };
 
   componentDidMount() {
@@ -49,7 +50,44 @@ class UserList extends React.Component {
   changeUser = user => {
     this.setActiveUser(user);
     this.props.setCurrentUser(user);
-    this.props.setUserTag(user.tag);
+    //this.props.setUserTag(user.tag);
+    this.findUserContact(user.tag);
+  };
+
+  findUserContact = (tag) => {
+     const {userContact} = this.state;
+     console.log("usertag =" + tag);
+     const contactRef = firebase.database().ref
+          ("repos/" + tag +"/contact");
+     console.log("userContact = ");
+     console.log(userContact);
+     contactRef.once('value')
+        .then((snapshot) => {
+           const contact = snapshot.val();
+
+           if (contact) {
+              if ( userContact && userContact.postcode != contact.postcode &&
+                         userContact.street   != contact.street)
+              {
+                 this.props.setUserContact(contact);
+                 this.setState (
+                   {userContact: contact}
+                 );
+              }
+              else if ( !userContact )
+              {
+                 this.props.setUserContact(contact);
+                 this.setState (
+                   {userContact: contact}
+                 );
+              }
+          } else if (userContact != null) {
+              this.props.setUserContact(null);
+              this.setState (
+                {userContact: null}
+              );
+          }
+      })
   };
 
   setActiveUser = user => {
@@ -63,12 +101,10 @@ class UserList extends React.Component {
         key={user.tag}
         onClick={() => this.changeUser(user)}
         name = {user.name}
-        style={
-          {
+        style={{
             opacity: "1.0",
             fontSize: "0.8em",
-          }
-        }
+        }}
         active={user.tag === this.state.activeUser}
       >
         {user.name}
@@ -77,6 +113,7 @@ class UserList extends React.Component {
 
   render() {
     const { users} = this.state;
+    //this.findUserContact();
 
     return (
         <Menu.Menu className = "MenuMenu" >
@@ -90,7 +127,12 @@ class UserList extends React.Component {
   }
 }
 
+//const mapStateToProps = state => ({
+     //usertag: state.user.usertag
+//   }
+//);
+
 export default connect(
   null,
-  { setCurrentUser, setUserTag }
+  { setUserContact, setCurrentUser }
 )(UserList);

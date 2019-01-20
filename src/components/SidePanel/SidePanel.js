@@ -11,15 +11,15 @@ class SidePanel extends React.Component {
    };
 
   render() {
-    const { currentUser, admin, usertag} = this.props;
+    const { currentUser, admin} = this.props;
 
     return (
       <Menu
         size="large"
         inverted
-        fixed="left"
+        floated
         vertical
-        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.3em"}}
+        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
       >
         <UserPanel currentUser={currentUser} />
         {admin && <UserList currentUser={currentUser} />}
@@ -30,7 +30,7 @@ class SidePanel extends React.Component {
 
 const mapStateToProps = state => ({
      admin: state.user.admin,
-     usertag: state.user.usertag
+     //usertag: state.user.usertag
    }
 );
 

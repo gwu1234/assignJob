@@ -38,7 +38,7 @@ class UserPanel extends React.Component {
 
   render() {
     const { user } = this.state;
-    console.log ("userPanel User displayName = ", user.displayName);
+    //console.log ("userPanel User displayName = ", user.displayName);
 
     return (
       <Menu.Menu className="UserPanelMenuMenu">
