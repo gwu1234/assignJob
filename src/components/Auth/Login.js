@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setUserTag, setAdmin } from "../../actions";
+import { setUserTag, setAdmin, setUserContact } from "../../actions";
 
 import {
   Grid,
@@ -63,6 +63,34 @@ class Login extends React.Component {
               } else {
                 this.props.setAdmin(false);
               }
+          });
+
+          const contactTag = "repos/" + tagName +"/contact";
+          console.log(contactTag);
+          var contactRef = firebase.database().ref(contactTag)
+          //starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
+          /*contactRef.on('value')
+             .then((snapshot) => {
+                const contact = snapshot.val();
+                console.log(contact)
+                if (contact) {
+                    this.props.setUserContact(contact);
+               } else {
+                   this.props.setUserContact(null);
+               }
+           })*/
+
+           contactRef.on('value', snapshot => {
+                //this.setState({
+                //posts: snapshot.val()
+                //});
+                const contact = snapshot.val();
+                //console.log(contact)
+                if (contact) {
+                    this.props.setUserContact(contact);
+               } else {
+                   this.props.setUserContact(null);
+               }
           });
 
         })
@@ -164,5 +192,5 @@ class Login extends React.Component {
 //export default Register;
 export default connect(
   null,
-  { setUserTag, setAdmin }
+  { setUserTag, setAdmin, setUserContact }
 )(Login);

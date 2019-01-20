@@ -26,7 +26,7 @@ export const setAdmin = admin => {
 };
 
 export const setUserTag = tag => {
-  console.log("action usertag = " + tag);
+  //console.log("action usertag = " + tag);
   return {
     type: actionTypes.SET_TAG,
     payload: {
@@ -61,6 +61,16 @@ export const setCurrentUser = user => {
     type: actionTypes.SET_CURRENT_USER,
     payload: {
       currentUser: user
+    }
+  }
+}
+
+/* Channel Actions */
+export const setUserContact = contact => {
+  return {
+    type: actionTypes.SET_USER_CONTACT,
+    payload: {
+      userContact: contact
     }
   }
 }

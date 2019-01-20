@@ -56,14 +56,16 @@ class UserList extends React.Component {
 
   findUserContact = (tag) => {
      const {userContact} = this.state;
-     console.log("usertag =" + tag);
+     //console.log("usertag =" + tag);
      const contactRef = firebase.database().ref
           ("repos/" + tag +"/contact");
-     console.log("userContact = ");
-     console.log(userContact);
-     contactRef.once('value')
-        .then((snapshot) => {
+     //console.log("userContact = ");
+     //console.log(userContact);
+     //contactRef.on('value', snapshot => {
+     contactRef.on('value', snapshot => {
+        //.then((snapshot) => {
            const contact = snapshot.val();
+           //console.log(contact);
 
            if (contact) {
               if ( userContact && userContact.postcode != contact.postcode &&
