@@ -10,8 +10,29 @@ class Contact extends React.Component {
     contactStyle: {
       visibility: 'hidden',
       height: "2px",
-    }
+    },
+    emailDisplay: false,
+    phoneDisplay: false,
+    cellDisplay: false,
   };
+
+  toggleEmailDisplay = (emailDisplay) => {
+      this.setState({
+          emailDisplay: !emailDisplay,
+      })
+    }
+
+  togglePhoneDisplay = (phoneDisplay) => {
+      this.setState({
+          phoneDisplay: !phoneDisplay,
+      })
+    }
+
+  toggleCellDisplay = (cellDisplay) => {
+      this.setState({
+          cellDisplay: !cellDisplay,
+      })
+    }
 
   displayEmails = emails =>
     emails.length > 0 &&
@@ -30,9 +51,10 @@ class Contact extends React.Component {
       </Menu.Item>
     ));
 
-    displayEmailHeader = () =>(
+    displayEmailHeader = (emailDisplay) =>(
         <Menu.Item
           name='emails'
+          onClick={() => this.toggleEmailDisplay(emailDisplay)}
         >
           <Header
               as='h4'
@@ -43,9 +65,10 @@ class Contact extends React.Component {
         </Menu.Item>
       );
 
-    displayPhoneHeader = () =>(
+    displayPhoneHeader = (phoneDisplay) =>(
           <Menu.Item
             name="phones"
+            onClick={() => this.togglePhoneDisplay(phoneDisplay)}
           >
             <Header
                 as='h4'
@@ -72,9 +95,10 @@ class Contact extends React.Component {
         </Menu.Item>
       ));
 
-  displayCellHeader = () =>(
+  displayCellHeader = (cellDisplay) =>(
             <Menu.Item
               name="cells"
+              onClick={() => this.toggleCellDisplay(cellDisplay)}
             >
               <Header
                   as='h4'
@@ -125,6 +149,8 @@ onButtonClick = () => {
 
   render() {
     const {contact} = this.props;
+    const {emailDisplay, phoneDisplay, cellDisplay} = this.state;
+
     //console.log (contact);
     let address = '';
     if (contact) {
@@ -135,21 +161,22 @@ onButtonClick = () => {
         //console.log(contact.cells);
     }
 
+
     return (
       <Menu.Menu className="ContactMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={this.onButtonClick}> <Icon name='eye' size ="small"/> </Button> &nbsp; Contact &nbsp; Info
+                <Button icon size="mini" onClick={this.onButtonClick}> <Icon name='eye' size ="small"/> </Button> &nbsp; Company &nbsp; Info
             </Menu.Header>
           <Menu.Menu style = {this.state.contactStyle}>
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
                {contact && address}
           </Menu.Item>
-            {contact && contact.emails.length>0 && this.displayEmailHeader ()}
-            {contact && contact.emails.length>0 && this.displayEmails (contact.emails)}
-            {contact && contact.phones.length>0 && this.displayPhoneHeader ()}
-            {contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
-            {contact && contact.cells.length>0 && this.displayCellHeader ()}
-            {contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+            {contact && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
+            {emailDisplay && contact && contact.emails.length>0 && this.displayEmails (contact.emails)}
+            {contact && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
+            {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
+            {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
+            {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
           </Menu.Menu>
       </Menu.Menu>
     );

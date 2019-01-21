@@ -7,8 +7,9 @@ import "./Employee.css";
 class Employees extends React.Component {
    state = {
      employeeStyle: {
-       visibility: 'visible'
-     }
+       visibility: 'hidden'
+     },
+     display: false,
    };
 
   displayEmails = emails =>
@@ -120,8 +121,16 @@ onButtonClick = () => {
    }
 };
 
+toggleDisplay = (display) => {
+    this.setState({
+        display: !display,
+    })
+  }
+
+
   render() {
     const {employee} = this.props;
+    const {display} = this.state;
 
     let name= '';
     if (employee) {
@@ -130,15 +139,15 @@ onButtonClick = () => {
 
     return (
       <Menu.Menu>
-         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}}>
+         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
               {employee && name}
          </Menu.Item>
-            {employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
-            {employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
-            {employee && employee.phones.length>0 && this.displayPhoneHeader ()}
-            {employee && employee.phones.length>0 && this.displayPhones (employee.phones)}
-            {employee && employee.cells.length>0 && this.displayCellHeader ()}
-            {employee && employee.cells.length>0 && this.displayCells (employee.cells)}
+            {display && employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
+            {display && employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
+            {display && employee && employee.phones.length>0 && this.displayPhoneHeader ()}
+            {display && employee && employee.phones.length>0 && this.displayPhones (employee.phones)}
+            {display && employee && employee.cells.length>0 && this.displayCellHeader ()}
+            {display && employee && employee.cells.length>0 && this.displayCells (employee.cells)}
          </Menu.Menu>
      );
    }
