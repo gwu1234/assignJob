@@ -37,7 +37,7 @@ class Employees extends React.Component {
    displayEmployees = employees =>
       employees.length > 0 &&
       employees.map(employee => (
-          <Employee employee={employee} />
+          <Employee key={employee.name} employee={employee} />
      ));
 
 

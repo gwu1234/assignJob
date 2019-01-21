@@ -1,7 +1,6 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-//import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Employee.css";
 
@@ -121,7 +120,6 @@ onButtonClick = () => {
    }
 };
 
-
   render() {
     const {employee} = this.props;
 
@@ -131,31 +129,19 @@ onButtonClick = () => {
     }
 
     return (
-      <Menu.Menu className="EmployeesMenuMenu" >
-          <Menu.Menu style = {this.state.employeeStyle}>
-          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
-               {employee && name}
-          </Menu.Item>
+      <Menu.Menu>
+         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}}>
+              {employee && name}
+         </Menu.Item>
             {employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
             {employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
             {employee && employee.phones.length>0 && this.displayPhoneHeader ()}
             {employee && employee.phones.length>0 && this.displayPhones (employee.phones)}
             {employee && employee.cells.length>0 && this.displayCellHeader ()}
             {employee && employee.cells.length>0 && this.displayCells (employee.cells)}
-          </Menu.Menu>
-      </Menu.Menu>
-    );
-  }
-}
-
-/*const mapStateToProps = state => ({
-     employees: state.user.employeeList,
+         </Menu.Menu>
+     );
    }
-);*/
-
-/*export default connect(
-  mapStateToProps,
-  {}
-)(Employees);*/
+}
 
 export default Employees;
