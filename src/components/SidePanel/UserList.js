@@ -143,10 +143,6 @@ class UserList extends React.Component {
   }
 }
 
-//const mapStateToProps = state => ({
-     //usertag: state.user.usertag
-//   }
-//);
 
 export default connect(
   null,

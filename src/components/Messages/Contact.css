@@ -1,8 +1,9 @@
 .ContactMenuMenu {
-   top: 0.0em;
+  padding-top: 1.0em;
    position: relative;
    color: white;
    size: tiny;
+   border: 2px dotted black;
 }
 
 .ContactMenuItem {

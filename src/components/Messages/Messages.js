@@ -1,10 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-//import UserPanel from "./UserPanel";
-//import UserList from "./UserList";
 import { Menu } from "semantic-ui-react";
-//import { setAdmin } from "../../actions";
 import Contact from "./Contact";
 import Employees from "./Employees";
 
@@ -27,17 +24,4 @@ class Messages extends React.Component {
   }
 }
 
-/*const mapStateToProps = state => ({
-     admin: state.user.admin,
-     usertag: state.user.usertag,
-     currentUser: state.user.currentUser
-   }
-);*/
-
-//export default connect(mapStateToProps)(SidePanel);
 export default Messages;
-
-/*export default connect(
-  mapStateToProps,
-  {}
-)(Messages);*/
