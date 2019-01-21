@@ -7,6 +7,9 @@ import "./Employees.css";
 
 class Employees extends React.Component {
    state = {
+     employeesStyle: {
+       visibility: 'visible'
+     },
      display: false,
    };
 
@@ -26,7 +29,7 @@ class Employees extends React.Component {
   render() {
     const {employees} = this.props;
     const {display} = this.state;
-
+  
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>

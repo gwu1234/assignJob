@@ -1,18 +1,17 @@
-.EmployeeMenuMenu {
-   padding-top: 0.5 em;
+.ClientMenuMenu {
+   top: 0.0em;
    position: relative;
    color: white;
    size: tiny;
-   border: 1px dotted black;
 }
 
-.EmployeeMenuItem {
+.ClientMenuItem {
   opacity: 1.0;
   fontSize: 3.0em;
   color: white;
 }
 
-.EmployeeMenuHeader{
+.ClientMenuHeader{
   padding-top: 1.0em;
   color: white;
 }

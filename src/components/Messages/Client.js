@@ -4,8 +4,11 @@ import { connect } from "react-redux";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Employee.css";
 
-class Employee extends React.Component {
+class Employees extends React.Component {
    state = {
+     employeeStyle: {
+       visibility: 'hidden'
+     },
      display: false,
    };
 
@@ -97,6 +100,26 @@ class Employee extends React.Component {
           </Menu.Item>
         ))
 
+onButtonClick = () => {
+  if (this.state.employeeStyle.visibility == "visible" ){
+     //this.setState (contactStyle: {visibility: 'hidden', height: '10px'});
+      this.setState({
+          employeeStyle: {
+              ...this.state.employeeStyle,
+              visibility: "hidden",
+              height: "2px",
+          }
+      })
+  } else {
+      this.setState({
+          employeeStyle: {
+            ...this.state.employeeStyle,
+            visibility: "visible",
+            height: ''
+        }
+     })
+   }
+};
 
 toggleDisplay = (display) => {
     this.setState({
@@ -114,18 +137,10 @@ toggleDisplay = (display) => {
         name = employee.lastname + ", " + employee.firstname;
     }
 
-    let address = '';
-    if (employee) {
-        address = employee.street + ", " +employee.city + ", " + employee.postcode;
-    }
-
     return (
-      <Menu.Menu className="EmployeeMenuMenu" >
+      <Menu.Menu>
          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
               {employee && name}
-         </Menu.Item>
-         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
-              {display && employee && address}
          </Menu.Item>
             {display && employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
             {display && employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
@@ -138,4 +153,4 @@ toggleDisplay = (display) => {
    }
 }
 
-export default Employee;
+export default Employees;
