@@ -3,15 +3,14 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 //import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
-import "./Contact.css";
+import "./Employee.css";
 
-class Contact extends React.Component {
-  state = {
-    contactStyle: {
-      visibility: 'hidden',
-      height: "2px",
-    }
-  };
+class Employees extends React.Component {
+   state = {
+     employeeStyle: {
+       visibility: 'visible'
+     }
+   };
 
   displayEmails = emails =>
     emails.length > 0 &&
@@ -102,19 +101,19 @@ class Contact extends React.Component {
         ))
 
 onButtonClick = () => {
-  if (this.state.contactStyle.visibility == "visible" ){
+  if (this.state.employeeStyle.visibility == "visible" ){
      //this.setState (contactStyle: {visibility: 'hidden', height: '10px'});
       this.setState({
-          contactStyle: {
-              ...this.state.contactStyle,
+          employeeStyle: {
+              ...this.state.employeeStyle,
               visibility: "hidden",
               height: "2px",
           }
       })
   } else {
       this.setState({
-          contactStyle: {
-            ...this.state.contactStyle,
+          employeeStyle: {
+            ...this.state.employeeStyle,
             visibility: "visible",
             height: ''
         }
@@ -124,44 +123,39 @@ onButtonClick = () => {
 
 
   render() {
-    const {contact} = this.props;
-    //console.log (contact);
-    let address = '';
-    if (contact) {
-        address = contact.street + ", " +contact.city + ", " + contact.postcode;
-        //console.log(contact);
-        //console.log(contact.phones);
-        //console.log(contact.cells.length);
-        //console.log(contact.cells);
+    const {employee} = this.props;
+
+    let name= '';
+    if (employee) {
+        name = employee.lastname + ", " + employee.firstname;
     }
 
     return (
-      <Menu.Menu className="ContactMenuMenu" >
-            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={this.onButtonClick}> <Icon name='eye' size ="small"/> </Button> &nbsp; Contact &nbsp; Info
-            </Menu.Header>
-          <Menu.Menu style = {this.state.contactStyle}>
+      <Menu.Menu className="EmployeesMenuMenu" >
+          <Menu.Menu style = {this.state.employeeStyle}>
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
-               {contact && address}
+               {employee && name}
           </Menu.Item>
-            {contact && contact.emails.length>0 && this.displayEmailHeader ()}
-            {contact && contact.emails.length>0 && this.displayEmails (contact.emails)}
-            {contact && contact.phones.length>0 && this.displayPhoneHeader ()}
-            {contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
-            {contact && contact.cells.length>0 && this.displayCellHeader ()}
-            {contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+            {employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
+            {employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
+            {employee && employee.phones.length>0 && this.displayPhoneHeader ()}
+            {employee && employee.phones.length>0 && this.displayPhones (employee.phones)}
+            {employee && employee.cells.length>0 && this.displayCellHeader ()}
+            {employee && employee.cells.length>0 && this.displayCells (employee.cells)}
           </Menu.Menu>
       </Menu.Menu>
     );
   }
 }
 
-const mapStateToProps = state => ({
-     contact: state.user.userContact,
+/*const mapStateToProps = state => ({
+     employees: state.user.employeeList,
    }
-);
+);*/
 
-export default connect(
+/*export default connect(
   mapStateToProps,
   {}
-)(Contact);
+)(Employees);*/
+
+export default Employees;

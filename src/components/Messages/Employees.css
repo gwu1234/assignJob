@@ -1,0 +1,17 @@
+.EmployeesMenuMenu {
+   top: 5.0 em;
+   position: relative;
+   color: white;
+   size: tiny;
+}
+
+.EmployeesMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.EmployeesMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

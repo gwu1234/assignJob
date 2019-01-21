@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Menu } from "semantic-ui-react";
 //import { setAdmin } from "../../actions";
 import Contact from "./Contact";
+import Employees from "./Employees";
 
 class Messages extends React.Component {
 
@@ -20,6 +21,7 @@ class Messages extends React.Component {
         style={{background:"#4c3c4c",color:"white",fontSize:"1.2rem",padding:"0.1em",width:"100%"}}
       >
         <Contact />
+        <Employees/>
       </Menu>
     );
   }
