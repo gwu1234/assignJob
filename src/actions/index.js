@@ -55,7 +55,6 @@ export const setCurrentChannel = channel => {
   }
 }
 
-/* Channel Actions */
 export const setCurrentUser = user => {
   return {
     type: actionTypes.SET_CURRENT_USER,
@@ -65,12 +64,20 @@ export const setCurrentUser = user => {
   }
 }
 
-/* Channel Actions */
 export const setUserContact = contact => {
   return {
     type: actionTypes.SET_USER_CONTACT,
     payload: {
       userContact: contact
+    }
+  }
+}
+
+export const setEmployeeList = employeeList => {
+  return {
+    type: actionTypes.SET_EMPLOYEE_LIST,
+    payload: {
+      employeeList: employeeList
     }
   }
 }

@@ -107,7 +107,7 @@ onButtonClick = () => {
           contactStyle: {
               ...this.state.contactStyle,
               visibility: "hidden",
-              height: "3px",
+              height: "2px",
           }
       })
   } else {

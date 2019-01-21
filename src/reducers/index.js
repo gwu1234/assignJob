@@ -7,7 +7,7 @@ const initialUserState = {
   admin: false,
   usertag: 'initial-tag',
   userContact: null,
-  //modal: false
+  employeeList: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -45,6 +45,13 @@ const user_reducer = (state = initialUserState, action) => {
         return {
           ...state,
           usertag: action.payload.usertag
+    };
+    case actionTypes.SET_EMPLOYEE_LIST:
+        console.log ("reducer employees list = ");
+        console.log (action.payload.employeeList);
+        return {
+          ...state,
+          employeeList: action.payload.employeeList
     };
     /*case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);

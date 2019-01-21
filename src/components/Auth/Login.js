@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setUserTag, setAdmin, setUserContact } from "../../actions";
+import { setUserTag, setAdmin, setUserContact, setEmployeeList } from "../../actions";
 
 import {
   Grid,
@@ -66,7 +66,7 @@ class Login extends React.Component {
           });
 
           const contactTag = "repos/" + tagName +"/contact";
-          console.log(contactTag);
+          //console.log(contactTag);
           var contactRef = firebase.database().ref(contactTag)
           //starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
           /*contactRef.on('value')
@@ -90,6 +90,21 @@ class Login extends React.Component {
                     this.props.setUserContact(contact);
                } else {
                    this.props.setUserContact(null);
+               }
+          });
+
+
+          const employeeTag = "repos/" + tagName +"/employees";
+          console.log(employeeTag);
+          var employeeRef = firebase.database().ref(employeeTag)
+
+           employeeRef.on('value', snapshot => {
+                const employees = snapshot.val();
+                //console.log(employees)
+                if (employees) {
+                    this.props.setEmployeeList(employees);
+               } else {
+                   this.props.setEmployeeList(null);
                }
           });
 
@@ -192,5 +207,5 @@ class Login extends React.Component {
 //export default Register;
 export default connect(
   null,
-  { setUserTag, setAdmin, setUserContact }
+  { setUserTag, setAdmin, setUserContact, setEmployeeList }
 )(Login);

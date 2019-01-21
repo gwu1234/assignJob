@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag, setUserContact } from "../../actions";
+import { setCurrentUser, setUserTag, setUserContact, setEmployeeList } from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
 
@@ -90,6 +90,20 @@ class UserList extends React.Component {
               );
           }
       })
+
+      const employeeTag = "repos/" + tag +"/employees";
+      console.log(employeeTag);
+      var employeeRef = firebase.database().ref(employeeTag)
+
+       employeeRef.on('value', snapshot => {
+            const employees = snapshot.val();
+            //console.log(employees)
+            if (employees) {
+                this.props.setEmployeeList(employees);
+           } else {
+               this.props.setEmployeeList(null);
+           }
+      });
   };
 
   setActiveUser = user => {
@@ -136,5 +150,5 @@ class UserList extends React.Component {
 
 export default connect(
   null,
-  { setUserContact, setCurrentUser }
+  { setUserContact, setCurrentUser, setEmployeeList }
 )(UserList);
