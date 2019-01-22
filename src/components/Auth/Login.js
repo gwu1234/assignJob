@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setUserTag, setAdmin, setUserContact, setEmployeeList } from "../../actions";
+import { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList } from "../../actions";
 
 import {
   Grid,
@@ -108,6 +108,21 @@ class Login extends React.Component {
                }
           });
 
+          const clientsTag = "repos/" + tagName +"/clients/tags";
+          //console.log("clientsTag = " + clientsTag);
+          const clientsRef = firebase.database().ref(clientsTag)
+
+           clientsRef.on('value', snapshot => {
+                const clients= snapshot.val();
+                //console.log("user list Clients = ");
+                //console.log(clients)
+                if (clients) {
+                    this.props.setClientList(clients);
+               } else {
+                   this.props.setClientList(null);
+               }
+          });
+
         })
         .catch(err => {
           console.error(err);
@@ -207,5 +222,5 @@ class Login extends React.Component {
 //export default Register;
 export default connect(
   null,
-  { setUserTag, setAdmin, setUserContact, setEmployeeList }
+  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList }
 )(Login);
