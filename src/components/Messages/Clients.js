@@ -31,13 +31,13 @@ class Clients extends React.Component {
                  ...this.state.clientsStyle,
                  visibility: "visible",
                  height: '',
-                 paddingTop: "0.5em",
+                 paddingTop: "0.0em",
                  position: "relative",
                  color: "white",
                  size: "tiny",
                  border: "2px dotted black",
                  overflow: "scroll",
-                 height: "410px",
+                 height: "400px",
              },
              display: true,
           })
@@ -49,6 +49,7 @@ class Clients extends React.Component {
       clients.map(client => (
           <Client key={client.tag} client={client} />
      ));
+
 
 
   render() {
