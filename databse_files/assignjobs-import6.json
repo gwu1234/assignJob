@@ -2,10 +2,7 @@
   "data" : {
     "christopherstankus+9ruegreenview+h9a2e4" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Dollard-des-Ormeaux",
         "country" : "canada",
         "emails" : [ "chris@gmail.com", "stankus@azazon.com", "cs@yahoo.com" ],
@@ -22,13 +19,13 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 01,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 5, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "davidHensley+3097mountainviewdr+h9j2e3" : {
@@ -50,33 +47,30 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 09,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 29, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 21,2014",
         "work" : "snow removal"
       }, {
         "date" : "dec 07, 2013",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 02,2012",
         "work" : "snow removal"
       }, {
         "date" : "dec 01, 2011",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "douglasgraves+131rowanave+h9w1j3" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Beaconsfield",
         "country" : "canada",
         "emails" : [ "graves@gmail.com", "douglas@amazon.com", "dg@yahoo.com" ],
@@ -93,21 +87,18 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 23,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 2, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "jamesthomas+53avenueanselme-lavigne+h9a1n7" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Dollard-des-Ormeaux",
         "country" : "canada",
         "emails" : [ "james@gmail.com", "thomas@amazon.com", "jt@yahoo.com" ],
@@ -124,15 +115,12 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "jamiebulger+25rueviney+h9j2t2" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Kirkland",
         "country" : "canada",
         "emails" : [ "jamie@gmail.com", "bulger@amazon.com", "bg@yahoo.com" ],
@@ -149,15 +137,12 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "janetjackson+41ruerondeau+h9h3t1" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Kirkland",
         "country" : "canada",
         "emails" : [ "janet@gmail.com", "jackson@amazon.com", "jj@yahoo.com" ],
@@ -174,15 +159,12 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "kellybaxter+28NelliganSt+h9j3x1" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Kirkland",
         "country" : "canada",
         "emails" : [ "kelly@gmail.com", "baxter@amazon.com", "kb@yahoo.com" ],
@@ -199,7 +181,7 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "maryaarons+6ruedusauvignon+h9h5a5" : {
@@ -221,25 +203,25 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 09,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 29, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 21,2014",
         "work" : "snow removal"
       }, {
         "date" : "dec 07, 2013",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 02,2012",
         "work" : "snow removal"
       }, {
         "date" : "dec 01, 2011",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "morganthomas+262westcroftrd+h9w2m4" : {
@@ -261,7 +243,7 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 09, 2016",
-        "work " : "snow removal "
+        "work" : "snow removal "
       }, {
         "date" : "nov 20, 2015",
         "work" : "snow removal "
@@ -286,33 +268,30 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 09,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 29, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 21,2014",
         "work" : "snow removal"
       }, {
         "date" : "dec 07, 2013",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 02,2012",
         "work" : "snow removal"
       }, {
         "date" : "dec 01, 2011",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "randyconant+3095mountainviewdrh9j2e3" : {
       "contact" : {
-        "cells" : {
-          "3" : "5143331188",
-          "4" : "4384441333"
-        },
+        "cells" : [ "5147788899", "5143331188", "4384441333" ],
         "city" : "Kirkland",
         "country" : "canada",
         "emails" : [ "randy@gmail.com", "randy@amazon.com", "randy@yahoo.com" ],
@@ -329,7 +308,7 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     },
     "stevemillar+137applewoodcrescent+h9w5z9" : {
@@ -351,25 +330,25 @@
         "work" : "snow removal"
       }, {
         "date" : "dec 19, 2017",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 09,2016",
         "work" : "snow removal"
       }, {
         "date" : "dec 29, 2015",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 21,2014",
         "work" : "snow removal"
       }, {
         "date" : "dec 07, 2013",
-        "work " : "snow removal"
+        "work" : "snow removal"
       }, {
         "date" : "dec 02,2012",
         "work" : "snow removal"
       }, {
         "date" : "dec 01, 2011",
-        "work " : "snow removal"
+        "work" : "snow removal"
       } ]
     }
   },

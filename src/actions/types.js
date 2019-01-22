@@ -8,6 +8,8 @@ export const SET_USER_CONTACT = "SET_USER_CONTACT";
 export const SET_EMPLOYEE_LIST = "SET_EMPLOYEE_LIST";
 //export const SET_OPEN_MODAL = "SET_OPEN_MODAL";
 export const SET_CLIENT_LIST = "SET_CLIENT_LIST";
+export const SET_CLIENT_CONTACT = "SET_CLIENT_CONTACT";
+export const SET_WORK_ORDER = "SET_WORK_ORDER";
 /* Channel Action Types */
 export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";
 //export const SET_CURRENT_USER = "SET_CURRENT_USER";

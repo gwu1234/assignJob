@@ -1,0 +1,17 @@
+.OrdersMenuMenu {
+   padding-top: 0.5em;
+   color: white;
+   size: tiny;
+   border: 2px dotted black;
+}
+
+.OrdersMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.OrdersMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

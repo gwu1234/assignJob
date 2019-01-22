@@ -8,7 +8,9 @@ const initialUserState = {
   usertag: 'initial-tag',
   userContact: null,
   employeeList: null,
-  clientList: null
+  clientList: null,
+  clientContact: null,
+  workOrder: null
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -60,6 +62,20 @@ const user_reducer = (state = initialUserState, action) => {
         return {
           ...state,
           clientList: action.payload.clientList
+    };
+    case actionTypes.SET_CLIENT_CONTACT:
+        //.log ("reducer client contact = " );
+        //console.log (action.payload.clientContact);
+        return {
+        ...state,
+        clientContact: action.payload.clientContact
+    };
+    case actionTypes.SET_WORK_ORDER:
+        //console.log ("reducer work order  = " );
+        //console.log (action.payload.workOrder);
+        return {
+        ...state,
+        workOrder: action.payload.workOrder
     };
     /*case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);

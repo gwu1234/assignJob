@@ -73,6 +73,24 @@ export const setUserContact = contact => {
   }
 }
 
+export const setClientContact = contact => {
+  return {
+    type: actionTypes.SET_CLIENT_CONTACT,
+    payload: {
+      clientContact: contact
+    }
+  }
+}
+
+export const setWorkOrder = order => {
+  return {
+    type: actionTypes.SET_WORK_ORDER,
+    payload: {
+      workOrder: order
+    }
+  }
+}
+
 export const setEmployeeList = employeeList => {
   return {
     type: actionTypes.SET_EMPLOYEE_LIST,
