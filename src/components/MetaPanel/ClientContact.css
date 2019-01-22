@@ -1,0 +1,18 @@
+.ClientContactMenuMenu {
+  padding-top: 1.0em;
+   position: relative;
+   color: white;
+   size: tiny;
+   border: 2px dotted black;
+}
+
+.ClientContactMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.ClientContactMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

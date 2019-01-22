@@ -50,7 +50,7 @@ class UserList extends React.Component {
   changeUser = user => {
     this.setActiveUser(user);
     this.props.setCurrentUser(user);
-    //this.props.setUserTag(user.tag);
+    this.props.setUserTag(user.tag);
     this.findUserContact(user.tag);
   };
 
@@ -161,5 +161,5 @@ class UserList extends React.Component {
 
 export default connect(
   null,
-  { setUserContact, setCurrentUser, setEmployeeList, setClientList }
+  { setUserContact, setCurrentUser, setEmployeeList, setClientList, setUserTag }
 )(UserList);

@@ -1,6 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
+import { setClientContact} from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Client.css";
 
@@ -15,8 +16,27 @@ class Client extends React.Component {
     })
   }
 
-  onButtonClick = () => {
-    console.log("open folder");
+  onButtonClick = (client) => {
+    //console.log(client.tag);
+    //console.log(this.props.usertag)
+    const clientContact = "/repos/" + this.props.usertag
+           + "/clients/data/" + client.tag + "/contact";
+    //console.log(clientContact);
+
+    //const clientsTag = "repos/" + tag +"/clients/tags";
+    //console.log("clientsTag = " + clientsTag);
+    const clientContactRef = firebase.database().ref(clientContact)
+
+     clientContactRef.on('value', snapshot => {
+          const contact = snapshot.val();
+          //console.log("Client Contact  = ");
+          //console.log(contact)
+          if (contact ) {
+              this.props.setClientContact(contact);
+         } else {
+             this.props.setClientContact(null);
+         }
+    });
   }
 
   render() {
@@ -42,7 +62,7 @@ class Client extends React.Component {
          </Menu.Item>
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}>
               <Button icon size="mini"
-                  onClick={() => this.onButtonClick()}>
+                  onClick={() => this.onButtonClick(client)}>
                   <Icon name='folder open' size ="small"/>
               </Button> Click button to open data folder
           </Menu.Item>}
@@ -51,4 +71,13 @@ class Client extends React.Component {
    }
 }
 
-export default Client;
+//export default Client;
+const mapStateToProps = state => ({
+     usertag: state.user.usertag
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {setClientContact}
+)(Client);

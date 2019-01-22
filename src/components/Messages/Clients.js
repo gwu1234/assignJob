@@ -37,7 +37,7 @@ class Clients extends React.Component {
                  size: "tiny",
                  border: "2px dotted black",
                  overflow: "scroll",
-                 height: "400px",
+                 height: "390px",
              },
              display: true,
           })
