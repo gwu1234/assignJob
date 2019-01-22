@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Menu } from "semantic-ui-react";
 import Contact from "./Contact";
 import Employees from "./Employees";
+import Clients from "./Clients";
 
 class Messages extends React.Component {
 
@@ -19,6 +20,7 @@ class Messages extends React.Component {
       >
         <Contact />
         <Employees/>
+        <Clients/>
       </Menu>
     );
   }

@@ -1,14 +1,16 @@
 .ClientMenuMenu {
-   top: 0.0em;
-   position: relative;
-   color: white;
-   size: tiny;
+  padding-top: 0.5 em;
+  position: relative;
+  color: white;
+  size: tiny;
+  border: 1px dotted black;
 }
 
 .ClientMenuItem {
   opacity: 1.0;
-  fontSize: 3.0em;
   color: white;
+  font-size: 0.8em;
+  font-style: bold
 }
 
 .ClientMenuHeader{

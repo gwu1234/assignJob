@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag, setUserContact, setEmployeeList } from "../../actions";
+import { setCurrentUser, setUserTag, setUserContact, setEmployeeList, setClientList } from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
 
@@ -92,8 +92,8 @@ class UserList extends React.Component {
       })
 
       const employeeTag = "repos/" + tag +"/employees";
-      console.log(employeeTag);
-      var employeeRef = firebase.database().ref(employeeTag)
+      //console.log(employeeTag);
+      const employeeRef = firebase.database().ref(employeeTag)
 
        employeeRef.on('value', snapshot => {
             const employees = snapshot.val();
@@ -102,6 +102,21 @@ class UserList extends React.Component {
                 this.props.setEmployeeList(employees);
            } else {
                this.props.setEmployeeList(null);
+           }
+      });
+
+      const clientsTag = "repos/" + tag +"/clients/tags";
+      //console.log("clientsTag = " + clientsTag);
+      const clientsRef = firebase.database().ref(clientsTag)
+
+       clientsRef.on('value', snapshot => {
+            const clients= snapshot.val();
+            //console.log("user list Clients = ");
+            //console.log(clients)
+            if (clients) {
+                this.props.setClientList(clients);
+           } else {
+               this.props.setClientList(null);
            }
       });
   };
@@ -146,5 +161,5 @@ class UserList extends React.Component {
 
 export default connect(
   null,
-  { setUserContact, setCurrentUser, setEmployeeList }
+  { setUserContact, setCurrentUser, setEmployeeList, setClientList }
 )(UserList);

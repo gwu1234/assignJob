@@ -81,3 +81,12 @@ export const setEmployeeList = employeeList => {
     }
   }
 }
+
+export const setClientList = clientList => {
+  return {
+    type: actionTypes.SET_CLIENT_LIST,
+    payload: {
+      clientList: clientList
+    }
+  }
+}

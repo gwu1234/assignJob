@@ -2,41 +2,69 @@ import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
-import Employee from "./Employee";
-import "./Employees.css";
+import Client from "./Client";
+import "./Clients.css";
 
-class Employees extends React.Component {
+class Clients extends React.Component {
+
    state = {
-     employeesStyle: {
-       visibility: 'visible'
+     clientsStyle: {
+       visibility: 'hidden',
+       height: "2px",
      },
      display: false,
    };
 
    onButtonClick = (display) => {
-      this.setState({
-          display: !display
-      })
+       if (display){
+           this.setState({
+               clientsStyle: {
+                   ...this.state.clientsStyle,
+                   visibility: "hidden",
+                   height: "1px",
+               },
+               display: false,
+           })
+       } else {
+           this.setState({
+               clientsStyle: {
+                 ...this.state.clientsStyle,
+                 visibility: "visible",
+                 height: '',
+                 paddingTop: "0.5em",
+                 position: "relative",
+                 color: "white",
+                 size: "tiny",
+                 border: "2px dotted black",
+                 overflow: "scroll",
+                 height: "410px",
+             },
+             display: true,
+          })
+        }
    };
 
-   displayEmployees = employees =>
-      employees.length > 0 &&
-      employees.map(employee => (
-          <Employee key={employee.name} employee={employee} />
+   displayClients = clients =>
+      clients.length > 0 &&
+      clients.map(client => (
+          <Client key={client.tag} client={client} />
      ));
 
 
   render() {
-    const {employees} = this.props;
+    const {clients} = this.props;
     const {display} = this.state;
-  
+    //console.log("Clients List = ");
+    //console.log(clients);
+    //display && clients && this.displayClients(clients)}
+
     return (
-      <Menu.Menu className="EmployeesMenuMenu" >
+      <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Employee &nbsp; List
+                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Client &nbsp; List
             </Menu.Header>
-          <Menu.Menu style = {this.state.employeesStyle}>
-              {display && employees && this.displayEmployees(employees)}
+          <Menu.Menu style={this.state.clientsStyle} >
+              {display && clients && this.displayClients(clients)}
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -44,11 +72,11 @@ class Employees extends React.Component {
 }
 
 const mapStateToProps = state => ({
-     employees: state.user.employeeList,
+     clients: state.user.clientList,
    }
 );
 
 export default connect(
   mapStateToProps,
   {}
-)(Employees);
+)(Clients);

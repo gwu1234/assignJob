@@ -7,7 +7,7 @@ export const SET_TAG = "SET_TAG";
 export const SET_USER_CONTACT = "SET_USER_CONTACT";
 export const SET_EMPLOYEE_LIST = "SET_EMPLOYEE_LIST";
 //export const SET_OPEN_MODAL = "SET_OPEN_MODAL";
-
+export const SET_CLIENT_LIST = "SET_CLIENT_LIST";
 /* Channel Action Types */
 export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";
 //export const SET_CURRENT_USER = "SET_CURRENT_USER";
