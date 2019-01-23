@@ -1,8 +1,9 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu, Icon, Header, Button, Modal, Image} from "semantic-ui-react";
 import Client from "./Client";
+import AddClientModal from "./AddClientModal";
 import "./Clients.css";
 
 class Clients extends React.Component {
@@ -14,6 +15,10 @@ class Clients extends React.Component {
      },
      display: false,
    };
+
+   /*onPlusClick = (open) =>
+   (<BasicModal open={open} />);*/
+
 
    onButtonClick = (display) => {
        if (display){
@@ -53,16 +58,20 @@ class Clients extends React.Component {
 
 
   render() {
-    const {clients} = this.props;
+    const {clients, currentUser, usertag} = this.props;
     const {display} = this.state;
-    //console.log("Clients List = ");
-    //console.log(clients);
+    //console.log("clients current User name = " );
+    //console.log(currentUser.name);
+    //console.log(currentUser);
+    //console.log("clients usertag = " );
+    //console.log(usertag);
     //display && clients && this.displayClients(clients)}
 
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Client &nbsp; List
+                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
+                <AddClientModal open={false} userName={currentUser.name} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && clients && this.displayClients(clients)}
@@ -74,6 +83,8 @@ class Clients extends React.Component {
 
 const mapStateToProps = state => ({
      clients: state.user.clientList,
+     currentUser: state.user.currentUser,
+     usertag: state.user.usertag
    }
 );
 
