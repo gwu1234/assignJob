@@ -79,7 +79,7 @@ class Client extends React.Component {
               <Button icon size="mini"
                   onClick={() => this.onButtonClick(client)}>
                   <Icon name='folder open' size ="small"/>
-              </Button> Click button to open data folder
+              </Button> view client data
           </Menu.Item>}
          </Menu.Menu>
      );
