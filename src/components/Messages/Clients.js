@@ -67,6 +67,18 @@ class Clients extends React.Component {
     //console.log(usertag);
     //display && clients && this.displayClients(clients)}
 
+    //converting nested objects to object array
+    const clientArray =[];
+    const keyArray = [];
+    for (var key in clients) {
+       console.log(clients[key]);
+       console.log(key);
+       keyArray.push(key);
+       clientArray.push(clients[key]);
+    }
+
+    console.log(keyArray.length);
+
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
@@ -74,7 +86,7 @@ class Clients extends React.Component {
                 <AddClientModal open={false} userName={currentUser.name} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
-              {display && clients && this.displayClients(clients)}
+              {display && clientArray.length>0 && this.displayClients(clientArray)}
           </Menu.Menu>
       </Menu.Menu>
     );
