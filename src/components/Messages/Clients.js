@@ -71,13 +71,13 @@ class Clients extends React.Component {
     const clientArray =[];
     const keyArray = [];
     for (var key in clients) {
-       console.log(clients[key]);
-       console.log(key);
+       //console.log(clients[key]);
+       //console.log(key);
        keyArray.push(key);
        clientArray.push(clients[key]);
     }
 
-    console.log(keyArray.length);
+    //console.log(keyArray.length);
 
     return (
       <Menu.Menu className ="ClientsMenuMenu">

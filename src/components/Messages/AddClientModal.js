@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Button, Header, Icon, Modal, Form, Input } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import firebase from "../../firebase";
+import { Button, Header, Icon, Modal, Form, Input } from 'semantic-ui-react';
 
 export default class AddClientModal extends Component {
   state = {
@@ -28,12 +29,35 @@ export default class AddClientModal extends Component {
   handleSubmit = () => {
     const event = this.nativeEvent;
     if (event) {
-       console.log(event);
+       //console.log(event);
        event.preventDefault();
     }
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
-         console.log("data is OK");
+         //console.log("data is OK");
+         const {lastname,firstname,street,city,postcode } = this.state;
+         const {usertag } = this.props;
+
+         const name = firstname + " " + lastname;
+         let tagString = name + "+" + street + "+" + postcode ;
+         const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
+
+         const newClient = {
+           "city":  String(city),
+           "lastname": String (lastname),
+           "firstname": String(firstname),
+           "street": String(street),
+           "name": String(name),
+           "postcode": String(postcode),
+           "tag": String(tag),
+         }
+          //console.log(newClient);
+         const clientPath = "repos/" + usertag + "/clients/tags";
+         console.log(clientPath);
+         const clientRef = firebase.database().ref(clientPath);
+         const clientKey = clientRef.push().getKey();
+         console.log(clientKey);
+         clientRef.child(clientKey).set(newClient);
     }
     //console.log("submit clicked");
   };
@@ -60,8 +84,8 @@ export default class AddClientModal extends Component {
   }
 
   handleChange = event => {
-    console.log([event.target.name]);
-    console.log(event.target.value);
+    //console.log([event.target.name]);
+    //console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -113,6 +137,18 @@ export default class AddClientModal extends Component {
                             label='PostCode'
                             placeholder='H1A 1B1'
                             name="postcode"
+                            onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label='province'
+                           placeholder='Quebec'
+                           name="province"
+                           onChange={this.handleChange} />
+                <Form.Input size ="mini"
+                            label='Country'
+                            placeholder='Canada'
+                            name="country"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal'>
