@@ -159,7 +159,7 @@ export default class AddClientModal extends Component {
 
     return (
       <Modal
-        trigger={<Button icon size="mini" onClick={() => this.handleOpen(true)}> <Icon name='plus circle' size ="small"/> </Button>}
+        trigger={<Button icon size="mini" onClick={() => this.handleOpen(true)}> <Icon name='plus circle' size ="large"/> </Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic

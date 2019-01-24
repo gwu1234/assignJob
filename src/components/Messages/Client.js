@@ -78,7 +78,7 @@ class Client extends React.Component {
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}>
               <Button icon size="mini"
                   onClick={() => this.onButtonClick(client)}>
-                  <Icon name='folder open' size ="small"/>
+                  <Icon name='folder open' size ="large"/>
               </Button> view client data
           </Menu.Item>}
          </Menu.Menu>

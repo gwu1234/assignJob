@@ -30,7 +30,7 @@ class Employees extends React.Component {
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Employee &nbsp; List
+                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Employee &nbsp; List
             </Menu.Header>
           <Menu.Menu style = {this.state.employeesStyle}>
               {display && employees && this.displayEmployees(employees)}

@@ -86,7 +86,7 @@ class Clients extends React.Component {
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="small"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
+                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
                 <AddClientModal open={false} userName={currentUser.name} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
