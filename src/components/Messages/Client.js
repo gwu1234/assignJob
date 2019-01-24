@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setClientContact, setWorkOrder} from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Client.css";
+import AddOrderModal from "../MetaPanel/AddOrderModal";
 
 class Client extends React.Component {
   state = {
@@ -77,9 +78,10 @@ class Client extends React.Component {
          </Menu.Item>
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}>
               <Button icon size="mini"
-                  onClick={() => this.onButtonClick(client)}>
+                  onClick={() => this.onButtonClick(client)} style ={{position: "relative", left: " 0px" }}>
                   <Icon name='folder open' size ="large"/>
-              </Button> view client data
+              </Button> <span style ={{position: "relative", left: " 3px" }}> view client data </span>
+              <AddOrderModal open={false}></AddOrderModal> <span style ={{position: "relative", left: "90px" }}> add work order </span>
           </Menu.Item>}
          </Menu.Menu>
      );
