@@ -53,13 +53,13 @@ export default class AddClientModal extends Component {
          }
           //console.log(newClient);
          const clientPath = "repos/" + usertag + "/clients/tags";
-         console.log(clientPath);
+         //console.log(clientPath);
          const clientRef = firebase.database().ref(clientPath);
          const clientKey = clientRef.push().getKey();
          console.log(clientKey);
          clientRef.child(clientKey).set(newClient);
     }
-    //console.log("submit clicked");
+    console.log("submit clicked");
   };
 
   isFormValid() {

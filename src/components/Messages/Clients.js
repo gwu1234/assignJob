@@ -52,7 +52,7 @@ class Clients extends React.Component {
    displayClients = clients =>
       clients.length > 0 &&
       clients.map(client => (
-          <Client key={client.tag} client={client} />
+          <Client key={client.clientKey} client={client.client} />
      ));
 
 
@@ -69,12 +69,16 @@ class Clients extends React.Component {
 
     //converting nested objects to object array
     const clientArray =[];
-    const keyArray = [];
+    //const keyArray = [];
     for (var key in clients) {
        //console.log(clients[key]);
        //console.log(key);
-       keyArray.push(key);
-       clientArray.push(clients[key]);
+       const newClient = {
+         clientKey: key,
+         client: clients[key]
+       }
+       //keyArray.push(key);
+       clientArray.push(newClient);
     }
 
     //console.log(keyArray.length);
