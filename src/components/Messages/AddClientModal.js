@@ -35,9 +35,10 @@ export default class AddClientModal extends Component {
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
          //console.log("data is OK");
-         const {lastname,firstname,street,city,postcode } = this.state;
+         const { lastname,firstname,street,city,postcode,province,
+                 country,phone1,phone2,phone3,cell1,cell2,cell3,
+                 email1,email2,email3} = this.state;
          const {usertag } = this.props;
-
          const name = firstname + " " + lastname;
          let tagString = name + "+" + street + "+" + postcode ;
          const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
@@ -58,8 +59,66 @@ export default class AddClientModal extends Component {
          const clientKey = clientRef.push().getKey();
          console.log(clientKey);
          clientRef.child(clientKey).set(newClient);
+
+         let emails = [];
+         let phones = [];
+         let cells = [];
+
+         if (email1) {
+            emails.push (email1);
+         }
+         if (email2) {
+            emails.push (email2);
+         }
+         if (email3) {
+            emails.push (email3);
+         }
+
+         if (phone1) {
+            phones.push (phone1);
+         }
+         if (phone2) {
+            phones.push (phone2);
+         }
+         if (phone3) {
+            phones.push (phone3);
+         }
+
+         if (cell1) {
+            cells.push (cell1);
+         }
+         if (cell2) {
+            cells.push (cell2);
+         }
+         if (cell3) {
+            cells.push (cell3);
+         }
+
+         const newContact = {
+           "city":  String(city),
+           "lastname": String (lastname),
+           "firstname": String(firstname),
+           "street": String(street),
+           "name": String(name),
+           "postcode": String(postcode),
+           "country": String(country),
+           "province":  String(province),
+           "emails": emails,
+           "phones": phones,
+           "cells": cells,
+         }
+         //console.log(newContact);
+         const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";
+         //console.log(clientPath);
+         const contactRef = firebase.database().ref(contactPath);
+         //const contactKey = contactRef.push().getKey();
+         //console.log(contactPath);
+         contactRef.set(newContact);
+
+         this.handleOpen(false);
     }
     console.log("submit clicked");
+    //this.handleOpen(false);
   };
 
   isFormValid() {
