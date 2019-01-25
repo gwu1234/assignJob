@@ -7,9 +7,10 @@ import ColorPanel from "./ColorPanel/ColorPanel";
 import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
+import Background from './terra.jpg';
 
 const App = ({ currentUser}) => (
-  <Grid columns={3} divided className="app" style={{ background: "#eee" }}>
+  <Grid columns={3} divided className="app" style={{backgroundImage: `url(${Background})`}}>
     <Grid.Column >
          <SidePanel currentUser={currentUser} />
     </Grid.Column >
