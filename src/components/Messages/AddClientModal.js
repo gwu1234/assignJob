@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-import { Button, Header, Icon, Modal, Form, Input } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
 export default class AddClientModal extends Component {
   state = {
@@ -122,8 +122,8 @@ export default class AddClientModal extends Component {
   };
 
   isFormValid() {
-    const {lastname, firstname, street, city, postcode, province, country,
-           phone1, phone2, phone3, cell1, cell2, cell3, email1, email2, email3}
+    const {lastname, firstname, street, postcode,
+           phone1, phone2, phone3, cell1, cell2, cell3}
            = this.state;
     if (!lastname || !firstname ){
        window.alert("lastname and firstname are required");
@@ -149,13 +149,13 @@ export default class AddClientModal extends Component {
   };
 
   render() {
-    const {userName, usertag } = this.props;
+    const {userName} = this.props;
     //console.log ("AddClientModal " + userName );
     //console.log(userName);
     //console.log ("AddClientModal " + usertag );
     const titleString = userName + ":  " + "Add New Client"
     //console.log (titleString);
-    const { value } = this.state
+    //const { value } = this.state
 
     return (
       <Modal

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-import { Button, Header, Icon, Modal, Form, Input } from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
 export default class AddOrderModal extends Component {
   state = {
     modalOpen: false,
+    date: '',
+    work: ''
   }
 
 
@@ -18,43 +20,39 @@ export default class AddOrderModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         //console.log("data is OK");
-         /*(const { lastname,firstname,street,city,postcode,province,
-                 country,phone1,phone2,phone3,cell1,cell2,cell3,
-                 email1,email2,email3} = this.state;
-         const {usertag } = this.props;
-         const name = firstname + " " + lastname;
-         let tagString = name + "+" + street + "+" + postcode ;
-         const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
-         const newContact = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "name": String(name),
-           "postcode": String(postcode),
-           "country": String(country),
-           "province":  String(province),
-           "emails": emails,
-           "phones": phones,
-           "cells": cells,
-         }
-         //console.log(newContact);
-         const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";
-         //console.log(clientPath);
-         const contactRef = firebase.database().ref(contactPath);
-         //const contactKey = contactRef.push().getKey();
-         //console.log(contactPath);
-         contactRef.set(newContact); */
+         const {date,work} = this.state;
+         const {usertag, clienttag } = this.props;
 
+         let orderString = "repos/"+usertag+"/clients/data/"+clienttag+"/workorders";
+         const ordertag = (orderString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
+         const orderRef = firebase.database().ref(ordertag);
+         const orderkey = orderRef.push().getKey();
+         console.log(ordertag);
+         console.log (orderkey);
+         console.log(orderRef);
+
+         const newOrder = {
+           "date": String(date),
+           "work": String(work),
+           "tag": String(orderkey),
+         }
+         console.log(newOrder);
+         orderRef.child(orderkey).set(newOrder);
          this.handleOpen(false);
     }
-    console.log("submit clicked");
-    //this.handleOpen(false);
   };
 
   isFormValid() {
-    return true;
+     const {date, work } = this.state;
+     if ( !date) {
+        window.alert ("date is required");
+        return false;
+     }
+     if ( !work) {
+        window.alert ("work is required");
+        return false;
+     }
+     return true;
   }
 
   handleChange = event => {
@@ -64,13 +62,14 @@ export default class AddOrderModal extends Component {
   };
 
   render() {
-    const {userName, usertag } = this.props;
-    //console.log ("AddClientModal " + userName );
-    //console.log(userName);
-    //console.log ("AddClientModal " + usertag );
-    const titleString = userName + ":  " + "Add New Order"
+    const {clientname } = this.props;
+    //console.log ("AddOrderModal clientname = " + clientname );
+    //console.log ("AddOrderModal usertag =" + usertag );
+    //console.log ("AddOrderModal clienttag =" + clienttag );
+
+    const titleString = clientname + ":  " + "Add New Order";
     //console.log (titleString);
-    const { value } = this.state
+    //const { value } = this.state
 
     return (
       <Modal

@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu, Icon, Button} from "semantic-ui-react";
 import WorkOrder from "./WorkOrder";
 import "./WorkOrders.css";
 
@@ -30,7 +30,6 @@ class WorkOrders extends React.Component {
                ordersStyle: {
                  ...this.state.clientsStyle,
                  visibility: "visible",
-                 height: '',
                  paddingTop: "0.0em",
                  position: "relative",
                  color: "white",

@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu, Icon, Button} from "semantic-ui-react";
 import Employee from "./Employee";
 import "./Employees.css";
 

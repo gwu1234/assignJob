@@ -56,7 +56,7 @@ class Client extends React.Component {
   }
 
   render() {
-    const {client} = this.props;
+    const {client, usertag} = this.props;
     const {display} = this.state;
 
     let name= '';
@@ -81,7 +81,7 @@ class Client extends React.Component {
                   onClick={() => this.onButtonClick(client)} style ={{position: "relative", left: " 0px" }}>
                   <Icon name='folder open' size ="large"/>
               </Button> <span style ={{position: "relative", left: " 3px" }}> view client data </span>
-              <AddOrderModal open={false}></AddOrderModal> <span style ={{position: "relative", left: "90px" }}> add work order </span>
+              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} /> <span style ={{position: "relative", left: "95px" }}> add work order </span>
           </Menu.Item>}
          </Menu.Menu>
      );

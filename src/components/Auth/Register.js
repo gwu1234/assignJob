@@ -1,6 +1,6 @@
 import React from "react";
 import firebase from "../../firebase";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 import md5 from "md5";
 //import { setOpenModal } from "../../actions";
 import {Grid,Form,Segment,Button,Header,Message,Icon} from "semantic-ui-react";
@@ -165,7 +165,7 @@ class Register extends React.Component {
       loading
     } = this.state;
 
-   const {modal} = this.props;
+   //const {modal} = this.props;
 
     return (
       //{modal} = this.props;

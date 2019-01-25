@@ -7,7 +7,7 @@ import Spinner from "./Spinner";
 import registerServiceWorker from "./registerServiceWorker";
 import firebase from "./firebase";
 import DialogModal from './components/SidePanel/DialogModal';
-import BasicModal from './components/SidePanel/BasicModal';
+//import BasicModal from './components/SidePanel/BasicModal';
 
 import "semantic-ui-css/semantic.min.css";
 
