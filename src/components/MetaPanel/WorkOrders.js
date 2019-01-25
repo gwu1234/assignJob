@@ -43,10 +43,11 @@ class WorkOrders extends React.Component {
         }
    };
 
+
    displayOrders = orders =>
       orders.length > 0 &&
       orders.map(order => (
-          <WorkOrder key={order.date} order={order} />
+          <WorkOrder key={order.orderKey} order={order.order} />
      ));
 
 
@@ -58,13 +59,27 @@ class WorkOrders extends React.Component {
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
 
+    const orderArray =[];
+    //const keyArray = [];
+    for (var key in orders) {
+       //console.log(clients[key]);
+       //console.log(key);
+       const newOrder = {
+         orderKey: key,
+         order: orders[key]
+       }
+       //keyArray.push(key);
+       orderArray.push(newOrder);
+    }
+
+
     return (
       <Menu.Menu className ="OrdersMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
                 <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Work Order
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
-              {display && orders && this.displayOrders(orders)}
+              {display && orders && this.displayOrders(orderArray)}
           </Menu.Menu>
       </Menu.Menu>
     );

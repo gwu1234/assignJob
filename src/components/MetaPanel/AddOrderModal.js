@@ -24,19 +24,19 @@ export default class AddOrderModal extends Component {
          const {usertag, clienttag } = this.props;
 
          let orderString = "repos/"+usertag+"/clients/data/"+clienttag+"/workorders";
-         const ordertag = (orderString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
+         const ordertag = orderString.replace(/[.,#$\[\]@ ]/g,'');
          const orderRef = firebase.database().ref(ordertag);
          const orderkey = orderRef.push().getKey();
-         console.log(ordertag);
-         console.log (orderkey);
-         console.log(orderRef);
+         //console.log(ordertag);
+         //console.log (orderkey);
+         //console.log(orderRef);
 
          const newOrder = {
            "date": String(date),
            "work": String(work),
            "tag": String(orderkey),
          }
-         console.log(newOrder);
+         //console.log(newOrder);
          orderRef.child(orderkey).set(newOrder);
          this.handleOpen(false);
     }
@@ -62,7 +62,8 @@ export default class AddOrderModal extends Component {
   };
 
   render() {
-    const {clientname } = this.props;
+    //const {clientname, usertag, clienttag } = this.props;
+    const {clientname} = this.props;
     //console.log ("AddOrderModal clientname = " + clientname );
     //console.log ("AddOrderModal usertag =" + usertag );
     //console.log ("AddOrderModal clienttag =" + clienttag );
