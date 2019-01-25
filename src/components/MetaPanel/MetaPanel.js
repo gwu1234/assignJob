@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Menu } from "semantic-ui-react";
 import ClientContact from "./ClientContact";
 import WorkOrders from "./WorkOrders";
@@ -21,4 +22,13 @@ class MetaPanel extends React.Component {
   }
 }
 
-export default MetaPanel;
+const mapStateToProps = state => ({
+     admin: state.user.admin,
+     //usertag: state.user.usertag
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(MetaPanel);

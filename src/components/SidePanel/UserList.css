@@ -1,7 +1,7 @@
 .MenuMenu {
    top: 1.0em;
    overflow: scroll;
-   border: 2px dotted black;
+   border: 2px dotted brown;
    height: 420px;
    position: relative;
 }

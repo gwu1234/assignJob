@@ -69,19 +69,21 @@ class Client extends React.Component {
 
     return (
       <Menu.Menu className="ClientMenuMenu">
-         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}
+         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}
               onClick={() => this.toggleDisplay(display)}>
               {client && name}
          </Menu.Item>
-         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}>
+         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
               {display && client && address }
          </Menu.Item>
-          {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.7em", fontStyle: "normal"}}>
+          {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
               <Button icon size="mini"
                   onClick={() => this.onButtonClick(client)} style ={{position: "relative", left: " 0px" }}>
                   <Icon name='folder open' size ="large"/>
               </Button> <span style ={{position: "relative", left: " 3px" }}> view client data </span>
-              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} /> <span style ={{position: "relative", left: "95px" }}> add work order </span>
+          </Menu.Item>}
+          {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", marginBottom: "16px"}}>
+              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} /> <span style ={{position: "relative", left: "3px" }}> add work order </span>
           </Menu.Item>}
          </Menu.Menu>
      );
