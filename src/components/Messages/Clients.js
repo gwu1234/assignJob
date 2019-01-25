@@ -21,16 +21,25 @@ class Clients extends React.Component {
 
 
    onButtonClick = (display) => {
+       const {admin} = this.props;
+       //let height = "";
+
+       //if (admin) {
+        //  height = "390px"
+       //} else {
+        //  height = "100vh";
+       //}
+
        if (display){
            this.setState({
                clientsStyle: {
                    ...this.state.clientsStyle,
                    visibility: "hidden",
-                   height: "1px",
+                   height: "2px",
                },
                display: false,
            })
-       } else {
+       } else if (admin) {
            this.setState({
                clientsStyle: {
                  ...this.state.clientsStyle,
@@ -46,6 +55,22 @@ class Clients extends React.Component {
              },
              display: true,
           })
+        } else {
+          this.setState({
+              clientsStyle: {
+                ...this.state.clientsStyle,
+                visibility: "visible",
+                height: '',
+                paddingTop: "0.0em",
+                position: "relative",
+                color: "white",
+                size: "tiny",
+                border: "2px dotted black",
+                overflow: "scroll",
+                height: "100vh",
+            },
+            display: true,
+         })
         }
    };
 
@@ -100,7 +125,8 @@ class Clients extends React.Component {
 const mapStateToProps = state => ({
      clients: state.user.clientList,
      currentUser: state.user.currentUser,
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     admin: state.user.admin
    }
 );
 
