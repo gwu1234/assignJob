@@ -11,12 +11,12 @@ import Background from './terra.jpg';
 import ContractPanel from "./MapPanel/ContractPanel";
 import PaymentPanel from "./MapPanel/PaymentPanel";
 import DeliveryPanel from "./MapPanel/DeliveryPanel";
-//import MapPanel from "./MapPanel/MapPanel";
+import MapPanel from "./MapPanel/MapPanel";
 
 class App extends React.Component {
 
   render() {
-    const {currentUser, admin} = this.props;
+    const {currentUser, admin, mapView} = this.props;
     console.log("App admin = " + admin);
 
     return (
@@ -29,7 +29,9 @@ class App extends React.Component {
         </Grid.Column>
 
         <Grid.Column width = {9} >
-           <Grid columns='equal'>
+        {mapView && <MapPanel/>}
+
+        {!mapView && <Grid columns='equal'>
            <Grid.Column>
               <MetaPanel />
            </Grid.Column>
@@ -38,7 +40,7 @@ class App extends React.Component {
                <PaymentPanel />
                <DeliveryPanel />
            </Grid.Column>
-           </Grid>
+           </Grid> }
         </Grid.Column>
       </Grid>
     );
@@ -47,7 +49,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser,
-    admin: state.user.admin
+    admin: state.user.admin,
+    mapView: state.user.mapView
   });
 
 export default connect(mapStateToProps)(App);

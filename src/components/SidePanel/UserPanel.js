@@ -1,12 +1,15 @@
 import React from "react";
 import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
+import { setMapView} from "../../actions";
+
 
 class UserPanel extends React.Component {
   state = {
-    user: this.props.currentUser
+    user: this.props.currentUser,
+    mapview: false
   };
 
   dropdownOptions = () => [
@@ -24,10 +27,15 @@ class UserPanel extends React.Component {
       text: <span>Change Avatar</span>
     },
     {
+      key: "mapview",
+      text: <span onClick={this.setMapView}> {this.state.mapview? "Set Text View": "Set Map View"} </span>
+    },
+    {
       key: "signout",
       text: <span onClick={this.handleSignout}>Sign Out</span>
     }
   ];
+
 
   handleSignout = () => {
     firebase
@@ -35,6 +43,23 @@ class UserPanel extends React.Component {
       .signOut()
       .then(() => console.log("signed out!"));
   };
+
+  setMapView  = () => {
+     const {mapview} = this.state;
+
+     if (mapview) {
+         this.setState ({
+             mapview: false
+         });
+         this.props.setMapView(false);
+     } else {
+       this.setState ({
+           mapview: true
+       });
+       this.props.setMapView(true);
+     }
+  };
+
 
   render() {
     const { user } = this.state;
@@ -62,9 +87,12 @@ class UserPanel extends React.Component {
 }
 
 //const mapStateToProps = state => ({
-//  currentUser: state.user.currentUser
+//   currentUser: state.user.currentUser
 //});
 
 //export default connect(mapStateToProps)(UserPanel);
 
-export default UserPanel;
+//export default UserPanel;
+export default connect(
+  null, {setMapView}
+)(UserPanel);
