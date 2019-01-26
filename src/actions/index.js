@@ -108,3 +108,12 @@ export const setClientList = clientList => {
     }
   }
 }
+
+export const setMapView = mapview => {
+  return {
+    type: actionTypes.SET_MAP_VIEW,
+    payload: {
+      mapView: mapview
+    }
+  }
+}

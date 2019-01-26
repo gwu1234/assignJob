@@ -10,6 +10,7 @@ export const SET_EMPLOYEE_LIST = "SET_EMPLOYEE_LIST";
 export const SET_CLIENT_LIST = "SET_CLIENT_LIST";
 export const SET_CLIENT_CONTACT = "SET_CLIENT_CONTACT";
 export const SET_WORK_ORDER = "SET_WORK_ORDER";
+export const SET_MAP_VIEW = "SET_MAP_VIEW";
 /* Channel Action Types */
 export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";
 //export const SET_CURRENT_USER = "SET_CURRENT_USER";

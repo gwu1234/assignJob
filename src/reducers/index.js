@@ -10,7 +10,8 @@ const initialUserState = {
   employeeList: null,
   clientList: null,
   clientContact: null,
-  workOrder: null
+  workOrder: null,
+  mapView: false
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -76,6 +77,13 @@ const user_reducer = (state = initialUserState, action) => {
         return {
         ...state,
         workOrder: action.payload.workOrder
+    };
+    case actionTypes.SET_MAP_VIEW:
+        //console.log ("reducer mapView  = " );
+        //console.log (action.payload.mapView);
+        return {
+        ...state,
+        mapView: action.payload.mapView
     };
     /*case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);
