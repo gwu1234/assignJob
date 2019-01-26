@@ -12,10 +12,21 @@ import ContractPanel from "./MapPanel/ContractPanel";
 import PaymentPanel from "./MapPanel/PaymentPanel";
 import DeliveryPanel from "./MapPanel/DeliveryPanel";
 import MapPanel from "./MapPanel/MapPanel";
+import MapContainer from './MapPanel/map/MapContainer';
 
 class App extends React.Component {
-
+  
   render() {
+    const markers = [
+      {pos: {lat: 45.4474017, lng: -73.8300837}, name: 'Lake Shore', id: 0, status: 0},
+      {pos: {lat: 45.4524017, lng: -73.8410837}, name: 'Stillview', id: 0, status: 0},
+      {pos: {lat: 45.4608017, lng: -73.8408837}, name: 'Fairview Shopping', id: 0, status: 0},
+      {pos: {lat: 45.4574017, lng: -73.8400837}, name: 'position 5', id: 0, status: 0},
+      {pos: {lat: 45.4394017, lng: -73.8510837}, name: 'position 6', id: 0, status: 0},
+      {pos: {lat: 45.4408017, lng: -73.8608837}, name: 'position 7', id: 0, status: 0},
+      {pos: {lat: 45.4506017, lng: -73.8507837}, name: 'Bruce', id: 0, status: 0}
+    ];
+
     const {currentUser, admin, mapView} = this.props;
     console.log("App admin = " + admin);
 
@@ -29,7 +40,7 @@ class App extends React.Component {
         </Grid.Column>
 
         <Grid.Column width = {9} >
-        {mapView && <MapPanel/>}
+        {mapView && <MapContainer markers = {markers}/>}
 
         {!mapView && <Grid columns='equal'>
            <Grid.Column>
