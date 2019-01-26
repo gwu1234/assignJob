@@ -19,8 +19,7 @@
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.1",
     "uuid": "^3.3.2",
-    "google-maps-react": "^2.0.2",
-    "material-ui": "^0.20.2"
+    "google-maps-react": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

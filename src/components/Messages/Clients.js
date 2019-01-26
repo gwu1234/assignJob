@@ -44,7 +44,6 @@ class Clients extends React.Component {
                clientsStyle: {
                  ...this.state.clientsStyle,
                  visibility: "visible",
-                 height: '',
                  paddingTop: "0.0em",
                  position: "relative",
                  color: "white",
@@ -60,7 +59,6 @@ class Clients extends React.Component {
               clientsStyle: {
                 ...this.state.clientsStyle,
                 visibility: "visible",
-                height: '',
                 paddingTop: "0.0em",
                 position: "relative",
                 color: "white",

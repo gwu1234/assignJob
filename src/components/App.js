@@ -3,7 +3,7 @@ import { Grid } from "semantic-ui-react";
 import "./App.css";
 import { connect } from "react-redux";
 
-import ColorPanel from "./ColorPanel/ColorPanel";
+//import ColorPanel from "./ColorPanel/ColorPanel";
 import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
@@ -11,11 +11,11 @@ import Background from './terra.jpg';
 import ContractPanel from "./MapPanel/ContractPanel";
 import PaymentPanel from "./MapPanel/PaymentPanel";
 import DeliveryPanel from "./MapPanel/DeliveryPanel";
-import MapPanel from "./MapPanel/MapPanel";
+//import MapPanel from "./MapPanel/MapPanel";
 import MapContainer from './MapPanel/map/MapContainer';
 
 class App extends React.Component {
-  
+
   render() {
     const markers = [
       {pos: {lat: 45.4474017, lng: -73.8300837}, name: 'Lake Shore', id: 0, status: 0},
