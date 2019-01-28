@@ -46,14 +46,14 @@ export const setUserTag = tag => {
 };*/
 
 /* Channel Actions */
-export const setCurrentChannel = channel => {
+/*export const setCurrentChannel = channel => {
   return {
     type: actionTypes.SET_CURRENT_CHANNEL,
     payload: {
       currentChannel: channel
     }
   }
-}
+}*/
 
 export const setCurrentUser = user => {
   return {
@@ -114,6 +114,23 @@ export const setMapView = mapview => {
     type: actionTypes.SET_MAP_VIEW,
     payload: {
       mapView: mapview
+    }
+  }
+}
+
+/*export const setLatLng = latlng => {
+  return {
+    type: actionTypes.SET_LAT_LNG,
+    payload: {
+      latlng: latlng
+    }
+  }
+}*/
+export const setGeoEncoding = geoEncoding => {
+  return {
+    type: actionTypes.SET_GEOENCODING,
+    payload: {
+      geoEncoding: geoEncoding
     }
   }
 }

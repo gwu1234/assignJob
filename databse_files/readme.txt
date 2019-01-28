@@ -13,3 +13,37 @@ const clientArray =[];
     }
     console.log(keyArray.length);
 
+
+
+function someFunction(addresses) {
+    var currAddress, coords = [];
+    for (var i = 0; i < addresses.length; i++) {
+        currAddress = addresses[i];
+        var geocoder = new google.maps.Geocoder();
+        if (geocoder) {
+            geocoder.geocode({'address':currAddress}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    coords.push(results[0].geometry.location);
+
+                    // Check if all calls have been processed
+                    if (coords.length == addresses.length) {
+                        someOtherFunction(coords);
+                    }
+                }
+                ...
+            });
+        }
+    }
+}
+
+function someOtherFunction(coords) {
+    // Geocoding has been done for all addresses
+    ...
+}
+
+
+
+
+
+
+

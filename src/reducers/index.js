@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
 import * as actionTypes from "../actions/types";
 
+const GEOCODING_DONE = 1;
+const GEOCODING_RENEWED = 2;
+
 const initialUserState = {
   currentUser: null, // user object
   isLoading: true,
@@ -11,7 +14,8 @@ const initialUserState = {
   clientList: null,
   clientContact: null,
   workOrder: null,
-  mapView: false
+  mapView: false,
+  geoEncoding: GEOCODING_DONE,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -85,7 +89,25 @@ const user_reducer = (state = initialUserState, action) => {
         ...state,
         mapView: action.payload.mapView
     };
-    /*case actionTypes.SET_OPEN_MODAL:
+
+    /*case actionTypes.SET_LAT_LNG:
+        console.log ("reducer SET_LAT_LNG  = " );
+        console.log (action.payload.latlng);
+        let coords = state.coords;
+        coords.push (action.payload.latlng);
+        //console.log(state.coords.length);
+        return {
+                 ...state,
+                 coords: coords
+        };*/
+    case actionTypes.SET_GEOENCODING:
+            //console.log ("reducer SET_GEOENCODING = " );
+            //console.log (action.payload.geoEncoding);
+            return {
+                     ...state,
+                     geoEncoding: action.payload.geoEncoding
+        };
+    /* case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);
         return {
           ...state,

@@ -1,23 +1,48 @@
 import React from "react";
-//import firebase from "../../firebase";
+import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon, Button} from "semantic-ui-react";
 import Client from "./Client";
 import AddClientModal from "./AddClientModal";
+import { setGeoEncoding } from "../../actions";
 import "./Clients.css";
+const GEOCODING_DONE = 1;
+const GEOCODING_RENEWED = 2;
+const GEOCODING_PUSHED= 3;
 
 class Clients extends React.Component {
+   constructor(props) {
+       super(props);
 
-   state = {
+       this.state = {
+            clientsStyle: {
+                visibility: 'hidden',
+                height: "2px",
+            },
+           display: false,
+           currentGeoEncoding: GEOCODING_DONE
+       }
+    }
+
+   /*state = {
      clientsStyle: {
        visibility: 'hidden',
        height: "2px",
      },
      display: false,
-   };
+   };*/
 
-   /*onPlusClick = (open) =>
-   (<BasicModal open={open} />);*/
+   componentDidMount() {
+     const {clients, geoEncoding} = this.props;
+
+     if (geoEncoding == GEOCODING_RENEWED) {
+        this.updateClients(clients);
+        this.props.setGeoEncoding(GEOCODING_DONE);
+        this.setState ({
+          currentGeoEncoding: GEOCODING_PUSHED
+        })
+     }
+   }
 
 
    onButtonClick = (display) => {
@@ -78,11 +103,18 @@ class Clients extends React.Component {
           <Client key={client.clientKey} client={client.client} />
      ));
 
-
+  updateClients = clients => {
+      const {usertag} = this.props;
+      const clientsTag = "repos/" + usertag +"/clients/tags";
+      console.log("clientsTag = " + clientsTag);
+      const clientsRef = firebase.database().ref(clientsTag)
+      console.log("clientTag = " + clientsTag);
+      clientsRef.set(clients);;
+  }
 
   render() {
-    const {clients, currentUser, usertag} = this.props;
-    const {display} = this.state;
+    const {clients, currentUser, usertag, geoEncoding} = this.props;
+    const {display, currentGeoEncoding} = this.state;
     //console.log("clients current User name = " );
     //console.log(currentUser.name);
     //console.log(currentUser);
@@ -104,6 +136,28 @@ class Clients extends React.Component {
        clientArray.push(newClient);
     }
 
+    //if (geoEncoding == GEOCODING_RENEWED) {
+    //   this.updateClients(clients);
+       //const clientsTag = "repos/" + usertag +"/clients/tags";
+       //console.log("clientsTag = " + clientsTag);
+       //const clientsRef = firebase.database().ref(clientsTag)
+     console.log("geoEncofing  = " + geoEncoding);
+     console.log("currentGeoEncoding  = " + currentGeoEncoding);
+
+     // need to be forced
+     if ( geoEncoding == GEOCODING_RENEWED &&
+          currentGeoEncoding != GEOCODING_PUSHED ) {
+          this.updateClients(clients);
+          this.props.setGeoEncoding(GEOCODING_DONE);
+          this.setState ({
+              currentGeoEncoding: GEOCODING_PUSHED
+        }) ;
+     }
+
+       //clientsRef.set(clients);
+    //   this.props.setGeoEncoding(GEOCODING_DONE);
+    //}
+
     //console.log(keyArray.length);
 
     return (
@@ -124,11 +178,12 @@ const mapStateToProps = state => ({
      clients: state.user.clientList,
      currentUser: state.user.currentUser,
      usertag: state.user.usertag,
-     admin: state.user.admin
+     admin: state.user.admin,
+     geoEncoding: state.user.geoEncoding
    }
 );
 
 export default connect(
   mapStateToProps,
-  {}
+  {setGeoEncoding}
 )(Clients);

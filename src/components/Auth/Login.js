@@ -1,19 +1,15 @@
 import React from "react";
 import firebase from "../../firebase";
+import Geocode from "react-geocode";
+//import response from "react-geocode";
 import { connect } from "react-redux";
-import { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList } from "../../actions";
+import { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding} from "../../actions";
 
-import {
-  Grid,
-  Form,
-  Segment,
-  Button,
-  Header,
-  Message,
-  Icon
-} from "semantic-ui-react";
+import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 //import { setAdmin } from "../../actions";
+const GEOCODING_DONE = 1;
+const GEOCODING_RENEWED = 2;
 
 class Login extends React.Component {
   state = {
@@ -21,8 +17,20 @@ class Login extends React.Component {
     password: "",
     errors: [],
     loading: false,
-    usersRef: firebase.database().ref("users")
+    usersRef: firebase.database().ref("users"),
   };
+
+  //const GEOCODING_DONE = 1;
+  //const GEOCODING_RENEWED = 2;
+
+  /*componentDidMount() {
+    const {coords, usertag} = this.props;
+
+    console.log (usertag);
+    console.log(coords.length);
+    console.log(coords);
+  }*/
+
 
   displayErrors = errors =>
     errors.map((error, i) => <p key={i}>{error.message}</p>);
@@ -117,7 +125,32 @@ class Login extends React.Component {
                 //console.log("user list Clients = ");
                 //console.log(clients)
                 if (clients) {
-                    this.props.setClientList(clients);
+                    if (this.isGeocodeReady(clients)) {
+                        //console.log("lat and longitudes ready");
+                        this.props.setClientList(clients);
+                        //const GEOCODING_DONE = 1;
+                        //const GEOCODING_RENEWED = 2;
+                        this.props.setGeoEncoding(GEOCODING_DONE);
+                    }
+                    else {
+                        const addresses =[];
+                         for (var key in clients) {
+                           if (!clients[key].lat || !clients[key].lng ){
+                               const addressStr =   clients[key].street + ", "
+                                           + clients[key].city + ", "
+                                           + clients[key].postcode;
+
+                               const address = {
+                                   address: addressStr,
+                                   key : key
+                               }
+                               addresses.push (address);
+                           }
+                        }
+                        this.getLocations(clients, addresses);
+                        //console.log(coords.length);
+                        //console.log(coords);
+                    }
                } else {
                    this.props.setClientList(null);
                }
@@ -136,6 +169,94 @@ class Login extends React.Component {
 
   isFormValid = ({ email, password }) => email && password;
 
+  isGeocodeReady = (clients) => {
+        //console.log("at isGeocodeReady");
+        let result = true;
+
+        for (var key in clients) {
+           if (!clients[key].lat || !clients[key].lng ){
+              return false;
+           }
+        }
+        return result;
+  }
+
+  async getLocations(clients, locations) {
+    Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
+    const coords = []
+    for (const l of locations) {
+      const r = await this.getLocation(l)
+      if (r == null) continue; // or display error message or whatever
+      coords.push(r)
+      clients[r.key].lng = r.lng;
+      clients[r.key].lat = r.lat;
+      //this.setState({annotations}); // move this after the loop if you want only one update
+    }
+    //console.log(coords);
+    //console.log(coords.length);
+    //console.log(clients);
+    this.props.setClientList(clients);
+    this.props.setGeoEncoding(GEOCODING_RENEWED);
+    //this.props.setLatLng (coords);
+    //return coords;
+  }
+
+  async getLocation(location) {
+    try {
+      let response = await Geocode.fromAddress(location.address);
+      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      return (
+        {
+          address: location.address,
+          key: location.key,
+          lat: await response.results[0].geometry.location.lat,
+          lng: await response.results[0].geometry.location.lng
+        }
+      );
+    }
+    catch(err) {
+      console.log("Error fetching geocode lat and lng:", err);
+    }
+    return null;
+  }
+
+
+  /*findLatLng = addresses => {
+     if (addresses.length > 0) {
+          let coords = [];
+          addresses.map(address => {
+          const currAddress = address.addressStr;
+          const key = address.key;
+          let lat = '';
+          let lng = '';
+
+          Geocode.fromAddress(currAddress).then(
+              response => {
+                 lat = response.results[0].geometry.location.lat;
+                 lng = response.results[0].geometry.location.lng;
+                 const latlng = {
+                     lat: lat,
+                     lng: lng,
+                     key: key
+                 }
+                 coords.push (latlng);
+                //this.props.setLatLng(latlng);
+              },
+              error => {
+                      console.error(error);
+              }
+          )});
+          console.log(coords);
+          this.props.setLatLng(coords);
+          //const {coords} = this.props;
+          //for (var key in coords) {
+          //   console.log(coords[key]);
+          //   console.log(key);
+          //}
+          console.log (coords.length);
+     }
+  };*/
+
   handleInputError = (errors, inputName) => {
     return errors.some(error => error.message.toLowerCase().includes(inputName))
       ? "error"
@@ -145,6 +266,12 @@ class Login extends React.Component {
   render() {
     //const { admin} = this.props;
     const { email, password, errors, loading } = this.state;
+    //const { usertag, coords } = this.props;
+
+    //if (coords.length > 0) {
+       console.log ("login loading = " + loading);
+    //   console.log (coords.length);
+    //}
 
     return (
       <Grid textAlign="center" verticalAlign="middle" className="app">
@@ -205,22 +332,12 @@ class Login extends React.Component {
   }
 }
 
-/*const mapStateToProps = state => ({
-  admin: state.user.admin
-});*/
+//const mapStateToProps = state => ({
+//  usertag: state.user.usertag,
+//  coords: state.user.coords
+//});
 
-/*export default connect(
-  null,
-  { setAdmin }
-)(Login);*/
-
-/*export default connect(
-  mapStateToProps,
-  { setAdmin }
-)(Login);*/
-//export default Login;
-//export default Register;
 export default connect(
   null,
-  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList }
+  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding}
 )(Login);
