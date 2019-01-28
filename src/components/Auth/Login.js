@@ -221,42 +221,6 @@ class Login extends React.Component {
   }
 
 
-  /*findLatLng = addresses => {
-     if (addresses.length > 0) {
-          let coords = [];
-          addresses.map(address => {
-          const currAddress = address.addressStr;
-          const key = address.key;
-          let lat = '';
-          let lng = '';
-
-          Geocode.fromAddress(currAddress).then(
-              response => {
-                 lat = response.results[0].geometry.location.lat;
-                 lng = response.results[0].geometry.location.lng;
-                 const latlng = {
-                     lat: lat,
-                     lng: lng,
-                     key: key
-                 }
-                 coords.push (latlng);
-                //this.props.setLatLng(latlng);
-              },
-              error => {
-                      console.error(error);
-              }
-          )});
-          console.log(coords);
-          this.props.setLatLng(coords);
-          //const {coords} = this.props;
-          //for (var key in coords) {
-          //   console.log(coords[key]);
-          //   console.log(key);
-          //}
-          console.log (coords.length);
-     }
-  };*/
-
   handleInputError = (errors, inputName) => {
     return errors.some(error => error.message.toLowerCase().includes(inputName))
       ? "error"

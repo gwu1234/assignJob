@@ -150,7 +150,7 @@ class Clients extends React.Component {
           this.updateClients(clients);
           this.props.setGeoEncoding(GEOCODING_DONE);
           this.setState ({
-              currentGeoEncoding: GEOCODING_PUSHED
+              currentGeoEncoding: GEOCODING_DONE
         }) ;
      }
 

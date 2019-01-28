@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
 export default class AddClientModal extends Component {
@@ -25,6 +26,36 @@ export default class AddClientModal extends Component {
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })
+
+  async getLocations(client, location) {
+    Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
+      const r = await this.getLocation(location)
+      if (r != null) {
+          client.lng = r.lng;
+          client.lat = r.lat;
+          console.log (location.key) ;
+          console.log (location.databaseRef);
+          location.databaseRef.child(location.key).set(client);
+      }
+  }
+
+  async getLocation(location) {
+    try {
+      let response = await Geocode.fromAddress(location.address);
+      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      return (
+        {
+          lat: await response.results[0].geometry.location.lat,
+          lng: await response.results[0].geometry.location.lng
+        }
+      );
+    }
+    catch(err) {
+      console.log("Error fetching geocode lat and lng:", err);
+    }
+    return null;
+  }
+
 
   handleSubmit = () => {
     const event = this.nativeEvent;
@@ -52,13 +83,23 @@ export default class AddClientModal extends Component {
            "postcode": String(postcode),
            "tag": String(tag),
          }
+
           //console.log(newClient);
          const clientPath = "repos/" + usertag + "/clients/tags";
          //console.log(clientPath);
          const clientRef = firebase.database().ref(clientPath);
          const clientKey = clientRef.push().getKey();
-         console.log(clientKey);
-         clientRef.child(clientKey).set(newClient);
+         //console.log(clientKey);
+
+         const address = street + ", " + city + ", " + postcode;
+         const location = {
+            address: address,
+            key: clientKey,
+            databaseRef: clientRef
+         }
+
+         this.getLocations (newClient,location);
+         //clientRef.child(clientKey).set(newClient);
 
          let emails = [];
          let phones = [];
