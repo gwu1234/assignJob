@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, Marker } from 'google-maps-react';
 import { connect } from "react-redux";
+import firebase from "../../../firebase";
 import CurrentLocation from './Map';
 import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
@@ -31,25 +32,41 @@ class MapContainer extends Component {
   }
 
  workIsDone = (props, marker, e) =>{
-   console.log("at MapContainer workIsDone");
-   const {markers} = this.props;
-   var  equalPos = markers.findIndex((element, index) =>
+   //console.log("at MapContainer workIsDone");
+   console.log(this.state.activeMarker.id);
+   //console.log(this.state.activeMarker.name);
+   //console.log(marker);
+
+   const {markers, usertag} = this.props;
+   const {activeMarker} = this.state;
+
+    var  equalPos = markers.findIndex((element, index) =>
      (
-       index === this.state.activeMarker.id
+        index === this.state.activeMarker.id
      ));
 
-   if (equalPos >= 0) {
-     markers[equalPos].status =2;
-   }
+    if (equalPos >= 0) {
+        markers[equalPos].status =2;
+    }
 
-   this.setState({
-      //activeMarker: null,
-      markers: markers,
-      showingInfoWindow: false
-   });
+    this.setState({
+       //activeMarker: null,
+       markers: markers,
+       showingInfoWindow: false
+    });
+
+    let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
+    let statusRef = firebase.database().ref(statusTag);
+
+    if (statusRef == null) {
+        statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id;
+        statusRef = firebase.database().ref(statusTag).child("status").set(2);
+    } else {
+        statusRef.set(2);
+    }
   }
 
-  workNotDone = (props, marker, e) =>{
+  /*workNotDone = (props, marker, e) =>{
     const {markers} = this.props;
     var  equalPos = markers.findIndex((element, index) =>
       (
@@ -65,10 +82,17 @@ class MapContainer extends Component {
        markers: markers,
        showingInfoWindow: false
     });
-   }
+  }*/
 
    workToRepeat = (props, marker, e) =>{
-     const {markers} = this.props;
+     //const {markers} = this.props;
+     const {markers, usertag} = this.props;
+     const {activeMarker} = this.state;
+     //console.log("at MapContainer workToRepeat");
+     console.log(this.state.activeMarker.id);
+     //console.log(this.state.activeMarker.name);
+     //console.log(marker);
+     //console.log(this.props.usertag);
      var  equalPos = markers.findIndex((element, index) =>
        (
          index === this.state.activeMarker.id
@@ -83,6 +107,16 @@ class MapContainer extends Component {
         markers: markers,
         showingInfoWindow: false
      });
+
+     let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
+     let statusRef = firebase.database().ref(statusTag);
+
+     if (statusRef == null) {
+         statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id;
+         statusRef = firebase.database().ref(statusTag).child("status").set(1);
+     } else {
+         statusRef.set(1);
+     }
     }
 
   onClose = props => {
@@ -159,7 +193,8 @@ class MapContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  markers: state.user.markers
+  markers: state.user.markers,
+  usertag: state.user.usertag
 });
 
 const WrappedContainer = GoogleApiWrapper({

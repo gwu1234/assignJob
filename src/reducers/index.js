@@ -69,6 +69,10 @@ const user_reducer = (state = initialUserState, action) => {
         let markers = [];
 
         for (var key in clients) {
+           let status = 0;
+           if (clients[key].status) {
+              status = clients[key].status;
+           }
            const marker = {
              pos:
              {
@@ -77,7 +81,7 @@ const user_reducer = (state = initialUserState, action) => {
              },
              name: clients[key].name,
              id:  key,
-             status: 0
+             status: status
            }
            markers.push(marker);
         }
