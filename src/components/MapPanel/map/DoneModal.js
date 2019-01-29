@@ -10,15 +10,15 @@ export default class DoneModal extends Component {
 
   handleClose() {this.handleOpen(false)}
 
-  handleSubmit = () => {
+  /*handleSubmit = () => {
     const event = this.nativeEvent;
     if (event) {
        event.preventDefault();
     }
-  };
+  };*/
 
   render() {
-    const {clientname} = this.props;
+    const {clientname, workIsDone} = this.props;
     const titleString = clientname + " :  " + "Work is Done ?";
 
     return (
@@ -43,7 +43,7 @@ export default class DoneModal extends Component {
         </Button>
 
           <Button color='green' size="large"
-                onClick={() =>this.handleSubmit()}
+                onClick={() => {this.props.workIsDone(); this.handleClose()}}
                 >
                 <Icon name='check' color ="brown" size ="large"/>
                 Confirm

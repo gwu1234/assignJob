@@ -6,17 +6,19 @@ export default class RepeatModal extends Component {
     modalOpen: false,
   }
 
-  handleOpen = (open) => this.setState({ modalOpen: open })
+  handleOpen = (open) => this.setState({ modalOpen: open });
 
-  handleSubmit = () => {
+  handleClose = () => this.handleOpen(false);
+
+  /*handleSubmit = () => {
     const event = this.nativeEvent;
     if (event) {
        event.preventDefault();
     }
-  };
+  };*/
 
   render() {
-    const {clientname} = this.props;
+    const {clientname, workToRepeat} = this.props;
     const titleString = clientname + " :  " + "Repeat Work  ?";
 
     return (
@@ -41,7 +43,7 @@ export default class RepeatModal extends Component {
         </Button>
 
           <Button color='teal' size="large"
-                onClick={() =>this.handleSubmit()}
+                onClick={() => {workToRepeat(); this.handleClose()}}
                 >
                 <Icon name='check' color ="brown" size ="large"/>
                 Confirm

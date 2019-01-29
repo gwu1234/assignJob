@@ -31,6 +31,7 @@ class MapContainer extends Component {
   }
 
  workIsDone = (props, marker, e) =>{
+   console.log("at MapContainer workIsDone");
    const {markers} = this.props;
    var  equalPos = markers.findIndex((element, index) =>
      (
@@ -42,7 +43,7 @@ class MapContainer extends Component {
    }
 
    this.setState({
-      activeMarker: null,
+      //activeMarker: null,
       markers: markers,
       showingInfoWindow: false
    });
@@ -60,7 +61,7 @@ class MapContainer extends Component {
     }
 
     this.setState({
-       activeMarker: null,
+       //activeMarker: null,
        markers: markers,
        showingInfoWindow: false
     });
@@ -78,7 +79,7 @@ class MapContainer extends Component {
      }
 
      this.setState({
-        activeMarker: null,
+        //activeMarker: null,
         markers: markers,
         showingInfoWindow: false
      });
@@ -103,11 +104,11 @@ class MapContainer extends Component {
          margin: '0.2em'
       }
 
-      console.log("at MapContainer : ");
-      console.log (this.state.showingInfoWindow);
-      console.log (this.state.activeMarker);
-      console.log (this.state.selectedPlace);
-      console.log (this.state.activeMarker.name);
+      //console.log("at MapContainer : ");
+      //console.log (this.state.showingInfoWindow);
+      //console.log (this.state.activeMarker);
+      //console.log (this.state.selectedPlace);
+      //console.log (this.state.activeMarker.name);
 
       return (
       <CurrentLocation google={this.props.google} centerAroundCurrentLocation>
@@ -144,8 +145,8 @@ class MapContainer extends Component {
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
                      </div>
-                         <DoneModal clientname ={this.state.activeMarker.name} />
-                         <RepeatModal clientname ={this.state.activeMarker.name} />
+                         <DoneModal workIsDone={this.workIsDone} clientname ={this.state.activeMarker.name} />
+                         <RepeatModal workToRepeat={this.workToRepeat} clientname ={this.state.activeMarker.name} />
 
                          <Button icon size="mini" color="red" onClick={this.onClose}>
                               <Icon name='cancel' size ="large"/> Cancel
