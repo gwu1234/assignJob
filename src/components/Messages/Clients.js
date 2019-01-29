@@ -141,8 +141,8 @@ class Clients extends React.Component {
        //const clientsTag = "repos/" + usertag +"/clients/tags";
        //console.log("clientsTag = " + clientsTag);
        //const clientsRef = firebase.database().ref(clientsTag)
-     console.log("geoEncofing  = " + geoEncoding);
-     console.log("currentGeoEncoding  = " + currentGeoEncoding);
+     //console.log("geoEncofing  = " + geoEncoding);
+     //console.log("currentGeoEncoding  = " + currentGeoEncoding);
 
      // need to be forced
      if ( geoEncoding == GEOCODING_RENEWED &&

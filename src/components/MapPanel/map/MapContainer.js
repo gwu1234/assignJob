@@ -6,6 +6,9 @@ import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
+import DoneModal from  './DoneModal';
+import RepeatModal from  './RepeatModal';
+import {Button, Icon} from 'semantic-ui-react';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -18,31 +21,6 @@ class MapContainer extends Component {
        //markers : [],
     }
   }
-
-  /*componentDidMount() {
-    const {clients} = this.props;
-    let markers = [];
-
-    for (var key in clients) {
-       const marker = {
-         pos:
-         {
-            lat: clients[key].lat,
-            lng: clients[key].lng
-         },
-         name: clients[key].name,
-         id:  key,
-         status: 0
-       }
-       markers.push(marker);
-    }
-    console.log(markers);
-
-    this.setState({
-      ...this.state,
-      markers: markers
-    });
-  }*/
 
   onMarkerClick = (props, marker, e) =>{
     this.setState({
@@ -110,7 +88,7 @@ class MapContainer extends Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
+        //activeMarker: null,
       });
     }
   };
@@ -124,6 +102,12 @@ class MapContainer extends Component {
          height: '2em',
          margin: '0.2em'
       }
+
+      console.log("at MapContainer : ");
+      console.log (this.state.showingInfoWindow);
+      console.log (this.state.activeMarker);
+      console.log (this.state.selectedPlace);
+      console.log (this.state.activeMarker.name);
 
       return (
       <CurrentLocation google={this.props.google} centerAroundCurrentLocation>
@@ -160,18 +144,12 @@ class MapContainer extends Component {
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
                      </div>
-                         <button style={{...buttonStyle, backgroundColor:'green', color: 'white'}} onClick={this.workIsDone}>
-                              <strong> Done </strong>
-                         </button>
+                         <DoneModal clientname ={this.state.activeMarker.name} />
+                         <RepeatModal clientname ={this.state.activeMarker.name} />
 
-                         <button style={{...buttonStyle, backgroundColor:'red', color: 'white'}} onClick={this.workNotDone}>
-                              <strong> Undo </strong>
-                         </button>
-
-                         <button style={{...buttonStyle, backgroundColor:'blue', color: 'white'}}  onClick={this.workToRepeat}>
-                               <strong> Repeat</strong>
-                         </button>
-
+                         <Button icon size="mini" color="red" onClick={this.onClose}>
+                              <Icon name='cancel' size ="large"/> Cancel
+                         </Button>
                  </div>
           </InfoWindowEx>
       </CurrentLocation>

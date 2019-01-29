@@ -28,7 +28,7 @@ class App extends React.Component {
     ];*/
 
     const {currentUser, admin, mapView} = this.props;
-    console.log("App admin = " + admin);
+    //console.log("App admin = " + admin);
 
     return (
       <Grid columns='equal' className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
