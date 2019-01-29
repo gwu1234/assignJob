@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, Marker } from 'google-maps-react';
+import { connect } from "react-redux";
 import CurrentLocation from './Map';
 import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
 
-export class MapContainer extends Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -14,9 +15,34 @@ export class MapContainer extends Component {
        showingInfoWindow: false,
        activeMarker: {},
        selectedPlace: {},
-       markers : this.props.markers,
+       //markers : [],
     }
   }
+
+  /*componentDidMount() {
+    const {clients} = this.props;
+    let markers = [];
+
+    for (var key in clients) {
+       const marker = {
+         pos:
+         {
+            lat: clients[key].lat,
+            lng: clients[key].lng
+         },
+         name: clients[key].name,
+         id:  key,
+         status: 0
+       }
+       markers.push(marker);
+    }
+    console.log(markers);
+
+    this.setState({
+      ...this.state,
+      markers: markers
+    });
+  }*/
 
   onMarkerClick = (props, marker, e) =>{
     this.setState({
@@ -27,7 +53,7 @@ export class MapContainer extends Component {
   }
 
  workIsDone = (props, marker, e) =>{
-   const {markers} = this.state;
+   const {markers} = this.props;
    var  equalPos = markers.findIndex((element, index) =>
      (
        index === this.state.activeMarker.id
@@ -45,7 +71,7 @@ export class MapContainer extends Component {
   }
 
   workNotDone = (props, marker, e) =>{
-    const {markers} = this.state;
+    const {markers} = this.props;
     var  equalPos = markers.findIndex((element, index) =>
       (
         index === this.state.activeMarker.id
@@ -63,7 +89,7 @@ export class MapContainer extends Component {
    }
 
    workToRepeat = (props, marker, e) =>{
-     const {markers} = this.state;
+     const {markers} = this.props;
      var  equalPos = markers.findIndex((element, index) =>
        (
          index === this.state.activeMarker.id
@@ -89,9 +115,10 @@ export class MapContainer extends Component {
     }
   };
 
-
     render() {
-      const {markers} = this.state;
+      const {markers} = this.props;
+      //const {clients} = this.props;
+
       const buttonStyle = {
          width: '5em',
          height: '2em',
@@ -152,6 +179,12 @@ export class MapContainer extends Component {
    }
 }
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE'
+const mapStateToProps = state => ({
+  markers: state.user.markers
+});
+
+const WrappedContainer = GoogleApiWrapper({
+   apiKey: 'AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE'
 })(MapContainer);
+
+export default connect(mapStateToProps,{})(WrappedContainer);

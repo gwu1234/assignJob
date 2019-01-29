@@ -16,6 +16,7 @@ const initialUserState = {
   workOrder: null,
   mapView: false,
   geoEncoding: GEOCODING_DONE,
+  markers: []
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -64,9 +65,28 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_CLIENT_LIST:
         //console.log ("reducer employees list = ");
         //console.log (action.payload.clientList);
+        const clients = action.payload.clientList;
+        let markers = [];
+
+        for (var key in clients) {
+           const marker = {
+             pos:
+             {
+                lat: clients[key].lat,
+                lng: clients[key].lng
+             },
+             name: clients[key].name,
+             id:  key,
+             status: 0
+           }
+           markers.push(marker);
+        }
+        //console.log(markers);
+
         return {
           ...state,
-          clientList: action.payload.clientList
+          clientList: action.payload.clientList,
+          markers: markers
     };
     case actionTypes.SET_CLIENT_CONTACT:
         //.log ("reducer client contact = " );
