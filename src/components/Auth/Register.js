@@ -110,7 +110,7 @@ class Register extends React.Component {
     const emailString = createdUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
     //console.log(emailString);
     const nameString = createdUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
-    const childName = nameString + '+' + emailString;
+    const childName = (nameString + '+' + emailString).toLowerCase();
     //this.props.setUserTag(childName);
     //console.log (childName);
     //const childName = createdUser.user.displayName + '+' + createdUser.user.email;
@@ -126,7 +126,7 @@ class Register extends React.Component {
     const emailString = createdUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
     //console.log(emailString);
     const nameString = createdUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
-    const childName = nameString + '+' + emailString;
+    const childName = (nameString + '+' + emailString).toLowerCase();
     //console.log (childName);
     //const repoRef = firebase.database().ref("repos");
 

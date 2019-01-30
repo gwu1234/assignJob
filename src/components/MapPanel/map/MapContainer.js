@@ -24,6 +24,10 @@ class MapContainer extends Component {
   }
 
   onMarkerClick = (props, marker, e) =>{
+    //console.log("onMarkerClick");
+    //console.log(marker);
+    //console.log (props);
+
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -89,7 +93,7 @@ class MapContainer extends Component {
      const {markers, usertag} = this.props;
      const {activeMarker} = this.state;
      //console.log("at MapContainer workToRepeat");
-     console.log(this.state.activeMarker.id);
+     //console.log(this.state.activeMarker.id);
      //console.log(this.state.activeMarker.name);
      //console.log(marker);
      //console.log(this.props.usertag);
@@ -148,7 +152,7 @@ class MapContainer extends Component {
       <CurrentLocation google={this.props.google} centerAroundCurrentLocation>
         {markers && markers.map((marker, index)=> {
            const status = marker.status;
-
+           //console.log(marker.id);
            var image = redDot;
            if (status === 1)  {
                image = blueDot;
@@ -159,7 +163,7 @@ class MapContainer extends Component {
           return (
                  <Marker
                       key={index}
-                      id = {index}
+                      id = {marker.id}
                       position={marker.pos}
                       name = {marker.name}
                       onClick={this.onMarkerClick}

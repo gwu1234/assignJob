@@ -56,8 +56,8 @@ class Login extends React.Component {
         .then(signedInUser => {
           const emailString = signedInUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
           const nameString = signedInUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
-          const tagName = nameString + '+' + emailString;
-          const adminName = nameString + '+' + emailString +"/admin";
+          const tagName = (nameString + '+' + emailString).toLowerCase();
+          const adminName = (nameString + '+' + emailString +"/admin").toLowerCase();;
           //console.log(tagName);
           this.props.setUserTag(tagName);
           var adminRef = this.state.usersRef.child(adminName);

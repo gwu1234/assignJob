@@ -79,6 +79,7 @@ export default class AddClientModal extends Component {
            "lastname": String (lastname),
            "firstname": String(firstname),
            "street": String(street),
+           "status" : 0,
            "name": String(name),
            "postcode": String(postcode),
            "tag": String(tag),
@@ -147,6 +148,7 @@ export default class AddClientModal extends Component {
            "emails": emails,
            "phones": phones,
            "cells": cells,
+           "status" : 0,
          }
          //console.log(newContact);
          const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";

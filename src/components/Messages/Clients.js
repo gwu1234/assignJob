@@ -159,12 +159,16 @@ class Clients extends React.Component {
     //}
 
     //console.log(keyArray.length);
+    let userName = currentUser.name;
+    if (!userName) {
+      userName = currentUser.displayName;
+    }
 
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
                 <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
-                <AddClientModal open={false} userName={currentUser.name} usertag = {usertag}/>
+                <AddClientModal open={false} userName={userName} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && clientArray.length>0 && this.displayClients(clientArray)}
