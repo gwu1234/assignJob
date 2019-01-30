@@ -11,6 +11,10 @@ import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import {Button, Icon} from 'semantic-ui-react';
 
+const JOB_NEW = 0;
+const JOB_REPEAT = 1;
+const JOB_DONE = 2;
+
 class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -50,7 +54,7 @@ class MapContainer extends Component {
      ));
 
     if (equalPos >= 0) {
-        markers[equalPos].status =2;
+        markers[equalPos].status = JOB_DONE;
     }
 
     this.setState({
@@ -103,7 +107,7 @@ class MapContainer extends Component {
        ));
 
      if (equalPos >= 0) {
-       markers[equalPos].status = 1;
+       markers[equalPos].status = JOB_REPEAT;
      }
 
      this.setState({

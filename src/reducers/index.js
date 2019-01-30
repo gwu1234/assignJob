@@ -4,6 +4,10 @@ import * as actionTypes from "../actions/types";
 const GEOCODING_DONE = 1;
 const GEOCODING_RENEWED = 2;
 
+const JOB_NEW = 0;
+const JOB_REPEAT = 1;
+const JOB_DONE = 2;
+
 const initialUserState = {
   currentUser: null, // user object
   isLoading: true,
@@ -70,7 +74,7 @@ const user_reducer = (state = initialUserState, action) => {
         let markers = [];
 
         for (var key in clients) {
-           let status = 0;
+           let status = JOB_NEW;
            if (clients[key].status) {
               status = clients[key].status;
            }
@@ -82,7 +86,7 @@ const user_reducer = (state = initialUserState, action) => {
              },
              name: clients[key].name,
              id:  key,
-             status: status
+             status: status,
            }
            markers.push(marker);
         }

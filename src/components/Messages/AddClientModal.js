@@ -3,6 +3,10 @@ import firebase from "../../firebase";
 import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
+const JOB_NEW = 0;
+const JOB_REPEAT = 1;
+const JOB_DONE = 2;
+
 export default class AddClientModal extends Component {
   state = {
     modalOpen: false,
@@ -79,7 +83,7 @@ export default class AddClientModal extends Component {
            "lastname": String (lastname),
            "firstname": String(firstname),
            "street": String(street),
-           "status" : 0,
+           "status" : JOB_NEW,
            "name": String(name),
            "postcode": String(postcode),
            "tag": String(tag),
@@ -147,8 +151,7 @@ export default class AddClientModal extends Component {
            "province":  String(province),
            "emails": emails,
            "phones": phones,
-           "cells": cells,
-           "status" : 0,
+           "cells": cells
          }
          //console.log(newContact);
          const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";
