@@ -23,10 +23,6 @@ class UserPanel extends React.Component {
       disabled: true
     },
     {
-      key: "avatar",
-      text: <span>Change Avatar</span>
-    },
-    {
       key: "mapview",
       text: <span onClick={this.setMapView}> {this.state.mapview? "Set Text View": "Set Map View"} </span>
     },
@@ -73,12 +69,13 @@ class UserPanel extends React.Component {
 
               <Dropdown
                 trigger={
-                  <span style = {{color: "white"}}>
-                    <Image src={user.photoURL} spaced="right" avatar />
-                    &nbsp; &nbsp; {user.displayName}
+                  <span style = {{color:"white"}}>
+                    <Icon name='tasks' size ="large"/>
+                    &nbsp; {user.displayName}
                   </span>
                 }
                 options={this.dropdownOptions()}
+                style = {{color: "white", left: "15px" }}
               />
 
       </Menu.Menu>
