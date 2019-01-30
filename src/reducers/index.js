@@ -42,7 +42,7 @@ const user_reducer = (state = initialUserState, action) => {
         admin: action.payload.admin
     };
     case actionTypes.SET_CURRENT_USER:
-        console.log(action.payload.currentUser);
+        //console.log(action.payload.currentUser);
         return {
         ...state,
         currentUser: action.payload.currentUser

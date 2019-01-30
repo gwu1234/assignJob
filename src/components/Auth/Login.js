@@ -233,7 +233,7 @@ class Login extends React.Component {
     //const { usertag, coords } = this.props;
 
     //if (coords.length > 0) {
-       console.log ("login loading = " + loading);
+       //console.log ("login loading = " + loading);
     //   console.log (coords.length);
     //}
 

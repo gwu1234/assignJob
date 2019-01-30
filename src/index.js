@@ -37,12 +37,12 @@ class Root extends React.Component {
       if (user) {
         const creationDate = new Date (user.metadata.creationTime);
         const creationTime = creationDate.getTime()/1000;
-        console.log ("creationTime " + creationTime) ;
+        //console.log ("creationTime " + creationTime) ;
 
         const loginDate = new Date (user.metadata.lastSignInTime);
         //console.log ("loginDate = "  + loginDate);
         const loginTime = loginDate.getTime()/1000;
-        console.log ("loginTime " + loginTime) ;
+        //console.log ("loginTime " + loginTime) ;
 
         this.props.setUser(user);
 
@@ -50,7 +50,7 @@ class Root extends React.Component {
         if ( loginTime === creationTime ){
            //this.props.history.push("/login");
            //this.props.clearUser();
-           console.log ("signout and open modal ") ;
+           //console.log ("signout and open modal ") ;
            //this.props.history.push("/modal");
            this.setState({ registering: true});
            firebase.auth().signOut()
@@ -59,7 +59,7 @@ class Root extends React.Component {
              .then(() => console.log("logout"));
 
         } else {
-           console.log("different time stamp");
+           //console.log("different time stamp");
            this.props.history.push("/");
         }
       } else {

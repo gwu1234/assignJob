@@ -37,8 +37,8 @@ export default class AddClientModal extends Component {
       if (r != null) {
           client.lng = r.lng;
           client.lat = r.lat;
-          console.log (location.key) ;
-          console.log (location.databaseRef);
+          //console.log (location.key) ;
+          //console.log (location.databaseRef);
           location.databaseRef.child(location.key).set(client);
       }
   }
@@ -163,7 +163,7 @@ export default class AddClientModal extends Component {
 
          this.handleOpen(false);
     }
-    console.log("submit clicked");
+    //console.log("submit clicked");
     //this.handleOpen(false);
   };
 
