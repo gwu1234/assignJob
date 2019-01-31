@@ -1,7 +1,8 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
-import { Menu, Header} from "semantic-ui-react";
+import { connect } from "react-redux";
+import { Menu, Header, Button, Icon } from "semantic-ui-react";
+import EditEmployeeModal from "./EditEmployeeModal"
 import "./Employee.css";
 
 class Employee extends React.Component {
@@ -106,8 +107,10 @@ toggleDisplay = (display) => {
 
 
   render() {
-    const {employee} = this.props;
+    const {employee, id, usertag} = this.props;
     const {display} = this.state;
+
+    //console.log ("Employee id = "  + id);
 
     let name= '';
     if (employee) {
@@ -122,7 +125,7 @@ toggleDisplay = (display) => {
     return (
       <Menu.Menu className="EmployeeMenuMenu" >
          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
-              {employee && name}
+              {employee && name} &nbsp; &nbsp; <EditEmployeeModal Modal open={false} employee = {employee} usertag = {usertag} id = {id}/>
          </Menu.Item>
          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
               {display && employee && address}
@@ -137,5 +140,13 @@ toggleDisplay = (display) => {
      );
    }
 }
+//export default Employee;
+const mapStateToProps = state => ({
+     usertag: state.user.usertag
+   }
+);
 
-export default Employee;
+export default connect(
+  mapStateToProps,
+  {}
+)(Employee);

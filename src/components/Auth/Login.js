@@ -103,7 +103,7 @@ class Login extends React.Component {
 
 
           const employeeTag = "repos/" + tagName +"/employees";
-          console.log(employeeTag);
+          //console.log(employeeTag);
           var employeeRef = firebase.database().ref(employeeTag)
 
            employeeRef.on('value', snapshot => {
