@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 //import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Contact.css";
+import EditContactModal from "./EditContactModal";
 
 class Contact extends React.Component {
   state = {
@@ -148,7 +149,7 @@ onButtonClick = () => {
 
 
   render() {
-    const {contact} = this.props;
+    const {contact, usertag} = this.props;
     const {emailDisplay, phoneDisplay, cellDisplay} = this.state;
 
     //console.log (contact);
@@ -177,6 +178,10 @@ onButtonClick = () => {
             {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
             {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+          {contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
+                       <span> &nbsp; &nbsp; Edit Company Info </span>
+                       <EditContactModal contact = {contact} usertag = {usertag}/>
+                       </Menu.Item> }
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -185,6 +190,7 @@ onButtonClick = () => {
 
 const mapStateToProps = state => ({
      contact: state.user.userContact,
+     usertag: state.user.usertag
    }
 );
 
