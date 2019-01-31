@@ -62,14 +62,14 @@ class Employees extends React.Component {
     }
 
     /*<Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-        <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
+        <Button icon size="mini" onClick={() => this.onButtonClick(displ ay)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
         <AddClientModal open={false} userName={userName} usertag = {usertag}/>
     </Menu.Header>*/
 
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
       <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-          <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Employee &nbsp; List &nbsp; &nbsp;
+          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Employee &nbsp; List &nbsp; &nbsp;
          <AddEmployeeModal usertag = {this.props.usertag}/>
         </Menu.Header>
         <Menu.Menu style = {this.state.employeesStyle}>

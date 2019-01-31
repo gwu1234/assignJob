@@ -76,7 +76,7 @@ class WorkOrders extends React.Component {
     return (
       <Menu.Menu className ="OrdersMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Work Order
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Work Order
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && orders && this.displayOrders(orderArray)}

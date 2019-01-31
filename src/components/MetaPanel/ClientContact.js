@@ -166,7 +166,7 @@ onButtonClick = () => {
     return (
       <Menu.Menu className="ClientContactMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Button icon size="mini" onClick={this.onButtonClick}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; Contact
+                <Icon name='eye' size ="big" onClick={this.onButtonClick}/> &nbsp; Client &nbsp; Contact
             </Menu.Header>
           <Menu.Menu style = {this.state.contactStyle}>
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
