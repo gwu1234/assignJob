@@ -134,7 +134,7 @@ export default class AddEmployeeModal extends Component {
 
     return (
       <Modal
-        trigger={<Button icon size="mini" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}> <Icon name='plus' size ="mini"/> </Button>}
+        trigger={<Button icon size="mini" onClick={() => this.handleOpen(true)} > <Icon name='plus' size ="large"/> </Button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic

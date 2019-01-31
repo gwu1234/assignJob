@@ -33,7 +33,7 @@ class Employees extends React.Component {
        window.alert("handle adding");
      };
 
-     dropdownOptions = () => [
+     /*dropdownOptions = () => [
        {
          style: {height: "3.7em", border: "1px dotted brown"},
          key: "editEmployee",
@@ -44,7 +44,7 @@ class Employees extends React.Component {
          key: "addEmployee",
          text: <Menu.Header as="h5" > Add Employee <AddEmployeeModal usertag = {this.props.usertag} /></Menu.Header>
        }
-     ];
+     ];*/
 
 
   render() {
@@ -60,19 +60,16 @@ class Employees extends React.Component {
        employeeArray.push(newEmployee);
     }
 
+    /*<Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+        <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
+        <AddClientModal open={false} userName={userName} usertag = {usertag}/>
+    </Menu.Header>*/
+
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
       <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-          <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button>
-        <Dropdown
-          trigger={
-            <span style = {{color:"white"}}>
-              &nbsp; Employees List
-            </span>
-          }
-          options={this.dropdownOptions()}
-          style = {{color: "white", left: "2px" }}
-        />
+          <Button icon size="mini" onClick={() => this.onButtonClick(display)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Employee &nbsp; List &nbsp; &nbsp;
+         <AddEmployeeModal usertag = {this.props.usertag}/>
         </Menu.Header>
         <Menu.Menu style = {this.state.employeesStyle}>
           {display && employees && this.displayEmployees(employeeArray)}
