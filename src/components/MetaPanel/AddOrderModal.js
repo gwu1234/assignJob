@@ -74,7 +74,7 @@ export default class AddOrderModal extends Component {
 
     return (
       <Modal
-        trigger={<Button icon size="mini" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}> <Icon name='plus' size ="large"/> </Button>}
+        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
