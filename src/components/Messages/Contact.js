@@ -15,6 +15,7 @@ class Contact extends React.Component {
     emailDisplay: false,
     phoneDisplay: false,
     cellDisplay: false,
+    editDisplay: false,
   };
 
   toggleEmailDisplay = (emailDisplay) => {
@@ -134,15 +135,17 @@ onButtonClick = () => {
               ...this.state.contactStyle,
               visibility: "hidden",
               height: "2px",
-          }
+          },
+          editDisplay: false,
       })
   } else {
       this.setState({
           contactStyle: {
             ...this.state.contactStyle,
             visibility: "visible",
-            height: ''
-        }
+            height: '',            
+        },
+        editDisplay: true,
      })
    }
 };
@@ -150,7 +153,7 @@ onButtonClick = () => {
 
   render() {
     const {contact, usertag} = this.props;
-    const {emailDisplay, phoneDisplay, cellDisplay} = this.state;
+    const {emailDisplay, phoneDisplay, cellDisplay, editDisplay} = this.state;
 
     //console.log (contact);
     let address = '';
@@ -178,7 +181,7 @@ onButtonClick = () => {
             {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
             {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
-          {contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
+            {editDisplay && contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
                        <span> &nbsp; &nbsp; Edit Company Info </span>
                        <EditContactModal contact = {contact} usertag = {usertag}/>
                        </Menu.Item> }
