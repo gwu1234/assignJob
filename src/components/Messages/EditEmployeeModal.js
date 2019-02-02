@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import DeleteEmployeeModal from "./DeleteEmployeeModal"
 
 export default class EditEmployeeModal extends Component {
   constructor(props) {
@@ -31,6 +32,27 @@ export default class EditEmployeeModal extends Component {
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })
+  handleClose =() => {
+    //console.log("handleClose")
+    this.setState({ modalOpen: false });
+  }
+
+  handleDelete = () => this.setState({ modalOpen: false })
+
+  deleteEmployee = () => {
+      //console.log("deleteEmployee");
+      const event = this.nativeEvent;
+      if (event) {
+          event.preventDefault();
+      }
+
+      const {usertag, id, employee } = this.props;
+      const employeePath = "repos/" + usertag + "/employees/" + id;
+      console.log (employeePath);
+      const employeeRef = firebase.database().ref(employeePath);
+      employeeRef.set(null);
+      this.handleOpen(false);
+  }
 
   handleSubmit = () => {
     const event = this.nativeEvent;
@@ -261,6 +283,14 @@ export default class EditEmployeeModal extends Component {
         </Form>
         </Modal.Content>
         <Modal.Actions>
+
+        <DeleteEmployeeModal
+            name={employee.name}
+            handleClose={()=>this.handleClose()}
+            deleteEmployee={()=>this.deleteEmployee()}
+        />
+
+
         <Button color="red" size="small" inverted
               onClick={() => this.handleOpen(false)}
               >
