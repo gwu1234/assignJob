@@ -2,7 +2,8 @@
    padding-top: 0.5em;
    color: white;
    size: tiny;
-   border: 2px dotted brown;
+   border: 1px dotted white;
+   height: 70px;
 }
 
 .OrderMenuItem {

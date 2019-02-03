@@ -15,6 +15,7 @@ class ClientContact extends React.Component {
     emailDisplay: false,
     phoneDisplay: false,
     cellDisplay: false,
+    editDisplay: false,
   };
 
   toggleEmailDisplay = (emailDisplay) => {
@@ -134,7 +135,8 @@ onButtonClick = () => {
               ...this.state.contactStyle,
               visibility: "hidden",
               height: "2px",
-          }
+          },
+          editDisplay: false,
       })
   } else {
       this.setState({
@@ -142,7 +144,8 @@ onButtonClick = () => {
             ...this.state.contactStyle,
             visibility: "visible",
             height: ''
-        }
+        },
+        editDisplay: true,
      })
    }
 };
@@ -150,7 +153,7 @@ onButtonClick = () => {
 
   render() {
     const {contact, usertag} = this.props;
-    const {emailDisplay, phoneDisplay, cellDisplay} = this.state;
+    const {emailDisplay, phoneDisplay, cellDisplay, editDisplay} = this.state;
 
     //console.log (contact);
     let address = '';
@@ -179,8 +182,8 @@ onButtonClick = () => {
             {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
             {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
-            {contact && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
-                <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
+            {contact && editDisplay && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
+                 <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
             </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>

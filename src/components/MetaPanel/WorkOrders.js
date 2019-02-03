@@ -47,7 +47,7 @@ class WorkOrders extends React.Component {
    displayOrders = orders =>
       orders.length > 0 &&
       orders.map(order => (
-          <WorkOrder key={order.orderKey} order={order.order} />
+          <WorkOrder orderKey={order.orderKey} key={order.orderKey} order={order.order} />
      ));
 
 
