@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 //import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./ClientContact.css";
+import EditClientContactModal from "./EditClientContactModal";
 
 class ClientContact extends React.Component {
   state = {
@@ -148,7 +149,7 @@ onButtonClick = () => {
 
 
   render() {
-    const {contact} = this.props;
+    const {contact, usertag} = this.props;
     const {emailDisplay, phoneDisplay, cellDisplay} = this.state;
 
     //console.log (contact);
@@ -178,6 +179,9 @@ onButtonClick = () => {
             {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
             {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+            {contact && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
+                <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
+            </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -186,6 +190,7 @@ onButtonClick = () => {
 
 const mapStateToProps = state => ({
      contact: state.user.clientContact,
+     usertag: state.user.usertag
    }
 );
 

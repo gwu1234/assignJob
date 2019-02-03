@@ -33,10 +33,12 @@ class Client extends React.Component {
     const clientContactRef = firebase.database().ref(clientContact)
 
      clientContactRef.on('value', snapshot => {
-          const contact = snapshot.val();
+          let contact = snapshot.val();
           //console.log("Client Contact  = ");
           //console.log(contact)
           if (contact ) {
+              contact = {...contact, "clientTag": client.tag, "clientKey":this.props.clientKey};
+              //console.log(contact);
               this.props.setClientContact(contact);
          } else {
              this.props.setClientContact(null);
@@ -52,7 +54,7 @@ class Client extends React.Component {
           //console.log("Client orders  = ");
           //console.log(orders)
           if (orders ) {
-              this.props.setWorkOrder(orders);
+             this.props.setWorkOrder(orders);
          } else {
              this.props.setWorkOrder(null);
          }
