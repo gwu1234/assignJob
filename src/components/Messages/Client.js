@@ -15,6 +15,10 @@ class Client extends React.Component {
     this.setState({
         display: !display,
     })
+    if (display) {
+       this.props.setClientContact(null);
+       this.props.setWorkOrder(null);
+    }
   }
 
   onButtonClick = (client) => {
