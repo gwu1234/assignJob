@@ -75,7 +75,9 @@ export default class AddClientModal extends Component {
                  email1,email2,email3} = this.state;
          const {usertag } = this.props;
          const name = firstname + " " + lastname;
-         let tagString = name + "+" + street + "+" + postcode ;
+         let tagString = name + "+" + street + "+"
+               + postcode + "+" +
+               Math.random().toString(36).substr(2, 4);
          const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
 
          const newClient = {
