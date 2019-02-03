@@ -21,7 +21,7 @@ export default class AddOrderModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work} = this.state;
-         const {usertag, clienttag } = this.props;
+         const {usertag, clienttag,clientKey} = this.props;
 
          let orderString = "repos/"+usertag+"/clients/data/"+clienttag+"/workorders";
          const ordertag = orderString.replace(/[.,#$\[\]@ ]/g,'');
@@ -35,6 +35,7 @@ export default class AddOrderModal extends Component {
            "date": String(date),
            "work": String(work),
            "tag": String(orderkey),
+           "clientKey": String(clientKey)
          }
          //console.log(newOrder);
          orderRef.child(orderkey).set(newOrder);

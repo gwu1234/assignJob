@@ -60,7 +60,7 @@ class Client extends React.Component {
   }
 
   render() {
-    const {client, usertag} = this.props;
+    const {client, usertag, clientKey} = this.props;
     const {display} = this.state;
 
     let name= '';
@@ -85,7 +85,7 @@ class Client extends React.Component {
               <span style ={{position: "relative", left: "16px" }}> view client data </span>
           </Menu.Item>}
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
-              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} /> <span style ={{position: "relative", left: "16px" }}> add work order </span>
+              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} clientKey={clientKey}/> <span style ={{position: "relative", left: "16px" }}> add work order </span>
           </Menu.Item>}
          </Menu.Menu>
      );

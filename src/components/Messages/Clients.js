@@ -100,7 +100,7 @@ class Clients extends React.Component {
    displayClients = clients =>
       clients.length > 0 &&
       clients.map(client => (
-          <Client key={client.clientKey} client={client.client} />
+          <Client clientKey={client.clientKey} client={client.client} />
      ));
 
   updateClients = clients => {
