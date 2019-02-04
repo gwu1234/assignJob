@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Menu, Icon, Button} from "semantic-ui-react";
 import Contract from "./Contract";
+import AddContractModal from "./AddContractModal";
 import "./Contracts.css";
 
 class Contracts extends React.Component {
@@ -80,6 +81,9 @@ class Contracts extends React.Component {
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && contracts && this.displayContracts(contractArray)}
+              {display && contracts && <Menu.Item style={{margin:"1em"}}>
+                  <span style={{color:"white", fontStyle:"bold"}}> add new contract</span> <AddContractModal />
+              </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>
     );
