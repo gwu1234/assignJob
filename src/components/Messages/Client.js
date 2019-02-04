@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientContact, setWorkOrder, setContracts, setPayments} from "../../actions";
+import { setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys} from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
@@ -19,6 +19,8 @@ class Client extends React.Component {
        this.props.setClientContact(null);
        this.props.setWorkOrder(null);
        this.props.setContracts(null);
+       this.props.setPayments(null);
+       this.props.setDeliverys(null);
     }
   }
 
@@ -75,7 +77,7 @@ class Client extends React.Component {
              this.props.setContracts(null);
          }
     });
-  
+
   const paymentPath = "/repos/" + this.props.usertag
          + "/clients/data/" + client.tag + "/payments";
   const paymentRef = firebase.database().ref(paymentPath);
@@ -90,6 +92,23 @@ class Client extends React.Component {
            this.props.setPayments(null);
        }
   });
+
+  const deliveryPath = "/repos/" + this.props.usertag
+         + "/clients/data/" + client.tag + "/deliverys";
+  const deliveryRef = firebase.database().ref(deliveryPath);
+
+  deliveryRef.on('value', snapshot => {
+        const deliverys = snapshot.val();
+        //console.log("Client orders  = ");
+        //console.log(deliverys)
+        if (deliverys ) {
+           this.props.setDeliverys(deliverys);
+       } else {
+           this.props.setDeliverys(null);
+       }
+  });
+
+
   }
 
 
@@ -134,5 +153,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {setClientContact, setWorkOrder, setContracts, setPayments}
+  {setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys}
 )(Client);

@@ -4,6 +4,7 @@ import React from "react";
 //import UserPanel from "./UserPanel";
 import Contracts from "./Contracts";
 import Payments from "./Payments";
+import Deliverys from "./Deliverys";
 import { Menu } from "semantic-ui-react";
 
 class MapPanel extends React.Component {
@@ -24,6 +25,7 @@ class MapPanel extends React.Component {
       >
         <Contracts />
         <Payments />
+        <Deliverys />
       </Menu>
     );
   }

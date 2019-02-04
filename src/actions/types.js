@@ -14,6 +14,7 @@ export const SET_MAP_VIEW = "SET_MAP_VIEW";
 export const SET_GEOENCODING = "SET_GEOENCODING";
 export const SET_CONTRACTS = "SET_CONTRACTS"
 export const SET_PAYMENTS = "SET_PAYMENTS";
+export const SET_DELIVERYS = "SET_DELIVERYS";
 //export const SET_LAT_LNG = "SET_LAT_LNG";
 
 /* Channel Action Types */

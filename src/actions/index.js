@@ -152,3 +152,12 @@ export const setPayments = payments => {
     }
   }
 }
+
+export const setDeliverys = deliverys => {
+  return {
+    type: actionTypes.SET_DELIVERYS,
+    payload: {
+      deliverys: deliverys
+    }
+  }
+}

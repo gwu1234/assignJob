@@ -1,0 +1,17 @@
+.DeliverysMenuMenu {
+   padding-top: 0.5em;
+   color: white;
+   size: tiny;
+   border: 2px dotted brown;
+}
+
+.DeliverysMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.DeliverysMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}
