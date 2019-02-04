@@ -143,3 +143,12 @@ export const setContracts = contracts => {
     }
   }
 }
+
+export const setPayments = payments => {
+  return {
+    type: actionTypes.SET_PAYMENTS,
+    payload: {
+      payments: payments
+    }
+  }
+}

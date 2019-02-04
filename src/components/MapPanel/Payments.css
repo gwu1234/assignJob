@@ -1,17 +1,18 @@
-.ContractsMenuMenu {
-   padding-top: 1.0em;
+.PaymentsMenuMenu {
+  padding-top: 1.0em;
+   position: relative;
    color: white;
    size: tiny;
    border: 2px dotted brown;
 }
 
-.ContractsMenuItem {
+.PaymentsMenuItem {
   opacity: 1.0;
   fontSize: 3.0em;
   color: white;
 }
 
-.ContractsMenuHeader{
+.PaymentsMenuHeader{
   padding-top: 1.0em;
   color: white;
 }

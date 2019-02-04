@@ -2,11 +2,11 @@ import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon, Button} from "semantic-ui-react";
-import Contract from "./Contract";
-import AddContractModal from "./AddContractModal";
-import "./Contracts.css";
+import Payment from "./Payment";
+import AddPaymentModal from "./AddPaymentModal";
+import "./Payments.css";
 
-class Contracts extends React.Component {
+class Payments extends React.Component {
 
    state = {
      contractsStyle: {
@@ -45,44 +45,44 @@ class Contracts extends React.Component {
    };
 
 
-   displayContracts = (contracts) =>
-      contracts.length > 0 &&
-      contracts.map(contract => (
-          <Contract key={contract.contractKey} contractKey={contract.contractKey} contract={contract.contract}/>
+   displayPayments = (payments) =>
+      payments.length > 0 &&
+      payments.map(payment => (
+          <Payment key={payment.paymentKey} paymentKey={payment.paymentKey} payment={payment.payment}/>
      ));
 
 
 
   render() {
-    const {contracts} = this.props;
+    const {payments} = this.props;
     const {display} = this.state;
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
 
-    const contractArray =[];
+    const paymentArray =[];
     //const keyArray = [];
-    for (var key in contracts) {
+    for (var key in payments) {
        //console.log(clients[key]);
        //console.log(key);
-       const newContract = {
-         contractKey: key,
-         contract: contracts[key]
+       const newPayment = {
+         paymentKey: key,
+         payment: payments[key]
        }
        //keyArray.push(key);
-       contractArray.push(newContract);
+       paymentArray.push(newPayment);
     }
 
 
     return (
-      <Menu.Menu className ="ContractsMenuMenu">
+      <Menu.Menu className ="PaymentsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Contract
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Payment
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
-              {display && contracts && this.displayContracts(contractArray)}
-              {display && contracts && <Menu.Item style={{margin:"1em"}}>
-                  <span style={{color:"white", fontStyle:"bold"}}> add new contract</span> <AddContractModal />
+              {display && payments && this.displayPayments(paymentArray)}
+              {display && payments && <Menu.Item style={{margin:"1em"}}>
+                  <span style={{color:"white", fontStyle:"bold"}}> add new payment</span> <AddPaymentModal />
               </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>
@@ -91,11 +91,11 @@ class Contracts extends React.Component {
 }
 
 const mapStateToProps = state => ({
-     contracts: state.user.contracts,
+     payments: state.user.payments,
    }
 );
 
 export default connect(
   mapStateToProps,
   {}
-)(Contracts);
+)(Payments);

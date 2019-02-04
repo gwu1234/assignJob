@@ -21,7 +21,8 @@ const initialUserState = {
   mapView: false,
   geoEncoding: GEOCODING_DONE,
   markers: [],
-  contracts: []
+  contracts: [],
+  payments:[]
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -144,7 +145,13 @@ const user_reducer = (state = initialUserState, action) => {
                      ...state,
                      contracts: action.payload.contracts
         };
-
+    case actionTypes.SET_PAYMENTS:
+               //console.log ("reducer SET_GEOENCODING = " );
+               //console.log (action.payload.geoEncoding);
+            return {
+                    ...state,
+                    payments: action.payload.payments
+        };
     /* case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);
         return {

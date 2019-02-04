@@ -3,6 +3,7 @@ import React from "react";
 //import { connect } from "react-redux";
 //import UserPanel from "./UserPanel";
 import Contracts from "./Contracts";
+import Payments from "./Payments";
 import { Menu } from "semantic-ui-react";
 
 class MapPanel extends React.Component {
@@ -22,6 +23,7 @@ class MapPanel extends React.Component {
         style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", color: "white"}}
       >
         <Contracts />
+        <Payments />
       </Menu>
     );
   }

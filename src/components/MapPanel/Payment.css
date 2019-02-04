@@ -1,0 +1,18 @@
+.PaymentMenuMenu {
+   padding-top: 0.5em;
+   color: white;
+   size: tiny;
+   border: 1px dotted white;
+   height: 90px;
+}
+
+.PaymentMenuItem {
+  opacity: 1.0;
+  font-size: 0.8em;
+  color: white;
+}
+
+.PaymentMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}
