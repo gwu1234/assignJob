@@ -2,7 +2,7 @@ import React from "react";
 //import firebase from "../../firebase";
 //import { connect } from "react-redux";
 //import UserPanel from "./UserPanel";
-//import UserList from "./UserList";
+import Contracts from "./Contracts";
 import { Menu } from "semantic-ui-react";
 
 class MapPanel extends React.Component {
@@ -21,7 +21,7 @@ class MapPanel extends React.Component {
         vertical
         style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", color: "white"}}
       >
-        MapPanel
+        <Contracts />
       </Menu>
     );
   }

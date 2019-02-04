@@ -1,0 +1,17 @@
+.ContractsMenuMenu {
+   padding-top: 0.5em;
+   color: white;
+   size: tiny;
+   border: 2px dotted brown;
+}
+
+.ContractsMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.ContractsMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

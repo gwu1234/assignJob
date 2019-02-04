@@ -134,3 +134,12 @@ export const setGeoEncoding = geoEncoding => {
     }
   }
 }
+
+export const setContracts = contracts => {
+  return {
+    type: actionTypes.SET_CONTRACTS,
+    payload: {
+      contracts: contracts
+    }
+  }
+}

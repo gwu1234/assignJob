@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientContact, setWorkOrder} from "../../actions";
+import { setClientContact, setWorkOrder, setContracts} from "../../actions";
 import { Menu, Icon, Header, Button} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
@@ -18,6 +18,7 @@ class Client extends React.Component {
     if (display) {
        this.props.setClientContact(null);
        this.props.setWorkOrder(null);
+       this.props.setContracts(null);
     }
   }
 
@@ -57,6 +58,21 @@ class Client extends React.Component {
              this.props.setWorkOrder(orders);
          } else {
              this.props.setWorkOrder(null);
+         }
+    });
+
+    const contracts = "/repos/" + this.props.usertag
+           + "/clients/data/" + client.tag + "/contracts";
+    const contractsRef = firebase.database().ref(contracts)
+
+    contractsRef.on('value', snapshot => {
+          const contracts = snapshot.val();
+          //console.log("Client orders  = ");
+          //console.log(orders)
+          if (contracts ) {
+             this.props.setContracts(contracts);
+         } else {
+             this.props.setContracts(null);
          }
     });
   }
@@ -102,5 +118,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {setClientContact, setWorkOrder}
+  {setClientContact, setWorkOrder, setContracts}
 )(Client);

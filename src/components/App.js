@@ -8,10 +8,10 @@ import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 import Background from './terra.jpg';
-import ContractPanel from "./MapPanel/ContractPanel";
+import Contracts from "./MapPanel/Contracts";
 import PaymentPanel from "./MapPanel/PaymentPanel";
 import DeliveryPanel from "./MapPanel/DeliveryPanel";
-//import MapPanel from "./MapPanel/MapPanel";
+import MapPanel from "./MapPanel/MapPanel";
 import MapContainer from './MapPanel/map/MapContainer';
 
 class App extends React.Component {
@@ -47,9 +47,7 @@ class App extends React.Component {
               <MetaPanel />
            </Grid.Column>
            <Grid.Column>
-               <ContractPanel />
-               <PaymentPanel />
-               <DeliveryPanel />
+               <MapPanel/>
            </Grid.Column>
            </Grid> }
         </Grid.Column>
