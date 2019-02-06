@@ -29,7 +29,8 @@ class EditEmployeeModal extends Component {
          email2: this.props.employee.emails?
                  (this.props.employee.emails[1]?this.props.employee.emails[1]:''):
                  '',
-         assigned: []
+         assigned: [],
+         newAssigned: false,
      }
 }
 
@@ -39,6 +40,16 @@ class EditEmployeeModal extends Component {
     //console.log("handleClose")
     this.setState({ modalOpen: false });
   }
+
+  handleCancel =() => {
+    //console.log("handleClose")
+    this.setState({
+       modalOpen: false,
+       newAssigned: false,
+       assigned: [],
+    });
+  }
+
 
   handleDelete = () => this.setState({ modalOpen: false })
 
@@ -133,7 +144,7 @@ class EditEmployeeModal extends Component {
               ...assigned[key],
               assignedKey: assignedKey
             }
-            console.log(newAssigned);
+            //console.log(newAssigned);
             assignedRef.child(assignedKey).set(newAssigned);
 
             const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
@@ -179,12 +190,30 @@ class EditEmployeeModal extends Component {
 
   addAssigned = assigned => {
      let previous = this.state.assigned;
+     //console.log(assigned);
      previous.push(assigned);
      this.setState({
-         assigned: previous
+         assigned: previous,
+         newAssigned: true,
     });
     //console.log(this.state.assigned);
   }
+
+  isNewAssigned (clientKey) {
+      const {assigned} = this.state;
+      let result = false;
+
+      for (var key in assigned ) {
+          if (assigned[key].clientKey == clientKey) {
+            //console.log (clientKey);
+            //console.log (key);
+            result = true;
+            return result;
+          }
+       }
+      return result;
+  }
+
 
   displayClients = clients =>
      clients.length > 0 &&
@@ -202,6 +231,8 @@ class EditEmployeeModal extends Component {
 
   render() {
     const {employee, employeeKey, usertag, id, clients} = this.props;
+    const {assigned} = this.state;
+
     const titleString = "Edit Employee : " + employee.name;
     let email1 = "";
     let email2 = "";
@@ -243,11 +274,15 @@ class EditEmployeeModal extends Component {
          clientKey: key,
          client: clients[key]
        }
-       if ((newClient.client.isAssigned==null) || (newClient.client.isAssigned==false)) {
+       if (  (newClient.client.isAssigned==null || newClient.client.isAssigned==false)
+          && !this.isNewAssigned (key) ) {
            clientArray.push(newClient);
        }
     }
 
+    const newAssignedNotice = assigned.length
+                 + " New Clients Just Assigned to " + employee.name
+                 + " , Click Submit to Commit ";
     return (
       <Modal
         trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)}/>}
@@ -352,6 +387,16 @@ class EditEmployeeModal extends Component {
             </Menu.Menu>
         </Grid.Column>
         </Grid.Row>
+        {assigned.length >0 && <Grid.Row columns='equal' style=
+                {{ width: "100%"}}>
+            <Menu.Menu >
+               <Menu.Item >
+                  <span style={{color: "green", fontStyle:"bold", fontSize: "1.5em"}}>
+                        {newAssignedNotice}
+                  </span>
+              </Menu.Item>
+            </Menu.Menu>
+        </Grid.Row> }
 
       </Grid>
 
@@ -366,7 +411,7 @@ class EditEmployeeModal extends Component {
 
 
         <Button color="red" size="small" inverted
-              onClick={() => this.handleOpen(false)}
+              onClick={() => this.handleCancel()}
               style ={{color: "red"}}
               >
               Cancel

@@ -47,7 +47,7 @@ class EmployeeClient extends React.Component {
     if (client) {
         name = client.lastname + ", " + client.firstname + ", " + client.street+ ", " + client.city ;
         //address = client.street+ ", " + client.city + ", " + client.postcode;
-        confirmMsg = "do not want assign " + client.lastname + " " + client.firstname + " to " + employee.name + " ?";
+        confirmMsg = "Do You Want Assign " + client.lastname + " " + client.firstname + " to " + employee.name + " ?";
     }
 
     return (
