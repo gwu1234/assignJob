@@ -107,7 +107,7 @@ toggleDisplay = (display) => {
 
 
   render() {
-    const {employee, id, usertag} = this.props;
+    const {employee, employeeKey, usertag} = this.props;
     const {display} = this.state;
 
     //console.log ("Employee id = "  + id);
@@ -125,7 +125,7 @@ toggleDisplay = (display) => {
     return (
       <Menu.Menu className="EmployeeMenuMenu" >
          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
-              {employee && name} &nbsp; &nbsp; <EditEmployeeModal Modal open={false} employee = {employee} usertag = {usertag} id = {id}/>
+              {employee && name} &nbsp; &nbsp; <EditEmployeeModal Modal open={false} employee = {employee} usertag = {usertag} employeeKey = {employeeKey}/>
          </Menu.Item>
          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
               {display && employee && address}

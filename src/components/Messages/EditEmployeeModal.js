@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { connect } from "react-redux";
+import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
 import DeleteEmployeeModal from "./DeleteEmployeeModal"
+import EmployeeClient from "./EmployeeClient"
 
-export default class EditEmployeeModal extends Component {
+class EditEmployeeModal extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -27,6 +29,7 @@ export default class EditEmployeeModal extends Component {
          email2: this.props.employee.emails?
                  (this.props.employee.emails[1]?this.props.employee.emails[1]:''):
                  '',
+         assigned: []
      }
 }
 
@@ -65,8 +68,8 @@ export default class EditEmployeeModal extends Component {
          //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,cell1,cell2,
-                 email1,email2} = this.state;
-         const {usertag, id, employee } = this.props;
+                 email1,email2, assigned} = this.state;
+         const {usertag, employeeKey, employee } = this.props;
          const name = firstname + " " + lastname;
          //let nameTag = firstname + lastname + Math.random().toString(36).substr(2, 4);
          //nameTag = (nameTag.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
@@ -108,16 +111,38 @@ export default class EditEmployeeModal extends Component {
            "emails": emails,
            "phones": phones,
            "cells": cells,
-           "tag": String (employee.tag? employee.tag: id),
+           "tag": String (employee.tag? employee.tag: employeeKey),
          }
          //console.log(newEmployee);
          //console.log(nameTag);
-         const employeePath = "repos/" + usertag + "/employees/" + id;
+         const employeePath = "repos/" + usertag + "/employees/" + employeeKey;
          //console.log(employeePath);
          const employeeRef = firebase.database().ref(employeePath);
          //const contactKey = contactRef.push().getKey();
          //console.log(contactPath);
          employeeRef.set(newEmployee);
+
+         //const assignedArray =[];
+         const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
+         const assignedRef = firebase.database().ref(assignedPath);
+
+         //let newAssigned =[];
+         for (var key in assigned) {
+            const assignedKey = assignedRef.push().getKey();
+            const newAssigned  = {
+              ...assigned[key],
+              assignedKey: assignedKey
+            }
+            console.log(newAssigned);
+            assignedRef.child(assignedKey).set(newAssigned);
+
+            const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
+            const assignedClientRef = firebase.database().ref(assignedClientPath);
+            assignedClientRef.child("isAssigned").set(true);
+            assignedClientRef.child("employeeName").set(assigned[key].employeeName);
+            assignedClientRef.child("employeeKey").set(assigned[key].employeeKey);
+            assignedClientRef.child("assignedKey").set(assignedKey);
+         }
 
          this.handleOpen(false);
     }
@@ -152,8 +177,31 @@ export default class EditEmployeeModal extends Component {
       this.setState({ [event.target.name]: event.target.value });
   };
 
+  addAssigned = assigned => {
+     let previous = this.state.assigned;
+     previous.push(assigned);
+     this.setState({
+         assigned: previous
+    });
+    //console.log(this.state.assigned);
+  }
+
+  displayClients = clients =>
+     clients.length > 0 &&
+     clients.map(client => (
+         <EmployeeClient
+             key={client.clientKey}
+             clientKey={client.clientKey}
+             client={client.client}
+             employee={this.props.employee}
+             employeeKey={this.props.employeeKey}
+             addAssigned={(assigned)=>this.addAssigned(assigned)}
+         />
+    ));
+
+
   render() {
-    const {employee, usertag, id} = this.props;
+    const {employee, employeeKey, usertag, id, clients} = this.props;
     const titleString = "Edit Employee : " + employee.name;
     let email1 = "";
     let email2 = "";
@@ -187,16 +235,32 @@ export default class EditEmployeeModal extends Component {
         cell2 = employee.cells[1];
     }
 
+
+    //converting nested objects to object array
+    const clientArray =[];
+    for (var key in clients) {
+       const newClient = {
+         clientKey: key,
+         client: clients[key]
+       }
+       if ((newClient.client.isAssigned==null) || (newClient.client.isAssigned==false)) {
+           clientArray.push(newClient);
+       }
+    }
+
     return (
       <Modal
         trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size='small'
-        style={{background: "#ccc"}}
+        size='large'
+        style={{background: "#ccc", paddingTop: "0em", paddingLeft:"3em", paddingRight:"2em", paddingBottom:"1em"}}
       >
         <Header icon='add user' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
+        <Grid>
+        <Grid.Row style={{paddingTop: "0em", paddingBottom:"0em", marginBotton:"0px", border: "1px dotted white"}}>
+
         <Modal.Content>
         <Form >
            <Form.Group inline width='equal' >
@@ -212,14 +276,12 @@ export default class EditEmployeeModal extends Component {
                             defaultValue = {employee.lastname}
                             name="lastname"
                             onChange={this.handleChange} />
+                <Form.Input size ="small"
+                            label='Street & No'
+                            defaultValue = {employee.street}
+                            name="street"
+                            onChange={this.handleChange} />
            </Form.Group>
-           <Form.Group inline width='equal' >
-               <Form.Input size ="small"
-                           label='Street & No'
-                           defaultValue = {employee.street}
-                           name="street"
-                           onChange={this.handleChange} />
-          </Form.Group>
            <Form.Group inline width='equal' >
                 <Form.Input size ="small"
                             label='City'
@@ -231,8 +293,6 @@ export default class EditEmployeeModal extends Component {
                             defaultValue = {employee.postcode}
                             name="postcode"
                             onChange={this.handleChange} />
-           </Form.Group>
-           <Form.Group inline width='equal' >
                <Form.Input size ="small"
                            label='Province'
                            defaultValue = {employee.province}
@@ -255,8 +315,6 @@ export default class EditEmployeeModal extends Component {
                             defaultValue = {phone2}
                             name="phone2"
                             onChange={this.handleChange} />
-           </Form.Group>
-           <Form.Group inline width='equal'>
                <Form.Input size ="small"
                            label='Cell 1'
                            defaultValue = {cell1}
@@ -282,6 +340,22 @@ export default class EditEmployeeModal extends Component {
            </Form.Group>
         </Form>
         </Modal.Content>
+
+        </Grid.Row>
+        <Grid.Row columns='equal' style={{width: "100%", marginTop:"0px", paddingTop:"0px"}}>
+        <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
+            assigned
+        </Grid.Column >
+        <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
+             <Menu.Menu >
+                {clientArray.length>0 && this.displayClients(clientArray)}
+            </Menu.Menu>
+        </Grid.Column>
+        </Grid.Row>
+
+      </Grid>
+
+
         <Modal.Actions>
 
         <DeleteEmployeeModal
@@ -293,17 +367,31 @@ export default class EditEmployeeModal extends Component {
 
         <Button color="red" size="small" inverted
               onClick={() => this.handleOpen(false)}
+              style ={{color: "red"}}
               >
               Cancel
         </Button>
 
           <Button color='green' size="small" inverted
                 onClick={() =>this.handleSubmit()}
+                style ={{position:"relative", float:"right", color: "green"}}
                 >
                 Submit
           </Button>
-        </Modal.Actions>
+
+         </Modal.Actions>
+
       </Modal>
     )
   }
 }
+
+const mapStateToProps = state => ({
+     clients: state.user.clientList,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  null
+)(EditEmployeeModal);

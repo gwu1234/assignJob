@@ -20,7 +20,7 @@ class Employees extends React.Component {
    displayEmployees = employees =>
       employees.length > 0 &&
       employees.map(employee => (
-          <Employee key={employee.id} id={employee.id} employee={employee.employee} />
+          <Employee key={employee.employeeKey} employeeKey={employee.employeeKey} employee={employee.employee} />
      ));
 
      handleEditting = () => {
@@ -55,7 +55,7 @@ class Employees extends React.Component {
     for (var key in employees) {
        //console.log ("employees key = " + key );
        const newEmployee = {
-         id: key,
+         employeeKey: key,
          employee: employees[key]
        }
        employeeArray.push(newEmployee);
