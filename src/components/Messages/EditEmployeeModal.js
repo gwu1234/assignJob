@@ -81,14 +81,12 @@ class EditEmployeeModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
-         //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,cell1,cell2,
-                 email1,email2, assigned, unassigned} = this.state;
+                 email1,email2, assigned, unassigned,
+                 newAssigned, newUnassigned} = this.state;
          const {usertag, employeeKey, employee } = this.props;
          const name = firstname + " " + lastname;
-         //let nameTag = firstname + lastname + Math.random().toString(36).substr(2, 4);
-         //nameTag = (nameTag.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
 
          let emails = [];
          let phones = [];
@@ -129,60 +127,60 @@ class EditEmployeeModal extends Component {
            "cells": cells,
            "tag": String (employee.tag? employee.tag: employeeKey),
          }
-         //console.log(newEmployee);
-         //console.log(nameTag);
+
          const employeePath = "repos/" + usertag + "/employees/" + employeeKey;
-         //console.log(employeePath);
          const employeeRef = firebase.database().ref(employeePath);
-         //const contactKey = contactRef.push().getKey();
-         //console.log(contactPath);
-         employeeRef.set(newEmployee);
+         employeeRef.update(newEmployee);
 
-         //const assignedArray =[];
-         const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
-         const assignedRef = firebase.database().ref(assignedPath);
+         if (newAssigned) {
+             const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
+             const assignedRef = firebase.database().ref(assignedPath);
 
-         //let newAssigned =[];
-         for (var key in assigned) {
-            const assignedKey = assignedRef.push().getKey();
-            const newAssigned  = {
-              ...assigned[key],
-              assignedKey: assignedKey
-            }
-            //console.log(newAssigned);
-            assignedRef.child(assignedKey).set(newAssigned);
+             for (var key in assigned) {
+                let assignedKey = assignedRef.push().getKey();
+                const newAssigned  = {
+                    ...assigned[key],
+                    assignedKey: assignedKey
+                 }
+                 assignedRef.child(assignedKey).set(newAssigned);
 
-            const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
-            const assignedClientRef = firebase.database().ref(assignedClientPath);
-            assignedClientRef.child("isAssigned").set(true);
-            assignedClientRef.child("employeeName").set(assigned[key].employeeName);
-            assignedClientRef.child("employeeKey").set(assigned[key].employeeKey);
-            assignedClientRef.child("assignedKey").set(assignedKey);
+                 const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
+                 const assignedClientRef = firebase.database().ref(assignedClientPath);
+                 assignedClientRef.child("isAssigned").set(true);
+                 assignedClientRef.child("employeeName").set(assigned[key].employeeName);
+                 assignedClientRef.child("employeeKey").set(assigned[key].employeeKey);
+                 assignedClientRef.child("assignedKey").set(assignedKey);
+             }
          }
 
-         //const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
-         //const unassignedEmployeeRef = firebase.database().ref(assignedPath);
-         //const unassignedClientPath = "repos/" + usertag + "/clients/tags";
-         //const unassignedClientRef = firebase.database().ref(assignedClientPath);
+         if (newUnassigned) {
+               //const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
+               //const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
+               //const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
+               //const unassignedEmployeeRef = firebase.database().ref(assignedPath);
+               //const unassignedClientPath = "repos/" + usertag + "/clients/tags";
+               //const unassignedClientRef = firebase.database().ref(assignedClientPath);
 
-         for (var key in unassigned) {
-            const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned/" + unassigned[key].assignedKey;
-            const unassignedEmployeeRef = firebase.database().ref(unassignedEmployeePath);
-            const unassignedClientPath = "repos/" + usertag + "/clients/tags/" + unassigned[key].clientKey;
-            const unassignedClientRef = firebase.database().ref(unassignedClientPath);
+               for (var key in unassigned) {
+                  const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned/" + unassigned[key].assignedKey;
+                  const unassignedEmployeeRef = firebase.database().ref(unassignedEmployeePath);
+                  const unassignedClientPath = "repos/" + usertag + "/clients/tags/" + unassigned[key].clientKey;
+                  const unassignedClientRef = firebase.database().ref(unassignedClientPath);
 
-            unassignedEmployeeRef.set(null);
+                  //console.log (unassignedEmployeePath);
+                  //console.log (unassignedClientPath);
 
-            unassignedClientRef.child("isAssigned").set(false);
-            unassignedClientRef.child("employeeName").set(null);
-            unassignedClientRef.child("employeeKey").set(null);
-            unassignedClientRef.child("assignedKey").set(null);
+                  unassignedEmployeeRef.set(null);
+
+                  unassignedClientRef.child("isAssigned").set(false);
+                  unassignedClientRef.child("employeeName").set(null);
+                  unassignedClientRef.child("employeeKey").set(null);
+                  unassignedClientRef.child("assignedKey").set(null);
+              }
          }
+
          this.handleCancel();
-         //this.handleOpen(false);
     }
-    //console.log("submit clicked");
-    //this.handleOpen(false);
   };
 
   isFormValid() {
@@ -220,7 +218,7 @@ class EditEmployeeModal extends Component {
          assigned: previous,
          newAssigned: true,
     });
-    //console.log(this.state.assigned);
+    //console.log(this.state.newAssigned);
   }
 
   addUnassigned = unassigned => {
@@ -229,9 +227,9 @@ class EditEmployeeModal extends Component {
      previous.push(unassigned);
      this.setState({
          unassigned: previous,
-         newUnssigned: true,
+         newUnassigned: true,
     });
-    console.log(this.state.unassigned);
+    //console.log(this.state.newUnassigned);
   }
 
   isNewAssigned (clientKey) {
