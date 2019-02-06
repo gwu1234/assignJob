@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
 import DeleteEmployeeModal from "./DeleteEmployeeModal"
 import EmployeeClient from "./EmployeeClient"
+import EmployeeAssigned from "./EmployeeAssigned"
 
 class EditEmployeeModal extends Component {
   constructor(props) {
@@ -31,6 +32,8 @@ class EditEmployeeModal extends Component {
                  '',
          assigned: [],
          newAssigned: false,
+         unassigned:[],
+         newUnassigned: false,
      }
 }
 
@@ -47,6 +50,8 @@ class EditEmployeeModal extends Component {
        modalOpen: false,
        newAssigned: false,
        assigned: [],
+       unassigned:[],
+       newUnassigned: false,
     });
   }
 
@@ -79,7 +84,7 @@ class EditEmployeeModal extends Component {
          //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,cell1,cell2,
-                 email1,email2, assigned} = this.state;
+                 email1,email2, assigned, unassigned} = this.state;
          const {usertag, employeeKey, employee } = this.props;
          const name = firstname + " " + lastname;
          //let nameTag = firstname + lastname + Math.random().toString(36).substr(2, 4);
@@ -155,7 +160,26 @@ class EditEmployeeModal extends Component {
             assignedClientRef.child("assignedKey").set(assignedKey);
          }
 
-         this.handleOpen(false);
+         //const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
+         //const unassignedEmployeeRef = firebase.database().ref(assignedPath);
+         //const unassignedClientPath = "repos/" + usertag + "/clients/tags";
+         //const unassignedClientRef = firebase.database().ref(assignedClientPath);
+
+         for (var key in unassigned) {
+            const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned/" + unassigned[key].assignedKey;
+            const unassignedEmployeeRef = firebase.database().ref(unassignedEmployeePath);
+            const unassignedClientPath = "repos/" + usertag + "/clients/tags/" + unassigned[key].clientKey;
+            const unassignedClientRef = firebase.database().ref(unassignedClientPath);
+
+            unassignedEmployeeRef.set(null);
+
+            unassignedClientRef.child("isAssigned").set(false);
+            unassignedClientRef.child("employeeName").set(null);
+            unassignedClientRef.child("employeeKey").set(null);
+            unassignedClientRef.child("assignedKey").set(null);
+         }
+         this.handleCancel();
+         //this.handleOpen(false);
     }
     //console.log("submit clicked");
     //this.handleOpen(false);
@@ -199,6 +223,17 @@ class EditEmployeeModal extends Component {
     //console.log(this.state.assigned);
   }
 
+  addUnassigned = unassigned => {
+     let previous = this.state.unassigned;
+     //console.log(assigned);
+     previous.push(unassigned);
+     this.setState({
+         unassigned: previous,
+         newUnssigned: true,
+    });
+    console.log(this.state.unassigned);
+  }
+
   isNewAssigned (clientKey) {
       const {assigned} = this.state;
       let result = false;
@@ -214,6 +249,20 @@ class EditEmployeeModal extends Component {
       return result;
   }
 
+  //assignedKey: key,
+  //assigned: employee.assigned[key]
+displayAssigned = assigneds =>
+   assigneds.length > 0 &&
+   assigneds.map(assigned => (
+       <EmployeeAssigned
+           key={assigned.assignedKey}
+           assignedKey = {assigned.assignedKey}
+           employee={this.props.employee}
+           employeeKey={assigned.assigned.employeeKey}
+           assigned = {assigned.assigned}
+           addUnassigned={(unassigned)=>this.addUnassigned(unassigned)}
+       />
+  ));
 
   displayClients = clients =>
      clients.length > 0 &&
@@ -231,7 +280,7 @@ class EditEmployeeModal extends Component {
 
   render() {
     const {employee, employeeKey, usertag, id, clients} = this.props;
-    const {assigned} = this.state;
+    const {assigned, unassigned} = this.state;
 
     const titleString = "Edit Employee : " + employee.name;
     let email1 = "";
@@ -280,9 +329,29 @@ class EditEmployeeModal extends Component {
        }
     }
 
+    //converting nested objects to object array
+    const assignedArray = [];
+
+    for (var key in employee.assigned) {
+       //console.log(employee.assigned);
+       //console.log (key);
+       //console.log();
+       const assignedClient = {
+         assignedKey: key,
+         assigned: employee.assigned[key]
+       }
+       //console.log(assignedClient);
+       assignedArray.push(assignedClient);
+    }
+
     const newAssignedNotice = assigned.length
                  + " New Clients Just Assigned to " + employee.name
                  + " , Click Submit to Commit ";
+
+    const unassignedNotice = "Removing " + unassigned.length
+                  + " Clients from " + employee.name + " Job List"
+                  + " , Click Submit to Commit ";
+
     return (
       <Modal
         trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)}/>}
@@ -379,7 +448,9 @@ class EditEmployeeModal extends Component {
         </Grid.Row>
         <Grid.Row columns='equal' style={{width: "100%", marginTop:"0px", paddingTop:"0px"}}>
         <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
-            assigned
+           <Menu.Menu >
+               {assignedArray.length>0 && this.displayAssigned(assignedArray)}
+           </Menu.Menu>
         </Grid.Column >
         <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
              <Menu.Menu >
@@ -398,6 +469,16 @@ class EditEmployeeModal extends Component {
             </Menu.Menu>
         </Grid.Row> }
 
+        {unassigned.length >0 && <Grid.Row columns='equal' style=
+                {{ width: "100%"}}>
+            <Menu.Menu >
+               <Menu.Item >
+                  <span style={{color: "red", fontStyle:"bold", fontSize: "1.3em"}}>
+                        {unassignedNotice}
+                  </span>
+              </Menu.Item>
+            </Menu.Menu>
+        </Grid.Row> }
       </Grid>
 
 
