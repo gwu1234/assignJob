@@ -58,7 +58,8 @@ class EditClientContactModal extends Component {
           //console.log (location.databaseRef);
           //console.log (location.address);
           //console.log(client);
-          location.databaseRef.set(client);
+          //location.databaseRef.set(client);
+          location.databaseRef.update(client);
       }
   }
 
@@ -102,7 +103,7 @@ class EditClientContactModal extends Component {
            "lastname": String (lastname),
            "firstname": String(firstname),
            "street": String(street),
-           "status" : JOB_NEW,
+           //"status" : JOB_NEW,
            "name": String(name),
            "postcode": String(postcode),
            "tag": String(contact.clientTag),
