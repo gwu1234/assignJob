@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
 export default class AddEmployeeModal extends Component {
@@ -22,6 +23,35 @@ export default class AddEmployeeModal extends Component {
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })
+
+  async getLocations(client, location) {
+    Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
+      const r = await this.getLocation(location)
+      if (r != null) {
+          client.lng = r.lng;
+          client.lat = r.lat;
+          //console.log (location.key) ;
+          //console.log (location.databaseRef);
+          location.databaseRef.set(client);
+      }
+  }
+
+  async getLocation(location) {
+    try {
+      let response = await Geocode.fromAddress(location.address);
+      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      return (
+        {
+          lat: await response.results[0].geometry.location.lat,
+          lng: await response.results[0].geometry.location.lng
+        }
+      );
+    }
+    catch(err) {
+      console.log("Error fetching geocode lat and lng:", err);
+    }
+    return null;
+  }
 
   handleSubmit = () => {
     const event = this.nativeEvent;
@@ -86,7 +116,15 @@ export default class AddEmployeeModal extends Component {
          const employeeRef = firebase.database().ref(employeePath);
          //const contactKey = contactRef.push().getKey();
          //console.log(contactPath);
-         employeeRef.set(newEmployee);
+
+         const address = street + ", " + city + ", " + postcode;
+         const location = {
+            address: address,
+            databaseRef: employeeRef
+         }
+
+         this.getLocations (newEmployee,location);
+         //employeeRef.set(newEmployee);
 
          this.handleOpen(false);
     }

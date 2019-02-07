@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+import Geocode from "react-geocode";
 import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
 import DeleteEmployeeModal from "./DeleteEmployeeModal"
@@ -34,6 +35,7 @@ class EditEmployeeModal extends Component {
          newAssigned: false,
          unassigned:[],
          newUnassigned: false,
+         contactChanged: false,
      }
 }
 
@@ -52,6 +54,7 @@ class EditEmployeeModal extends Component {
        assigned: [],
        unassigned:[],
        newUnassigned: false,
+       contactChanged: false,
     });
   }
 
@@ -73,6 +76,36 @@ class EditEmployeeModal extends Component {
       this.handleOpen(false);
   }
 
+  async getLocations(client, location) {
+    Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
+      const r = await this.getLocation(location)
+      if (r != null) {
+          client.lng = r.lng;
+          client.lat = r.lat;
+          //console.log (location.key) ;
+          //console.log (location.databaseRef);
+          location.databaseRef.update(client);
+      }
+  }
+
+  async getLocation(location) {
+    try {
+      let response = await Geocode.fromAddress(location.address);
+      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      return (
+        {
+          lat: await response.results[0].geometry.location.lat,
+          lng: await response.results[0].geometry.location.lng
+        }
+      );
+    }
+    catch(err) {
+      console.log("Error fetching geocode lat and lng:", err);
+    }
+    return null;
+  }
+
+
   handleSubmit = () => {
     const event = this.nativeEvent;
     if (event) {
@@ -84,53 +117,63 @@ class EditEmployeeModal extends Component {
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,cell1,cell2,
                  email1,email2, assigned, unassigned,
-                 newAssigned, newUnassigned} = this.state;
+                 newAssigned, newUnassigned, contactChanged} = this.state;
          const {usertag, employeeKey, employee } = this.props;
          const name = firstname + " " + lastname;
 
-         let emails = [];
-         let phones = [];
-         let cells = [];
+         if (contactChanged) {
+            let emails = [];
+            let phones = [];
+            let cells = [];
 
-         if (email1) {
-            emails.push (email1);
-         }
-         if (email2) {
-            emails.push (email2);
-         }
+            if (email1) {
+               emails.push (email1);
+            }
+            if (email2) {
+               emails.push (email2);
+            }
 
-         if (phone1) {
-            phones.push (phone1);
-         }
-         if (phone2) {
-            phones.push (phone2);
-         }
+            if (phone1) {
+               phones.push (phone1);
+            }
+            if (phone2) {
+               phones.push (phone2);
+            }
 
-         if (cell1) {
-            cells.push (cell1);
-         }
-         if (cell2) {
-            cells.push (cell2);
-         }
+            if (cell1) {
+               cells.push (cell1);
+            }
+            if (cell2) {
+                 cells.push (cell2);
+            }
 
-         const newEmployee = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "name": String(name),
-           "postcode": String(postcode),
-           "country": String(country),
-           "province":  String(province),
-           "emails": emails,
-           "phones": phones,
-           "cells": cells,
-           "tag": String (employee.tag? employee.tag: employeeKey),
-         }
+            const newEmployee = {
+                "city":  String(city),
+                "lastname": String (lastname),
+                "firstname": String(firstname),
+                "street": String(street),
+                "name": String(name),
+                "postcode": String(postcode),
+                "country": String(country),
+                "province":  String(province),
+                "emails": emails,
+                "phones": phones,
+                "cells": cells,
+                "tag": String (employee.tag? employee.tag: employeeKey),
+             }
 
-         const employeePath = "repos/" + usertag + "/employees/" + employeeKey;
-         const employeeRef = firebase.database().ref(employeePath);
-         employeeRef.update(newEmployee);
+             const employeePath = "repos/" + usertag + "/employees/" + employeeKey;
+             const employeeRef = firebase.database().ref(employeePath);
+
+             const address = street + ", " + city + ", " + postcode;
+             const location = {
+                address: address,
+                databaseRef: employeeRef
+             }
+
+             this.getLocations (newEmployee,location);
+             //employeeRef.update(newEmployee);
+         }
 
          if (newAssigned) {
              const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
@@ -207,7 +250,10 @@ class EditEmployeeModal extends Component {
   handleChange = event => {
       //console.log([event.target.name]);
       //console.log(event.target.value);
-      this.setState({ [event.target.name]: event.target.value });
+      this.setState({
+        [event.target.name]: event.target.value,
+        contactChanged: true,
+      });
   };
 
   addAssigned = assigned => {
