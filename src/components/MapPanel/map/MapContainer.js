@@ -7,6 +7,8 @@ import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
+//import goldStar from '../images/goldStar.png';
+import redStar from '../images/redStar.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import {Button, Icon} from 'semantic-ui-react';
@@ -14,6 +16,9 @@ import {Button, Icon} from 'semantic-ui-react';
 const JOB_NEW = 0;
 const JOB_REPEAT = 1;
 const JOB_DONE = 2;
+
+const EMPLOYEE_MARKER = 0;
+const CLIENT_MARKER = 1;
 
 class MapContainer extends Component {
   constructor(props) {
@@ -155,13 +160,19 @@ class MapContainer extends Component {
       return (
       <CurrentLocation google={this.props.google} centerAroundCurrentLocation>
         {markers && markers.map((marker, index)=> {
-           const status = marker.status;
-           //console.log(marker.id);
-           var image = redDot;
-           if (status === 1)  {
+
+           let  image = "";
+           if (marker.type === EMPLOYEE_MARKER) {
+               image = redStar;
+           } else if (marker.status === JOB_NEW){
+               image = redDot;
+           }
+           else if (marker.status === JOB_REPEAT)  {
                image = blueDot;
-           } else if (status === 2) {
+           } else if (marker.status === JOB_DONE) {
                image = greenDot;
+           } else {
+               image = redDot;
            }
 
           return (

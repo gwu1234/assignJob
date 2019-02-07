@@ -8,6 +8,9 @@ const JOB_NEW = 0;
 const JOB_REPEAT = 1;
 const JOB_DONE = 2;
 
+const EMPLOYEE_MARKER = 0;
+const CLIENT_MARKER = 1;
+
 const initialUserState = {
   currentUser: null, // user object
   isLoading: true,
@@ -160,6 +163,7 @@ const user_reducer = (state = initialUserState, action) => {
                 name: employees[key].name,
                 id:  key,
                 status: status,
+                type: EMPLOYEE_MARKER
             }
            employeeMarkers.push(marker);
       }
