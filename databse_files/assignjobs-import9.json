@@ -1,0 +1,20 @@
+ {
+            "deliverys" : [ {
+              "date" : "dec 11,2018",
+              "employee" : "Alain Dubois",
+              "work" : "snow removal"
+            }, {
+              "date" : "dec 1, 2018",
+              "employee" : "JP",
+              "work " : "snow removal"
+            }, {
+              "date" : "dec 2, 2018",
+              "employee" : "steve P.",
+              "work" : "snow removal"
+            }, {
+              "date" : "dec 3, 2018",
+              "employee" : "Alex",
+              "work" : "remove snow from roof"
+            } ]
+    }
+

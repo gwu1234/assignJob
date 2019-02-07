@@ -109,12 +109,22 @@ export const setClientList = clientList => {
   }
 }
 
-export const setMapView = mapview => {
+export const setMapView = () => {
   return {
     type: actionTypes.SET_MAP_VIEW,
-    payload: {
-      mapView: mapview
-    }
+  }
+}
+
+export const setTextView = () => {
+  return {
+    type: actionTypes.SET_TEXT_VIEW,
+  }
+}
+
+
+export const setEmployeeView = () => {
+  return {
+    type: actionTypes.SET_EMPLOYEE_VIEW
   }
 }
 

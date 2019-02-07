@@ -173,7 +173,7 @@ class MapContainer extends Component {
                       onClick={this.onMarkerClick}
                       icon = {{
                           url: image,
-                          scaledSize: { width: 20, height: 20 }
+                          scaledSize: { width: 13, height: 13 }
                       }}
                   >
                  </Marker> )

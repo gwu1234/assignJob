@@ -2,4 +2,7 @@
 {4} for /repos/skyljack+infoskyljackcom
 {5,6} for /repos/tag/clients
 {7} from /repos/duraguard+infoduraguardcom
-
+{8} from root
+{9} from /repos/jc+infojccom
+{10} from root
+{11} from /repos/jc+infocom

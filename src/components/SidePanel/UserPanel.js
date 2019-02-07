@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
-import { setMapView} from "../../actions";
+import { setMapView, setEmployeeView, setTextView} from "../../actions";
 
 
 class UserPanel extends React.Component {
@@ -23,8 +23,16 @@ class UserPanel extends React.Component {
       disabled: true
     },
     {
+      key: "textview",
+      text: <span style ={{fontStyle: "bold"}} onClick={this.setTextView}> text view </span>
+    },
+    {
       key: "mapview",
-      text: <span onClick={this.setMapView}> {this.state.mapview? "Set Text View": "Set Map View"} </span>
+      text: <span style ={{fontStyle: "bold"}} onClick={this.setMapView}> display all clients </span>
+    },
+    {
+      key: "employeeview",
+      text: <span style ={{fontStyle: "bold"}} onClick={this.setEmployeeView}> display all employees </span>
     },
     {
       key: "signout",
@@ -40,22 +48,28 @@ class UserPanel extends React.Component {
       .then(() => console.log("signed out!"));
   };
 
+  // display all clients
   setMapView  = () => {
-     const {mapview} = this.state;
-
-     if (mapview) {
-         this.setState ({
-             mapview: false
-         });
-         this.props.setMapView(false);
-     } else {
-       this.setState ({
-           mapview: true
-       });
-       this.props.setMapView(true);
-     }
+     this.setState ({
+         mapview: true
+     });
+     this.props.setMapView();
   };
 
+  // display all employees
+  setEmployeeView  = () => {
+     this.setState ({
+         mapview: true
+     });
+     this.props.setEmployeeView();
+  };
+
+  setTextView  = () => {
+      this.setState ({
+            mapview: false
+      });
+      this.props.setTextView();
+  };
 
   render() {
     const { user } = this.state;
@@ -91,5 +105,5 @@ class UserPanel extends React.Component {
 
 //export default UserPanel;
 export default connect(
-  null, {setMapView}
+  null, {setMapView, setEmployeeView, setTextView}
 )(UserPanel);

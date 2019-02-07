@@ -73,7 +73,7 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_CLIENT_LIST:
         //console.log ("reducer employees list = ");
         //console.log (action.payload.clientList);
-        const clients = action.payload.clientList;
+        /*const clients = action.payload.clientList;
         let markers = [];
 
         for (var key in clients) {
@@ -93,12 +93,12 @@ const user_reducer = (state = initialUserState, action) => {
            }
            markers.push(marker);
         }
-        //console.log(markers);
+        //console.log(markers);*/
 
         return {
           ...state,
           clientList: action.payload.clientList,
-          markers: markers
+          //markers: markers
     };
     case actionTypes.SET_CLIENT_CONTACT:
         //.log ("reducer client contact = " );
@@ -117,9 +117,64 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_MAP_VIEW:
         //console.log ("reducer mapView  = " );
         //console.log (action.payload.mapView);
+         const clients = state.clientList;
+         let clientMarkers = [];
+
+         for (var key in clients) {
+           let status = JOB_NEW;
+           if (clients[key].status) {
+              status = clients[key].status;
+           }
+           const marker = {
+             pos:
+             {
+                lat: clients[key].lat,
+                lng: clients[key].lng
+             },
+             name: clients[key].name,
+             id:  key,
+             status: status,
+           }
+           clientMarkers.push(marker);
+        }
         return {
-        ...state,
-        mapView: action.payload.mapView
+            ...state,
+           markers: clientMarkers,
+           mapView: true
+      };
+    case actionTypes.SET_EMPLOYEE_VIEW:
+        const employees = state.employeeList;
+        let employeeMarkers = [];
+
+        for (var key in employees) {
+            let status = JOB_NEW;
+            if (employees[key].status) {
+                status = employees[key].status;
+            }
+            const marker = {
+                pos:
+                {
+                   lat: employees[key].lat,
+                   lng: employees[key].lng
+                },
+                name: employees[key].name,
+                id:  key,
+                status: status,
+            }
+           employeeMarkers.push(marker);
+      }
+      //console.log(markers);
+
+      return {
+          ...state,
+         markers: employeeMarkers,
+         mapView: true
+    };
+    case actionTypes.SET_TEXT_VIEW:
+      return {
+          ...state,
+         markers: [],
+         mapView: false
     };
 
     /*case actionTypes.SET_LAT_LNG:
