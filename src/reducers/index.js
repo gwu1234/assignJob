@@ -26,7 +26,8 @@ const initialUserState = {
   markers: [],
   contracts: null,
   payments:null,
-  deliverys: null
+  deliverys: null,
+  selectedEmployee: null
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -74,34 +75,10 @@ const user_reducer = (state = initialUserState, action) => {
           employeeList: action.payload.employeeList
     };
     case actionTypes.SET_CLIENT_LIST:
-        //console.log ("reducer employees list = ");
-        //console.log (action.payload.clientList);
-        /*const clients = action.payload.clientList;
-        let markers = [];
-
-        for (var key in clients) {
-           let status = JOB_NEW;
-           if (clients[key].status) {
-              status = clients[key].status;
-           }
-           const marker = {
-             pos:
-             {
-                lat: clients[key].lat,
-                lng: clients[key].lng
-             },
-             name: clients[key].name,
-             id:  key,
-             status: status,
-           }
-           markers.push(marker);
-        }
-        //console.log(markers);*/
-
         return {
           ...state,
           clientList: action.payload.clientList,
-          //markers: markers
+
     };
     case actionTypes.SET_CLIENT_CONTACT:
         //.log ("reducer client contact = " );
@@ -206,8 +183,6 @@ const user_reducer = (state = initialUserState, action) => {
                      contracts: action.payload.contracts
         };
     case actionTypes.SET_PAYMENTS:
-               //console.log ("reducer SET_GEOENCODING = " );
-               //console.log (action.payload.geoEncoding);
             return {
                     ...state,
                     payments: action.payload.payments
@@ -217,8 +192,44 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                       ...state,
                       deliverys: action.payload.deliverys
-        };
+      };
+   case actionTypes.SET_SELECTED_EMPLOYEE:
+         const selectedEmployee = action.payload.selected
+         //const employees = state.employeeList;
+         let selectedMarkers = [];
+         const selectedMarker = {
+             pos:
+             {
+                lat: selectedEmployee.lat,
+                lng: selectedEmployee.lng
+             },
+             name: selectedEmployee.name,
+             id:  selectedEmployee.tag,
+             type: EMPLOYEE_MARKER
+         }
+         selectedMarkers.push(selectedMarker);
 
+         const assignedJobs = selectedEmployee.assigned;
+         for (var key in assignedJobs) {
+             let status = JOB_NEW;
+             const assignedMarker = {
+                 pos:
+                 {
+                    lat: assignedJobs[key].clientLat,
+                    lng: assignedJobs[key].clientLng
+                 },
+                 name: assignedJobs[key].clientName,
+                 id:  assignedJobs[key].assignedKey,
+                 status: status,
+                 type: CLIENT_MARKER
+             }
+            selectedMarkers.push(assignedMarker);
+       }
+            return {
+                    ...state,
+                    markers: selectedMarkers,
+                    mapView: true
+      };
     /* case actionTypes.SET_OPEN_MODAL:
         console.log ("reducer = " + action.payload.modal);
         return {

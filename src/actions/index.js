@@ -128,6 +128,14 @@ export const setEmployeeView = () => {
   }
 }
 
+export const setSelectedEmployee = selected => {
+  return {
+    type: actionTypes.SET_SELECTED_EMPLOYEE,
+    payload: {
+      selected: selected
+    }
+  }
+}
 /*export const setLatLng = latlng => {
   return {
     type: actionTypes.SET_LAT_LNG,

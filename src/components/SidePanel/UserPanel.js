@@ -3,7 +3,8 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
-import { setMapView, setEmployeeView, setTextView} from "../../actions";
+import { setMapView, setEmployeeView, setTextView, setSelectedEmployee} from "../../actions";
+import EmployeeJob from "./EmployeeJob";
 
 
 class UserPanel extends React.Component {
@@ -12,7 +13,16 @@ class UserPanel extends React.Component {
     mapview: false
   };
 
-  dropdownOptions = () => [
+  displayAssigned(employee) {
+    this.setState ({
+        mapview: true
+    });
+    this.props.setSelectedEmployee(employee);
+  }
+
+  dropdownOptions = (employees) => {
+      let optionArray =
+  [
     {
       key: "user",
       text: (
@@ -24,21 +34,39 @@ class UserPanel extends React.Component {
     },
     {
       key: "textview",
-      text: <span style ={{fontStyle: "bold"}} onClick={this.setTextView}> text view </span>
+      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
     },
     {
       key: "mapview",
-      text: <span style ={{fontStyle: "bold"}} onClick={this.setMapView}> display all clients </span>
+      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
     },
     {
       key: "employeeview",
-      text: <span style ={{fontStyle: "bold"}} onClick={this.setEmployeeView}> display all employees </span>
-    },
-    {
-      key: "signout",
-      text: <span onClick={this.handleSignout}>Sign Out</span>
+      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
     }
   ];
+
+  for (var key in employees) {
+     const newEmployee = {
+       key: key,
+       text: <EmployeeJob
+             displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
+             employee={employees[key]}
+             />
+     }
+     optionArray.push(newEmployee);
+  };
+
+  const signout = {
+    key: "signout",
+    text: <span onClick={this.handleSignout}>Sign Out</span>
+  };
+
+  optionArray.push(signout);
+
+  return optionArray;
+}
+
 
 
   handleSignout = () => {
@@ -73,6 +101,7 @@ class UserPanel extends React.Component {
 
   render() {
     const { user } = this.state;
+    const {employees} = this.props;
     //console.log ("userPanel User displayName = ", user.displayName);
 
     return (
@@ -80,16 +109,11 @@ class UserPanel extends React.Component {
             <Menu.Header as="h1" className="UserPanelMenuHeader">
               <Icon name="truck" /> AssignJobs
             </Menu.Header>
-
               <Dropdown
-                trigger={
-                  <span style = {{color:"white"}}>
-                    <Icon name='tasks' size ="large"/>
-                    &nbsp; {user.displayName}
-                  </span>
-                }
-                options={this.dropdownOptions()}
-                style = {{color: "white", left: "15px" }}
+                placeholder='Dropdown Control Menu'
+                selection
+                options={this.dropdownOptions(employees)}
+                style = {{color: "white", left: "10px", fontSize:"0.9em"}}
               />
 
       </Menu.Menu>
@@ -97,13 +121,10 @@ class UserPanel extends React.Component {
   }
 }
 
-//const mapStateToProps = state => ({
-//   currentUser: state.user.currentUser
-//});
+const mapStateToProps = state => ({
+   employees: state.user.employeeList
+});
 
-//export default connect(mapStateToProps)(UserPanel);
-
-//export default UserPanel;
 export default connect(
-  null, {setMapView, setEmployeeView, setTextView}
+  mapStateToProps, {setMapView, setEmployeeView, setTextView, setSelectedEmployee}
 )(UserPanel);
