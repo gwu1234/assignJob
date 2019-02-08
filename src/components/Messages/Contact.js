@@ -143,7 +143,7 @@ onButtonClick = () => {
           contactStyle: {
             ...this.state.contactStyle,
             visibility: "visible",
-            height: '',            
+            height: '',
         },
         editDisplay: true,
      })
@@ -175,12 +175,12 @@ onButtonClick = () => {
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
                {contact && address}
           </Menu.Item>
-            {contact && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
-            {emailDisplay && contact && contact.emails.length>0 && this.displayEmails (contact.emails)}
-            {contact && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
-            {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
-            {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
-            {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+            {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
+            {emailDisplay && contact && contact.emails && contact.emails.length>0 && this.displayEmails (contact.emails)}
+            {contact && contact.phones && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
+            {phoneDisplay && contact && contact.phones && contact.phones.length>0 && this.displayPhones (contact.phones)}
+            {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
+            {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
             {editDisplay && contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
                        <span> &nbsp; &nbsp; Edit Company Info </span>
                        <EditContactModal contact = {contact} usertag = {usertag}/>

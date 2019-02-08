@@ -159,7 +159,12 @@ export default class EditContactModal extends Component {
 
   render() {
     const {contact, usertag} = this.props;
-    const titleString = "Edit Company Info : ";
+    let titleString = "Edit Company Info : ";
+
+    if (contact.name) {
+      titleString = titleString + contact.name;
+    }
+
     let email1 = "";
     let email2 = "";
     let email3 = "";
