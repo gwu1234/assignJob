@@ -27,7 +27,7 @@ const initialUserState = {
   contracts: null,
   payments:null,
   deliverys: null,
-  selectedEmployee: null
+  selectedEmployee: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -41,7 +41,8 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.CLEAR_USER:
       return {
         ...state,
-        isLoading: false
+        isLoading: false,
+        currentUser: null,
       };
     case actionTypes.SET_ADMIN:
       return {
@@ -157,17 +158,6 @@ const user_reducer = (state = initialUserState, action) => {
          markers: [],
          mapView: false
     };
-
-    /*case actionTypes.SET_LAT_LNG:
-        console.log ("reducer SET_LAT_LNG  = " );
-        console.log (action.payload.latlng);
-        let coords = state.coords;
-        coords.push (action.payload.latlng);
-        //console.log(state.coords.length);
-        return {
-                 ...state,
-                 coords: coords
-        };*/
     case actionTypes.SET_GEOENCODING:
             //console.log ("reducer SET_GEOENCODING = " );
             //console.log (action.payload.geoEncoding);
@@ -233,12 +223,6 @@ const user_reducer = (state = initialUserState, action) => {
                     markers: selectedMarkers,
                     mapView: true
       };
-    /* case actionTypes.SET_OPEN_MODAL:
-        console.log ("reducer = " + action.payload.modal);
-        return {
-          ...state,
-          modal: action.payload.modal
-    };*/
     default:
       return state;
   }

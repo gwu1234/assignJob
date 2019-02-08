@@ -33,6 +33,7 @@ class Root extends React.Component {
   };
 
   componentDidMount() {
+    this.props.clearUser();
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const creationDate = new Date (user.metadata.creationTime);

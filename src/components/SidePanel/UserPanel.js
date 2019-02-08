@@ -21,17 +21,27 @@ class UserPanel extends React.Component {
   }
 
   dropdownOptions = (employees) => {
-      let optionArray =
+      let optionArray = [];
+
+      let username = "";
+      if (this.state.user) {
+          username = this.state.user.displayName;
+      }
+
+      const titleArray =
   [
     {
       key: "user",
       text: (
         <span>
-          Signed in as <strong>{this.state.user.displayName}</strong>
+          Signed in as <strong>{username}</strong>
         </span>
       ),
       disabled: true
-    },
+    }];
+
+    const userOptions =
+    [
     {
       key: "textview",
       text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
@@ -44,7 +54,11 @@ class UserPanel extends React.Component {
       key: "employeeview",
       text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
     }
-  ];
+   ];
+
+   if (this.state.user) {
+     optionArray= titleArray.concat(userOptions);
+   }
 
   for (var key in employees) {
      const newEmployee = {
@@ -57,12 +71,23 @@ class UserPanel extends React.Component {
      optionArray.push(newEmployee);
   };
 
+  const signin = {
+    key: "signout",
+    text: <span onClick={this.handleSignout}>Sign In</span>
+  };
+
   const signout = {
     key: "signout",
     text: <span onClick={this.handleSignout}>Sign Out</span>
   };
 
-  optionArray.push(signout);
+  if (!this.state.user) {
+    optionArray.push(signin);
+  } else {
+    optionArray.push(signout);
+  }
+
+  //optionArray.push(signout);
 
   return optionArray;
 }
@@ -122,7 +147,8 @@ class UserPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-   employees: state.user.employeeList
+   employees: state.user.employeeList,
+   currentUser: state.user.currentUser,
 });
 
 export default connect(

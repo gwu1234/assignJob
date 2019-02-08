@@ -159,10 +159,16 @@ class Clients extends React.Component {
     //}
 
     //console.log(keyArray.length);
-    let userName = currentUser.name;
-    if (!userName) {
-      userName = currentUser.displayName;
+    let userName = "";
+    if (currentUser) {
+         userName = currentUser.name;
+         if (!userName) {
+           userName = currentUser.displayName;
+         }
     }
+    //if (!userName) {
+    //  userName = currentUser.displayName;
+    //}
 
     return (
       <Menu.Menu className ="ClientsMenuMenu">

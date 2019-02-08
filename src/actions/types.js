@@ -18,8 +18,3 @@ export const SET_CONTRACTS = "SET_CONTRACTS"
 export const SET_PAYMENTS = "SET_PAYMENTS";
 export const SET_DELIVERYS = "SET_DELIVERYS";
 export const SET_SELECTED_EMPLOYEE = "SET_SELECTED_EMPLOYEE";
-//export const SET_LAT_LNG = "SET_LAT_LNG";
-
-/* Channel Action Types */
-//export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";
-//export const SET_CURRENT_USER = "SET_CURRENT_USER";
