@@ -195,7 +195,8 @@ const user_reducer = (state = initialUserState, action) => {
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected
-         //const employees = state.employeeList;
+         const assignedClients = state.clientList;
+
          let selectedMarkers = [];
          const selectedMarker = {
              pos:
@@ -212,6 +213,8 @@ const user_reducer = (state = initialUserState, action) => {
          const assignedJobs = selectedEmployee.assigned;
          for (var key in assignedJobs) {
              let status = JOB_NEW;
+             const assignedClient = assignedClients[assignedJobs[key].clientKey];
+
              const assignedMarker = {
                  pos:
                  {
@@ -220,7 +223,7 @@ const user_reducer = (state = initialUserState, action) => {
                  },
                  name: assignedJobs[key].clientName,
                  id:  assignedJobs[key].assignedKey,
-                 status: status,
+                 status: assignedClient.status,
                  type: CLIENT_MARKER
              }
             selectedMarkers.push(assignedMarker);
