@@ -132,10 +132,10 @@ toggleDisplay = (display) => {
          </Menu.Item>
             {display && employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
             {display && employee && employee.emails && employee.emails.length>0 && this.displayEmails (employee.emails)}
-            {display && employee && employee.phones.length>0 && this.displayPhoneHeader ()}
-            {display && employee && employee.phones.length>0 && this.displayPhones (employee.phones)}
-            {display && employee && employee.cells.length>0 && this.displayCellHeader ()}
-            {display && employee && employee.cells.length>0 && this.displayCells (employee.cells)}
+            {display && employee && employee.phones && employee.phones.length>0 && this.displayPhoneHeader ()}
+            {display && employee && employee.phones && employee.phones.length>0 && this.displayPhones (employee.phones)}
+            {display && employee && employee.cells && employee.cells.length>0 && this.displayCellHeader ()}
+            {display && employee && employee.cells && employee.cells.length>0 && this.displayCells (employee.cells)}
          </Menu.Menu>
      );
    }
