@@ -223,10 +223,59 @@ const user_reducer = (state = initialUserState, action) => {
                     markers: selectedMarkers,
                     mapView: true
       };
+case actionTypes.SET_UNASSIGNED_CLIENTS:
+
+     const allclients = state.clientList;
+     let unClientMarkers = [];
+
+     for (var key in allclients) {
+       if (!allclients[key].isAssigned) {
+            let status = JOB_NEW;
+            if (allclients[key].status) {
+               status = allclients[key].status;
+            }
+            const marker = {
+            pos:
+            {
+               lat: allclients[key].lat,
+               lng: allclients[key].lng
+            },
+            name: allclients[key].name,
+            id:  key,
+            status: status,
+          }
+          unClientMarkers.push(marker);
+      }
+    }
+
+    const allemployees = state.employeeList;
+    //let allemployeeMarkers = [];
+
+    for (var key in allemployees) {
+        const marker = {
+            pos:
+            {
+               lat: allemployees[key].lat,
+               lng: allemployees[key].lng
+            },
+            name: allemployees[key].name,
+            id:  key,
+            type: EMPLOYEE_MARKER
+        }
+       unClientMarkers.push(marker);
+    }
+
+    return {
+        ...state,
+       markers: unClientMarkers,
+       mapView: true
+  };
     default:
       return state;
   }
 };
+
+
 
 /*const initialChannelState = {
   currentChannel: null,

@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
-import { setMapView, setEmployeeView, setTextView, setSelectedEmployee} from "../../actions";
+import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient} from "../../actions";
 import EmployeeJob from "./EmployeeJob";
 
 
@@ -53,6 +53,10 @@ class UserPanel extends React.Component {
     {
       key: "employeeview",
       text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
+    },
+    {
+      key: "unassignedview",
+      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> not assigned </span>
     }
    ];
 
@@ -124,6 +128,14 @@ class UserPanel extends React.Component {
       this.props.setTextView();
   };
 
+  setUnassignedView =() => {
+      this.setState ({
+         mapview: true
+      });
+     this.props.setUnassignedClient();
+};
+
+
   render() {
     const { user } = this.state;
     const {employees} = this.props;
@@ -152,5 +164,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps, {setMapView, setEmployeeView, setTextView, setSelectedEmployee}
+  mapStateToProps, {setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient}
 )(UserPanel);

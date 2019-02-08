@@ -179,3 +179,9 @@ export const setDeliverys = deliverys => {
     }
   }
 }
+
+export const setUnassignedClient = () => {
+  return {
+    type: actionTypes.SET_UNASSIGNED_CLIENTS,
+  }
+}
