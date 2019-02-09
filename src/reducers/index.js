@@ -115,6 +115,8 @@ const user_reducer = (state = initialUserState, action) => {
              name: clients[key].name,
              id:  key,
              status: status,
+             isAssigned: clients[key].isAssigned,
+             employeeName: clients[key].employeeName
            }
            clientMarkers.push(marker);
         }
@@ -214,7 +216,9 @@ const user_reducer = (state = initialUserState, action) => {
                  name: assignedJobs[key].clientName,
                  id:  assignedJobs[key].assignedKey,
                  status: assignedClient.status,
-                 type: CLIENT_MARKER
+                 type: CLIENT_MARKER,
+                 isAssigned: true,
+                 employeeName: selectedEmployee.name
              }
             selectedMarkers.push(assignedMarker);
        }

@@ -182,6 +182,9 @@ class MapContainer extends Component {
                       position={marker.pos}
                       name = {marker.name}
                       onClick={this.onMarkerClick}
+                      isAssigned = {marker.isAssigned}
+                      employeeName = {marker.employeeName}
+                      type = {marker.type}
                       icon = {{
                           url: image,
                           scaledSize: { width: 13, height: 13 }
@@ -197,13 +200,18 @@ class MapContainer extends Component {
                  <div>
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
+                         {this.state.selectedPlace.isAssigned && <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
-                         <DoneModal workIsDone={this.workIsDone} clientname ={this.state.activeMarker.name} />
-                         <RepeatModal workToRepeat={this.workToRepeat} clientname ={this.state.activeMarker.name} />
-
-                         <Button icon size="mini" color="red" onClick={this.onClose}>
-                              <Icon name='cancel' size ="large"/> Cancel
-                         </Button>
+                         {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
+                              <DoneModal workIsDone={this.workIsDone}
+                              clientname ={this.state.activeMarker.name} />}
+                         {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
+                              <RepeatModal workToRepeat={this.workToRepeat}
+                              clientname ={this.state.activeMarker.name} /> }
+                         {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
+                              <Button icon size="mini" color="red" onClick={this.onClose}>
+                                  <Icon name='cancel' size ="large"/> Cancel
+                              </Button>}
                  </div>
           </InfoWindowEx>
       </CurrentLocation>
