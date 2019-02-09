@@ -185,6 +185,7 @@ class MapContainer extends Component {
                       isAssigned = {marker.isAssigned}
                       employeeName = {marker.employeeName}
                       type = {marker.type}
+                      street={marker.street}
                       icon = {{
                           url: image,
                           scaledSize: { width: 13, height: 13 }
@@ -200,6 +201,7 @@ class MapContainer extends Component {
                  <div>
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
+                         {this.state.selectedPlace.street && <span style={{fondSize:"0.5em", fondStyle:"bold"}}> {this.state.selectedPlace.street} </span>}
                          {this.state.selectedPlace.isAssigned && <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
                          {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
