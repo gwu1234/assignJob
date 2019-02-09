@@ -117,7 +117,11 @@ const user_reducer = (state = initialUserState, action) => {
              status: status,
              isAssigned: clients[key].isAssigned,
              employeeName: clients[key].employeeName,
-             street: clients[key].street
+             status: status,
+             street: clients[key].street,
+             assignedKey: clients[key].assignedKey,
+             employeeKey: clients[key].employeeKey,
+             clientKey: key
            }
            clientMarkers.push(marker);
         }
@@ -220,7 +224,10 @@ const user_reducer = (state = initialUserState, action) => {
                  street: assignedJobs[key].clientStreet,
                  type: CLIENT_MARKER,
                  isAssigned: true,
-                 employeeName: selectedEmployee.name
+                 employeeName: selectedEmployee.name,
+                 assignedKey: assignedJobs[key].assignedKey,
+                 employeeKey: assignedJobs[key].employeeKey,
+                 clientKey: assignedJobs[key].clientKey
              }
             selectedMarkers.push(assignedMarker);
        }
@@ -248,6 +255,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             },
             name: allclients[key].name,
             street: allclients[key].street,
+            clientKey: key,
             id:  key,
             status: status,
           }
