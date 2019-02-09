@@ -12,6 +12,7 @@ import redStar from '../images/redStar.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
+import MapAssignModal from './MapAssign';
 import {Button, Icon} from 'semantic-ui-react';
 
 const JOB_NEW = 0;
@@ -143,7 +144,7 @@ class MapContainer extends Component {
   };
 
     render() {
-      const {markers, usertag} = this.props;
+      const {markers, usertag, employees} = this.props;
       //const {clients} = this.props;
 
       const buttonStyle = {
@@ -189,7 +190,11 @@ class MapContainer extends Component {
                       assignedKey = {marker.assignedKey}
                       clientKey = {marker.clientKey}
                       type = {marker.type}
-                      street={marker.street}
+                      clientStreet={marker.street}
+                      clientCity={marker.city}
+                      clientPostcode={marker.postcode}
+                      clientLat={marker.lat}
+                      clientLng={marker.lng}
                       icon = {{
                           url: image,
                           scaledSize: { width: 13, height: 13 }
@@ -231,6 +236,19 @@ class MapContainer extends Component {
                                  employeeName={this.state.selectedPlace.employeeName}
                                  usertag={usertag}
                                  />}
+                        {!this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
+                        {!this.state.selectedPlace.isAssigned &&
+                            <MapAssignModal
+                                 clientKey={this.state.selectedPlace.clientKey}
+                                 clientName={this.state.selectedPlace.name}
+                                 clientStreet={this.state.selectedPlace.clientStreet}
+                                 clientCity={this.state.selectedPlace.clientCity}
+                                 clientPostcode={this.state.selectedPlace.clientPostcode}
+                                 clientLat={this.state.selectedPlace.clientLat}
+                                 clientLng={this.state.selectedPlace.clientLng}
+                                 usertag={usertag}
+                                 employees={employees}
+                                />}
                      </div>
                  </div>
           </InfoWindowEx>
@@ -241,7 +259,8 @@ class MapContainer extends Component {
 
 const mapStateToProps = state => ({
   markers: state.user.markers,
-  usertag: state.user.usertag
+  usertag: state.user.usertag,
+  employees: state.user.employeeList
 });
 
 const WrappedContainer = GoogleApiWrapper({

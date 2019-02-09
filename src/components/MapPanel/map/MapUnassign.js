@@ -45,17 +45,17 @@ class MapUnassignModal extends Component {
      }
      clientRef.update(assignUpdate);
 
-     console.log("employeeName = " + employeeName);
-     console.log("employeeKey = " + employeeKey);
-     console.log("assignedKey = " + assignedKey);
-     console.log("clientName = " + clientName);
-     console.log("clientKey = " + clientKey);
-     console.log("usertag = " + usertag);
-     console.log(clientPath);
-     console.log(assignUpdate);
+     //console.log("employeeName = " + employeeName);
+     //console.log("employeeKey = " + employeeKey);
+     //console.log("assignedKey = " + assignedKey);
+     //console.log("clientName = " + clientName);
+     //console.log("clientKey = " + clientKey);
+     //console.log("usertag = " + usertag);
+     //console.log(clientPath);
+     //console.log(assignUpdate);
 
      const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned/"+ assignedKey;
-     console.log(assignedPath);
+     //console.log(assignedPath);
      const assignedRef = firebase.database().ref(assignedPath);
       assignedRef.set(null);
      this.handleCancel();
@@ -72,7 +72,7 @@ class MapUnassignModal extends Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size='large'
+        size='mini'
         style={{background: "#ccc", paddingTop: "0em", paddingLeft:"3em", paddingRight:"2em", paddingBottom:"1em"}}
       >
         <Header icon='delete' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"red"}}/>
