@@ -201,7 +201,7 @@ class MapContainer extends Component {
                  <div>
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
-                         {this.state.selectedPlace.street && <span style={{fondSize:"0.5em", fondStyle:"bold"}}> {this.state.selectedPlace.street} </span>}
+                         {this.state.selectedPlace.street && <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}> {this.state.selectedPlace.street} </span>}
                          {this.state.selectedPlace.isAssigned && <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
                          {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
