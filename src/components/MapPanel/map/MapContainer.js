@@ -11,6 +11,7 @@ import greenDot from '../images/greenDot.png';
 import redStar from '../images/redStar.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
+import MapUnassignModal from './MapUnassign';
 import {Button, Icon} from 'semantic-ui-react';
 
 const JOB_NEW = 0;
@@ -142,7 +143,7 @@ class MapContainer extends Component {
   };
 
     render() {
-      const {markers} = this.props;
+      const {markers, usertag} = this.props;
       //const {clients} = this.props;
 
       const buttonStyle = {
@@ -184,6 +185,9 @@ class MapContainer extends Component {
                       onClick={this.onMarkerClick}
                       isAssigned = {marker.isAssigned}
                       employeeName = {marker.employeeName}
+                      employeeKey = {marker.employeeKey}
+                      assignedKey = {marker.assignedKey}
+                      clientKey = {marker.clientKey}
                       type = {marker.type}
                       street={marker.street}
                       icon = {{
@@ -204,6 +208,7 @@ class MapContainer extends Component {
                          {this.state.selectedPlace.street && <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}> {this.state.selectedPlace.street} </span>}
                          {this.state.selectedPlace.isAssigned && <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
+                     <div>
                          {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
                               <DoneModal workIsDone={this.workIsDone}
                               clientname ={this.state.activeMarker.name} />}
@@ -214,6 +219,19 @@ class MapContainer extends Component {
                               <Button icon size="mini" color="red" onClick={this.onClose}>
                                   <Icon name='cancel' size ="large"/> Cancel
                               </Button>}
+                     </div>
+                     <div>
+                        {this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
+                        {this.state.selectedPlace.isAssigned &&
+                            <MapUnassignModal
+                                 clientKey={this.state.selectedPlace.clientKey}
+                                 clientName={this.state.selectedPlace.name}
+                                 assignedKey={this.state.selectedPlace.assignedKey}
+                                 employeeKey={this.state.selectedPlace.employeeKey}
+                                 employeeName={this.state.selectedPlace.employeeName}
+                                 usertag={usertag}
+                                 />}
+                     </div>
                  </div>
           </InfoWindowEx>
       </CurrentLocation>
