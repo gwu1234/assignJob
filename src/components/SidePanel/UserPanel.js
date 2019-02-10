@@ -5,7 +5,7 @@ import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
 import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient} from "../../actions";
 import EmployeeJob from "./EmployeeJob";
-
+import RepeatModal from "./RepeatModal";
 
 class UserPanel extends React.Component {
   state = {
@@ -85,10 +85,16 @@ class UserPanel extends React.Component {
     text: <span onClick={this.handleSignout}>Sign Out</span>
   };
 
+  const repeattimer= {
+    key: "repeathour",
+    text: <RepeatModal />
+  }
+
   if (!this.state.user) {
     optionArray.push(signin);
   } else {
     optionArray.push(signout);
+    optionArray.push(repeattimer);
   }
 
   //optionArray.push(signout);

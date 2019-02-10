@@ -227,7 +227,7 @@ class MapContainer extends Component {
                      </div>
                      <div>
                         {this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
-                        {this.state.selectedPlace.isAssigned &&
+                        {this.state.selectedPlace.isAssigned &&         
                             <MapUnassignModal
                                  clientKey={this.state.selectedPlace.clientKey}
                                  clientName={this.state.selectedPlace.name}
@@ -238,6 +238,7 @@ class MapContainer extends Component {
                                  />}
                         {!this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
                         {!this.state.selectedPlace.isAssigned &&
+                          this.state.selectedPlace.type !== EMPLOYEE_MARKER &&
                             <MapAssignModal
                                  clientKey={this.state.selectedPlace.clientKey}
                                  clientName={this.state.selectedPlace.name}
