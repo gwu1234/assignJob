@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import firebase from "../../firebase";
-import Geocode from "react-geocode";
 import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
+import {setRepeatHours} from "../../actions";
+// 10 seconds
+const TIMER_INTERVAL = 10;
 
 
 class RepeatModal extends Component {
@@ -13,17 +14,14 @@ class RepeatModal extends Component {
          repeathour: 5,
          timerID: null
      }
-     //timerID = null;
   }
-
-  //TimerID;
 
   componentDidMount() {
     let {timerID} = this.state;
     if (!timerID) {
         timerID = setInterval(
            () => this.tick(),
-           2000
+           TIMER_INTERVAL * 1000
        );
        this.setState ({timerID: timerID});
     }
@@ -66,7 +64,9 @@ class RepeatModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
        //this.setState({ modalOpen: false })
-      this.handleClose();
+       const {repeathour} = this.state;
+       this.props.setRepeatHours(repeathour);
+       this.handleClose();
     }
   };
 
@@ -116,7 +116,7 @@ class RepeatModal extends Component {
                      <Form.Input size ="small"
                            label='Repeat Hours'
                            placeholder = "5"
-                           defaultValue = "5"
+                           defaultValue = {this.state.repeathour}
                            name="repeathour"
                            onChange={this.handleChange} />
                </Form.Group>
@@ -149,5 +149,5 @@ class RepeatModal extends Component {
 
 export default connect(
   null,
-  null
+  {setRepeatHours}
 )(RepeatModal);
