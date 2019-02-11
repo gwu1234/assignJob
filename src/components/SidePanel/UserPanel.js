@@ -17,6 +17,7 @@ class UserPanel extends React.Component {
     this.setState ({
         mapview: true
     });
+    //console.log("displayAssigned")
     this.props.setSelectedEmployee(employee);
   }
 
@@ -117,10 +118,12 @@ class UserPanel extends React.Component {
          mapview: true
      });
      this.props.setMapView();
+     //console.log("setMapView")
   };
 
   // display all employees
   setEmployeeView  = () => {
+    //console.log("setEmployeeView")
      this.setState ({
          mapview: true
      });
@@ -128,6 +131,7 @@ class UserPanel extends React.Component {
   };
 
   setTextView  = () => {
+    //console.log("setTextView")
       this.setState ({
             mapview: false
       });
@@ -135,6 +139,7 @@ class UserPanel extends React.Component {
   };
 
   setUnassignedView =() => {
+    //console.log("setUnassignedView")
       this.setState ({
          mapview: true
       });

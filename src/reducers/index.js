@@ -7,6 +7,7 @@ const GEOCODING_RENEWED = 2;
 const JOB_NEW = 0;
 const JOB_REPEAT = 1;
 const JOB_DONE = 2;
+const JOB_SOON = 3;
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
@@ -28,6 +29,7 @@ const initialUserState = {
   payments:null,
   deliverys: null,
   selectedEmployee: null,
+  repeathours: 5
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -96,16 +98,51 @@ const user_reducer = (state = initialUserState, action) => {
         workOrder: action.payload.workOrder
     };
     case actionTypes.SET_MAP_VIEW:
-        //console.log ("reducer mapView  = " );
+         //console.log ("reducer SET_MAP_View  " );
         //console.log (action.payload.mapView);
          const clients = state.clientList;
+         //const timestamp = state.timestamp;
+         const repeathours = state.repeathours;
+         const date = new Date();
+         // timestamp in second
+         const timestamp = Math.round(date.getTime()/1000 + 0.5);
+           //const timestamp = 1000;
+         //console.log (timestamp);
+         //console.log (repeathours);
+
          let clientMarkers = [];
 
          for (var key in clients) {
            let status = JOB_NEW;
+
            if (clients[key].status) {
               status = clients[key].status;
            }
+
+           const repeattime = clients[key].repeattime;
+           const lastservicetime = clients[key].lastservicetime;
+
+           if (repeattime && !lastservicetime){
+               status = JOB_REPEAT;
+           } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+               status = JOB_REPEAT;
+           }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+               status = JOB_DONE;
+           }
+           else if (lastservicetime) {
+               const remainingtime = repeathours*60*60 - (timestamp - lastservicetime);
+               // more than 20 minutes before deadline
+               if (remainingtime >= 20*60 ) {
+                 status = JOB_DONE;
+               }
+               // 5 seconds - 20 minutes before deadline
+               else if (remainingtime<20*60 && remainingtime>5) {
+                 status = JOB_SOON;
+               } else if (remainingtime < 5) {
+                 status = JOB_NEW;
+               }
+           }
+
            const marker = {
              pos:
              {
@@ -133,6 +170,11 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_EMPLOYEE_VIEW:
         const employees = state.employeeList;
         let employeeMarkers = [];
+        //console.log ("reducer");
+        //console.log ("SET_EMPLOYEE_VIEW");
+
+        //console.log (timestamp);
+        //console.log (repeathours);
 
         for (var key in employees) {
             let status = JOB_NEW;
@@ -160,6 +202,8 @@ const user_reducer = (state = initialUserState, action) => {
          mapView: true
     };
     case actionTypes.SET_TEXT_VIEW:
+      //console.log ("reducer");
+      //console.log ("SET_TEXT_VIEW");
       return {
           ...state,
          markers: [],
@@ -187,12 +231,27 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_DELIVERYS:
      //console.log (action.payload.deliverys);
             return {
-                      ...state,
-                      deliverys: action.payload.deliverys
+                    ...state,
+                    deliverys: action.payload.deliverys
+      };
+    case actionTypes.SET_REPEAT_HOURS:
+     //console.log("at reducer = ::");
+     //console.log (action.payload.repeathours);
+            return {
+                   ...state,
+                   repeathours: action.payload.repeathours
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected
          const assignedClients = state.clientList;
+         //const selectedtimestamp = state.timestamp;
+         const selectedrepeathours = state.repeathours;
+         const date1 = new Date();
+         // timestamp in second
+         const selectedtimestamp = Math.round(date1.getTime()/1000 + 0.5);
+         //const selectedtimestamp = 100;
+         //console.log ("reducer");
+         //console.log ("SET_SELECTED_EMPLOYEE");
 
          let selectedMarkers = [];
          const selectedMarker = {
@@ -212,6 +271,34 @@ const user_reducer = (state = initialUserState, action) => {
              let status = JOB_NEW;
              const assignedClient = assignedClients[assignedJobs[key].clientKey];
 
+             if (assignedClient.status) {
+                status = assignedClient.status;
+             }
+
+             const repeattime = assignedClient.repeattime;
+             const lastservicetime = assignedClient.lastservicetime;
+
+             if (repeattime && !lastservicetime){
+                 status = JOB_REPEAT;
+             } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+                 status = JOB_REPEAT;
+             }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+                 status = JOB_DONE;
+             }
+             else if (lastservicetime) {
+                 const remainingtime = selectedrepeathours*60*60 - (selectedtimestamp - lastservicetime);
+                 // more than 20 minutes before deadline
+                 if (remainingtime >= 20*60 ) {
+                   status = JOB_DONE;
+                 }
+                 // 5 seconds - 20 minutes before deadline
+                 else if (remainingtime<20*60 && remainingtime>5) {
+                   status = JOB_SOON;
+                 } else if (remainingtime < 5) {
+                   status = JOB_NEW;
+                 }
+             }
+
              const assignedMarker = {
                  pos:
                  {
@@ -220,7 +307,7 @@ const user_reducer = (state = initialUserState, action) => {
                  },
                  name: assignedJobs[key].clientName,
                  id:  assignedJobs[key].assignedKey,
-                 status: assignedClient.status,
+                 status: status,
                  street: assignedJobs[key].clientStreet,
                  type: CLIENT_MARKER,
                  isAssigned: true,
@@ -237,8 +324,19 @@ const user_reducer = (state = initialUserState, action) => {
                     mapView: true
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
+     //console.log ("reducer");
+     //console.log ("SET_UNASSIGNED_CLIENTS");
 
      const allclients = state.clientList;
+     //const alltimestamp = state.timestamp;
+     const allrepeathours = state.repeathours;
+     const date2 = new Date();
+     // timestamp in second
+     const alltimestamp = Math.round(date2.getTime()/1000 + 0.5);
+     //const alltimestamp = 1000;
+     //console.log (alltimestamp);
+     //console.log (allrepeathours);
+
      let unClientMarkers = [];
 
      for (var key in allclients) {
@@ -247,6 +345,32 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             if (allclients[key].status) {
                status = allclients[key].status;
             }
+
+            const lastservicetime = allclients[key].lastservicetime;
+            const repeattime = allclients[key].repeattime;
+
+            if (repeattime && !lastservicetime){
+                status = JOB_REPEAT;
+            } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+                status = JOB_REPEAT;
+            }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+                status = JOB_DONE;
+            }
+            else if (lastservicetime) {
+                const remainingtime = allrepeathours*60*60 - (alltimestamp - lastservicetime);
+                // more than 20 minutes before deadline
+                if (remainingtime >= 20*60 ) {
+                  status = JOB_DONE;
+                // 5 seconds - 20 minutes before deadline
+                }
+                else if (remainingtime<20*60 && remainingtime>5) {
+                  status = JOB_SOON;
+                }
+                else if (remainingtime < 5) {
+                  status = JOB_NEW;
+                }
+            }
+
             const marker = {
             pos:
             {
@@ -289,6 +413,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        markers: unClientMarkers,
        mapView: true
   };
+
     default:
       return state;
   }

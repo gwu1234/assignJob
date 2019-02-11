@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
 import {setRepeatHours} from "../../actions";
 // 10 seconds
-const TIMER_INTERVAL = 10;
+const TIMER_INTERVAL = 3;
 
 
 class RepeatModal extends Component {
@@ -12,11 +12,11 @@ class RepeatModal extends Component {
       this.state = {
          modalOpen: false,
          repeathour: 5,
-         timerID: null
+         //timerID: null
      }
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     let {timerID} = this.state;
     if (!timerID) {
         timerID = setInterval(
@@ -34,12 +34,15 @@ class RepeatModal extends Component {
        clearInterval(timerID);
      }
      this.setState ({timerID: null});
-  }
+  }*/
 
-  tick=()=> {
+  /*tick=()=> {
     const date = new Date();
-    console.log (date);
-  }
+    // timestamp in second
+    const timestamp = Math.round(date.getTime()/1000 + 0.5);
+    //console.log (timestamp);
+    this.props.setTimeStamp(timestamp);
+  }*/
 
   handleOpen = (open) => this.setState({ modalOpen: open })
   handleClose =() => {

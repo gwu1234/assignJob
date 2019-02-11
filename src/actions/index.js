@@ -185,3 +185,12 @@ export const setUnassignedClient = () => {
     type: actionTypes.SET_UNASSIGNED_CLIENTS,
   }
 }
+
+export const setRepeatHours= repeathours => {
+  return {
+    type: actionTypes.SET_REPEAT_HOURS,
+    payload: {
+      repeathours: repeathours
+    }
+  }
+}

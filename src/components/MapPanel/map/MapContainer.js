@@ -7,7 +7,7 @@ import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
-//import goldStar from '../images/goldStar.png';
+import yellowDot from '../images/yellowDot.png';
 import redStar from '../images/redStar.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
@@ -18,6 +18,7 @@ import {Button, Icon} from 'semantic-ui-react';
 const JOB_NEW = 0;
 const JOB_REPEAT = 1;
 const JOB_DONE = 2;
+const JOB_SOON = 3;
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
@@ -30,7 +31,7 @@ class MapContainer extends Component {
        showingInfoWindow: false,
        activeMarker: {},
        selectedPlace: {},
-       //markers : [],
+       //markers : this.props.markers,
     }
   }
 
@@ -48,29 +49,38 @@ class MapContainer extends Component {
 
  workIsDone = (props, marker, e) =>{
    //console.log("at MapContainer workIsDone");
-   console.log(this.state.activeMarker.id);
+   //console.log(this.state.activeMarker.clientKey);
    //console.log(this.state.activeMarker.name);
    //console.log(marker);
 
-   const {markers, usertag} = this.props;
+   const {usertag, markers} = this.props;
    const {activeMarker} = this.state;
+   //const {markers, activeMarker} = this.state;
+   const date = new Date();
+   // timestamp in second
+   const timestamp = Math.round(date.getTime()/1000 + 0.5);
 
     var  equalPos = markers.findIndex((element, index) =>
      (
         index === this.state.activeMarker.id
      ));
 
+    //console.log(this.state.activeMarker.name);
+    //console.log(this.state.activeMarker.clientKey);
     if (equalPos >= 0) {
         markers[equalPos].status = JOB_DONE;
     }
 
+    //console.log("equalPos = ");
+    //console.log(equalPos);
+
     this.setState({
        //activeMarker: null,
-       markers: markers,
+       //markers: markers,
        showingInfoWindow: false
     });
 
-    let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
+    /*let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
     let statusRef = firebase.database().ref(statusTag);
 
     if (statusRef == null) {
@@ -78,6 +88,16 @@ class MapContainer extends Component {
         statusRef = firebase.database().ref(statusTag).child("status").set(2);
     } else {
         statusRef.set(2);
+    }*/
+    //lastservicetime
+    let lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/lastservicetime";
+    let lastRef = firebase.database().ref(lastTag);
+
+    if (lastRef == null) {
+        lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey;
+        lastRef = firebase.database().ref(lastTag).child("lastservicetime").set(timestamp);
+    } else {
+        lastRef.set(timestamp);
     }
   }
 
@@ -101,12 +121,15 @@ class MapContainer extends Component {
 
    workToRepeat = (props, marker, e) =>{
      //const {markers} = this.props;
-     const {markers, usertag} = this.props;
+     const {usertag, markers} = this.props;
      const {activeMarker} = this.state;
+     const date = new Date();
+     // timestamp in second
+     const timestamp = Math.round(date.getTime()/1000 + 0.5);
      //console.log("at MapContainer workToRepeat");
-     //console.log(this.state.activeMarker.id);
+     //console.log(this.state.activeMarker.clientKey);
      //console.log(this.state.activeMarker.name);
-     //console.log(marker);
+     //console.log(activeMarker.id);
      //console.log(this.props.usertag);
      var  equalPos = markers.findIndex((element, index) =>
        (
@@ -119,11 +142,11 @@ class MapContainer extends Component {
 
      this.setState({
         //activeMarker: null,
-        markers: markers,
+        //markers: markers,
         showingInfoWindow: false
      });
 
-     let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
+     /*let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
      let statusRef = firebase.database().ref(statusTag);
 
      if (statusRef == null) {
@@ -131,6 +154,15 @@ class MapContainer extends Component {
          statusRef = firebase.database().ref(statusTag).child("status").set(1);
      } else {
          statusRef.set(1);
+     }*/
+     let repeatTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/repeattime";
+     let repeatRef = firebase.database().ref(repeatTag);
+
+     if (repeatRef == null) {
+         repeatTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey;
+         repeatRef = firebase.database().ref(repeatTag).child("repeattime").set(1);
+     } else {
+         repeatRef.set(timestamp);
      }
     }
 
@@ -144,8 +176,8 @@ class MapContainer extends Component {
   };
 
     render() {
-      const {markers, usertag, employees} = this.props;
-      //const {clients} = this.props;
+      const {usertag, employees, markers} = this.props;
+      //const {markers} = this.state;
 
       const buttonStyle = {
          width: '5em',
@@ -171,16 +203,21 @@ class MapContainer extends Component {
            }
            else if (marker.status === JOB_REPEAT)  {
                image = blueDot;
-           } else if (marker.status === JOB_DONE) {
+           }
+           else if (marker.status === JOB_DONE) {
                image = greenDot;
-           } else {
+           }
+           else if (marker.status === JOB_SOON) {
+               image = yellowDot;
+           }
+           else {
                image = redDot;
            }
 
           return (
                  <Marker
                       key={index}
-                      id = {marker.id}
+                      id = {index}
                       position={marker.pos}
                       name = {marker.name}
                       onClick={this.onMarkerClick}
@@ -227,7 +264,7 @@ class MapContainer extends Component {
                      </div>
                      <div>
                         {this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
-                        {this.state.selectedPlace.isAssigned &&         
+                        {this.state.selectedPlace.isAssigned &&
                             <MapUnassignModal
                                  clientKey={this.state.selectedPlace.clientKey}
                                  clientName={this.state.selectedPlace.name}
@@ -261,7 +298,8 @@ class MapContainer extends Component {
 const mapStateToProps = state => ({
   markers: state.user.markers,
   usertag: state.user.usertag,
-  employees: state.user.employeeList
+  employees: state.user.employeeList,
+  //timestamp: state.user.timestamp,
 });
 
 const WrappedContainer = GoogleApiWrapper({

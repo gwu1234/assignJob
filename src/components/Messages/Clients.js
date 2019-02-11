@@ -106,9 +106,9 @@ class Clients extends React.Component {
   updateClients = clients => {
       const {usertag} = this.props;
       const clientsTag = "repos/" + usertag +"/clients/tags";
-      console.log("clientsTag = " + clientsTag);
+      //console.log("clientsTag = " + clientsTag);
       const clientsRef = firebase.database().ref(clientsTag)
-      console.log("clientTag = " + clientsTag);
+      //console.log("clientTag = " + clientsTag);
       clientsRef.set(clients);;
   }
 
