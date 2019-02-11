@@ -113,37 +113,81 @@ const user_reducer = (state = initialUserState, action) => {
          let clientMarkers = [];
 
          for (var key in clients) {
-           let status = JOB_NEW;
-
-           if (clients[key].status) {
-              status = clients[key].status;
-           }
-
            const repeattime = clients[key].repeattime;
            const lastservicetime = clients[key].lastservicetime;
-           let effecttime = "";
+           const repeatseconds = repeathours * 60 * 60;
+           let status = JOB_NEW;
 
-           if (repeattime && !lastservicetime){
-               status = JOB_REPEAT;
-               effecttime = repeattime;
-           } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-               status = JOB_REPEAT;
-               effecttime = repeattime;
-           }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-               status = JOB_DONE;
-               effecttime = lastservicetime;
+           // case 1: it is a new client
+           if (!repeattime && !lastservicetime) {
+               status = JOB_NEW;
+            // case 2: it is a one time job
+           } else if (repeatseconds === 0) {
+               if (!repeattime && lastservicetime) {
+                   status = JOB_DONE;
+               } else if (repeattime && !lastservicetime) {
+                   status = JOB_REPEAT;
+               } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
+                  status = JOB_DONE;
+               } else {
+                  status = JOB_REPEAT;
+               }
            }
+           // case 3: should not happen, no service record, but repeat button pressed
+           // by accident
+           else if (repeattime && !lastservicetime){
+               const remainingseconds = repeatseconds - (timestamp - repeattime);
+               if (remainingseconds < 5 ) {
+                   status = JOB_NEW;
+               } else {
+                   status = JOB_REPEAT;
+               }
+           }
+           // case 4: repeat button pressed after being serviced
+           else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+               const remainingseconds = repeatseconds - (timestamp - repeattime);
+               if (remainingseconds < 5 ) {
+                   status = JOB_NEW;
+               } else {
+                   status = JOB_REPEAT;
+               }
+           }
+           // case 5: no repeat button pressed after being serviced
+           else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+                const remainingseconds = repeatseconds - (timestamp - lastservicetime);
+                // 20 minutes before delivery time, it is a JOB_DONE
+                if (remainingseconds > 60 * 20 ) {
+                    status = JOB_DONE;
+                }
+                // between 20 minutes and 5 seconds, a job need to be repeated soon
+                else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                   status = JOB_SOON
+                }
+                // it is a job to be done asap
+                else {
+                    status = JOB_NEW;
+                }
+           }
+           // case 6: repeat button never pressed
            else if (!repeattime && lastservicetime) {
-               status = JOB_DONE;
-               effecttime = lastservicetime;
+                const remainingseconds = repeatseconds - (timestamp - lastservicetime);
+                // 20 minutes before delivery time, it is a JOB_DONE
+                if (remainingseconds > 60 * 20 ) {
+                    status = JOB_DONE;
+                }
+                // between 20 minutes and 5 seconds, a job need to be repeated soon
+                else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                    status = JOB_SOON
+                }
+                // it is a job to be done asap
+                else {
+                    status = JOB_NEW;
+                }
            }
-
-           const remainingtime = repeathours*60*60 - (timestamp - effecttime);
-               // 5 seconds - 20 minutes before deadline
-           if (remainingtime<20*60 && remainingtime>5) {
-                 status = JOB_SOON;
-           } else if (remainingtime < 5) {
-                 status = JOB_NEW;
+           // should not come
+           else {
+                console.log("should bot come here");
+                status = JOB_NEW;
            }
 
 
@@ -273,39 +317,85 @@ const user_reducer = (state = initialUserState, action) => {
 
          const assignedJobs = selectedEmployee.assigned;
          for (var key in assignedJobs) {
-             let status = JOB_NEW;
+
              const assignedClient = assignedClients[assignedJobs[key].clientKey];
-
-             if (assignedClient.status) {
-                status = assignedClient.status;
-             }
-
              const repeattime = assignedClient.repeattime;
              const lastservicetime = assignedClient.lastservicetime;
-             let effecttime = "";
+             const repeatseconds = selectedrepeathours * 60 * 60;
+             let status = JOB_NEW;
 
-             if (repeattime && !lastservicetime){
-                 status = JOB_REPEAT;
-                 effecttime = repeattime;
-             } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-                 status = JOB_REPEAT;
-                 effecttime = repeattime;
-             }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-                 status = JOB_DONE;
-                 effecttime = lastservicetime;
+             // case 1: it is a new client
+             if (!repeattime && !lastservicetime) {
+                 status = JOB_NEW;
+              // case 2: it is a one time job
+             } else if (repeatseconds === 0) {
+                 if (!repeattime && lastservicetime) {
+                     status = JOB_DONE;
+                 } else if (repeattime && !lastservicetime) {
+                     status = JOB_REPEAT;
+                 } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
+                    status = JOB_DONE;
+                 } else {
+                    status = JOB_REPEAT;
+                 }
              }
+             // case 3: should not happen, no service record, but repeat button pressed
+             // by accident
+             else if (repeattime && !lastservicetime){
+                 const remainingseconds = repeatseconds - (selectedtimestamp - repeattime);
+                 if (remainingseconds < 5 ) {
+                     status = JOB_NEW;
+                 } else {
+                     status = JOB_REPEAT;
+                 }
+             }
+             // case 4: repeat button pressed after being serviced
+             else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+                 const remainingseconds = repeatseconds - (selectedtimestamp - repeattime);
+                 if (remainingseconds < 5 ) {
+                     status = JOB_NEW;
+                 } else {
+                     status = JOB_REPEAT;
+                 }
+             }
+             // case 5: no repeat button pressed after being serviced
+             else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+                  const remainingseconds = repeatseconds - (selectedtimestamp - lastservicetime);
+                  // 20 minutes before delivery time, it is a JOB_DONE
+                  if (remainingseconds > 60 * 20 ) {
+                      status = JOB_DONE;
+                  }
+                  // between 20 minutes and 5 seconds, a job need to be repeated soon
+                  else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                     status = JOB_SOON
+                  }
+                  // it is a job to be done asap
+                  else {
+                      status = JOB_NEW;
+                  }
+             }
+             // case 6: repeat button never pressed
              else if (!repeattime && lastservicetime) {
-                 status = JOB_DONE;
-                 effecttime = lastservicetime;
+                  const remainingseconds = repeatseconds - (selectedtimestamp - lastservicetime);
+                  // 20 minutes before delivery time, it is a JOB_DONE
+                  if (remainingseconds > 60 * 20 ) {
+                      status = JOB_DONE;
+                  }
+                  // between 20 minutes and 5 seconds, a job need to be repeated soon
+                  else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                      status = JOB_SOON
+                  }
+                  // it is a job to be done asap
+                  else {
+                      status = JOB_NEW;
+                  }
+             }
+             // should not come
+             else {
+                  console.log("should bot come here");
+                  status = JOB_NEW;
              }
 
-             const remainingtime = selectedrepeathours*60*60 - (selectedtimestamp - effecttime);
-                 // 5 seconds - 20 minutes before deadline
-             if (remainingtime<20*60 && remainingtime>5) {
-                   status = JOB_SOON;
-             } else if (remainingtime < 5) {
-                   status = JOB_NEW;
-             }
 
              const assignedMarker = {
                  pos:
@@ -350,40 +440,85 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
 
      for (var key in allclients) {
        if (!allclients[key].isAssigned) {
-            let status = JOB_NEW;
-            if (allclients[key].status) {
-               status = allclients[key].status;
-            }
-
-            //const lastservicetime = allclients[key].lastservicetime;
-            //const repeattime = allclients[key].repeattime;
 
             const repeattime = allclients[key].repeattime;
             const lastservicetime = allclients[key].lastservicetime;
-            let effecttime = "";
+            const repeatseconds = allrepeathours * 60 * 60;
+            let status = JOB_NEW;
 
-            if (repeattime && !lastservicetime){
-                status = JOB_REPEAT;
-                effecttime = repeattime;
-            } else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-                status = JOB_REPEAT;
-                effecttime = repeattime;
-            }else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-                status = JOB_DONE;
-                effecttime = lastservicetime;
+            // case 1: it is a new client
+            if (!repeattime && !lastservicetime) {
+                status = JOB_NEW;
+             // case 2: it is a one time job
+            } else if (repeatseconds === 0) {
+                if (!repeattime && lastservicetime) {
+                    status = JOB_DONE;
+                } else if (repeattime && !lastservicetime) {
+                    status = JOB_REPEAT;
+                } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
+                   status = JOB_DONE;
+                } else {
+                   status = JOB_REPEAT;
+                }
             }
+            // case 3: should not happen, no service record, but repeat button pressed
+            // by accident
+            else if (repeattime && !lastservicetime){
+                const remainingseconds = repeatseconds - (alltimestamp - repeattime);
+                if (remainingseconds < 5 ) {
+                    status = JOB_NEW;
+                } else {
+                    status = JOB_REPEAT;
+                }
+            }
+            // case 4: repeat button pressed after being serviced
+            else if (repeattime && lastservicetime && repeattime>lastservicetime ){
+                const remainingseconds = repeatseconds - (alltimestamp - repeattime);
+                if (remainingseconds < 5 ) {
+                    status = JOB_NEW;
+                } else {
+                    status = JOB_REPEAT;
+                }
+            }
+            // case 5: no repeat button pressed after being serviced
+            else if (repeattime && lastservicetime && repeattime<lastservicetime ){
+                 const remainingseconds = repeatseconds - (alltimestamp - lastservicetime);
+                 // 20 minutes before delivery time, it is a JOB_DONE
+                 if (remainingseconds > 60 * 20 ) {
+                     status = JOB_DONE;
+                 }
+                 // between 20 minutes and 5 seconds, a job need to be repeated soon
+                 else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                    status = JOB_SOON
+                 }
+                 // it is a job to be done asap
+                 else {
+                     status = JOB_NEW;
+                 }
+            }
+            // case 6: repeat button never pressed
             else if (!repeattime && lastservicetime) {
-                status = JOB_DONE;
-                effecttime = lastservicetime;
+                 const remainingseconds = repeatseconds - (alltimestamp - lastservicetime);
+                 // 20 minutes before delivery time, it is a JOB_DONE
+                 if (remainingseconds > 60 * 20 ) {
+                     status = JOB_DONE;
+                 }
+                 // between 20 minutes and 5 seconds, a job need to be repeated soon
+                 else if (remainingseconds <= 60*20 && remainingseconds > 5) {
+                     status = JOB_SOON
+                 }
+                 // it is a job to be done asap
+                 else {
+                     status = JOB_NEW;
+                 }
+            }
+            // should not come
+            else {
+                 console.log("should bot come here");
+                 status = JOB_NEW;
             }
 
-            const remainingtime = allrepeathours*60*60 - (alltimestamp - effecttime);
-                // 5 seconds - 20 minutes before deadline
-            if (remainingtime<20*60 && remainingtime>5) {
-                  status = JOB_SOON;
-            } else if (remainingtime < 5) {
-                  status = JOB_NEW;
-            }
+
 
             const marker = {
             pos:
