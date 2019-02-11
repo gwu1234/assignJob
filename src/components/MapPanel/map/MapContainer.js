@@ -7,7 +7,7 @@ import InfoWindowEx from './InfoWindowEx'
 import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
-import yellowDot from '../images/yellowDot.png';
+import yellowDot from '../images/yellowDot2.png';
 import redStar from '../images/redStar.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
@@ -59,6 +59,7 @@ class MapContainer extends Component {
    const date = new Date();
    // timestamp in second
    const timestamp = Math.round(date.getTime()/1000 + 0.5);
+   const localtime = date.toLocaleString();
 
     var  equalPos = markers.findIndex((element, index) =>
      (
@@ -99,6 +100,30 @@ class MapContainer extends Component {
     } else {
         lastRef.set(timestamp);
     }
+    const delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
+    //console.log(delTag);
+    const delRef = firebase.database().ref(delTag);
+    const delKey = delRef.push().getKey();
+    //console.log(delKey);
+
+    const newDelivery = {
+      "date": localtime,
+      "work": "DONE-" + timestamp,
+      "employee": "admin",
+      "clientKey": activeMarker.clientKey,
+      "clientTag": activeMarker.clientTag,
+      "deliveryKey": delKey,
+    }
+    //console.log (newDelivery);
+    delRef.child(delKey).set(newDelivery);
+
+
+    /*if (delRef == null) {
+        delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
+        delRef = firebase.database().ref(delTag).child("lastservicetime").set(timestamp);
+    } else {
+        delRef.set(timestamp);
+    }*/
   }
 
   /*workNotDone = (props, marker, e) =>{
@@ -126,6 +151,7 @@ class MapContainer extends Component {
      const date = new Date();
      // timestamp in second
      const timestamp = Math.round(date.getTime()/1000 + 0.5);
+     const localtime = date.toLocaleString();
      //console.log("at MapContainer workToRepeat");
      //console.log(this.state.activeMarker.clientKey);
      //console.log(this.state.activeMarker.name);
@@ -164,6 +190,24 @@ class MapContainer extends Component {
      } else {
          repeatRef.set(timestamp);
      }
+
+     const delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
+     //console.log(delTag);
+     const delRef = firebase.database().ref(delTag);
+     const delKey = delRef.push().getKey();
+     console.log(delKey);
+
+     const newDelivery = {
+       "date": localtime,
+       "work": "REPEAT-" + timestamp,
+       "employee": "admin",
+       "clientKey": activeMarker.clientKey,
+       "clientTag": activeMarker.clientTag,
+       "deliveryKey": delKey,
+     }
+     //console.log (newDelivery);
+     delRef.child(delKey).set(newDelivery);
+
     }
 
   onClose = props => {
@@ -226,6 +270,7 @@ class MapContainer extends Component {
                       employeeKey = {marker.employeeKey}
                       assignedKey = {marker.assignedKey}
                       clientKey = {marker.clientKey}
+                      clientTag = {marker.clientTag}
                       type = {marker.type}
                       clientStreet={marker.street}
                       clientCity={marker.city}
