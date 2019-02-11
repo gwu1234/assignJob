@@ -81,7 +81,7 @@ class Payments extends React.Component {
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && payments && this.displayPayments(paymentArray)}
-              {display && payments && <Menu.Item style={{margin:"1em"}}>
+              {display && <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> add new payment</span> <AddPaymentModal />
               </Menu.Item>}
           </Menu.Menu>

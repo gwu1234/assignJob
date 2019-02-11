@@ -80,7 +80,7 @@ class Deliverys extends React.Component {
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && deliverys && this.displayDeliverys(deliveryArray)}
-              {display && deliverys && <Menu.Item style={{margin:"1em"}}>
+              {display && <Menu.Item style={{margin:"1em"}}>
                    <span style={{color:"white", fontStyle:"bold"}}> add new delivery</span> <AddDeliveryModal />
               </Menu.Item>}
           </Menu.Menu>
