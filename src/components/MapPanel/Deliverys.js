@@ -59,7 +59,9 @@ class Deliverys extends React.Component {
 
     //console.log(deliverys);
     let titleString = "Delivery";
+    let modalString = "add new delivery";
     if (french) {
+       modalString = "ajouter nouveau livraison";
        titleString = "livraison";
     }
 
@@ -85,7 +87,7 @@ class Deliverys extends React.Component {
           <Menu.Menu style={this.state.clientsStyle} >
               {display && deliverys && this.displayDeliverys(deliveryArray)}
               {display && <Menu.Item style={{margin:"1em"}}>
-                   <span style={{color:"white", fontStyle:"bold"}}> add new delivery</span> <AddDeliveryModal />
+                   <span style={{color:"white", fontStyle:"bold"}}> {modalString}</span> <AddDeliveryModal />
               </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>

@@ -166,8 +166,10 @@ onButtonClick = () => {
     }
 
     let titleString = "Company Info";
+    let modalTitle = "Edit Company Info";
     if (french) {
        titleString = "compagne info";
+       modalTitle = "modifier compagne info";
     }
 
     return (
@@ -186,7 +188,7 @@ onButtonClick = () => {
             {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
             {editDisplay && contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
-                       <span> &nbsp; &nbsp; Edit Company Info </span>
+                       <span> {modalTitle} </span>
                        <EditContactModal contact = {contact} usertag = {usertag}/>
                        </Menu.Item> }
           </Menu.Menu>

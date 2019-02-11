@@ -60,8 +60,10 @@ class Payments extends React.Component {
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
     let titleString = "Payment";
+    let modalString = "add new payment";
     if (french) {
          titleString ="paiement";
+         modalString = "ajouter nouveau paiement";
     }
 
     const paymentArray =[];
@@ -86,7 +88,7 @@ class Payments extends React.Component {
           <Menu.Menu style={this.state.clientsStyle} >
               {display && payments && this.displayPayments(paymentArray)}
               {display && <Menu.Item style={{margin:"1em"}}>
-                  <span style={{color:"white", fontStyle:"bold"}}> add new payment</span> <AddPaymentModal />
+                  <span style={{color:"white", fontStyle:"bold"}}> {modalString} </span> <AddPaymentModal />
               </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>
