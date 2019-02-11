@@ -48,8 +48,13 @@ class Employees extends React.Component {
 
 
   render() {
-    const {employees} = this.props;
+    const {employees, french} = this.props;
     const {display} = this.state;
+
+    let titleString = "Employee List";
+    if (french) {
+      titleString = "employe liste";
+    }
 
     const employeeArray =[];
     for (var key in employees) {
@@ -69,7 +74,7 @@ class Employees extends React.Component {
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
       <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Employee &nbsp; List &nbsp; &nbsp;
+          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
          <AddEmployeeModal usertag = {this.props.usertag}/>
         </Menu.Header>
         <Menu.Menu style = {this.state.employeesStyle}>
@@ -82,7 +87,8 @@ class Employees extends React.Component {
 
 const mapStateToProps = state => ({
      employees: state.user.employeeList,
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     french: state.user.french
    }
 );
 

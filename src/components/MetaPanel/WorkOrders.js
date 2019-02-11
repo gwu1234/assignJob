@@ -53,11 +53,15 @@ class WorkOrders extends React.Component {
 
 
   render() {
-    const {orders} = this.props;
+    const {orders, french} = this.props;
     const {display} = this.state;
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
+    let titleString = "Work Order";
+    if (french) {
+       titleString = "travail command";
+    }
 
     const orderArray =[];
     //const keyArray = [];
@@ -76,7 +80,7 @@ class WorkOrders extends React.Component {
     return (
       <Menu.Menu className ="OrdersMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Work Order
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && orders && this.displayOrders(orderArray)}
@@ -88,6 +92,7 @@ class WorkOrders extends React.Component {
 
 const mapStateToProps = state => ({
      orders: state.user.workOrder,
+     french: state.user.french
    }
 );
 

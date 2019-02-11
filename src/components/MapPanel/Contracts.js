@@ -54,11 +54,15 @@ class Contracts extends React.Component {
 
 
   render() {
-    const {contracts} = this.props;
+    const {contracts, french} = this.props;
     const {display} = this.state;
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
+    let titleString = "Contract";
+    if (french) {
+       titleString ="contrat";
+    }
 
     const contractArray =[];
     //const keyArray = [];
@@ -77,7 +81,7 @@ class Contracts extends React.Component {
     return (
       <Menu.Menu className ="ContractsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Contract
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && contracts && this.displayContracts(contractArray)}
@@ -92,6 +96,7 @@ class Contracts extends React.Component {
 
 const mapStateToProps = state => ({
      contracts: state.user.contracts,
+     french: state.user.french,
    }
 );
 

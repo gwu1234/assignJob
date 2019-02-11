@@ -152,7 +152,7 @@ onButtonClick = () => {
 
 
   render() {
-    const {contact, usertag} = this.props;
+    const {contact, usertag, french} = this.props;
     const {emailDisplay, phoneDisplay, cellDisplay, editDisplay} = this.state;
 
     //console.log (contact);
@@ -166,11 +166,15 @@ onButtonClick = () => {
 
     }
 
+    let titleString = "Client Contact";
+    if (french) {
+        titleString = "client contact";
+    }
 
     return (
       <Menu.Menu className="ClientContactMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={this.onButtonClick}/> &nbsp; Client &nbsp; Contact
+                <Icon name='eye' size ="big" onClick={this.onButtonClick}/> {titleString}
             </Menu.Header>
           <Menu.Menu style = {this.state.contactStyle}>
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
@@ -193,7 +197,8 @@ onButtonClick = () => {
 
 const mapStateToProps = state => ({
      contact: state.user.clientContact,
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     french: state.user.french
    }
 );
 

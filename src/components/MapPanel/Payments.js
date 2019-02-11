@@ -54,11 +54,15 @@ class Payments extends React.Component {
 
 
   render() {
-    const {payments} = this.props;
+    const {payments, french} = this.props;
     const {display} = this.state;
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
+    let titleString = "Payment";
+    if (french) {
+         titleString ="paiement";
+    }
 
     const paymentArray =[];
     //const keyArray = [];
@@ -77,7 +81,7 @@ class Payments extends React.Component {
     return (
       <Menu.Menu className ="PaymentsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Payment
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && payments && this.displayPayments(paymentArray)}
@@ -92,6 +96,7 @@ class Payments extends React.Component {
 
 const mapStateToProps = state => ({
      payments: state.user.payments,
+     french: state.user.french
    }
 );
 

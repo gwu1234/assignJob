@@ -29,7 +29,8 @@ const initialUserState = {
   payments:null,
   deliverys: null,
   selectedEmployee: null,
-  repeathours: 5
+  repeathours: 5,
+  french: false
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -289,6 +290,11 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                    ...state,
                    repeathours: action.payload.repeathours
+      };
+    case actionTypes.SET_FRENCH:
+            return {
+                   ...state,
+                   french: action.payload.french
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected

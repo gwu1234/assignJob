@@ -194,3 +194,12 @@ export const setRepeatHours= repeathours => {
     }
   }
 }
+//export const SET_FRENCH= "SET_FRENCH";
+export const setFrench = french => {
+  return {
+    type: actionTypes.SET_FRENCH,
+    payload: {
+      french: french
+    }
+  }
+}

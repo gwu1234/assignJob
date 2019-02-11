@@ -54,10 +54,14 @@ class Deliverys extends React.Component {
 
 
   render() {
-    const {deliverys} = this.props;
+    const {deliverys, french} = this.props;
     const {display} = this.state;
 
     //console.log(deliverys);
+    let titleString = "Delivery";
+    if (french) {
+       titleString = "livraison";
+    }
 
     const deliveryArray =[];
     //const keyArray = [];
@@ -76,7 +80,7 @@ class Deliverys extends React.Component {
     return (
       <Menu.Menu className ="DeliverysMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Delivery
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
               {display && deliverys && this.displayDeliverys(deliveryArray)}
@@ -91,6 +95,7 @@ class Deliverys extends React.Component {
 
 const mapStateToProps = state => ({
      deliverys: state.user.deliverys,
+     french: state.user.french
    }
 );
 

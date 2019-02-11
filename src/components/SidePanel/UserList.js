@@ -144,13 +144,17 @@ class UserList extends React.Component {
 
   render() {
     const { users} = this.state;
+    const {french} = this.props;
     //this.findUserContact();
 
+    let titleString = "Company List";
+    if (french) {
+       titleString = "compagne liste";
+    }
     return (
         <Menu.Menu className = "MenuMenu" >
            <Menu.Header as="h4" className="MenuHeader">
-              <Icon name="address book" size = "large"/> <span> Company &nbsp; List
-                  &nbsp;  </span> ({users.length})
+              <Icon name="address book" size = "large"/> <span> {titleString} </span> ({users.length})
            </Menu.Header>
            {this.displayUsers(users)}
         </Menu.Menu>
@@ -158,8 +162,11 @@ class UserList extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+   french: state.user.french,
+});
 
 export default connect(
-  null,
+  mapStateToProps,
   { setUserContact, setCurrentUser, setEmployeeList, setClientList, setUserTag }
 )(UserList);

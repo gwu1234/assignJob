@@ -113,7 +113,7 @@ class Clients extends React.Component {
   }
 
   render() {
-    const {clients, currentUser, usertag, geoEncoding} = this.props;
+    const {clients, currentUser, usertag, geoEncoding, french} = this.props;
     const {display, currentGeoEncoding} = this.state;
     //console.log("clients current User name = " );
     //console.log(currentUser.name);
@@ -121,6 +121,11 @@ class Clients extends React.Component {
     //console.log("clients usertag = " );
     //console.log(usertag);
     //display && clients && this.displayClients(clients)}
+
+    let titleString = "Client List";
+    if (french) {
+        titleString = "client liste";
+    }
 
     //converting nested objects to object array
     const clientArray =[];
@@ -173,7 +178,7 @@ class Clients extends React.Component {
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> &nbsp; Client &nbsp; List &nbsp; &nbsp;
+                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
                 <AddClientModal open={false} userName={userName} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
@@ -189,7 +194,8 @@ const mapStateToProps = state => ({
      currentUser: state.user.currentUser,
      usertag: state.user.usertag,
      admin: state.user.admin,
-     geoEncoding: state.user.geoEncoding
+     geoEncoding: state.user.geoEncoding,
+     french: state.user.french
    }
 );
 

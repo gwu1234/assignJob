@@ -3,15 +3,30 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
-import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient} from "../../actions";
+import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench} from "../../actions";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
 
 class UserPanel extends React.Component {
-  state = {
-    user: this.props.currentUser,
-    mapview: false
-  };
+  constructor(props) {
+      super(props);
+      this.state = {
+        user: this.props.currentUser,
+        mapview: false,
+     }
+  }
+
+  handleFrench=()=>{
+      const {french} = this.props;
+      /*console.log("at handleFrench") ;
+      console.log(this.state.mapview);
+      this.setState ({
+           isFrench: !isFrench
+      })*/
+
+      this.props.setFrench(!french);
+  }
+
 
   displayAssigned(employee) {
     this.setState ({
@@ -21,7 +36,7 @@ class UserPanel extends React.Component {
     this.props.setSelectedEmployee(employee);
   }
 
-  dropdownOptions = (employees) => {
+  dropdownOptions = (employees, isFrench) => {
       let optionArray = [];
 
       let username = "";
@@ -29,37 +44,68 @@ class UserPanel extends React.Component {
           username = this.state.user.displayName;
       }
 
-      const titleArray =
-  [
-    {
-      key: "user",
-      text: (
-        <span>
-          Signed in as <strong>{username}</strong>
-        </span>
-      ),
-      disabled: true
-    }];
+      const titleArray = isFrench ?
+       [
+        {
+           key: "user",
+           text: (
+               <span>
+                  Signed in comme <strong>{username}</strong>
+              </span>
+           ),
+           disabled: true
+       }
+      ]:
+      [
+         {
+            key: "user",
+            text: (
+                 <span>
+                    Signed in as <strong>{username}</strong>
+                 </span>
+            ),
+            disabled: true
+         }
+      ];
 
-    const userOptions =
+    const userOptions = isFrench?
     [
-    {
-      key: "textview",
-      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
-    },
-    {
-      key: "mapview",
-      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
-    },
-    {
-      key: "employeeview",
-      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
-    },
-    {
-      key: "unassignedview",
-      text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> not assigned </span>
-    }
-   ];
+      {
+         key: "textview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> texte view </span>
+      },
+      {
+         key: "mapview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> tous les clientes </span>
+      },
+      {
+         key: "employeeview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> tous les employees </span>
+      },
+      {
+         key: "unassignedview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> non assigne </span>
+      }
+    ]:
+    [
+      {
+         key: "textview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
+      },
+      {
+         key: "mapview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
+      },
+      {
+         key: "employeeview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
+      },
+      {
+         key: "unassignedview",
+         text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> not assigned </span>
+      }
+    ];
+
 
    if (this.state.user) {
      optionArray= titleArray.concat(userOptions);
@@ -91,10 +137,20 @@ class UserPanel extends React.Component {
     text: <RepeatModal />
   }
 
+  const french = isFrench ? {
+    key: "french",
+    text: <span onClick={this.handleFrench}> Anglais </span>
+  } : {
+    key: "french",
+    text: <span onClick={this.handleFrench}> French </span>
+  };
+
   if (!this.state.user) {
     optionArray.push(signin);
+    optionArray.push(french);
   } else {
     optionArray.push(signout);
+    optionArray.push(french);
     optionArray.push(repeattimer);
   }
 
@@ -148,9 +204,14 @@ class UserPanel extends React.Component {
 
 
   render() {
-    const { user } = this.state;
-    const {employees} = this.props;
+    const { user} = this.state;
+    const {employees, french} = this.props;
     //console.log ("userPanel User displayName = ", user.displayName);
+
+    let placeHolder = 'Dropdown Control Menu';
+    if (french) {
+       placeHolder = "controlle menu"
+    }
 
     return (
       <Menu.Menu className="UserPanelMenuMenu">
@@ -158,9 +219,9 @@ class UserPanel extends React.Component {
               <Icon name="truck" /> AssignJobs
             </Menu.Header>
               <Dropdown
-                placeholder='Dropdown Control Menu'
+                placeholder={placeHolder}
                 selection
-                options={this.dropdownOptions(employees)}
+                options={this.dropdownOptions(employees, french)}
                 style = {{color: "white", left: "10px", fontSize:"0.9em"}}
               />
 
@@ -172,8 +233,9 @@ class UserPanel extends React.Component {
 const mapStateToProps = state => ({
    employees: state.user.employeeList,
    currentUser: state.user.currentUser,
+   french: state.user.french,
 });
 
 export default connect(
-  mapStateToProps, {setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient}
+  mapStateToProps, {setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench}
 )(UserPanel);
