@@ -133,16 +133,31 @@ export default class EditContactModal extends Component {
   };
 
   isFormValid() {
-    const {street, postcode,
+    const {street, postcode, city,
            phone1, phone2, phone3, phone4,
            cell1, cell2, cell3, cell4,
            email1, email2, email3, email4}
            = this.state;
 
-    if (!street || !postcode ){
-       window.alert("street name, number and post code are required");
-       return false;
-    }
+           if (!street || !postcode ){
+              window.alert("street name, number and post code are required");
+              return false;
+           } else if (street.length < 3) {
+             window.alert("full street name and number please");
+             return false;
+           } else if (postcode.length < 5) {
+             window.alert("full postcode please");
+             return false;
+           }
+
+           if (!city){
+              window.alert("city is required");
+              return false;
+           } else if (city.length < 3) {
+             window.alert("full city name please");
+             return false;
+           }
+
 
     if (!phone1 && !cell1 && !email1){
        window.alert("at least one phone, one cell or one email is required");

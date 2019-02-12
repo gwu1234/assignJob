@@ -227,23 +227,44 @@ class EditEmployeeModal extends Component {
   };
 
   isFormValid() {
-    const {lastname, firstname, street, postcode,
+    const {lastname, firstname, street, postcode, city,
            phone1, phone2, cell1, cell2}
            = this.state;
-    if (!lastname || !firstname ){
-       window.alert("lastname and firstname are required");
-       return false;
-    }
+           if (!lastname || !firstname ){
+              window.alert("lastname and firstname are required");
+              return false;
+           } else if (lastname.length < 2) {
+              window.alert("full lastname please");
+              return false;
+           } else if (firstname.length < 2) {
+              window.alert("full firstname please");
+              return false;
+           }
 
-    if (!street || !postcode ){
-       window.alert("street name, number and post code are required");
-       return false;
-    }
+           if (!street || !postcode ){
+              window.alert("street name, number and post code are required");
+              return false;
+           } else if (street.length < 3) {
+             window.alert("full street name and number please");
+             return false;
+           } else if (postcode.length < 5) {
+             window.alert("full postcode please");
+             return false;
+           }
 
-    if (!phone1 && !phone2 && !cell1 && !cell2 ){
-       window.alert("at least one phone or cell number is required");
-       return false;
-    }
+           if (!city){
+              window.alert("city is required");
+              return false;
+           } else if (city.length < 3) {
+             window.alert("full city name please");
+             return false;
+           }
+
+           if (!phone1 && !cell1 && !phone2 && !cell2){
+              window.alert("at least one phone, one cell is required");
+              return false;
+           }
+
     return true;
   }
 
