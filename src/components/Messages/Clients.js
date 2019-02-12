@@ -141,6 +141,9 @@ class Clients extends React.Component {
        clientArray.push(newClient);
     }
 
+    // sort list by the lastname
+    clientArray.sort((a, b) => a.client.lastname.localeCompare(b.client.lastname));
+
     //if (geoEncoding == GEOCODING_RENEWED) {
     //   this.updateClients(clients);
        //const clientsTag = "repos/" + usertag +"/clients/tags";

@@ -56,6 +56,8 @@ class Employees extends React.Component {
       titleString = "employe liste";
     }
 
+    //console.log(employees);
+
     const employeeArray =[];
     for (var key in employees) {
        //console.log ("employees key = " + key );
@@ -65,6 +67,10 @@ class Employees extends React.Component {
        }
        employeeArray.push(newEmployee);
     }
+
+    // sort the employee by the last name
+    employeeArray.sort((a, b) => a.employee.lastname.localeCompare(b.employee.lastname));
+    //console.log(employeeArray);
 
     /*<Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
         <Button icon size="mini" onClick={() => this.onButtonClick(displ ay)}> <Icon name='eye' size ="large"/> </Button> &nbsp; Client &nbsp; List &nbsp; &nbsp;
