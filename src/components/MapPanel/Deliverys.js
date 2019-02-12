@@ -78,6 +78,19 @@ class Deliverys extends React.Component {
        deliveryArray.push(newDelivery);
     }
 
+    // sort the delivery by the time
+    deliveryArray.sort((a, b) => {
+            const dataA = new Date(a.delivery.date);
+            const timeA = dataA.getTime();
+            //console.log(timeA);
+            const dataB = new Date(b.delivery.date);
+            const timeB = dataB.getTime();
+            //console.log(timeB);
+            return (parseInt(timeA)>parseInt(timeB)? -1: 1);
+            //return (aSize < bSize) ? -1 : (aSize > bSize) ? 1 : 0;;
+          }
+       );
+    //console.log(deliveryArray);
 
     return (
       <Menu.Menu className ="DeliverysMenuMenu">
