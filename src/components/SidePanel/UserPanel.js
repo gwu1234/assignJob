@@ -117,6 +117,7 @@ class UserPanel extends React.Component {
        text: <EmployeeJob
              displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
              employee={employees[key]}
+             french={isFrench}
              />
      }
      optionArray.push(newEmployee);
