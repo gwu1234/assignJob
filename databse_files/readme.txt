@@ -6,3 +6,5 @@
 {9} from /repos/jc+infojccom
 {10} from root
 {11} from /repos/jc+infocom
+{12} from /repos/jc+infocom
+{repo-template.json}  a template for any company at root/repo/company/

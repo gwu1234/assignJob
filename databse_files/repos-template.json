@@ -1,0 +1,126 @@
+{
+    "clients" : {
+      "data" : {
+        "101" : {
+          "contact" : {
+            "cells" : [ "5149993333" ],
+            "city" : "Kirkland",
+            "country" : "Canada",
+            "emails" : [ "dan@yahoo.com" ],
+            "firstname" : "Dan",
+            "lastname" : "Scharch",
+            "name" : "Dan Scharch",
+            "phones" : [ "5146667777" ],
+            "postcode" : "H9H 5E5",
+            "province" : "Quebec",
+            "street" : "79 Rue Hedgerow Kirkland"
+          }
+        },
+        "102" : {
+          "contact" : {
+            "cells" : [ "5148884444" ],
+            "city" : "Pointe-Claire",
+            "country" : "Canada",
+            "emails" : [ "david@yahoo.ca" ],
+            "firstname" : "David",
+            "lastname" : "Cook",
+            "name" : "David Cook",
+            "phones" : [ "5146667777" ],
+            "postcode" : "H9R 4X7",
+            "province" : "Quebec",
+            "street" : "222 Saint-Louis Ave"
+          }
+        },
+        "103" : {
+          "contact" : {
+            "cells" : [ "5140086655" ],
+            "city" : "Pierrefonds",
+            "country" : "canada",
+            "emails" : [ "david@yahoo.com" ],
+            "firstname" : "David",
+            "lastname" : "Smith",
+            "name" : "David  Smith",
+            "phones" : [ "5141121122" ],
+            "postcode" : "H9H 3M1",
+            "province" : "quebec",
+            "street" : "40 Rue Neveu"
+          }
+        }
+      },
+      "tags" : {
+        "0" : {
+          "city" : "Kirkland",
+          "firstname" : "Dan",
+          "lastname" : "Scharch",
+          "name" : "Dan Scharch",
+          "clientKey": "0",
+          "postcode" : "H9H 5E5",
+          "street" : "79 Rue Hedgerow Kirkland",
+          "tag" : "101"
+        },
+        "1" : {
+          "city" : "Kirkland",
+          "firstname" : "David",
+          "lastname" : "Cook",
+          "name" : "David Cook",
+          "clientKey": "1",
+          "postcode" : "H9R 4X7",
+          "street" : "222 Saint-Louis Ave",
+          "tag" : "102"
+        },
+        "2" : {
+          "city" : "Pierrefonds",
+          "firstname" : "David",
+          "lastname" : "Smith",
+          "name" : "David  Smith",
+          "clientKey": "2",
+          "postcode" : "H9H 3M1",
+          "street" : "40 Rue Neveu",
+          "tag" : "103"
+        }
+      }
+    },
+    "contact" : {
+      "cells" : [ "5147584067" ],
+      "city" : "kirkland",
+      "country" : "canada",
+      "emails" : [ "info@alainfavreau.com" ],
+      "phones" : [5147584067],
+      "postcode" : "h4c2p6",
+      "province" : "quebec",
+      "street" : "932 laporte"
+    },
+    "email" : "info@alainfavreau.com",
+    "employees" : {
+      "0" : {
+        "cells" : [ 5141119999, 4382228888 ],
+        "city" : "Pointe-Claire",
+        "country" : "canada",
+        "emails" : [ "alain@yahoo.ca", "alain@gmail.com" ],
+        "firstname" : "alain",
+        "lastname" : "dubois",
+        "name" : "alain dubois",
+        "phones" : [ 5141119999, 5142229999 ],
+        "postcode" : "H9R1J7",
+        "province" : "quebec",
+        "street" : "125-127 Seigniory Ave",
+        "tag" : "0"
+      },
+      "1" : {
+        "cells" : [ 5149998888, 5144445555 ],
+        "city" : "Pointe-Claire",
+        "country" : "canada",
+        "emails" : [ "scot@yahoo.com", "scot@gmail.com" ],
+        "firstname" : "Scott",
+        "lastname" : "Hilgen",
+        "name" : "Scott Hilgen",
+        "phones" : [ "5147773389", 5142226666 ],
+        "postcode" : "H9R4Y3",
+        "province" : "quebec",
+        "street" : "39 Crois Carmel",
+        "tag" : "1"
+      }
+    },
+    "name" : "Alain Favreau",
+    "tag" : "AlainFavreau+infoalainfavreaucom"
+}
