@@ -6,6 +6,7 @@ import UserList from "./UserList";
 import { Menu } from "semantic-ui-react";
 import Contact from "../Messages/Contact";
 import Employees from "../Messages/Employees";
+import Trucks from "./Trucks";
 
 class SidePanel extends React.Component {
    state = {
@@ -25,8 +26,10 @@ class SidePanel extends React.Component {
       >
         <UserPanel currentUser={currentUser} />
         {admin && <UserList currentUser={currentUser} />}
-        {!admin && <Contact />}
         {!admin && <Employees/>}
+        {!admin && <Trucks/>}
+        {!admin && <Contact />}
+
       </Menu>
     );
   }

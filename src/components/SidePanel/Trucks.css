@@ -1,0 +1,18 @@
+.TrucksMenuMenu {
+   padding-top: 0.5em;
+   margin-top: 1.0em;
+   color: white;
+   size: tiny;
+   border: 2px dotted brown;
+}
+
+.TrucksMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.TrucksMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

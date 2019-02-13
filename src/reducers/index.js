@@ -30,7 +30,8 @@ const initialUserState = {
   deliverys: null,
   selectedEmployee: null,
   repeathours: 5,
-  french: false
+  french: false,
+  trucks: [],
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -283,6 +284,12 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                     ...state,
                     deliverys: action.payload.deliverys
+      };
+    case actionTypes.SET_TRUCKS:
+       //console.log (action.payload.trucks);
+              return {
+                      ...state,
+                      trucks: action.payload.trucks
       };
     case actionTypes.SET_REPEAT_HOURS:
      //console.log("at reducer = ::");

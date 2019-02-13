@@ -3,7 +3,9 @@ import firebase from "../../firebase";
 import Geocode from "react-geocode";
 //import response from "react-geocode";
 import { connect } from "react-redux";
-import { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding} from "../../actions";
+import {  setUserTag, setAdmin, setUserContact, setEmployeeList,
+          setClientList, setGeoEncoding, setTrucks}
+        from "../../actions";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -181,6 +183,21 @@ class Login extends React.Component {
                }
           });
 
+          const trucksTag = "repos/" + tagName +"/trucks";
+          //console.log("clientsTag = " + clientsTag);
+          const trucksRef = firebase.database().ref(trucksTag)
+
+           trucksRef.on('value', snapshot => {
+                const trucks= snapshot.val();
+                //console.log("truck list = ");
+                //console.log(trucks)
+                if (trucks) {
+                  this.props.setTrucks (trucks)
+                } else {
+                   this.props.setTrucks (null);
+               }
+          });
+
         })
         .catch(err => {
           console.error(err);
@@ -333,5 +350,5 @@ class Login extends React.Component {
 
 export default connect(
   null,
-  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding}
+  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding, setTrucks}
 )(Login);

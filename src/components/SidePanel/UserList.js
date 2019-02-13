@@ -1,7 +1,9 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag, setUserContact, setEmployeeList, setClientList } from "../../actions";
+import { setCurrentUser, setUserTag, setUserContact,
+         setEmployeeList, setClientList, setTrucks }
+       from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
 
@@ -119,6 +121,21 @@ class UserList extends React.Component {
                this.props.setClientList(null);
            }
       });
+
+      const trucksTag = "repos/" + tag +"/trucks";
+      //console.log("clientsTag = " + clientsTag);
+      const trucksRef = firebase.database().ref(trucksTag)
+
+       trucksRef.on('value', snapshot => {
+            const trucks= snapshot.val();
+            //console.log("user list Clients = ");
+            //console.log(clients)
+            if (trucks) {
+                this.props.setTrucks(trucks);
+           } else {
+               this.props.setTrucks(null);
+           }
+      });
   };
 
   setActiveUser = user => {
@@ -168,5 +185,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserContact, setCurrentUser, setEmployeeList, setClientList, setUserTag }
+  { setUserContact, setCurrentUser, setEmployeeList, setClientList, setUserTag, setTrucks}
 )(UserList);

@@ -1,0 +1,20 @@
+.TruckMenuMenu {
+  padding-top: 0.0em;
+  padding-bottom: 0.0em;
+  position: relative;
+  color: white;
+  size: tiny;
+  border: 1px dotted brown;
+}
+
+.TruckMenuItem {
+  opacity: 1.0;
+  color: white;
+  font-size: 0.8em;
+  font-style: bold
+}
+
+.TruckMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

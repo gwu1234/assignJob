@@ -180,6 +180,15 @@ export const setDeliverys = deliverys => {
   }
 }
 
+export const setTrucks = trucks => {
+  return {
+    type: actionTypes.SET_TRUCKS,
+    payload: {
+      trucks: trucks
+    }
+  }
+}
+
 export const setUnassignedClient = () => {
   return {
     type: actionTypes.SET_UNASSIGNED_CLIENTS,
