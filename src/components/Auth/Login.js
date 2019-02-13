@@ -110,7 +110,32 @@ class Login extends React.Component {
                 const employees = snapshot.val();
                 //console.log(employees)
                 if (employees) {
-                    this.props.setEmployeeList(employees);
+                  if (this.isGeocodeReady(employees)) {
+                      //console.log("lat and longitudes ready");
+                      this.props.setEmployeeList(employees);
+                      //const GEOCODING_DONE = 1;
+                      //const GEOCODING_RENEWED = 2;
+                      this.props.setGeoEncoding(GEOCODING_DONE);
+                  }
+                  else {
+                      const addresses =[];
+                       for (var key in employees) {
+                         if (!employees[key].lat || !employees[key].lng ){
+                             const addressStr =   employees[key].street + ", "
+                                         + employees[key].city + ", "
+                                         + employees[key].postcode;
+
+                             const address = {
+                                 address: addressStr,
+                                 key : key
+                             }
+                             addresses.push (address);
+                         }
+                      }
+                      this.getLocations(employees, addresses, true);
+                      //console.log(coords.length);
+                      //console.log(coords);
+                  }
                } else {
                    this.props.setEmployeeList(null);
                }
@@ -147,7 +172,7 @@ class Login extends React.Component {
                                addresses.push (address);
                            }
                         }
-                        this.getLocations(clients, addresses);
+                        this.getLocations(clients, addresses, false);
                         //console.log(coords.length);
                         //console.log(coords);
                     }
@@ -181,7 +206,7 @@ class Login extends React.Component {
         return result;
   }
 
-  async getLocations(clients, locations) {
+  async getLocations(clients, locations, isEmployee) {
     Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
     const coords = []
     for (const l of locations) {
@@ -195,8 +220,13 @@ class Login extends React.Component {
     //console.log(coords);
     //console.log(coords.length);
     //console.log(clients);
-    this.props.setClientList(clients);
-    this.props.setGeoEncoding(GEOCODING_RENEWED);
+    if (isEmployee) {
+       this.props.setEmployeeList(clients);
+       this.props.setGeoEncoding(GEOCODING_RENEWED);
+    } else {
+       this.props.setClientList(clients);
+       this.props.setGeoEncoding(GEOCODING_RENEWED);
+    }
     //this.props.setLatLng (coords);
     //return coords;
   }
