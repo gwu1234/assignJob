@@ -27,7 +27,7 @@ export default class DoneModal extends Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size='small'
+        size='mini'
         style={{background: "#ccc"}}
       >
         <Header icon='check circle outline' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>

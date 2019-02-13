@@ -16,6 +16,7 @@ class MapUnassignModal extends Component {
 
   handleClose =() => {
     this.setState({ modalOpen: false });
+    this.props.onClose();
   }
 
   handleCancel =() => {
@@ -23,6 +24,7 @@ class MapUnassignModal extends Component {
     this.setState({
        modalOpen: false,
     });
+    this.props.onClose();
   }
 
 

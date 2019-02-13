@@ -18,6 +18,7 @@ class MapAssignModal extends Component {
 
   handleClose =() => {
     this.setState({ modalOpen: false });
+    this.props.onClose();
   }
 
   handleCancel =() => {
@@ -25,6 +26,7 @@ class MapAssignModal extends Component {
        modalOpen: false,
        selectedEmployee: null
     });
+    this.props.onClose();
   }
 
   dropdownOptions = (employees) => {
@@ -64,6 +66,10 @@ class MapAssignModal extends Component {
     //console.log("usertag = " + usertag);
     //console.log(selectedEmployee);
 
+    if (!selectedEmployee) {
+        window.alert("select an employee first");
+        return;
+    }
     const assignedPath = "repos/" + usertag + "/employees/" + selectedEmployee.tag +"/assigned";
     //console.log(assignedPath);
     const assignedRef = firebase.database().ref(assignedPath);

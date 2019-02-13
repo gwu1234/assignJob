@@ -103,7 +103,7 @@ class RepeatModal extends Component {
 
     return (
       <Modal
-        trigger={<Button icon size="large" color="grey" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}> Set Repeat Timer</Button>}
+        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}> Set Repeat Timer</span>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic

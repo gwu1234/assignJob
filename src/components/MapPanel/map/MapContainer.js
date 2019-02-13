@@ -210,7 +210,7 @@ class MapContainer extends Component {
 
     }
 
-  onClose = props => {
+  onClose = () => {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
@@ -317,6 +317,7 @@ class MapContainer extends Component {
                                  employeeKey={this.state.selectedPlace.employeeKey}
                                  employeeName={this.state.selectedPlace.employeeName}
                                  usertag={usertag}
+                                 onClose={()=>this.onClose()}
                                  />}
                         {!this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
                         {!this.state.selectedPlace.isAssigned &&
@@ -331,6 +332,7 @@ class MapContainer extends Component {
                                  clientLng={this.state.selectedPlace.clientLng}
                                  usertag={usertag}
                                  employees={employees}
+                                 onClose={()=>this.onClose()}
                                 />}
                      </div>
                  </div>
