@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon, Button} from "semantic-ui-react";
 import Truck from "./Truck";
-//import AddClientModal from "./AddClientModal";
+import AddTruckModal from "./AddTruckModal";
 //import { setGeoEncoding } from "../../actions";
 import "./Trucks.css";
 //const GEOCODING_DONE = 1;
@@ -11,72 +11,15 @@ import "./Trucks.css";
 //const GEOCODING_PUSHED= 3;
 
 class Trucks extends React.Component {
-   constructor(props) {
-       super(props);
+  state = {
+    display: false,
+  };
 
-       this.state = {
-            clientsStyle: {
-                visibility: 'hidden',
-                height: "2px",
-            },
-           display: false,
-       }
-    }
-
-   onButtonClick = (display) => {
-       const {admin, trucks} = this.props;
-
-       if (display){
-           this.setState({
-               trucksStyle: {
-                   ...this.state.trucksStyle,
-                   visibility: "hidden",
-                   height: "2px",
-               },
-               display: false,
-           })
-       } else if (admin && trucks) {
-           this.setState({
-               trucksStyle: {
-                 ...this.state.trucksStyle,
-                 visibility: "visible",
-                 paddingTop: "0.0em",
-                 position: "relative",
-                 color: "white",
-                 size: "tiny",
-                 border: "2px dotted black",
-                 overflow: "scroll",
-                 height: "150px",
-             },
-             display: true,
-          })
-        } else if (!admin && trucks){
-          this.setState({
-              trucksStyle: {
-                ...this.state.trucksStyle,
-                visibility: "visible",
-                paddingTop: "0.0em",
-                position: "relative",
-                color: "white",
-                size: "tiny",
-                border: "2px dotted black",
-                overflow: "scroll",
-                height: "200px",
-            },
-            display: true,
-         })
-        }
-        else {
-              this.setState({
-                 trucksStyle: {
-                      ...this.state.trucksStyle,
-                      visibility: "hidden",
-                      height: "2px",
-                  },
-                  display: false,
-              })
-        };
-      }
+  onButtonClick = (display) => {
+     this.setState({
+         display: !display
+     })
+  };
 
    displayTrucks = trucks =>
       trucks.length > 0 &&
@@ -94,7 +37,7 @@ class Trucks extends React.Component {
   }*/
 
   render() {
-    const {french, trucks} = this.props;
+    const {french, trucks, usertag} = this.props;
     const {display} = this.state;
 
     let titleString = "Truck List";
@@ -115,13 +58,14 @@ class Trucks extends React.Component {
     }
 
     return (
-      <Menu.Menu className ="TrucksMenuMenu">
-            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
-            </Menu.Header>
-          <Menu.Menu style={this.state.trucksStyle} >
-              {display && truckArray.length>0 && this.displayTrucks(truckArray)}
-          </Menu.Menu>
+      <Menu.Menu className="TrucksMenuMenu" >
+      <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+          <AddTruckModal usertag = {usertag}/>
+        </Menu.Header>
+        <Menu.Menu style={{opacity: 1.0, fontSize: "1.0em",color: "white", fontStyle: "bold", marginTop:"0.4em", marginBottom:"0.4em"}}>
+          {display && trucks && this.displayTrucks(truckArray)}
+        </Menu.Menu>
       </Menu.Menu>
     );
   }
@@ -129,7 +73,9 @@ class Trucks extends React.Component {
 
 const mapStateToProps = state => ({
      french: state.user.french,
-     trucks: state.user.trucks
+     trucks: state.user.trucks,
+     admin: state.user.admin,
+     usertag: state.user.usertag,
    }
 );
 

@@ -16,7 +16,7 @@ const initialUserState = {
   currentUser: null, // user object
   isLoading: true,
   admin: false,
-  usertag: 'initial-tag',
+  usertag: null,
   userContact: null,
   employeeList: null,
   clientList: null,
