@@ -113,7 +113,7 @@ class Client extends React.Component {
 
 
   render() {
-    const {client, usertag, clientKey} = this.props;
+    const {client, usertag, clientKey, french} = this.props;
     const {display} = this.state;
 
     let name= '';
@@ -122,6 +122,15 @@ class Client extends React.Component {
     if (client) {
         name = client.lastname + ", " + client.firstname;
         address = client.street+ ", " + client.city + ", " + client.postcode;
+    }
+
+    let viewTitle = "view client data";
+    if (french) {
+       viewTitle = "voir cliente donnee";
+    }
+    let jobTitle = "add work order";
+    if (french) {
+       jobTitle = "ajouter travail order";
     }
 
     return (
@@ -135,10 +144,10 @@ class Client extends React.Component {
          </Menu.Item>
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
               <Icon name='folder open' size ="big" onClick={() => this.onButtonClick(client)} style ={{position: "relative", float: "left" }}/>
-              <span style ={{position: "relative", left: "16px" }}> view client data </span>
+              <span style ={{position: "relative", left: "16px" }}> {viewTitle} </span>
           </Menu.Item>}
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
-              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} clientKey={clientKey}/> <span style ={{position: "relative", left: "16px" }}> add work order </span>
+              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} clientKey={clientKey} french={french}/> <span style ={{position: "relative", left: "16px" }}> {jobTitle} </span>
           </Menu.Item>}
          </Menu.Menu>
      );
@@ -147,7 +156,8 @@ class Client extends React.Component {
 
 //export default Client;
 const mapStateToProps = state => ({
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     french: state.user.french,
    }
 );
 

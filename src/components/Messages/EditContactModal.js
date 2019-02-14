@@ -173,8 +173,11 @@ export default class EditContactModal extends Component {
   };
 
   render() {
-    const {contact, usertag} = this.props;
+    const {contact, usertag, french} = this.props;
     let titleString = "Edit Company Info : ";
+    if (french) {
+        titleString = "modifier compagne info : "
+    }
 
     if (contact.name) {
       titleString = titleString + contact.name;
@@ -243,7 +246,7 @@ export default class EditContactModal extends Component {
         size='large'
         style={{background: "#ccc"}}
       >
-        <Header icon='add user' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='edit' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
         <Form >
            <Form.Group inline width='equal' >

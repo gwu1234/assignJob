@@ -344,10 +344,14 @@ displayAssigned = assigneds =>
 
 
   render() {
-    const {employee, employeeKey, usertag, id, clients} = this.props;
+    const {employee, employeeKey, usertag, id, clients, french} = this.props;
     const {assigned, unassigned} = this.state;
 
-    const titleString = "Edit Employee : " + employee.name;
+    let titleString = "Edit Employee : " + employee.name;
+    if (french) {
+       titleString = "modifier employe : " + employee.name;
+    }
+
     let email1 = "";
     let email2 = "";
     let phone1 = "";
@@ -579,6 +583,7 @@ displayAssigned = assigneds =>
 
 const mapStateToProps = state => ({
      clients: state.user.clientList,
+     french: state.user.french,
    }
 );
 

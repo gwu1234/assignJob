@@ -63,15 +63,17 @@ export default class AddOrderModal extends Component {
   };
 
   render() {
-    //const {clientname, usertag, clienttag } = this.props;
-    const {clientname} = this.props;
+    const {clientname, french} = this.props;
     //console.log ("AddOrderModal clientname = " + clientname );
     //console.log ("AddOrderModal usertag =" + usertag );
     //console.log ("AddOrderModal clienttag =" + clienttag );
 
-    const titleString = clientname + ":  " + "Add New Order";
-    //console.log (titleString);
-    //const { value } = this.state
+    let titleString = clientname + ":  " + "Add New Order";
+    let worklabel ="Work";
+    if (french) {
+       titleString = clientname + ":  " + "ajouter nouveau order";
+       worklabel = "Travail";
+    }
 
     return (
       <Modal
@@ -82,7 +84,7 @@ export default class AddOrderModal extends Component {
         size='small'
         style={{background: "#ccc"}}
       >
-        <Header icon='add user' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='folder outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
         <Form >
            <Form.Group inline width='equal' >
@@ -92,7 +94,7 @@ export default class AddOrderModal extends Component {
                            name="date"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Work'
+                            label={worklabel}
                             placeholder='snow removal'
                             name="work"
                             onChange={this.handleChange} />

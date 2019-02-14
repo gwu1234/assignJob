@@ -189,7 +189,7 @@ onButtonClick = () => {
             {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
             {editDisplay && contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
                        <span> {modalTitle} </span>
-                       <EditContactModal contact = {contact} usertag = {usertag}/>
+                       <EditContactModal contact = {contact} usertag = {usertag} french={french}/>
                        </Menu.Item> }
           </Menu.Menu>
       </Menu.Menu>

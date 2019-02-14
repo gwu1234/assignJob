@@ -38,7 +38,7 @@ class EmployeeClient extends React.Component {
     closeCancel = () => this.setState({ open: false })
 
  render() {
-    const {client, usertag, clientKey, employee, employeeKey} = this.props;
+    const {client, usertag, clientKey, employee, employeeKey, french} = this.props;
 
     let name= '';
     let address ='';
@@ -48,6 +48,9 @@ class EmployeeClient extends React.Component {
         name = client.lastname + ", " + client.firstname + ", " + client.street+ ", " + client.city ;
         //address = client.street+ ", " + client.city + ", " + client.postcode;
         confirmMsg = "Do You Want Assign " + client.lastname + " " + client.firstname + " to " + employee.name + " ?";
+        if (french) {
+          confirmMsg = "veuillez assigner " + client.lastname + " " + client.firstname + " a " + employee.name + " ?";
+        }
     }
 
     return (
@@ -69,7 +72,8 @@ class EmployeeClient extends React.Component {
 
 //export default Client;
 const mapStateToProps = state => ({
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     french: state.user.french,
    }
 );
 

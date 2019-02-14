@@ -40,7 +40,7 @@ class EmployeeAssigned extends React.Component {
     closeCancel = () => this.setState({ open: false })
 
  render() {
-    const {usertag, employee, employeeKey, assigned} = this.props;
+    const {usertag, employee, employeeKey, assigned, french} = this.props;
 
     let name= '';
     let address ='';
@@ -49,6 +49,9 @@ class EmployeeAssigned extends React.Component {
     if (assigned) {
         name = assigned.clientName + ", " + assigned.clientStreet+ " " + assigned.clientCity;
         confirmMsg = "Do You Want Remove " + name + " from " + employee.name + " Job List?";
+        if (french) {
+           confirmMsg = "veuillez enlever " + name + " de la " + employee.name + " travail liste?";
+        }
     }
 
     return (
@@ -70,7 +73,8 @@ class EmployeeAssigned extends React.Component {
 
 //export default Client;
 const mapStateToProps = state => ({
-     usertag: state.user.usertag
+     usertag: state.user.usertag,
+     french: state.user.french,
    }
 );
 

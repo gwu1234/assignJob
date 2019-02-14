@@ -60,7 +60,7 @@ class WorkOrders extends React.Component {
     //display && clients && this.displayClients(clients)}
     let titleString = "Work Order";
     if (french) {
-       titleString = "travail command";
+       titleString = "travail order";
     }
 
     const orderArray =[];
