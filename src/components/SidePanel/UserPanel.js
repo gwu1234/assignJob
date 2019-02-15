@@ -6,6 +6,7 @@ import "./UserPanel.css";
 import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench} from "../../actions";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
+import InputFileReader from "./InputFileReader";
 
 class UserPanel extends React.Component {
   constructor(props) {
@@ -146,6 +147,13 @@ class UserPanel extends React.Component {
     text: <span onClick={this.handleFrench}> French </span>
   };
 
+  const datareader= {
+    key: "datareader",
+    text: <InputFileReader usertag={this.props.usertag}/>
+  }
+
+
+
   if (!this.state.user) {
     optionArray.push(signin);
     optionArray.push(french);
@@ -153,6 +161,7 @@ class UserPanel extends React.Component {
     optionArray.push(signout);
     optionArray.push(french);
     optionArray.push(repeattimer);
+    optionArray.push(datareader);
   }
 
   //optionArray.push(signout);
@@ -235,6 +244,7 @@ const mapStateToProps = state => ({
    employees: state.user.employeeList,
    currentUser: state.user.currentUser,
    french: state.user.french,
+   usertag: state.user.usertag,
 });
 
 export default connect(

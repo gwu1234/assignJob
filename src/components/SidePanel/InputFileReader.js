@@ -1,4 +1,5 @@
 import React , { Component } from 'react';
+import firebase from "../../firebase";
 import { Grid, Button, Header, Icon, Modal, Form, Menu, Confirm} from 'semantic-ui-react';
 
 export default class InputFileReader extends React.Component{
@@ -20,8 +21,20 @@ export default class InputFileReader extends React.Component{
        });
     }
 
-    closeConfirm =() => {
+    closeConfirm =(jsonObject) => {
+      //console.log(jsonObject);
+      const {usertag} = this.props;
 
+      const path = "repos/" + usertag ;
+      //console.log(path);
+      const dataRef = firebase.database().ref(path);
+      dataRef.set(jsonObject);
+
+      this.setState({
+        modalOpen: false,
+        date:null,
+        open: false,
+       });
     }
 
     onButtonClick = () =>{
@@ -78,7 +91,7 @@ export default class InputFileReader extends React.Component{
 
 render() {
     const data = this.state.data;
-    console.log (data);
+    //console.log (data);
 
     var myObject = null;
     let parsed = false;
@@ -126,8 +139,8 @@ render() {
               <Icon name='check' size ="large" color="green" onClick={() => this.onButtonClick()} style ={{position: "relative", float: "right" }}/>
               <span style ={{position: "relative", left: "0px" }}> json data is valid. click CHECK to continue </span>
               <Confirm open={this.state.open} style={{color:"black", fontSize:"1.2em", fontStyle:"bold"}}
-                     content={conformMsg } onCancel={()=>this.handleCancel()} 
-                     onConfirm={()=>this.closeConfirm()} />
+                     content={conformMsg } onCancel={()=>this.handleCancel()}
+                     onConfirm={()=>this.closeConfirm(myObject)} />
           </Menu.Menu>}
           {parsed && !myObject && <Menu.Menu style={{width:"%100",color: "red",
                          border: "2px dotted brown", overflow:"scroll"}} >
