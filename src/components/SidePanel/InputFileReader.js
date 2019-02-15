@@ -102,9 +102,9 @@ render() {
            //console.log (myObject);
         }
         catch (e) {
-            alert("json data error");
+            //alert("json data error");
             myObject = null;
-            parsed = false;
+            parsed = true;
         }
    }
 
@@ -142,8 +142,8 @@ render() {
                      content={conformMsg } onCancel={()=>this.handleCancel()}
                      onConfirm={()=>this.closeConfirm(myObject)} />
           </Menu.Menu>}
-          {parsed && !myObject && <Menu.Menu style={{width:"%100",color: "red",
-                         border: "2px dotted brown", overflow:"scroll"}} >
+          {parsed && !myObject && <Menu.Menu style={{width:"%100",color: "red", fontSize:"1.3em",
+                         border: "2px dotted brown", paddingTop:"0.3em"}} >
               <span style ={{position: "relative", left: "0px" }}> json data is not correctly formatted</span>
 
           </Menu.Menu>}
