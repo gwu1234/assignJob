@@ -1,8 +1,8 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
 //import { } from "../../actions";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu} from "semantic-ui-react";
 import "./Truck.css";
 import EditTruckModal from "./EditTruckModal";
 
@@ -23,7 +23,7 @@ class Truck extends React.Component {
     const {display} = this.state;
 
     let name= '';
-    let address ='';
+    //let address ='';
 
     if (truck) {
         name = truck.model + ", " + truck.year ;

@@ -27,7 +27,7 @@ class EditOrderModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work} = this.state;
-         const {order, orderKey, contact, usertag} = this.props;
+         const {orderKey, contact, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);

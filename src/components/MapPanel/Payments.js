@@ -1,7 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Button} from "semantic-ui-react";
+import { Menu, Icon} from "semantic-ui-react";
 import Payment from "./Payment";
 import AddPaymentModal from "./AddPaymentModal";
 import "./Payments.css";

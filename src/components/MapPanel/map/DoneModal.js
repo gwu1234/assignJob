@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import {Button, Header, Icon, Modal} from 'semantic-ui-react';
 
 export default class DoneModal extends Component {
   state = {
@@ -18,7 +18,7 @@ export default class DoneModal extends Component {
   };*/
 
   render() {
-    const {clientname, workIsDone} = this.props;
+    const {clientname} = this.props;
     const titleString = clientname + " :  " + "Work is Done ?";
 
     return (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import {Button, Header, Icon, Modal} from 'semantic-ui-react';
 
 export default class RepeatModal extends Component {
   state = {

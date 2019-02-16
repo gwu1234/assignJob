@@ -68,7 +68,7 @@ class AddDeliveryModal extends Component {
   };
 
   render() {
-    const {delivery, contact, deliveryKey} = this.props;
+    const {contact } = this.props;
 
     let titleString = "Add Delivery";
     if (contact) {

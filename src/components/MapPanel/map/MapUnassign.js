@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../../firebase";
 
-import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
+import { Button, Header, Modal} from 'semantic-ui-react';
 
 class MapUnassignModal extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class MapUnassignModal extends Component {
        event.preventDefault();
     }
 
-    const {employeeName, employeeKey, assignedKey, clientName, clientKey, usertag} = this.props;
+    const {employeeKey, assignedKey, clientKey, usertag} = this.props;
 
     const clientPath = "repos/" + usertag + "/clients/tags/" + clientKey;
     const clientRef = firebase.database().ref(clientPath);

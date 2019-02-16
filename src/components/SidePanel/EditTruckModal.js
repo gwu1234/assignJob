@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-import Geocode from "react-geocode";
+//import Geocode from "react-geocode";
 import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
 import DeleteTruckModal from "./DeleteTruckModal"
@@ -44,7 +44,7 @@ class EditTruckModal extends Component {
           event.preventDefault();
       }
 
-      const {usertag, truck, truckKey } = this.props;
+      const {usertag, truckKey } = this.props;
       const truckPath = "repos/" + usertag + "/trucks/" + truckKey;
       //console.log (truckPath);
       const truckRef = firebase.database().ref(truckPath);
@@ -133,9 +133,9 @@ class EditTruckModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
-         const { model, contentChanged, modal, year, color} = this.state;
-         const {usertag, truckKey, truck } = this.props;
-         const name = model + " " + year + " " + color;
+         const { contentChanged, model, year, color} = this.state;
+         const {usertag, truckKey} = this.props;
+         //const name = model + " " + year + " " + color;
 
          if (contentChanged) {
 
@@ -148,8 +148,8 @@ class EditTruckModal extends Component {
 
              const truckPath = "repos/" + usertag + "/trucks/" + truckKey;
              const truckRef = firebase.database().ref(truckPath);
-             console.log(truckPath);
-             //truckRef.update(newTruck);
+             //console.log(truckPath);
+             truckRef.update(newTruck);
          }
 
          this.handleCancel();
@@ -196,8 +196,8 @@ class EditTruckModal extends Component {
 
 
   render() {
-    const {truck, truckKey, usertag, employees} = this.props;
-    const {model, year, color} = this.state;
+    const {truck, employees} = this.props;
+    //const {year, color} = this.state;
 
     const titleString = "Edit Truck: " + truck.model;
     const truckName = truck.model + " " + truck.year;

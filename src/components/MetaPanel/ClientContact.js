@@ -2,7 +2,7 @@ import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
 //import { setCurrentUser, setUserTag } from "../../actions";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu, Icon, Header } from "semantic-ui-react";
 import "./ClientContact.css";
 import EditClientContactModal from "./EditClientContactModal";
 

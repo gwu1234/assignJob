@@ -2,7 +2,7 @@ import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys} from "../../actions";
-import { Menu, Icon, Header, Button} from "semantic-ui-react";
+import { Menu, Icon} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
 

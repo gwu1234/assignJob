@@ -1,6 +1,6 @@
-import React , { Component } from 'react';
+import React from 'react';
 import firebase from "../../firebase";
-import { Grid, Button, Header, Icon, Modal, Form, Menu, Confirm} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Menu, Confirm} from 'semantic-ui-react';
 
 export default class InputFileReader extends React.Component{
     constructor(props) {
@@ -108,10 +108,10 @@ render() {
         }
    }
 
-   let myStr = null;
-   if (myObject) {
-       const myStr = JSON.stringify(myObject, null, '   ');
-   }
+   //let myStr = null;
+   //if (myObject) {
+    //   const myStr = JSON.stringify(myObject, null, '   ');
+   //}
 
    const conformMsg = "Do you really want to overwrite client database ?";
 

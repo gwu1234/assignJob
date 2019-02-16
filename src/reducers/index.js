@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import * as actionTypes from "../actions/types";
 
 const GEOCODING_DONE = 1;
-const GEOCODING_RENEWED = 2;
+//const GEOCODING_RENEWED = 2;
 
 const JOB_NEW = 0;
 const JOB_REPEAT = 1;
@@ -32,6 +32,7 @@ const initialUserState = {
   repeathours: 5,
   french: false,
   trucks: [],
+  badAccess: false
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -204,7 +205,6 @@ const user_reducer = (state = initialUserState, action) => {
              status: status,
              isAssigned: clients[key].isAssigned,
              employeeName: clients[key].employeeName,
-             status: status,
              street: clients[key].street,
              assignedKey: clients[key].assignedKey,
              employeeKey: clients[key].employeeKey,
@@ -302,6 +302,11 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                    ...state,
                    french: action.payload.french
+      };
+   case actionTypes.SET_BAD_ACCESS:
+            return {
+                   ...state,
+                   badAccess: action.payload.badAccess
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected

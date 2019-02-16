@@ -76,7 +76,7 @@ class AddContractModal extends Component {
   };
 
   render() {
-    const {contract, contact, contractKey} = this.props;
+    const {contact} = this.props;
     //console.log ("EditContractModal order = " );
     //console.log (contract);
     //console.log (contractKey);

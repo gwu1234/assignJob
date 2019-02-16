@@ -4,8 +4,8 @@ import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
 const JOB_NEW = 0;
-const JOB_REPEAT = 1;
-const JOB_DONE = 2;
+//const JOB_REPEAT = 1;
+//const JOB_DONE = 2;
 
 export default class AddClientModal extends Component {
   state = {
@@ -171,8 +171,7 @@ export default class AddClientModal extends Component {
   };
 
   isFormValid() {
-    const {lastname, firstname, street, postcode, city,
-           phone1, phone2, phone3, cell1, cell2, cell3}
+    const {lastname, firstname, street, postcode, city}
            = this.state;
 
            if (!lastname || !firstname ){

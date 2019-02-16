@@ -28,7 +28,7 @@ class EditOrderModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work, employee} = this.state;
-         const {delivery, deliveryKey, contact, usertag} = this.props;
+         const {deliveryKey, contact, usertag} = this.props;
 
          let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
          const deliveryRef = firebase.database().ref(deliveryPath);

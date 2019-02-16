@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from "../../../firebase";
 import EmployeeJob from "../../SidePanel/EmployeeJob";
 
-import { Grid, Button, Header, Icon, Modal, Form, Menu, Dropdown} from 'semantic-ui-react';
+import { Button, Header, Modal, Dropdown} from 'semantic-ui-react';
 
 class MapAssignModal extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class MapAssignModal extends Component {
   }
 
   displayAssigned(employee) {
-    const {clientName, clientKey, usertag} = this.props;
+    //const {clientName, clientKey, usertag} = this.props;
     this.setState ({
         selectedEmployee: employee,
     });

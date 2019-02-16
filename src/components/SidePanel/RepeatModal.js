@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
+import { Button, Header, Modal, Form} from 'semantic-ui-react';
 import {setRepeatHours} from "../../actions";
 // 10 seconds
-const TIMER_INTERVAL = 3;
+//const TIMER_INTERVAL = 3;
 
 
 class RepeatModal extends Component {

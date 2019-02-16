@@ -68,7 +68,7 @@ class EditEmployeeModal extends Component {
           event.preventDefault();
       }
 
-      const {usertag, id, employee } = this.props;
+      const {usertag, id } = this.props;
       const employeePath = "repos/" + usertag + "/employees/" + id;
       console.log (employeePath);
       const employeeRef = firebase.database().ref(employeePath);
@@ -304,7 +304,7 @@ class EditEmployeeModal extends Component {
       let result = false;
 
       for (var key in assigned ) {
-          if (assigned[key].clientKey == clientKey) {
+          if (assigned[key].clientKey === clientKey) {
             //console.log (clientKey);
             //console.log (key);
             result = true;
@@ -344,7 +344,7 @@ displayAssigned = assigneds =>
 
 
   render() {
-    const {employee, employeeKey, usertag, id, clients, french} = this.props;
+    const {employee, clients, french} = this.props;
     const {assigned, unassigned} = this.state;
 
     let titleString = "Edit Employee : " + employee.name;
@@ -392,7 +392,7 @@ displayAssigned = assigneds =>
          clientKey: key,
          client: clients[key]
        }
-       if (  (newClient.client.isAssigned==null || newClient.client.isAssigned==false)
+       if (  (newClient.client.isAssigned===null || newClient.client.isAssigned===false)
           && !this.isNewAssigned (key) ) {
            clientArray.push(newClient);
        }

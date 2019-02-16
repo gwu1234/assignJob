@@ -1,7 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Button} from "semantic-ui-react";
+import { Menu, Icon } from "semantic-ui-react";
 import WorkOrder from "./WorkOrder";
 import "./WorkOrders.css";
 

@@ -8,9 +8,9 @@ import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 import Background from './terra.jpg';
-import Contracts from "./MapPanel/Contracts";
-import PaymentPanel from "./MapPanel/PaymentPanel";
-import DeliveryPanel from "./MapPanel/DeliveryPanel";
+//import Contracts from "./MapPanel/Contracts";
+//import PaymentPanel from "./MapPanel/PaymentPanel";
+//import DeliveryPanel from "./MapPanel/DeliveryPanel";
 import MapPanel from "./MapPanel/MapPanel";
 import MapContainer from './MapPanel/map/MapContainer';
 
@@ -27,7 +27,7 @@ class App extends React.Component {
       {pos: {lat: 45.4506017, lng: -73.8507837}, name: 'Bruce', id: 0, status: 0}
     ];*/
 
-    const {currentUser, admin, mapView} = this.props;
+    const {currentUser, mapView} = this.props;
     //console.log("App admin = " + admin);
 
     return (
@@ -58,7 +58,6 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser,
-    admin: state.user.admin,
     mapView: state.user.mapView
   });
 

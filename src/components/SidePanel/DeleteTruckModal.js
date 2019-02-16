@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase from "../../firebase";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+//import firebase from "../../firebase";
+import { Button, Header, Icon, Modal} from 'semantic-ui-react';
 
 export default class DeleteTruckModal extends Component {
   state = {

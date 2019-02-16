@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Grid, Header, Icon, Dropdown, Image, Menu } from "semantic-ui-react";
+import { Icon, Dropdown, Menu } from "semantic-ui-react";
 import "./UserPanel.css";
 import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench} from "../../actions";
 import EmployeeJob from "./EmployeeJob";
@@ -214,7 +214,7 @@ class UserPanel extends React.Component {
 
 
   render() {
-    const { user} = this.state;
+    //const { user} = this.state;
     const {employees, french} = this.props;
     //console.log ("userPanel User displayName = ", user.displayName);
 

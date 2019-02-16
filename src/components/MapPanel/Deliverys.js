@@ -1,7 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Button} from "semantic-ui-react";
+import { Menu, Icon} from "semantic-ui-react";
 import Delivery from "./Delivery";
 import AddDeliveryModal from "./AddDeliveryModal";
 import "./Deliverys.css";

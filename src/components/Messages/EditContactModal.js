@@ -62,7 +62,7 @@ export default class EditContactModal extends Component {
                  country,phone1,phone2, phone3, phone4,
                  cell1,cell2, cell3, cell4,
                  email1, email2, email3, email4} = this.state;
-         const {usertag, contact} = this.props;
+         const {usertag} = this.props;
 
          let emails = [];
          let phones = [];
@@ -134,9 +134,7 @@ export default class EditContactModal extends Component {
 
   isFormValid() {
     const {street, postcode, city,
-           phone1, phone2, phone3, phone4,
-           cell1, cell2, cell3, cell4,
-           email1, email2, email3, email4}
+           phone1, cell1, email1}
            = this.state;
 
            if (!street || !postcode ){
@@ -173,7 +171,7 @@ export default class EditContactModal extends Component {
   };
 
   render() {
-    const {contact, usertag, french} = this.props;
+    const {contact, french} = this.props;
     let titleString = "Edit Company Info : ";
     if (french) {
         titleString = "modifier compagne info : "

@@ -1,8 +1,8 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys} from "../../actions";
-import { Menu, Icon, Header, Button, Confirm} from "semantic-ui-react";
+//import { setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys} from "../../actions";
+import { Menu, Icon, Confirm} from "semantic-ui-react";
 //import "./Client.css";
 
 
@@ -25,7 +25,7 @@ class EmployeeTruck extends React.Component {
             truckYear: truck.year,
             truckColor: truck.color,
             employeeName: employee.name,
-            employeeKey, employeeKey
+            employeeKey: employeeKey
 
         };
         //console.log(assigned);
@@ -40,10 +40,10 @@ class EmployeeTruck extends React.Component {
     }
 
  render() {
-    const {truck, usertag, truckKey, employee, employeeKey} = this.props;
+    const {truck, truckKey, employee} = this.props;
 
     let name= '';
-    let address ='';
+    //let address ='';
     let confirmMsg ="";
 
     if (employee) {

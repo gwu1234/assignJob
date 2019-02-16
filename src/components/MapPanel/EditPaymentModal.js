@@ -27,7 +27,7 @@ class EditPaymentModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,amount, method} = this.state;
-         const {payment, paymentKey, contact, usertag} = this.props;
+         const {paymentKey, contact, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);
@@ -75,7 +75,7 @@ class EditPaymentModal extends Component {
   };
 
   render() {
-    const {payment, contact, paymentKey} = this.props;
+    const {payment, contact} = this.props;
     //console.log ("EditContractModal order = " );
     //console.log (contract);
     //console.log (contractKey);

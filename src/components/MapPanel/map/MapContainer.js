@@ -21,7 +21,7 @@ const JOB_DONE = 2;
 const JOB_SOON = 3;
 
 const EMPLOYEE_MARKER = 0;
-const CLIENT_MARKER = 1;
+//const CLIENT_MARKER = 1;
 
 class MapContainer extends Component {
   constructor(props) {
@@ -223,11 +223,11 @@ class MapContainer extends Component {
       const {usertag, employees, markers} = this.props;
       //const {markers} = this.state;
 
-      const buttonStyle = {
+      /*const buttonStyle = {
          width: '5em',
          height: '2em',
          margin: '0.2em'
-      }
+      }*/
 
       //console.log("at MapContainer : ");
       //console.log (this.state.showingInfoWindow);

@@ -212,3 +212,12 @@ export const setFrench = french => {
     }
   }
 }
+
+export const setBadAccess = bad => {
+  return {
+    type: actionTypes.SET_BAD_ACCESS,
+    payload: {
+      badAccess: bad
+    }
+  }
+}

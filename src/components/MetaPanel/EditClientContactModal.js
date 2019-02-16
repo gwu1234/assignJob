@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
 import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
-const JOB_NEW = 0;
-const JOB_REPEAT = 1;
-const JOB_DONE = 2;
+//const JOB_NEW = 0;
+//const JOB_REPEAT = 1;
+//const JOB_DONE = 2;
 
 class EditClientContactModal extends Component {
   constructor(props) {
@@ -32,14 +32,14 @@ class EditClientContactModal extends Component {
          cell2: contact.cells?
                 (contact.cells[1]?contact.cells[1]:''):
                  '',
-         cell2: contact.cells?
+         cell3: contact.cells?
                 (contact.cells[2]?contact.cells[2]:''):
                 '',
          email1: contact.emails?contact.emails[0]:'',
          email2: contact.emails?
                  (contact.emails[1]?contact.emails[1]:''):
                  '',
-         email2: contact.emails?
+         email3: contact.emails?
                  (contact.emails[2]?contact.emails[1]:''):
                  '',
      }
@@ -192,8 +192,7 @@ class EditClientContactModal extends Component {
   };
 
   isFormValid() {
-    const {lastname, firstname, street, postcode, city,
-           phone1, phone2, phone3, cell1, cell2, cell3}
+    const {lastname, firstname, street, postcode, city}
            = this.state;
 
            if (!lastname || !firstname ){

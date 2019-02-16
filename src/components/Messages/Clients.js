@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Button} from "semantic-ui-react";
+import { Menu, Icon} from "semantic-ui-react";
 import Client from "./Client";
 import AddClientModal from "./AddClientModal";
 import { setGeoEncoding } from "../../actions";
@@ -35,7 +35,7 @@ class Clients extends React.Component {
    componentDidMount() {
      const {clients, geoEncoding} = this.props;
 
-     if (geoEncoding == GEOCODING_RENEWED) {
+     if (geoEncoding === GEOCODING_RENEWED) {
         this.updateClients(clients);
         this.props.setGeoEncoding(GEOCODING_DONE);
         this.setState ({
@@ -153,8 +153,8 @@ class Clients extends React.Component {
      //console.log("currentGeoEncoding  = " + currentGeoEncoding);
 
      // need to be forced
-     if ( geoEncoding == GEOCODING_RENEWED &&
-          currentGeoEncoding != GEOCODING_PUSHED ) {
+     if ( geoEncoding === GEOCODING_RENEWED &&
+          currentGeoEncoding !== GEOCODING_PUSHED ) {
           this.updateClients(clients);
           this.props.setGeoEncoding(GEOCODING_DONE);
           this.setState ({

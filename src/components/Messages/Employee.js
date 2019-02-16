@@ -1,7 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Header, Button, Icon } from "semantic-ui-react";
+import { Menu, Header } from "semantic-ui-react";
 import EditEmployeeModal from "./EditEmployeeModal"
 import "./Employee.css";
 

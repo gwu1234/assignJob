@@ -1,8 +1,8 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys} from "../../actions";
-import { Menu, Icon, Header, Button, Confirm} from "semantic-ui-react";
+//import { setDeliverys} from "../../actions";
+import { Menu, Icon, Confirm} from "semantic-ui-react";
 import "./Client.css";
 
 
@@ -18,7 +18,7 @@ class EmployeeClient extends React.Component {
 
     openConfirm = () => this.setState({ open: true })
     closeConfirm = () => {
-        const {client, usertag, clientKey, employee, employeeKey} = this.props;
+        const {client, clientKey, employee, employeeKey} = this.props;
         const assigned = {
             clientKey: clientKey,
             clientName: client.name,
@@ -28,7 +28,7 @@ class EmployeeClient extends React.Component {
             clientLat: client.lat,
             clientLng: client.lng,
             employeeName: employee.name,
-            employeeKey, employeeKey
+            employeeKey: employeeKey
 
         };
         //console.log(assigned);
@@ -38,10 +38,10 @@ class EmployeeClient extends React.Component {
     closeCancel = () => this.setState({ open: false })
 
  render() {
-    const {client, usertag, clientKey, employee, employeeKey, french} = this.props;
+    const {client, clientKey, employee, french} = this.props;
 
     let name= '';
-    let address ='';
+    //let address ='';
     let confirmMsg ="";
 
     if (client) {

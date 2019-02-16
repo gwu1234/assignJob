@@ -72,7 +72,7 @@ class AddPaymentModal extends Component {
   };
 
   render() {
-    const {payment, contact, paymentKey} = this.props;
+    const {contact} = this.props;
     //console.log ("EditContractModal order = " );
     //console.log (contract);
     //console.log (contractKey);

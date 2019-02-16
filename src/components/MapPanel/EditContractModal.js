@@ -29,7 +29,7 @@ class EditContractModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work, price, tax, total} = this.state;
-         const {contract, contractKey, contact, usertag} = this.props;
+         const {contact, contractKey, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);
@@ -75,7 +75,7 @@ class EditContractModal extends Component {
   };
 
   render() {
-    const {contract, contact, contractKey} = this.props;
+    const {contract, contact} = this.props;
     //console.log ("EditContractModal order = " );
     //console.log (contract);
     //console.log (contractKey);

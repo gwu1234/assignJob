@@ -4,12 +4,13 @@ import Geocode from "react-geocode";
 //import response from "react-geocode";
 import { connect } from "react-redux";
 import {  setUserTag, setAdmin, setUserContact, setEmployeeList,
-          setClientList, setGeoEncoding, setTrucks}
+          setClientList, setGeoEncoding, setTrucks, setBadAccess}
         from "../../actions";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-//import { setAdmin } from "../../actions";
+
+
 const GEOCODING_DONE = 1;
 const GEOCODING_RENEWED = 2;
 
@@ -19,6 +20,7 @@ class Login extends React.Component {
     password: "",
     errors: [],
     loading: false,
+    access: "",
     usersRef: firebase.database().ref("users"),
   };
 
@@ -40,6 +42,7 @@ class Login extends React.Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
 
   //componentWillUnmount() {
   //  this.state.usersRef.off();
@@ -72,6 +75,26 @@ class Login extends React.Component {
                    this.props.setAdmin(true);
               } else {
                 this.props.setAdmin(false);
+              }
+          });
+
+          const accessName = (nameString + '+' + emailString +"/access").toLowerCase();
+          //console.log(accessName);
+          var accessRef = this.state.usersRef.child(accessName);
+          accessRef.once('value')
+            .then((snapshot) => {
+              const accessInput = snapshot.val();
+              //console.log(accessInput);
+              const {access} = this.state;
+              //console.log(access);
+              if (parseInt(access) !== parseInt(accessInput)) {
+                this.props.setBadAccess(true);
+                firebase
+                  .auth()
+                  .signOut()
+                  .then(() => console.log("signed out!"));
+              } else {
+                 this.props.setBadAccess(false);
               }
           });
 
@@ -276,7 +299,7 @@ class Login extends React.Component {
 
   render() {
     //const { admin} = this.props;
-    const { email, password, errors, loading } = this.state;
+    const { email, password, errors, loading, access } = this.state;
     //const { usertag, coords } = this.props;
 
     //if (coords.length > 0) {
@@ -317,6 +340,18 @@ class Login extends React.Component {
                 type="password"
               />
 
+              <Form.Input
+                fluid
+                name="access"
+                icon="lock"
+                iconPosition="left"
+                placeholder="Access Code"
+                onChange={this.handleChange}
+                value={access}
+                className={this.handleInputError(errors, "password")}
+                type="password"
+              />
+
               <Button
                 disabled={loading}
                 className={loading ? "loading" : ""}
@@ -334,6 +369,9 @@ class Login extends React.Component {
               {this.displayErrors(errors)}
             </Message>
           )}
+          {this.props.badAccess && <Message style={{color:"red", fontSize:"1.1em", fontStyle:"bold"}}>
+             Invalid Access Code, Try Again
+          </Message>}
           <Message>
             Do not have an account? <Link to="/register">Register</Link>
           </Message>
@@ -343,12 +381,11 @@ class Login extends React.Component {
   }
 }
 
-//const mapStateToProps = state => ({
-//  usertag: state.user.usertag,
-//  coords: state.user.coords
-//});
+const mapStateToProps = state => ({
+  badAccess: state.user.badAccess,
+});
 
 export default connect(
-  null,
-  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding, setTrucks}
+  mapStateToProps,
+  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding, setTrucks, setBadAccess}
 )(Login);
