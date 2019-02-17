@@ -31,26 +31,25 @@ class App extends React.Component {
     //console.log("App admin = " + admin);
 
     return (
-      <Grid columns='equal' className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
-        <Grid.Column >
-             <SidePanel currentUser={currentUser} />
-        </Grid.Column >
-        <Grid.Column >
-          <Messages />
-        </Grid.Column>
+      <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
+        <Grid.Row columns='equal' style={{width:"100%",height:"8vh",color:"white",backgroundColor:"blue"}}>
+            <Grid.Column style={{textAlign: "center"}}>
+               <span> user </span>
+            </Grid.Column >
+            <Grid.Column style={{textAlign: "center"}}>
+               <span> setting </span>
+            </Grid.Column>
+            <Grid.Column style={{textAlign: "center"}}>
+              <span> map </span>
+            </Grid.Column>
+            <Grid.Column style={{textAlign: "center"}}>
+               <span> Francaise </span>
+            </Grid.Column>
+        </Grid.Row>
 
-        <Grid.Column width = {9} >
-        {mapView && <MapContainer markers />}
+        <Grid.Row style={{width: "100%"}}>
 
-        {!mapView && <Grid columns='equal'>
-           <Grid.Column>
-              <MetaPanel />
-           </Grid.Column>
-           <Grid.Column>
-               <MapPanel/>
-           </Grid.Column>
-           </Grid> }
-        </Grid.Column>
+        </Grid.Row>
       </Grid>
     );
   }
