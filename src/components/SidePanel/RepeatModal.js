@@ -100,24 +100,25 @@ class RepeatModal extends Component {
 
 
   render() {
+    const {french} = this.props;
 
     return (
       <Modal
-        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left", paddingBottom:"1em"}}> Set Repeat Timer</span>}
+        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left", paddingBottom:"1em"}}> {french? "Fixer Heures a Repeter": "Set Repeat Timer"}</span>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size='mini'
         style={{background: "#ccc"}}
       >
-        <Header icon='setting' content="Set Repeat Hours" style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='setting' content={french? "Fixer Heures a Repeter": "Set Repeat Timer"} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
 
 
         <Modal.Content>
             <Form >
                 <Form.Group inline width='equal' >
                      <Form.Input size ="small"
-                           label='Repeat Hours'
+                           label={french? "Heures a Repeter": "Repeat Hours"}
                            placeholder = "5"
                            defaultValue = {this.state.repeathour}
                            name="repeathour"

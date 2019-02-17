@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench} from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
+import RepeatModal from "./RepeatModal";
+import InputFileReader from "./InputFileReader";
 
 class TopPanel extends React.Component {
    constructor(props) {
@@ -16,20 +18,41 @@ class TopPanel extends React.Component {
      }
    }
 
+   dropdownSettingOptions = () => {
+      const {french, user} = this.state;
+      const optionArray= [];
+
+      if (!user) {
+         return [];
+      }
+
+      const repeattimer= {
+        key: "repeathour",
+        text: <RepeatModal french={french}/>
+      }
+      const datareader= {
+        key: "datareader",
+        text: <InputFileReader usertag={this.props.usertag} french={french}/>
+      }
+      optionArray.push(repeattimer);
+      optionArray.push(datareader);
+      return optionArray;
+   }
+
    dropdownOptions = () => {
-      const {french} = this.state;
+      const {french, user} = this.state;
 
       let username = "";
-      if (this.state.user) {
-         username = this.state.user.displayName;
+      if (user) {
+         username = user.displayName;
       }
 
       let loginMsg = "Not Signed in";
-      if (!french && username) {
+      if (!french && user && username.length>0) {
          loginMsg = "Signed in as " + username;
-      } else if (french && !username) {
+      } else if (french && !user && username.length===0) {
          loginMsg = " Pas Signe in"
-      } else {
+      } else if (french && user && username.length > 0) {
          loginMsg ="Signe in comme " + username;
       }
 
@@ -46,11 +69,11 @@ class TopPanel extends React.Component {
 
       const signin = {
         key: "signout",
-        text: <span onClick={this.handleSignout}>Sign In</span>
+        text: <span onClick={()=>this.handleSignout()}>Sign In</span>
        };
       const signout = {
         key: "signout",
-        text: <span onClick={this.handleSignout}>Sign Out</span>
+        text: <span onClick={()=>this.handleSignout()}>Sign Out</span>
        };
       if (!this.state.user) {
         titleArray.push(signin);
@@ -211,6 +234,11 @@ class TopPanel extends React.Component {
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
              <span> {french? "Cadre": "Setting"}</span>
+             <Dropdown
+               placeholder=""
+               options={this.dropdownSettingOptions()}
+               style = {{color: "white"}}
+             />
           </Grid.Column>
       </Grid.Row>
 
