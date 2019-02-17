@@ -26,9 +26,9 @@ class App extends React.Component {
     return (
       <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
         <TopPanel/>
-        <Grid.Row style={{width: "100%"}}>
-
-        </Grid.Row>
+        {mapView && <Grid.Row style={{width: "100%", height:"100%", marginTop:"0px", paddingTop:"0px"}}>
+            <MapContainer/>
+        </Grid.Row>}
       </Grid>
     );
   }
