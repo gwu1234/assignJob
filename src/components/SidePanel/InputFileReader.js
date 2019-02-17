@@ -91,6 +91,7 @@ export default class InputFileReader extends React.Component{
 
 render() {
     const data = this.state.data;
+    const {french} = this.props;
     //console.log (data);
 
     var myObject = null;
@@ -117,14 +118,15 @@ render() {
 
     return (
       <Modal
-        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}>import client data</span>}
+        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}>
+        {french? "importer cliente donnees":"import client data"}</span>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size='small'
         style={{background: "#ccc"}}
       >
-        <Header icon='setting' content="Import Client Data from Json File" style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='setting' content={french? "Importer Cliente Donnees de Json Dossier": "Import Client Data from Json File"} style = {{fontSize: "1.2em", fondStyle: "bold", color:"black"}}/>
 
 
         <Modal.Content>
