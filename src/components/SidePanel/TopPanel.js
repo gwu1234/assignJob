@@ -12,21 +12,38 @@ class TopPanel extends React.Component {
         user: this.props.currentUser,
         mapview: false,
         usersRef: firebase.database().ref("users"),
+        french: false,
      }
    }
 
    dropdownOptions = () => {
+      const {french} = this.state;
+
       let username = "";
       if (this.state.user) {
          username = this.state.user.displayName;
       }
-      const titleArray =
-       [{
-          key: "user",
-          text: (username)? (<span> Signed in as <strong>{username}</strong></span>):
-                           (<span> Not Signed in </span>),
-          disabled: true
+
+      let loginMsg = "Not Signed in";
+      if (!french && username) {
+         loginMsg = "Signed in as " + username;
+      } else if (french && !username) {
+         loginMsg = " Pas Signe in"
+      } else {
+         loginMsg ="Signe in comme " + username;
+      }
+
+      const titleArray = [{
+           key: "user",
+           text: (
+               <span>
+                  <strong>{loginMsg}</strong>
+              </span>
+           ),
+           disabled: true
        }];
+
+
       const signin = {
         key: "signout",
         text: <span onClick={this.handleSignout}>Sign In</span>
@@ -45,6 +62,7 @@ class TopPanel extends React.Component {
 
    dropdownMapOptions = () => {
       let username = "";
+      const {french} = this.state;
       if (this.state.user) {
          username = this.state.user.displayName;
       }
@@ -52,8 +70,30 @@ class TopPanel extends React.Component {
          return [];
       }
 
-      const titleArray =
+      const titleArray = french?
       [
+        {
+           key: "textview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> texte view </span>
+        },
+        {
+           key: "mapview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> tous les clientes </span>
+        },
+        {
+           key: "employeeview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> tous les employees </span>
+        },
+        {
+           key: "unassignedview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> non assigne </span>
+        }
+      ]:
+      [
+        {
+           key: "textview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
+        },
         {
            key: "mapview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
@@ -75,7 +115,7 @@ class TopPanel extends React.Component {
            text: <EmployeeJob
                  displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
                  employee={employees[key]}
-                 french={this.props.french}
+                 french={french}
                  />
          }
          titleArray.push(newEmployee);
@@ -118,16 +158,26 @@ class TopPanel extends React.Component {
  };
 
  displayAssigned(employee) {
-   //this.setState ({
-    //   mapview: true
-   //});
+   this.setState ({
+       mapview: true
+   });
    //console.log("displayAssigned")
    this.props.setSelectedEmployee(employee);
+ }
+
+ toggleFrench = () => {
+    //console.log("toggleFrench");
+    const {french} = this.state;
+    this.setState ({
+        french: !french
+    });
+    this.props.setFrench(!french);
  }
 
 
   render() {
     const { currentUser, admin} = this.props;
+    const {french} = this.state;
     //console.log(currentUser);
 
     return (
@@ -143,13 +193,13 @@ class TopPanel extends React.Component {
                      />
           </Grid.Column >
           <Grid.Column style={{textAlign: "center"}}>
-             <span> Company </span>
+             <span> {french? "Compagnie":"Company"} </span>
           </Grid.Column >
           <Grid.Column style={{textAlign: "center"}}>
-             <span> TextView </span>
+             <span> {french? "Texte Vue" : "TextView" }</span>
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
-               <span> MapView </span>
+               <span> {french? "Carte Vue": "MapView"} </span>
                  <Dropdown
                    placeholder=""
                    options={this.dropdownMapOptions()}
@@ -157,10 +207,10 @@ class TopPanel extends React.Component {
                  />
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
-             <span> French </span>
+             <span onClick={()=>this.toggleFrench()}> {this.state.french? "Anglais": "French"} </span>
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
-             <span> Setting </span>
+             <span> {french? "Cadre": "Setting"}</span>
           </Grid.Column>
       </Grid.Row>
 
@@ -172,7 +222,7 @@ class TopPanel extends React.Component {
 const mapStateToProps = state => ({
   employees: state.user.employeeList,
   currentUser: state.user.currentUser,
-  french: state.user.french,
+  //french: state.user.french,
   usertag: state.user.usertag,
 });
 
