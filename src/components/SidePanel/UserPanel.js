@@ -225,8 +225,8 @@ class UserPanel extends React.Component {
 
     return (
       <Menu.Menu className="UserPanelMenuMenu">
-            <Menu.Header as="h1" className="UserPanelMenuHeader">
-              <Icon name="truck" /> AssignJobs
+            <Menu.Header as="h6" className="UserPanelMenuHeader">
+              <Icon name="truck" size="mini"/> AssignJobs
             </Menu.Header>
               <Dropdown
                 placeholder={placeHolder}
