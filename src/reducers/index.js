@@ -81,6 +81,7 @@ const user_reducer = (state = initialUserState, action) => {
           employeeList: action.payload.employeeList
     };
     case actionTypes.SET_CLIENT_LIST:
+        //console.log("set_client_list");
         return {
           ...state,
           clientList: action.payload.clientList,

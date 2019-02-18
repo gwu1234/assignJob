@@ -50,6 +50,7 @@ class UserList extends React.Component {
   };
 
   changeUser = user => {
+    //console.log(user);
     this.setActiveUser(user);
     this.props.setCurrentUser(user);
     this.props.setUserTag(user.tag);
