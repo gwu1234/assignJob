@@ -18,6 +18,24 @@ class TopPanel extends React.Component {
      }
    }
 
+   dropdownTextOptions = () => {
+      const {french, user} = this.state;
+      const userOptions = french?
+      [
+        {
+           key: "textview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> texte view </span>
+        },
+      ]:
+      [
+        {
+           key: "textview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
+        },
+      ];
+      return userOptions;
+   }
+
    dropdownSettingOptions = () => {
       const {french, user} = this.state;
       const optionArray= [];
@@ -163,6 +181,14 @@ class TopPanel extends React.Component {
       //console.log("setMapView")
    };
 
+   setTextView  = () => {
+     //console.log("setTextView")
+       this.setState ({
+             mapview: false
+       });
+       this.props.setTextView();
+   };
+
    // display all employees
    setEmployeeView  = () => {
      //console.log("setEmployeeView")
@@ -220,6 +246,11 @@ class TopPanel extends React.Component {
           </Grid.Column >
           <Grid.Column style={{textAlign: "center"}}>
              <span> {french? "Texte Vue" : "TextView" }</span>
+             <Dropdown
+               placeholder=""
+               options={this.dropdownTextOptions()}
+               style = {{color: "white"}}
+             />
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
                <span> {french? "Carte Vue": "MapView"} </span>
