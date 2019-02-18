@@ -170,7 +170,7 @@ class UserList extends React.Component {
     }
     return (
         <Menu.Menu className = "MenuMenu" >
-           <Menu.Header as="h4" className="MenuHeader">
+           <Menu.Header as="h5" className="MenuHeader">
               <span> {titleString} </span>
            </Menu.Header>
            {this.displayUsers(users)}

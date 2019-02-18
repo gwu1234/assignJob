@@ -31,20 +31,27 @@ class App extends React.Component {
         {mapView && !admin && <Grid.Row style={{width: "100%", height:"100%", marginTop:"0px", paddingTop:"0px"}}>
             <MapContainer/>
         </Grid.Row>}
-        {admin && <Grid.Row style={{width: "100%", height:"100%", marginTop:"0px", paddingTop:"0px"}}>
-            <Grid.Column style={{marginTop:"0px", paddingTop:"0px"}}>
+        {admin && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"10%", height:"100%"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"10%", height:"100%"}}>
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
+                         height:"100%", margin:"0px", padding:"0px"}}>
                        <UserList currentUser={currentUser} />
                  </Menu>
             </Grid.Column>
             {mapView && <Grid.Column style=
-                 {{width: "90%", height:"100%", marginTop:"0px", paddingTop:"0px",
-                 marginLeft:"0px", paddingLeft:"0px",marginBottom:"0px", paddingBottom:"0px"}}>
+                 {{width: "90%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <MapContainer/>
+            </Grid.Column>}
+        </Grid.Row>}
+
+        {!admin && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            {mapView && <Grid.Column style=
+                 {{width: "87%", height:"100%", margin:"0px", padding:"0px"}}>
                  <MapContainer/>
             </Grid.Column>}
         </Grid.Row>}

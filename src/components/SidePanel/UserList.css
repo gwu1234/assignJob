@@ -4,6 +4,7 @@
    border: 2px dotted brown;
    height: 460px;
    position: relative;
+   text-align: center;
 }
 
 .MenuItem {
