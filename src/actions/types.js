@@ -23,3 +23,4 @@ export const SET_REPEAT_HOURS = "SET_REPEAT_HOURS";
 export const SET_FRENCH= "SET_FRENCH";
 export const SET_TRUCKS = "SET_TRUCKS";
 export const SET_BAD_ACCESS = "SET_BAD_ACCESS";
+export const SET_COMPANY_INFOVIEW = "SET_COMPANY_INFOVIEW";

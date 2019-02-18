@@ -15,24 +15,25 @@ import Background from './terra.jpg';
 //import MapPanel from "./MapPanel/MapPanel";
 import MapContainer from './MapPanel/map/MapContainer';
 import TopPanel from './SidePanel/TopPanel';
+import Contact from "./Messages/Contact";
+import Employees from "./Messages/Employees";
+import Trucks from "./SidePanel/Trucks";
 
 class App extends React.Component {
 
   render() {
 
 
-    const {currentUser, mapView, admin} = this.props;
+    const {currentUser, mapView, admin, companyInfoView} = this.props;
+    console.log("App companyInfoView = " + companyInfoView);
+    console.log("App mapView = " + mapView);
     console.log("App admin = " + admin);
-    console.log(currentUser);
 
     return (
       <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
         <TopPanel/>
-        {mapView && !admin && <Grid.Row style={{width: "100%", height:"100%", marginTop:"0px", paddingTop:"0px"}}>
-            <MapContainer/>
-        </Grid.Row>}
-        {admin && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
-            <Grid.Column style={{margin:"0px", padding:"0px", width:"10%", height:"100%"}}>
+        {admin && !mapView && !companyInfoView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
                    size="large"
                    inverted
@@ -43,15 +44,85 @@ class App extends React.Component {
                        <UserList currentUser={currentUser} />
                  </Menu>
             </Grid.Column>
-            {mapView && <Grid.Column style=
-                 {{width: "90%", height:"100%", margin:"0px", padding:"0px"}}>
+        </Grid.Row>}
+
+        {admin && mapView && !companyInfoView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
+                         height:"100%", margin:"0px", padding:"0px"}}>
+                       <UserList currentUser={currentUser} />
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "89%", height:"100%", margin:"0px", padding:"0px"}}>
                  <MapContainer/>
-            </Grid.Column>}
+            </Grid.Column>
+        </Grid.Row>}
+
+        {admin && !mapView && companyInfoView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
+                         height:"100%", margin:"0px", padding:"0px"}}>
+                       <UserList currentUser={currentUser} />
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+
+                   <Contact />
+
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+                   <Employees/>
+
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "29%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+
+                    <Trucks/>
+
+
+                 </Menu>
+            </Grid.Column>
         </Grid.Row>}
 
         {!admin && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
             {mapView && <Grid.Column style=
-                 {{width: "87%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
                  <MapContainer/>
             </Grid.Column>}
         </Grid.Row>}
@@ -64,7 +135,8 @@ class App extends React.Component {
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser,
     mapView: state.user.mapView,
-    admin: state.user.admin
+    admin: state.user.admin,
+    companyInfoView: state.user.companyInfoView,
   });
 
 export default connect(mapStateToProps)(App);

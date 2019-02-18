@@ -32,7 +32,8 @@ const initialUserState = {
   repeathours: 5,
   french: false,
   trucks: [],
-  badAccess: false
+  badAccess: false,
+  companyInfoView: false
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -100,6 +101,13 @@ const user_reducer = (state = initialUserState, action) => {
         return {
         ...state,
         workOrder: action.payload.workOrder
+    };
+    case actionTypes.SET_COMPANY_INFOVIEW:
+        //console.log ("reducer work order  = " );
+        //console.log (action.payload.workOrder);
+        return {
+        ...state,
+        companyInfoView: action.payload.view
     };
     case actionTypes.SET_MAP_VIEW:
          //console.log ("reducer SET_MAP_View  " );

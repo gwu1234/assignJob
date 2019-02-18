@@ -35,6 +35,16 @@ export const setUserTag = tag => {
   };
 };
 
+export const setCompanyInfoView = view => {
+  //console.log("action usertag = " + tag);
+  return {
+    type: actionTypes.SET_COMPANY_INFOVIEW,
+    payload: {
+      view: view
+    }
+  };
+};
+
 /*export const setOpenModal = modal => {
   console.log("action modal = " + modal);
   return {

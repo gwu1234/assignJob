@@ -1,7 +1,9 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench} from "../../actions";
+import { setMapView, setEmployeeView, setTextView,
+         setSelectedEmployee, setUnassignedClient,
+         setFrench, setCompanyInfoView} from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
@@ -12,14 +14,33 @@ class TopPanel extends React.Component {
       super(props);
       this.state = {
         user: this.props.currentUser,
-        mapview: false,
+        //mapview: false,
         usersRef: firebase.database().ref("users"),
         french: false,
+        //companyInfoView: true,
      }
    }
 
+   dropdownCompanyOptions =() => {
+     const {french} = this.state;
+     const userOptions = french?
+     [
+       {
+          key: "companyinfo",
+          text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setCompanyInfo}> compagnie info </span>
+       },
+     ]:
+     [
+       {
+          key: "textview",
+          text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setCompanyInfo}> company info </span>
+       },
+     ];
+     return userOptions;
+   }
+
    dropdownTextOptions = () => {
-      const {french, user} = this.state;
+      const {french} = this.state;
       const userOptions = french?
       [
         {
@@ -114,10 +135,6 @@ class TopPanel extends React.Component {
       const titleArray = french?
       [
         {
-           key: "textview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> texte view </span>
-        },
-        {
            key: "mapview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> tous les clientes </span>
         },
@@ -131,10 +148,6 @@ class TopPanel extends React.Component {
         }
       ]:
       [
-        {
-           key: "textview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
-        },
         {
            key: "mapview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
@@ -172,46 +185,63 @@ class TopPanel extends React.Component {
        .then(() => console.log("signed out!"));
    };
 
+   setCompanyInfo = () => {
+      //this.setState ({
+      //    companyInfoView: true
+      //});
+      this.props.setTextView();
+      this.props.setCompanyInfoView(true);
+   }
+
    // display all clients
    setMapView  = () => {
-      this.setState ({
-          mapview: true
-      });
+    //  this.setState ({
+    //      mapview: true,
+    //      companyInfoView: false,
+    //  });
       this.props.setMapView();
+      this.props.setCompanyInfoView(false);
       //console.log("setMapView")
    };
 
    setTextView  = () => {
      //console.log("setTextView")
-       this.setState ({
-             mapview: false
-       });
+    //   this.setState ({
+    //         mapview: false
+    //   });
        this.props.setTextView();
+       this.props.setCompanyInfoView(false);
    };
 
    // display all employees
    setEmployeeView  = () => {
      //console.log("setEmployeeView")
-      this.setState ({
-          mapview: true
-      });
+    //  this.setState ({
+    //      mapview: true,
+    //      companyInfoView: false,
+    //  });
       this.props.setEmployeeView();
+      this.props.setCompanyInfoView(false);
    };
 
    setUnassignedView =() => {
      //console.log("setUnassignedView")
-       this.setState ({
-          mapview: true
-       });
+    //   this.setState ({
+      //    mapview: true,
+      //    companyInfoView: false,
+      // });
       this.props.setUnassignedClient();
+      this.props.setCompanyInfoView(false);
  };
 
  displayAssigned(employee) {
-   this.setState ({
-       mapview: true
-   });
+   //this.setState ({
+    //   mapview: true,
+    //   companyInfoView: false,
+   //});
    //console.log("displayAssigned")
    this.props.setSelectedEmployee(employee);
+   this.props.setCompanyInfoView(false);
  }
 
  toggleFrench = () => {
@@ -243,6 +273,11 @@ class TopPanel extends React.Component {
           </Grid.Column >
           <Grid.Column style={{textAlign: "center"}}>
              <span> {french? "Compagnie":"Company"} </span>
+             <Dropdown
+               placeholder=""
+               options={this.dropdownCompanyOptions()}
+               style = {{color: "white"}}
+             />
           </Grid.Column >
           <Grid.Column style={{textAlign: "center"}}>
              <span> {french? "Texte Vue" : "TextView" }</span>
@@ -287,5 +322,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {setMapView, setEmployeeView, setTextView, setSelectedEmployee, setUnassignedClient, setFrench}
+  {setMapView, setEmployeeView, setTextView, setSelectedEmployee,
+   setUnassignedClient, setCompanyInfoView, setFrench}
 )(TopPanel);
