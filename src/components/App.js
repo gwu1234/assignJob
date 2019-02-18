@@ -85,9 +85,7 @@ class App extends React.Component {
                    vertical
                    style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                  >
-
                    <Contact />
-
                  </Menu>
             </Grid.Column>
             <Grid.Column style=
@@ -100,7 +98,6 @@ class App extends React.Component {
                    style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                  >
                    <Employees/>
-
                  </Menu>
             </Grid.Column>
             <Grid.Column style=
@@ -112,14 +109,49 @@ class App extends React.Component {
                    vertical
                    style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                  >
-
                     <Trucks/>
-
-
                  </Menu>
             </Grid.Column>
         </Grid.Row>}
 
+        {!admin && !mapView && companyInfoView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style=
+                 {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+                   <Contact />
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+                   <Employees/>
+                 </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                 {{width: "34%", height:"100%", margin:"0px", padding:"0px"}}>
+                 <Menu
+                   size="large"
+                   inverted
+                   floated
+                   vertical
+                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                 >
+                    <Trucks/>
+                 </Menu>
+            </Grid.Column>
+        </Grid.Row>}
         {!admin && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
             {mapView && <Grid.Column style=
                  {{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
