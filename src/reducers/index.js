@@ -33,7 +33,8 @@ const initialUserState = {
   french: false,
   trucks: [],
   badAccess: false,
-  companyInfoView: false
+  companyInfoView: false,
+  clientView: false,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -225,7 +226,9 @@ const user_reducer = (state = initialUserState, action) => {
         return {
             ...state,
            markers: clientMarkers,
-           mapView: true
+           mapView: true,
+           companyInfoView: false,
+           clientView: false,
       };
     case actionTypes.SET_EMPLOYEE_VIEW:
         const employees = state.employeeList;
@@ -259,7 +262,9 @@ const user_reducer = (state = initialUserState, action) => {
       return {
           ...state,
          markers: employeeMarkers,
-         mapView: true
+         mapView: true,
+         companyInfoView: false,
+         clientView: false,
     };
     case actionTypes.SET_TEXT_VIEW:
       //console.log ("reducer");
@@ -267,7 +272,9 @@ const user_reducer = (state = initialUserState, action) => {
       return {
           ...state,
          markers: [],
-         mapView: false
+         mapView: false,
+         companyInfoView: false,
+         clientView: false,
     };
     case actionTypes.SET_GEOENCODING:
             //console.log ("reducer SET_GEOENCODING = " );
@@ -287,6 +294,14 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                     ...state,
                     payments: action.payload.payments
+        };
+    case actionTypes.SET_CLIENT_VIEW:
+            //console.log(action.payload.view);
+            return {
+                    ...state,
+                    clientView: action.payload.view,
+                    mapView: false,
+                    companyInfoView: false,
         };
     case actionTypes.SET_DELIVERYS:
      //console.log (action.payload.deliverys);
@@ -447,7 +462,9 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                     ...state,
                     markers: selectedMarkers,
-                    mapView: true
+                    mapView: true,
+                    companyInfoView: false,
+                    clientView: false,
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
      //console.log ("reducer");
@@ -588,7 +605,9 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
     return {
         ...state,
        markers: unClientMarkers,
-       mapView: true
+       mapView: true,
+       companyInfoView: false,
+       clientView: false,
   };
 
     default:

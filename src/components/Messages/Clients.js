@@ -19,7 +19,7 @@ class Clients extends React.Component {
                 visibility: 'hidden',
                 height: "2px",
             },
-           display: false,
+           display: true,
            currentGeoEncoding: GEOCODING_DONE
        }
     }
@@ -75,7 +75,7 @@ class Clients extends React.Component {
                  size: "tiny",
                  border: "2px dotted black",
                  overflow: "scroll",
-                 height: "390px",
+                 height: "100vh",
              },
              display: true,
           })
@@ -181,10 +181,12 @@ class Clients extends React.Component {
     return (
       <Menu.Menu className ="ClientsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+                {titleString}
                 <AddClientModal open={false} userName={userName} usertag = {usertag}/>
             </Menu.Header>
-          <Menu.Menu style={this.state.clientsStyle} >
+          <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
+                             color: "white",size: "tiny", border: "2px dotted black",
+                             overflow: "scroll", height: "100vh"}} >
               {display && clientArray.length>0 && this.displayClients(clientArray)}
           </Menu.Menu>
       </Menu.Menu>

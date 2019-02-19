@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setMapView, setEmployeeView, setTextView,
          setSelectedEmployee, setUnassignedClient,
-         setFrench, setCompanyInfoView} from "../../actions";
+         setFrench, setCompanyInfoView, setClientView} from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
@@ -44,14 +44,14 @@ class TopPanel extends React.Component {
       const userOptions = french?
       [
         {
-           key: "textview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> texte view </span>
+           key: "clientview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente view </span>
         },
       ]:
       [
         {
            key: "textview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setTextView}> text view </span>
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client view </span>
         },
       ];
       return userOptions;
@@ -213,6 +213,16 @@ class TopPanel extends React.Component {
        this.props.setCompanyInfoView(false);
    };
 
+   setClientView  = () => {
+     //console.log("setTextView")
+    //   this.setState ({
+    //         mapview: false
+    //   });
+       //this.props.setTextView();
+       //this.props.setCompanyInfoView(false);
+       this.props.setClientView (true);
+   };
+
    // display all employees
    setEmployeeView  = () => {
      //console.log("setEmployeeView")
@@ -323,5 +333,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {setMapView, setEmployeeView, setTextView, setSelectedEmployee,
-   setUnassignedClient, setCompanyInfoView, setFrench}
+   setUnassignedClient, setCompanyInfoView, setFrench,
+   setClientView
+ }
 )(TopPanel);
