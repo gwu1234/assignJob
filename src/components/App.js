@@ -34,7 +34,7 @@ class App extends React.Component {
     return (
       <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
         <TopPanel/>
-        {admin && !mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+        {admin && !mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
                    size="large"
@@ -48,7 +48,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {admin && mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+        {admin && mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
                    size="large"
@@ -61,13 +61,13 @@ class App extends React.Component {
                  </Menu>
             </Grid.Column>
             <Grid.Column style=
-                 {{width: "89%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "89%", height:"92vh", margin:"0px", padding:"0px"}}>
                  <MapContainer/>
             </Grid.Column>
         </Grid.Row>}
 
-        {admin && !mapView && companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
-            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
+        {admin && !mapView && companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"88%"}}>
                  <Menu
                    size="large"
                    inverted
@@ -116,7 +116,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {!admin && !mapView && companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+        {!admin && !mapView && companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style=
                  {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
                  <Menu
@@ -155,14 +155,14 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {!admin && mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+        {!admin && mapView && !companyInfoView && !clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style=
-                 {{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "100%", height:"92vh", margin:"0px", padding:"0px"}}>
                  <MapContainer/>
             </Grid.Column>
           </Grid.Row>}
 
-        {!admin && !mapView && !companyInfoView && clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+        {!admin && !mapView && !companyInfoView && clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
                 <Grid.Column style=
                      {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
                      <Menu
@@ -170,7 +170,7 @@ class App extends React.Component {
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", height:"92vh"}}
                      >
                        <Clients/>
                      </Menu>
@@ -201,7 +201,7 @@ class App extends React.Component {
                 </Grid.Column>
             </Grid.Row>}
 
-       {admin && !mapView && !companyInfoView && clientView && <Grid.Row style={{width: "100%", height:"100%", margin:"0px", padding:"0px"}}>
+       {admin && !mapView && !companyInfoView && clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                 <Menu
                   size="large"

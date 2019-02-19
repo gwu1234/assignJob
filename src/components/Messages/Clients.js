@@ -179,14 +179,14 @@ class Clients extends React.Component {
     //}
 
     return (
-      <Menu.Menu className ="ClientsMenuMenu">
+      <Menu.Menu className ="ClientsMenuMenu" style={{height:"92vh"}}>
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
                 {titleString}
                 <AddClientModal open={false} userName={userName} usertag = {usertag}/>
             </Menu.Header>
           <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
-                             color: "white",size: "tiny", border: "2px dotted black",
-                             overflow: "scroll", height: "100vh"}} >
+                             color: "white",size: "tiny",
+                             overflow: "scroll", height: "84vh"}} >
               {display && clientArray.length>0 && this.displayClients(clientArray)}
           </Menu.Menu>
       </Menu.Menu>
