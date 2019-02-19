@@ -7,15 +7,15 @@ import AddEmployeeModal from "./AddEmployeeModal";
 import "./Employees.css";
 
 class Employees extends React.Component {
-   state = {
-     display: false,
-   };
+   //state = {
+    // display: true,
+   //};
 
-   onButtonClick = (display) => {
+   /*onButtonClick = (display) => {
       this.setState({
           display: !display
       })
-   };
+   };*/
 
    displayEmployees = employees =>
       employees.length > 0 &&
@@ -49,7 +49,7 @@ class Employees extends React.Component {
 
   render() {
     const {employees, french} = this.props;
-    const {display} = this.state;
+    //const {display} = this.state;
 
     let titleString = "Employee List";
     if (french) {
@@ -80,11 +80,11 @@ class Employees extends React.Component {
     return (
       <Menu.Menu className="EmployeesMenuMenu" >
       <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+          {titleString}
          <AddEmployeeModal usertag = {this.props.usertag}/>
         </Menu.Header>
-        <Menu.Menu style = {this.state.employeesStyle}>
-          {display && employees && this.displayEmployees(employeeArray)}
+        <Menu.Menu >
+           {employees && this.displayEmployees(employeeArray)}
         </Menu.Menu>
       </Menu.Menu>
     );

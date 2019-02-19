@@ -11,15 +11,15 @@ import "./Trucks.css";
 //const GEOCODING_PUSHED= 3;
 
 class Trucks extends React.Component {
-  state = {
-    display: false,
-  };
+  //state = {
+  //  display: true,
+  //};
 
-  onButtonClick = (display) => {
+  /*onButtonClick = (display) => {
      this.setState({
          display: !display
      })
-  };
+  };*/
 
    displayTrucks = trucks =>
       trucks.length > 0 &&
@@ -38,7 +38,7 @@ class Trucks extends React.Component {
 
   render() {
     const {french, trucks, usertag} = this.props;
-    const {display} = this.state;
+    //const {display} = this.state;
 
     let titleString = "Truck List";
     if (french) {
@@ -60,11 +60,11 @@ class Trucks extends React.Component {
     return (
       <Menu.Menu className="TrucksMenuMenu" >
       <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-          <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+          {titleString}
           <AddTruckModal usertag = {usertag}/>
         </Menu.Header>
         <Menu.Menu style={{opacity: 1.0, fontSize: "1.0em",color: "white", fontStyle: "bold", marginTop:"0.4em", marginBottom:"0.4em"}}>
-          {display && trucks && this.displayTrucks(truckArray)}
+          {trucks && this.displayTrucks(truckArray)}
         </Menu.Menu>
       </Menu.Menu>
     );
