@@ -20,6 +20,7 @@ class Clients extends React.Component {
                 height: "2px",
             },
            display: true,
+           selectedClientKey:null,
            currentGeoEncoding: GEOCODING_DONE
        }
     }
@@ -44,6 +45,10 @@ class Clients extends React.Component {
      }
    }
 
+   setSelectedClientKey = (key) =>{
+     //console.log("selcted key = " + key);
+     this.setState ({selectedClientKey: key}) ;
+   }
 
    onButtonClick = (display) => {
        const {admin} = this.props;
@@ -100,7 +105,9 @@ class Clients extends React.Component {
    displayClients = clients =>
       clients.length > 0 &&
       clients.map(client => (
-          <Client key={client.clientKey} clientKey={client.clientKey} client={client.client} />
+          <Client key={client.clientKey} clientKey={client.clientKey}
+          client={client.client} setSelectedClientKey={(key)=>this.setSelectedClientKey(key)}
+          selectedClientKey={this.state.selectedClientKey}/>
      ));
 
   updateClients = clients => {

@@ -12,7 +12,10 @@ class Client extends React.Component {
   };
 
   toggleDisplay = (display) => {
-    const {client} = this.props;
+    const {client, key, clientKey} = this.props;
+    //console.log("key = " + key);
+    //console.log("clientKey = " + clientKey  );
+    //console.log(e.target.key);
     this.setState({
         display: !display,
     })
@@ -25,6 +28,7 @@ class Client extends React.Component {
     } else {
       this.onButtonClick(client);
     }
+    this.props.setSelectedClientKey(clientKey);
   }
 
   onButtonClick = (client) => {
@@ -163,7 +167,7 @@ class Client extends React.Component {
 
 
   render() {
-    const {client, usertag, clientKey, french, clientContact} = this.props;
+    const {client, usertag, clientKey, french, clientContact, selectedClientKey} = this.props;
     const {display} = this.state;
 
     let name= '';
@@ -187,11 +191,16 @@ class Client extends React.Component {
 
     return (
       <Menu.Menu className="ClientMenuMenu">
-         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}
+         <Menu.Item style = {selectedClientKey===clientKey?
+                 {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue"}
+                 :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}
               onClick={() => this.toggleDisplay(display)}>
               {client && name}
          </Menu.Item>
-         <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
+         <Menu.Item
+              style = {selectedClientKey===clientKey?
+                      {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue"}
+                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
               {client && city }
          </Menu.Item>
          </Menu.Menu>

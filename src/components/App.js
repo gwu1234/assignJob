@@ -31,10 +31,10 @@ class App extends React.Component {
 
 
     const {currentUser, mapView, admin, companyInfoView, clientView} = this.props;
-    console.log("App companyInfoView = " + companyInfoView);
-    console.log("App mapView = " + mapView);
-    console.log("App admin = " + admin);
-    console.log("App clientView  = " + clientView);
+    //console.log("App companyInfoView = " + companyInfoView);
+    //console.log("App mapView = " + mapView);
+    //console.log("App admin = " + admin);
+    //console.log("App clientView  = " + clientView);
 
     return (
       <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
