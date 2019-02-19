@@ -112,7 +112,7 @@ class Client extends React.Component {
   });
   }
 
-  displayEmails = emails =>
+  /*displayEmails = emails =>
     emails.length > 0 &&
     emails.map(email => (
       <Menu.Item
@@ -159,7 +159,7 @@ class Client extends React.Component {
               >
                 {cell}
          </Menu.Item>
-     ))
+     )) */
 
 
   render() {
@@ -168,10 +168,12 @@ class Client extends React.Component {
 
     let name= '';
     let address ='';
+    let city ="";
 
     if (client) {
         name = client.lastname + ", " + client.firstname;
-        address = client.street+ ", " + client.city + ", " + client.postcode;
+        address = client.street;
+        city = client.city;
     }
 
     let viewTitle = "view client data";
@@ -190,14 +192,8 @@ class Client extends React.Component {
               {client && name}
          </Menu.Item>
          <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
-              {display && client && address }
+              {client && city }
          </Menu.Item>
-              {display && clientContact && clientContact.emails && this.displayEmails(clientContact.emails) }
-              {display && clientContact && clientContact.phones && this.displayPhones(clientContact.phones) }
-              {display && clientContact && clientContact.cells && this.displayCells(clientContact.cells) }
-          {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
-              <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} clientKey={clientKey} french={french}/> <span style ={{position: "relative", left: "16px" }}> {jobTitle} </span>
-          </Menu.Item>}
          </Menu.Menu>
      );
    }

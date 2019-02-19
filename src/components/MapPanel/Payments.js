@@ -83,13 +83,13 @@ class Payments extends React.Component {
     return (
       <Menu.Menu className ="PaymentsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+               {titleString}
             </Menu.Header>
           <Menu.Menu style={this.state.clientsStyle} >
-              {display && payments && this.displayPayments(paymentArray)}
-              {display && <Menu.Item style={{margin:"1em"}}>
+              {payments && this.displayPayments(paymentArray)}
+              <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> {modalString} </span> <AddPaymentModal />
-              </Menu.Item>}
+              </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
     );

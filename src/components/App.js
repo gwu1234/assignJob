@@ -21,6 +21,7 @@ import Trucks from "./SidePanel/Trucks";
 import Clients from "./Messages/Clients";
 import WorkOrders from "./MetaPanel/WorkOrders";
 import Contracts from "./MapPanel/Contracts";
+import Deliverys from "./MapPanel/Deliverys";
 import Payments from "./MapPanel/Payments";
 
 
@@ -168,7 +169,7 @@ class App extends React.Component {
 
         {!admin && !mapView && !companyInfoView && clientView && <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
                 <Grid.Column style=
-                     {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
                      <Menu
                        size="large"
                        inverted
@@ -180,7 +181,7 @@ class App extends React.Component {
                      </Menu>
                 </Grid.Column>
                 <Grid.Column style=
-                     {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
                      <Menu
                        size="large"
                        inverted
@@ -189,15 +190,29 @@ class App extends React.Component {
                        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                      >
 
-                     <WorkOrders />
                      <Contracts />
+                     <WorkOrders />
+
+
+                     </Menu>
+                </Grid.Column>
+                <Grid.Column style=
+                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     >
+
                      <Payments />
 
 
                      </Menu>
                 </Grid.Column>
                 <Grid.Column style=
-                     {{width: "34%", height:"100%", margin:"0px", padding:"0px"}}>
+                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
                      <Menu
                        size="large"
                        inverted
@@ -205,7 +220,7 @@ class App extends React.Component {
                        vertical
                        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                      >
-                        delivery
+                      <Deliverys />
                      </Menu>
                 </Grid.Column>
             </Grid.Row>}
@@ -224,7 +239,7 @@ class App extends React.Component {
             </Grid.Column>
 
             <Grid.Column style=
-                  {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
                   <Menu
                      size="large"
                      inverted
@@ -236,7 +251,7 @@ class App extends React.Component {
                    </Menu>
             </Grid.Column>
             <Grid.Column style=
-                  {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
                   <Menu
                      size="large"
                      inverted
@@ -244,13 +259,24 @@ class App extends React.Component {
                      vertical
                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                    >
-                   <WorkOrders />
                    <Contracts />
+                   <WorkOrders />
+                  </Menu>
+            </Grid.Column>
+            <Grid.Column style=
+                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
+                  <Menu
+                     size="large"
+                     inverted
+                     floated
+                     vertical
+                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   >
                    <Payments />
                   </Menu>
             </Grid.Column>
             <Grid.Column style=
-                         {{width: "29%", height:"100%", margin:"0px", padding:"0px"}}>
+                         {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
                   <Menu
                       size="large"
                       inverted
@@ -258,7 +284,7 @@ class App extends React.Component {
                       vertical
                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                   >
-                        delivery
+                        <Deliverys />
                   </Menu>
              </Grid.Column>
         </Grid.Row>}

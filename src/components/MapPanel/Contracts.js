@@ -81,11 +81,13 @@ class Contracts extends React.Component {
     return (
       <Menu.Menu className ="ContractsMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+                 {titleString}
             </Menu.Header>
-          <Menu.Menu style={this.state.clientsStyle} >
-              {display && contracts && this.displayContracts(contractArray)}
-              {display && contracts && <Menu.Item style={{margin:"1em"}}>
+          <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
+                             color: "white", size: "tiny",
+                             overflow: "scroll", height: "37vh"}} >
+              {contracts && this.displayContracts(contractArray)}
+              {contracts && <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> add new contract</span> <AddContractModal />
               </Menu.Item>}
           </Menu.Menu>

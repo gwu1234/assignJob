@@ -93,15 +93,16 @@ class Deliverys extends React.Component {
     //console.log(deliveryArray);
 
     return (
-      <Menu.Menu className ="DeliverysMenuMenu">
+      <Menu.Menu className ="DeliverysMenuMenu" style={{height:"92vh"}}>
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={() => this.onButtonClick(display)}/> {titleString}
+                {titleString}
             </Menu.Header>
-          <Menu.Menu style={this.state.clientsStyle} >
-              {display && deliverys && this.displayDeliverys(deliveryArray)}
-              {display && <Menu.Item style={{margin:"1em"}}>
+          <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
+                             color: "white", size: "tiny", overflow: "scroll", height: "84vh"}} >
+              {deliverys && this.displayDeliverys(deliveryArray)}
+              <Menu.Item style={{margin:"1em"}}>
                    <span style={{color:"white", fontStyle:"bold"}}> {modalString}</span> <AddDeliveryModal />
-              </Menu.Item>}
+              </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
     );
