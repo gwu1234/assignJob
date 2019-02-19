@@ -12,6 +12,7 @@ class Client extends React.Component {
   };
 
   toggleDisplay = (display) => {
+    const {client} = this.props;
     this.setState({
         display: !display,
     })
@@ -21,6 +22,8 @@ class Client extends React.Component {
        this.props.setContracts(null);
        this.props.setPayments(null);
        this.props.setDeliverys(null);
+    } else {
+      this.onButtonClick(client);
     }
   }
 
@@ -107,13 +110,60 @@ class Client extends React.Component {
            this.props.setDeliverys(null);
        }
   });
-
-
   }
+
+  displayEmails = emails =>
+    emails.length > 0 &&
+    emails.map(email => (
+      <Menu.Item
+        key={email}
+        style={{
+            opacity: "1.0",
+            fontSize: "0.7em",
+            color: "white",
+            marginLeft: "2.0em",
+            visibility: "visible"
+        }}
+      >
+        {email}
+      </Menu.Item>
+    ));
+
+    displayPhones = phones =>
+      phones.length > 0 &&
+      phones.map(phone => (
+        <Menu.Item
+          key={phone}
+          style={{
+              opacity: "1.0",
+              fontSize: "0.7em",
+              color: "white",
+              marginLeft: "2.0em"
+          }}
+        >
+          {phone}
+        </Menu.Item>
+      ));
+
+   displayCells = cells =>
+      cells.length > 0 &&
+      cells.map(cell => (
+         <Menu.Item
+                key={cell}
+                style={{
+                    opacity: "1.0",
+                    fontSize: "0.7em",
+                    color: "white",
+                    marginLeft: "2.0em"
+                }}
+              >
+                {cell}
+         </Menu.Item>
+     ))
 
 
   render() {
-    const {client, usertag, clientKey, french} = this.props;
+    const {client, usertag, clientKey, french, clientContact} = this.props;
     const {display} = this.state;
 
     let name= '';
@@ -142,10 +192,9 @@ class Client extends React.Component {
          <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
               {display && client && address }
          </Menu.Item>
-          {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
-              <Icon name='folder open' size ="big" onClick={() => this.onButtonClick(client)} style ={{position: "relative", float: "left" }}/>
-              <span style ={{position: "relative", left: "16px" }}> {viewTitle} </span>
-          </Menu.Item>}
+              {display && clientContact && clientContact.emails && this.displayEmails(clientContact.emails) }
+              {display && clientContact && clientContact.phones && this.displayPhones(clientContact.phones) }
+              {display && clientContact && clientContact.cells && this.displayCells(clientContact.cells) }
           {display && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
               <AddOrderModal open={false} usertag={usertag} clienttag={client.tag} clientname={client.name} clientKey={clientKey} french={french}/> <span style ={{position: "relative", left: "16px" }}> {jobTitle} </span>
           </Menu.Item>}
@@ -158,6 +207,7 @@ class Client extends React.Component {
 const mapStateToProps = state => ({
      usertag: state.user.usertag,
      french: state.user.french,
+     clientContact: state.user.clientContact,
    }
 );
 
