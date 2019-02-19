@@ -19,6 +19,10 @@ import Contact from "./Messages/Contact";
 import Employees from "./Messages/Employees";
 import Trucks from "./SidePanel/Trucks";
 import Clients from "./Messages/Clients";
+import WorkOrders from "./MetaPanel/WorkOrders";
+import Contracts from "./MapPanel/Contracts";
+import Payments from "./MapPanel/Payments";
+
 
 class App extends React.Component {
 
@@ -184,7 +188,12 @@ class App extends React.Component {
                        vertical
                        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                      >
-                       invoice
+
+                     <WorkOrders />
+                     <Contracts />
+                     <Payments />
+
+
                      </Menu>
                 </Grid.Column>
                 <Grid.Column style=
@@ -235,7 +244,9 @@ class App extends React.Component {
                      vertical
                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                    >
-                        invoice
+                   <WorkOrders />
+                   <Contracts />
+                   <Payments />
                   </Menu>
             </Grid.Column>
             <Grid.Column style=
