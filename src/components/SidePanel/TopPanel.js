@@ -45,13 +45,13 @@ class TopPanel extends React.Component {
       [
         {
            key: "clientview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente view </span>
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente travail order </span>
         },
       ]:
       [
         {
            key: "textview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client view </span>
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client work order </span>
         },
       ];
       return userOptions;

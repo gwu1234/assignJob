@@ -189,10 +189,8 @@ class App extends React.Component {
                        vertical
                        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                      >
-
-                     <Contracts />
                      <WorkOrders />
-
+                     <Contracts />
 
                      </Menu>
                 </Grid.Column>
@@ -207,7 +205,6 @@ class App extends React.Component {
                      >
 
                      <Payments />
-
 
                      </Menu>
                 </Grid.Column>
@@ -259,8 +256,9 @@ class App extends React.Component {
                      vertical
                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                    >
-                   <Contracts />
                    <WorkOrders />
+                   <Contracts />
+
                   </Menu>
             </Grid.Column>
             <Grid.Column style=
