@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+import { connect } from "react-redux";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
-export default class AddOrderModal extends Component {
+class AddOrderModal extends Component {
   state = {
     modalOpen: false,
     date: '',
@@ -21,21 +22,25 @@ export default class AddOrderModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work} = this.state;
-         const {usertag, clienttag,clientKey} = this.props;
+         const {usertag, contact} = this.props;
 
-         let orderString = "repos/"+usertag+"/clients/data/"+clienttag+"/workorders";
+         //"repos/"+usertag+"/clients/data/"+ contact.clientTag
+         let orderString = "repos/"+usertag+"/clients/data/"+contact.clientTag+"/workorders";
          const ordertag = orderString.replace(/[.,#$\[\]@ ]/g,'');
          const orderRef = firebase.database().ref(ordertag);
          const orderkey = orderRef.push().getKey();
          //console.log(ordertag);
          //console.log (orderkey);
          //console.log(orderRef);
-
+         //"clientKey": String(contact.clientKey),
+         //"clientTag": String(contact.clientTag)
          const newOrder = {
            "date": String(date),
            "work": String(work),
            "tag": String(orderkey),
-           "clientKey": String(clientKey)
+           "orderKey": String(orderkey),
+           "clientKey": String(contact.clientKey),
+           "clientTag": String(contact.clientTag),
          }
          //console.log(newOrder);
          orderRef.child(orderkey).set(newOrder);
@@ -63,21 +68,29 @@ export default class AddOrderModal extends Component {
   };
 
   render() {
-    const {clientname, french} = this.props;
+    //const {clientname, french} = this.props;
+    const {contact, french} = this.props;
     //console.log ("AddOrderModal clientname = " + clientname );
     //console.log ("AddOrderModal usertag =" + usertag );
     //console.log ("AddOrderModal clienttag =" + clienttag );
 
-    let titleString = clientname + ":  " + "Add New Order";
+    let titleString = "Add New Order";
+    if (contact) {
+       titleString = contact.name + ":  " + "Add New Order";
+    }
+
     let worklabel ="Work";
     if (french) {
-       titleString = clientname + ":  " + "ajouter nouveau order";
+       titleString = "ajouter nouveau order";
+       if (contact) {
+            titleString = contact.name + ":  " + "ajouter nouveau order";
+       }
        worklabel = "Travail";
     }
 
     return (
       <Modal
-        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}/>}
+        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -118,3 +131,14 @@ export default class AddOrderModal extends Component {
     )
   }
 }
+const mapStateToProps = state => ({
+     contact: state.user.clientContact,
+     usertag: state.user.usertag,
+     french: state.user.french,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(AddOrderModal);

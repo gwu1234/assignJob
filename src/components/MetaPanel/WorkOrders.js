@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Menu, Icon } from "semantic-ui-react";
 import WorkOrder from "./WorkOrder";
+import AddOrderModal from "./AddOrderModal";
 import "./WorkOrders.css";
 
 class WorkOrders extends React.Component {
@@ -86,6 +87,9 @@ class WorkOrders extends React.Component {
                      color: "white", size: "tiny", overflow: "scroll",
                      height: "37vh"}} >
               {orders && this.displayOrders(orderArray)}
+              {orders && <Menu.Item style={{margin:"1em"}}>
+                  <span style={{color:"white", fontStyle:"bold"}}> add new order</span> <AddOrderModal />
+              </Menu.Item>}
           </Menu.Menu>
       </Menu.Menu>
     );
