@@ -7,11 +7,11 @@ import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
 
 class Client extends React.Component {
-  state = {
-    display: false,
-  };
+  //state = {
+  //  display: false,
+  //};
 
-  toggleDisplay = (display) => {
+  /*toggleDisplay = (display) => {
     const {client, key, clientKey} = this.props;
     //console.log("key = " + key);
     //console.log("clientKey = " + clientKey  );
@@ -29,9 +29,16 @@ class Client extends React.Component {
       this.onButtonClick(client);
     }
     this.props.setSelectedClientKey(clientKey);
-  }
+  }*/
 
-  onButtonClick = (client) => {
+  onButtonClick = () => {
+    const {client, clientKey, selectedClientKey} = this.props;
+
+    // click the same item more than once
+    if (clientKey === selectedClientKey) {
+        return
+    }
+
     //console.log(client.tag);
     //console.log(this.props.usertag)
     const clientContact = "/repos/" + this.props.usertag
@@ -114,6 +121,8 @@ class Client extends React.Component {
            this.props.setDeliverys(null);
        }
   });
+
+    this.props.setSelectedClientKey(clientKey);
   }
 
   /*displayEmails = emails =>
@@ -168,7 +177,7 @@ class Client extends React.Component {
 
   render() {
     const {client, usertag, clientKey, french, clientContact, selectedClientKey} = this.props;
-    const {display} = this.state;
+    //const {display} = this.state;
 
     let name= '';
     let address ='';
@@ -199,13 +208,14 @@ class Client extends React.Component {
                  :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal",
                   marginTop:"0px", paddingTop:"0px",
                   marginBottom:"0px", paddingBottom:"0px"}}
-              onClick={() => this.toggleDisplay(display)}>
+              onClick={() => this.onButtonClick()}>
               {client && name}
          </Menu.Item>
          <Menu.Item
               style = {selectedClientKey===clientKey?
                       {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue"}
-                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}>
+                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}
+                      onClick={() => this.onButtonClick()}>
               {client && city }
          </Menu.Item>
          </Menu.Menu>
