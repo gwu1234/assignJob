@@ -28,6 +28,7 @@ const initialUserState = {
   contracts: null,
   payments:null,
   deliverys: null,
+  invoices: null,
   selectedEmployee: null,
   repeathours: 5,
   french: false,
@@ -103,6 +104,13 @@ const user_reducer = (state = initialUserState, action) => {
         return {
         ...state,
         workOrder: action.payload.workOrder
+    };
+    case actionTypes.SET_INVOICES:
+        //console.log ("reducer invoices  = " );
+        //console.log (action.payload.invoices);
+        return {
+        ...state,
+        invoices: action.payload.invoices
     };
     case actionTypes.SET_COMPANY_INFOVIEW:
         //console.log("SET_COMPANY_INFOVIEW");

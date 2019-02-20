@@ -2,11 +2,11 @@ import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon } from "semantic-ui-react";
-import Contract from "./Contract";
-import AddContractModal from "./AddContractModal";
-import "./Contracts.css";
+import Invoice from "./Invoice";
+//import AddContractModal from "./AddContractModal";
+import "./Invoices.css";
 
-class Contracts extends React.Component {
+class Invoices extends React.Component {
 
    /*state = {
      contractsStyle: {
@@ -14,9 +14,9 @@ class Contracts extends React.Component {
        height: "2px",
      },
      display: false,
-   };
+   };*/
 
-   onButtonClick = (display) => {
+   /*onButtonClick = (display) => {
        if (display){
            this.setState({
                contractsStyle: {
@@ -45,51 +45,49 @@ class Contracts extends React.Component {
    };*/
 
 
-   displayContracts = (contracts) =>
-      contracts.length > 0 &&
-      contracts.map(contract => (
-          <Contract key={contract.contractKey} contractKey={contract.contractKey} contract={contract.contract}/>
+   displayInvoices = (invoices) =>
+      invoices.length > 0 &&
+      invoices.map(invoice => (
+          <Invoice key={invoice.invoiceKey} invoiceKey={invoice.invoiceKey} invoice={invoice.invoice}/>
      ));
 
 
 
   render() {
-    const {contracts, french} = this.props;
+    const {invoices, french} = this.props;
     //const {display} = this.state;
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
-    let titleString = "Contract";
+    let titleString = "Invoice";
     if (french) {
-       titleString ="contrat";
+       titleString ="facture";
     }
 
-    const contractArray =[];
+    const invoiceArray =[];
     //const keyArray = [];
-    for (var key in contracts) {
+    for (var key in invoices) {
        //console.log(clients[key]);
        //console.log(key);
-       const newContract = {
-         contractKey: key,
-         contract: contracts[key]
+       const newInvoice = {
+         invoiceKey: key,
+         invoice: invoices[key]
        }
-       //keyArray.push(key);
-       contractArray.push(newContract);
+       invoiceArray.push(newInvoice);
     }
 
 
     return (
-      <Menu.Menu className ="ContractsMenuMenu">
+      <Menu.Menu className ="InvoicesMenuMenu">
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
                  {titleString}
             </Menu.Header>
           <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
                              color: "white", size: "tiny",
                              overflow: "scroll", height: "37vh"}} >
-              {contracts && this.displayContracts(contractArray)}
-              {contracts && <Menu.Item style={{margin:"1em"}}>
-                  <span style={{color:"white", fontStyle:"bold"}}> add new contract</span> <AddContractModal />
-              </Menu.Item>}
+              {invoices && this.displayInvoices(invoiceArray)}
+
+
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -97,7 +95,7 @@ class Contracts extends React.Component {
 }
 
 const mapStateToProps = state => ({
-     contracts: state.user.contracts,
+     invoices: state.user.invoices,
      french: state.user.french,
    }
 );
@@ -105,4 +103,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(Contracts);
+)(Invoices);

@@ -1,0 +1,17 @@
+.InvoicesMenuMenu {
+   padding-top: 1.0em;
+   color: white;
+   size: tiny;
+   border: 2px dotted brown;
+}
+
+.InvoicesMenuItem {
+  opacity: 1.0;
+  fontSize: 3.0em;
+  color: white;
+}
+
+.InvoicesMenuHeader{
+  padding-top: 1.0em;
+  color: white;
+}

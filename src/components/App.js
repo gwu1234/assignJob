@@ -24,7 +24,7 @@ import Contracts from "./MapPanel/Contracts";
 import Deliverys from "./MapPanel/Deliverys";
 import Payments from "./MapPanel/Payments";
 import ClientContact from "./MetaPanel/ClientContact";
-
+import Invoices from "./MapPanel/Invoices";
 
 class App extends React.Component {
 
@@ -210,7 +210,7 @@ class App extends React.Component {
                        vertical
                        style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                      >
-
+                     <Invoices />
                      <Payments />
 
                      </Menu>
@@ -278,6 +278,7 @@ class App extends React.Component {
                      vertical
                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
                    >
+                   <Invoices />
                    <Payments />
                   </Menu>
             </Grid.Column>

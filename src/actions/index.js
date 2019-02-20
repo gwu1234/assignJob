@@ -217,6 +217,15 @@ export const setTrucks = trucks => {
   }
 }
 
+export const setInvoices = invoices => {
+  return {
+    type: actionTypes.SET_INVOICES,
+    payload: {
+      invoices: invoices
+    }
+  }
+}
+
 export const setUnassignedClient = () => {
   return {
     type: actionTypes.SET_UNASSIGNED_CLIENTS,
