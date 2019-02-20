@@ -33,13 +33,19 @@ class Delivery extends React.Component {
 
     return (
       <Menu.Menu className ="DeliveryMenuMenu">
-          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}}>
+          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}}>
               <span> {date} </span> <EditDeliveryModal delivery={delivery} deliveryKey={deliveryKey} />
           </Menu.Item>}
-          {work && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {work && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+               marginTop:"0px", paddingTop:"0px",
+               marginBottom:"0px", paddingBottom:"0px"}} >
               {work}
           </Menu.Item>}
-          {employee && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {employee && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}} >
               {employee}
           </Menu.Item>}
       </Menu.Menu>

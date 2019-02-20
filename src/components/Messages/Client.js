@@ -213,8 +213,12 @@ class Client extends React.Component {
          </Menu.Item>
          <Menu.Item
               style = {selectedClientKey===clientKey?
-                      {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue"}
-                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal"}}
+                      {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue",
+                      marginTop:"0px", paddingTop:"0px",
+                      marginBottom:"0px", paddingBottom:"0px"}
+                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal",
+                      marginTop:"0px", paddingTop:"0px",
+                      marginBottom:"0px", paddingBottom:"0px"}}
                       onClick={() => this.onButtonClick()}>
               {client && city }
          </Menu.Item>

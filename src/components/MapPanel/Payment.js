@@ -36,13 +36,19 @@ class Payment extends React.Component {
 
     return (
       <Menu.Menu className ="PaymentMenuMenu">
-          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}}>
+          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}}>
               <span> {date} </span> <EditPaymentModal payment={payment} paymentKey={paymentKey} />
           </Menu.Item>}
-          {amount && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {amount && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}} >
               {amount}
           </Menu.Item>}
-          {method && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {method && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}} >
               {method}
           </Menu.Item>}
       </Menu.Menu>

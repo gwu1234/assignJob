@@ -1,9 +1,9 @@
 .ContractMenuMenu {
-   padding-top: 0.5em;
+   padding-top: 0.2em;
    color: white;
    size: tiny;
    border: 1px dotted brown;
-   height: 90px;
+   height: 45px;
 }
 
 .ContractMenuItem {

@@ -38,10 +38,14 @@ class Contract extends React.Component {
           {contractDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}}>
               <span> {contractDate} </span> <EditContractModal contract={contract} contractKey={contractKey} />
           </Menu.Item>}
-          {contractWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {contractWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+              marginTop:"0px", paddingTop:"0px",
+              marginBottom:"0px", paddingBottom:"0px"}} >
               {contractWork}
           </Menu.Item>}
-          {price && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {price && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+             marginTop:"0px", paddingTop:"0px",
+             marginBottom:"0px", paddingBottom:"0px"}} >
               {price}
           </Menu.Item>}
       </Menu.Menu>

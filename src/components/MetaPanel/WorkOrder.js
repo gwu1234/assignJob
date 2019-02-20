@@ -31,10 +31,15 @@ class WorkOrder extends React.Component {
 
     return (
       <Menu.Menu className ="OrderMenuMenu">
-          {orderDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}}>
+          {orderDate && <Menu.Item
+               style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+               marginTop:"0px", paddingTop:"0px",
+               marginBottom:"0px", paddingBottom:"0px"}}>
               <span> {orderDate} </span> <EditOrderModal order={order} orderKey={orderKey} />
           </Menu.Item>}
-          {orderWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white"}} >
+          {orderWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
+               marginTop:"0px", paddingTop:"0px",
+               marginBottom:"0px", paddingBottom:"0px"}} >
               {orderWork}
           </Menu.Item>}
       </Menu.Menu>
