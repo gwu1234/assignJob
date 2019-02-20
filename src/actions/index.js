@@ -44,6 +44,15 @@ export const setClientView = view => {
   };
 };
 
+export const setClientContactView = view => {
+  return {
+    type: actionTypes.SET_CLIENT_CONTACT_VIEW,
+    payload: {
+      view: view
+    }
+  };
+};
+
 export const setCompanyInfoView = view => {
   //console.log("action usertag = " + tag);
   return {

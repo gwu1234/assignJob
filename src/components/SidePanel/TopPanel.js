@@ -3,7 +3,8 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setMapView, setEmployeeView, setTextView,
          setSelectedEmployee, setUnassignedClient,
-         setFrench, setCompanyInfoView, setClientView} from "../../actions";
+         setFrench, setCompanyInfoView, setClientView,
+         setClientContactView } from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
@@ -44,13 +45,21 @@ class TopPanel extends React.Component {
       const userOptions = french?
       [
         {
+           key: "clientcontactview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientContactView}> cliente contact</span>
+        },
+        {
            key: "clientview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente travail order </span>
-        },
+        }
       ]:
       [
         {
-           key: "textview",
+           key: "clientcontactview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientContactView}> client contact  </span>
+        },
+        {
+           key: "clientview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client work order </span>
         },
       ];
@@ -189,7 +198,7 @@ class TopPanel extends React.Component {
       //this.setState ({
       //    companyInfoView: true
       //});
-      this.props.setTextView();
+      //this.props.setTextView();
       this.props.setCompanyInfoView(true);
    }
 
@@ -200,7 +209,7 @@ class TopPanel extends React.Component {
     //      companyInfoView: false,
     //  });
       this.props.setMapView();
-      this.props.setCompanyInfoView(false);
+      //this.props.setCompanyInfoView(false);
       //console.log("setMapView")
    };
 
@@ -210,7 +219,7 @@ class TopPanel extends React.Component {
     //         mapview: false
     //   });
        this.props.setTextView();
-       this.props.setCompanyInfoView(false);
+       //this.props.setCompanyInfoView(false);
    };
 
    setClientView  = () => {
@@ -231,7 +240,7 @@ class TopPanel extends React.Component {
     //      companyInfoView: false,
     //  });
       this.props.setEmployeeView();
-      this.props.setCompanyInfoView(false);
+      //this.props.setCompanyInfoView(false);
    };
 
    setUnassignedView =() => {
@@ -241,7 +250,7 @@ class TopPanel extends React.Component {
       //    companyInfoView: false,
       // });
       this.props.setUnassignedClient();
-      this.props.setCompanyInfoView(false);
+      //this.props.setCompanyInfoView(false);
  };
 
  displayAssigned(employee) {
@@ -251,8 +260,12 @@ class TopPanel extends React.Component {
    //});
    //console.log("displayAssigned")
    this.props.setSelectedEmployee(employee);
-   this.props.setCompanyInfoView(false);
+   //this.props.setCompanyInfoView(false);
  }
+
+ setClientContactView  = () => {
+    this.props.setClientContactView(true);
+ };
 
  toggleFrench = () => {
     //console.log("toggleFrench");
@@ -334,6 +347,6 @@ export default connect(
   mapStateToProps,
   {setMapView, setEmployeeView, setTextView, setSelectedEmployee,
    setUnassignedClient, setCompanyInfoView, setFrench,
-   setClientView
+   setClientView, setClientContactView
  }
 )(TopPanel);

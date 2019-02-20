@@ -35,6 +35,7 @@ const initialUserState = {
   badAccess: false,
   companyInfoView: false,
   clientView: false,
+  clientContactView: false,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -104,11 +105,14 @@ const user_reducer = (state = initialUserState, action) => {
         workOrder: action.payload.workOrder
     };
     case actionTypes.SET_COMPANY_INFOVIEW:
-        //console.log ("reducer work order  = " );
-        //console.log (action.payload.workOrder);
+        //console.log("SET_COMPANY_INFOVIEW");
+        //console.log(action.payload.view);
         return {
         ...state,
-        companyInfoView: action.payload.view
+        companyInfoView: action.payload.view,
+        clientView: false,
+        clientContactView: false,
+        mapView: false,
     };
     case actionTypes.SET_MAP_VIEW:
          //console.log ("reducer SET_MAP_View  " );
@@ -227,8 +231,9 @@ const user_reducer = (state = initialUserState, action) => {
             ...state,
            markers: clientMarkers,
            mapView: true,
-           companyInfoView: false,
+           clientContactView: false,
            clientView: false,
+           companyInfoView: false,
       };
     case actionTypes.SET_EMPLOYEE_VIEW:
         const employees = state.employeeList;
@@ -263,8 +268,9 @@ const user_reducer = (state = initialUserState, action) => {
           ...state,
          markers: employeeMarkers,
          mapView: true,
-         companyInfoView: false,
+         clientContactView: false,
          clientView: false,
+         companyInfoView: false,
     };
     case actionTypes.SET_TEXT_VIEW:
       //console.log ("reducer");
@@ -273,8 +279,9 @@ const user_reducer = (state = initialUserState, action) => {
           ...state,
          markers: [],
          mapView: false,
-         companyInfoView: false,
+         clientContactView: false,
          clientView: false,
+         companyInfoView: false,
     };
     case actionTypes.SET_GEOENCODING:
             //console.log ("reducer SET_GEOENCODING = " );
@@ -300,9 +307,22 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                     ...state,
                     clientView: action.payload.view,
+                    clientContactView: false,
                     mapView: false,
                     companyInfoView: false,
         };
+
+   case actionTypes.SET_CLIENT_CONTACT_VIEW:
+            //console.log("SET_CLIENT_CONTACT_VIEW");
+            //console.log(action.payload.view);
+           return {
+                    ...state,
+                    clientContactView: action.payload.view,
+                    clientView: false,
+                    mapView: false,
+                    companyInfoView: false,
+        };
+
     case actionTypes.SET_DELIVERYS:
      //console.log (action.payload.deliverys);
             return {
@@ -462,9 +482,10 @@ const user_reducer = (state = initialUserState, action) => {
             return {
                     ...state,
                     markers: selectedMarkers,
+                    clientContactView: false,
+                    clientView: false,
                     mapView: true,
                     companyInfoView: false,
-                    clientView: false,
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
      //console.log ("reducer");
@@ -605,9 +626,10 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
     return {
         ...state,
        markers: unClientMarkers,
+       clientContactView: false,
+       clientView: false,
        mapView: true,
        companyInfoView: false,
-       clientView: false,
   };
 
     default:

@@ -59,7 +59,7 @@ class Login extends React.Component {
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(signedInUser => {
-          console.log (signedInUser.user) ;
+          //console.log (signedInUser.user) ;
           const emailString = signedInUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
           const nameString = signedInUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
 

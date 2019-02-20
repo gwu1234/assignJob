@@ -12,13 +12,13 @@ class ClientContact extends React.Component {
       visibility: 'hidden',
       height: "2px",
     },
-    emailDisplay: false,
-    phoneDisplay: false,
-    cellDisplay: false,
-    editDisplay: false,
+    emailDisplay: true,
+    phoneDisplay: true,
+    cellDisplay: true,
+    editDisplay: true,
   };
 
-  toggleEmailDisplay = (emailDisplay) => {
+  /*toggleEmailDisplay = (emailDisplay) => {
       this.setState({
           emailDisplay: !emailDisplay,
       })
@@ -34,7 +34,7 @@ class ClientContact extends React.Component {
       this.setState({
           cellDisplay: !cellDisplay,
       })
-    }
+    }*/
 
   displayEmails = emails =>
     emails.length > 0 &&
@@ -46,7 +46,7 @@ class ClientContact extends React.Component {
             fontSize: "0.7em",
             color: "white",
             marginLeft: "2.0em",
-            visibility: this.state.visibility
+            visibility: "visible"
         }}
       >
         {email}
@@ -56,7 +56,7 @@ class ClientContact extends React.Component {
     displayEmailHeader = (emailDisplay) =>(
         <Menu.Item
           name='emails'
-          onClick={() => this.toggleEmailDisplay(emailDisplay)}
+
         >
           <Header
               as='h4'
@@ -70,7 +70,7 @@ class ClientContact extends React.Component {
     displayPhoneHeader = (phoneDisplay) =>(
           <Menu.Item
             name="phones"
-            onClick={() => this.togglePhoneDisplay(phoneDisplay)}
+
           >
             <Header
                 as='h4'
@@ -100,7 +100,7 @@ class ClientContact extends React.Component {
   displayCellHeader = (cellDisplay) =>(
             <Menu.Item
               name="cells"
-              onClick={() => this.toggleCellDisplay(cellDisplay)}
+              
             >
               <Header
                   as='h4'
@@ -127,7 +127,7 @@ class ClientContact extends React.Component {
           </Menu.Item>
         ))
 
-onButtonClick = () => {
+/*onButtonClick = () => {
   if (this.state.contactStyle.visibility == "visible" ){
      //this.setState (contactStyle: {visibility: 'hidden', height: '10px'});
       this.setState({
@@ -148,7 +148,7 @@ onButtonClick = () => {
         editDisplay: true,
      })
    }
-};
+};*/
 
 
   render() {
@@ -159,11 +159,6 @@ onButtonClick = () => {
     let address = '';
     if (contact) {
         address = contact.street + ", " +contact.city + ", " + contact.postcode;
-        //console.log(contact);
-        //console.log(contact.phones);
-        //console.log(contact.cells.length);
-        //console.log(contact.cells);
-
     }
 
     let titleString = "Client Contact";
@@ -174,9 +169,9 @@ onButtonClick = () => {
     return (
       <Menu.Menu className="ClientContactMenuMenu" >
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
-                <Icon name='eye' size ="big" onClick={this.onButtonClick}/> {titleString}
+                {titleString}
             </Menu.Header>
-          <Menu.Menu style = {this.state.contactStyle}>
+          <Menu.Menu >
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
                {contact && address}
           </Menu.Item>

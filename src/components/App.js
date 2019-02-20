@@ -23,6 +23,7 @@ import WorkOrders from "./MetaPanel/WorkOrders";
 import Contracts from "./MapPanel/Contracts";
 import Deliverys from "./MapPanel/Deliverys";
 import Payments from "./MapPanel/Payments";
+import ClientContact from "./MetaPanel/ClientContact";
 
 
 class App extends React.Component {
@@ -30,7 +31,7 @@ class App extends React.Component {
   render() {
 
 
-    const {currentUser, mapView, admin, companyInfoView, clientView} = this.props;
+    const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView} = this.props;
     //console.log("App companyInfoView = " + companyInfoView);
     //console.log("App mapView = " + mapView);
     //console.log("App admin = " + admin);
@@ -287,6 +288,76 @@ class App extends React.Component {
              </Grid.Column>
         </Grid.Row>}
 
+        {!admin && !mapView && !companyInfoView && !clientView && clientContactView &&
+          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+                <Grid.Column style=
+                     {{width: "50%", height:"100%", margin:"0px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", height:"92vh"}}
+                     >
+                       <Clients/>
+                     </Menu>
+                </Grid.Column>
+                <Grid.Column style=
+                     {{width: "50%", height:"100%", margin:"0px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     >
+                      <ClientContact />
+
+                     </Menu>
+                </Grid.Column>
+
+            </Grid.Row>}
+
+        {admin && !mapView && !companyInfoView && !clientView && clientContactView &&
+         <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
+                <Menu
+                  size="large"
+                  inverted
+                  floated
+                  vertical
+                  style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
+                       height:"100%", margin:"0px", padding:"0px"}}>
+                      <UserList currentUser={currentUser} />
+                  </Menu>
+            </Grid.Column>
+
+            <Grid.Column style=
+                  {{width: "45%", height:"100%", margin:"0px", padding:"0px"}}>
+                  <Menu
+                     size="large"
+                     inverted
+                     floated
+                     vertical
+                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   >
+                       <Clients/>
+                   </Menu>
+            </Grid.Column>
+
+            <Grid.Column style=
+                         {{width: "45%", height:"100%", margin:"0px", padding:"0px"}}>
+                  <Menu
+                      size="large"
+                      inverted
+                      floated
+                      vertical
+                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                  >
+                        <ClientContact />
+                  </Menu>
+             </Grid.Column>
+        </Grid.Row>}
 
       </Grid>
     );
@@ -299,6 +370,7 @@ const mapStateToProps = state => ({
     admin: state.user.admin,
     companyInfoView: state.user.companyInfoView,
     clientView: state.user.clientView,
+    clientContactView: state.user.clientContactView,
   });
 
 export default connect(mapStateToProps)(App);
