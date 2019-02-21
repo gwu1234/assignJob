@@ -3,11 +3,14 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
-class AddOrderModal extends Component {
+class AddInvoiceModal extends Component {
   state = {
     modalOpen: false,
     date: '',
-    work: ''
+    work: '',
+    amount: "",
+    tax:"",
+    total:"",
   }
 
 
@@ -21,41 +24,48 @@ class AddOrderModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work} = this.state;
+         const {date,work, amount, tax, total} = this.state;
          const {usertag, contact} = this.props;
 
          //"repos/"+usertag+"/clients/data/"+ contact.clientTag
-         let orderString = "repos/"+usertag+"/clients/data/"+contact.clientTag+"/workorders";
-         const ordertag = orderString.replace(/[.,#$\[\]@ ]/g,'');
-         const orderRef = firebase.database().ref(ordertag);
-         const orderkey = orderRef.push().getKey();
+         let invoiceString = "repos/"+usertag+"/clients/data/"+contact.clientTag+"/invoices";
+         const invoicetag = invoiceString.replace(/[.,#$\[\]@ ]/g,'');
+         const invoiceRef = firebase.database().ref(invoicetag);
+         const invoicekey = invoiceRef.push().getKey();
          //console.log(ordertag);
          //console.log (orderkey);
          //console.log(orderRef);
          //"clientKey": String(contact.clientKey),
          //"clientTag": String(contact.clientTag)
-         const newOrder = {
+         const newInvoice = {
            "date": String(date),
+           "total": String(total),
            "work": String(work),
-           "tag": String(orderkey),
-           "orderKey": String(orderkey),
+           "tax": String(tax),
+           "amount": String(amount),
+           "tag": String(invoicekey),
+           "invoiceKey": String(invoicekey),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag),
          }
          //console.log(newOrder);
-         orderRef.child(orderkey).set(newOrder);
+         invoiceRef.child(invoicekey).set(newInvoice);
          this.handleOpen(false);
     }
   };
 
   isFormValid() {
-     const {date, work } = this.state;
+     const {date, total, amount } = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
      }
-     if ( !work) {
-        window.alert ("work is required");
+     if ( !total) {
+        window.alert ("total is required");
+        return false;
+     }
+     if ( !amount) {
+        window.alert ("amount is required");
         return false;
      }
      return true;
@@ -74,24 +84,31 @@ class AddOrderModal extends Component {
     //console.log ("AddOrderModal usertag =" + usertag );
     //console.log ("AddOrderModal clienttag =" + clienttag );
 
-    let titleString = "Add New Order";
+    let titleString = "Add New Invoice";
+    let workString ="Work";
+    let totalString="Total";
+    let taxString ="Tax";
+    let amountString = "Amount";
+
     if (contact) {
-       titleString = contact.name + ":  " + "Add New Order";
+       titleString = contact.name + ":  " + "Add New Invoice";
     }
 
-    let worklabel ="Work";
+    //let totallabel ="Total";
     if (french) {
-       titleString = "ajouter nouveau order";
+       titleString = "ajouter nouveau facture";
        if (contact) {
-            titleString = contact.name + ":  " + "ajouter nouveau order";
+            titleString = contact.name + ":  " + "ajouter nouveau facture";
        }
-       worklabel = "Travail";
+       workString = "Travail";
+       taxString ="Impot";
+       amountString="Somme";
     }
 
     return (
       <Modal
         trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)}
-                 style = {{position: "relative", float: "right", color:"white"}}/>}
+        style = {{position: "relative", float: "right", color:"white"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -108,9 +125,26 @@ class AddOrderModal extends Component {
                            name="date"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label={worklabel}
+                            label={workString}
                             placeholder='snow removal'
                             name="work"
+                            onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label={amountString}
+                           placeholder='500.00'
+                           name="amount"
+                           onChange={this.handleChange} />
+                <Form.Input size ="mini"
+                            label={taxString}
+                            placeholder='45.00'
+                            name="tax"
+                            onChange={this.handleChange} />
+                <Form.Input size ="mini"
+                            label="Total"
+                            placeholder='545.00'
+                            name="total"
                             onChange={this.handleChange} />
            </Form.Group>
         </Form>
@@ -142,4 +176,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(AddOrderModal);
+)(AddInvoiceModal);

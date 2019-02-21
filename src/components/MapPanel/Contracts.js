@@ -87,9 +87,9 @@ class Contracts extends React.Component {
                              color: "white", size: "tiny",
                              overflow: "scroll", height: "37vh"}} >
               {contracts && this.displayContracts(contractArray)}
-              {contracts && <Menu.Item style={{margin:"1em"}}>
+              <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> add new contract</span> <AddContractModal />
-              </Menu.Item>}
+              </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
     );

@@ -87,9 +87,9 @@ class WorkOrders extends React.Component {
                      color: "white", size: "tiny", overflow: "scroll",
                      height: "37vh"}} >
               {orders && this.displayOrders(orderArray)}
-              {orders && <Menu.Item style={{margin:"1em"}}>
+              <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> add new order</span> <AddOrderModal />
-              </Menu.Item>}
+              </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
     );

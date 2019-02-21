@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Menu, Icon } from "semantic-ui-react";
 import Invoice from "./Invoice";
-//import AddContractModal from "./AddContractModal";
+import AddInvoiceModal from "./AddInvoiceModal";
 import "./Invoices.css";
 
 class Invoices extends React.Component {
@@ -86,7 +86,9 @@ class Invoices extends React.Component {
                              color: "white", size: "tiny",
                              overflow: "scroll", height: "37vh"}} >
               {invoices && this.displayInvoices(invoiceArray)}
-
+              <Menu.Item style={{margin:"1em"}}>
+                  <span style={{color:"white", fontStyle:"bold"}}> add new invoice</span> <AddInvoiceModal />
+              </Menu.Item>
 
           </Menu.Menu>
       </Menu.Menu>
