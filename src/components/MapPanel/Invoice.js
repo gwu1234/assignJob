@@ -4,7 +4,7 @@ import React from "react";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Invoice.css";
-//import EditContractModal from "./EditContractModal";
+import EditInvoiceModal from "./EditInvoiceModal";
 
 class Invoice extends React.Component {
 
@@ -40,7 +40,7 @@ class Invoice extends React.Component {
           {invoiceDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
           marginTop:"0px", paddingTop:"0px",
           marginBottom:"0px", paddingBottom:"0px"}}>
-              <span> {invoiceDate} </span>
+              <span> {invoiceDate} </span> <EditInvoiceModal invoice={invoice} invoiceKey={invoiceKey} />
           </Menu.Item>}
           {invoiceWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
               marginTop:"0px", paddingTop:"0px",
