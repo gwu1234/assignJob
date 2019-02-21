@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Radio} from 'semantic-ui-react';
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -11,6 +11,8 @@ class EditOrderModal extends Component {
 
          date: this.props.order.date,
          work: this.props.order.work,
+         orderId: this.props.order.orderId,
+         isActive: this.props.order.isActive,
      }
 }
 
@@ -26,7 +28,7 @@ class EditOrderModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work} = this.state;
+         const {date,work, orderId, isActive} = this.state;
          const {orderKey, contact, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
@@ -41,8 +43,10 @@ class EditOrderModal extends Component {
            "date": String(date),
            "work": String(work),
            "orderKey": String(orderKey),
+           "orderId" : String(orderId),
            "clientKey": String(contact.clientKey),
-           "tag": String(contact.tag)
+           "tag": String(contact.tag),
+           "isActive": String(isActive),
          }
          //console.log(newOrder);
          orderRef.set(newOrder);
@@ -68,6 +72,22 @@ class EditOrderModal extends Component {
     //console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  handleRadioChange = (e, { name, label, value, checked }) => {
+    //this.setState({ value });
+    //console.log("radio name = " + name);
+    //console.log("radio label = " + label);
+    //console.log("radio value = " + value);
+    //console.log("radio checked = " + checked);
+    //console.log(e);
+    this.setState({isActive: !this.state.isActive});
+
+    if (checked) {
+       console.log("this is active work order");
+    } else {
+       console.log("this is not active work order");
+    }
+  }
 
   render() {
     const {order, contact} = this.props;
@@ -105,7 +125,27 @@ class EditOrderModal extends Component {
                             name="work"
                             onChange={this.handleChange} />
            </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label='Order ID'
+                           defaultValue = {order.orderId}
+                           name="orderId"
+                           onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Field>
+               <Radio
+                   toggle
+                   label='make this order active'
+                   name='activeRadio'
+                   value={this.state.orderId}
+                   checked={this.state.isActive}
+                   onChange={this.handleRadioChange}
+               />
+   </Form.Field>
         </Form>
+
+
+
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
