@@ -29,13 +29,13 @@ class EditInvoiceModal extends Component {
     //event.preventDefault();
     if (this.isFormValid()) {
          const {date,work, amount, tax, total} = this.state;
-         const {invoice, invoiceKey, usertag} = this.props;
+         const {invoice, invoiceKey, usertag, contact} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);
          //console.log (contact.clientKey);
 
-         let invoicePath = "repos/"+usertag+"/clients/data/"+ invoice.clientTag +"/invoices/" +invoiceKey;
+         let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/invoices/" +invoiceKey;
          const invoiceRef = firebase.database().ref(invoicePath);
          //console.log(contractPath);
 
@@ -46,8 +46,8 @@ class EditInvoiceModal extends Component {
            "tax":   String(tax),
            "total": String(total),
            "invoiceKey": String(invoiceKey),
-           "clientKey": String(invoice.clientKey),
-           "clientTag": String(invoice.clientTag)
+           "clientKey": String(contact.clientKey),
+           "clientTag": String(contact.tag)
          }
          //console.log(newContract);
          invoiceRef.update(newInvoice);
