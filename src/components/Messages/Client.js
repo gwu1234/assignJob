@@ -141,9 +141,10 @@ class Client extends React.Component {
        }
   });
 
-    console.log ("active order  id = " + client.activeOrderId);
-    console.log ("active order key = " + client.activeOrderkey);
-
+    //console.log(client);
+    //console.log ("active order  id = " + client.activeOrderId);
+    //console.log ("active order key = " + client.activeOrderKey);
+    //console.log ("active order key = " + client["activeOrderKey"]);
     this.props.setActiveOrderKey(client.activeOrderKey);
     this.props.setActiveOrderId(client.activeOrderId);
     this.props.setSelectedClientKey(clientKey);

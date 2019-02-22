@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
+import { setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Button, Header, Icon, Modal, Form, Radio} from 'semantic-ui-react';
 
 class EditOrderModal extends Component {
@@ -10,9 +11,6 @@ class EditOrderModal extends Component {
          modalOpen: false,
          fieldChange: false,
          activeOrderChanged: false,
-         //activeOrderId:  "",
-         //activeOrderKey: "",
-
          date: this.props.order.date,
          work: this.props.order.work,
          orderId: this.props.order.orderId,
@@ -20,7 +18,22 @@ class EditOrderModal extends Component {
      }
 }
 
+componentDidMount() {
+  const {order} = this.props;
+  console.log(order.isActive);
 
+  this.setState({
+     isActive: order.isActive
+  });
+}
+
+componentWillUnMount() {
+  const {order} = this.props;
+console.log(order.isActive);
+  this.setState({
+     isActive: order.isActive
+  });
+}
 
   handleOpen = (open) => this.setState({ modalOpen: open })
 
@@ -62,17 +75,25 @@ class EditOrderModal extends Component {
              //this.handleOpen(false);
        } else if (!fieldChange && activeOrderChanged) {
              //console.log("fields not change, active id changed");
-             let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
-             const orderRef = firebase.database().ref(orderPath);
+             //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
+             //const orderRef = firebase.database().ref(orderPath);
              //console.log(orderPath);
-
+             let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/";
+             const orderRef = firebase.database().ref(orderPath);
              const activeOrderActive  = isActive === "true" ? true:false;
              const newOrder = {
 
                 "isActive": String(activeOrderActive),
              }
              //console.log(newOrder);
-             orderRef.update(newOrder);
+             orderRef.child(orderKey).update(newOrder);
+
+             if (activeOrderActive && this.props.activeOrderId !== null
+                 && this.props.activeOrderKey !== null) {
+                   console.log(this.props.activeOrderKey);
+                   console.log(this.props.activeOrderId);
+                   orderRef.child(this.props.activeOrderKey).update({"isActive": "false"});
+             }
 
              const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
              const clientRef = firebase.database().ref(clientPath);
@@ -87,13 +108,19 @@ class EditOrderModal extends Component {
 
              clientRef.update(newOrderId);
 
+             this.props.setActiveOrderId(activeOrderId);
+             this.props.setActiveOrderKey(activeOrderKey);
              //this.handleOpen(false);
       }
       else if (fieldChange && activeOrderChanged) {
             //console.log("fields not change, active id changed");
-            let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
-            const orderRef = firebase.database().ref(orderPath);
+            //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
+            //const orderRef = firebase.database().ref(orderPath);
             //console.log(orderPath);
+
+            let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/";
+            const orderRef = firebase.database().ref(orderPath);
+            const activeOrderActive  = isActive === "true" ? true:false;
 
             const newOrder = {
                "date": String(date),
@@ -102,10 +129,18 @@ class EditOrderModal extends Component {
                "orderId" : String(orderId),
                "clientKey": String(contact.clientKey),
                "tag": String(contact.tag),
-               "isActive": String(isActive),
+               "isActive": String(activeOrderActive),
             }
             //console.log(newOrder);
-            orderRef.update(newOrder);
+            orderRef.child(orderKey).update(newOrder);
+
+            if (activeOrderActive && this.props.activeOrderId !== null
+                && this.props.activeOrderKey !== null) {
+                  console.log(this.props.activeOrderKey);
+                  console.log(this.props.activeOrderId);
+                  orderRef.child(this.props.activeOrderKey).update({"isActive": "false"});
+            }
+
 
             const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
             const clientRef = firebase.database().ref(clientPath);
@@ -119,10 +154,15 @@ class EditOrderModal extends Component {
                 "activeOrderKey": String(activeOrderKey),
             }
 
+            this.props.setActiveOrderId(activeOrderId);
+            this.props.setActiveOrderKey(activeOrderKey);
             clientRef.update(newOrderId);
 
             //this.handleOpen(false);
       }
+      this.setState({
+          activeOrderChanged: false,
+      });
       this.handleOpen(false);
     }
   };
@@ -158,14 +198,21 @@ class EditOrderModal extends Component {
     //console.log("radio value = " + value);
     //console.log("radio checked = " + checked);
     //console.log(e);
-    const {orderId} = this.state;
+    const {orderId, isActive} = this.state;
     const {activeOrderId, orderKey} = this.props;
 
 
-    this.setState({
-          isActive: this.state.isActive==="true"? "false":"true",
+    if (isActive === "true") {
+          this.setState({
+              isActive: "false",
+              activeOrderChanged: true,
+          });
+    } else {
+      this.setState({
+          isActive: "true",
           activeOrderChanged: true,
-    });
+        });
+    }
 
     /*if (checked) {
        console.log("this is active work order");
@@ -216,13 +263,25 @@ class EditOrderModal extends Component {
   }
 
   render() {
-    const {order, contact} = this.props;
+    const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
+    const {orderId, isActive, activeOrderChanged} = this.state;
+
+
+
     //console.log ("EditOrderModal order = " );
     //console.log (order);
+    //console.log (isActive);
+    //console.log (activeOrderId);
+    //console.log (activeOrderKey);
     //console.log (orderKey);
-    //console.log (contact.tag);
-    //console.log (contact.name);
-    //console.log (contact.clientKey);
+    //console.log(orderId);
+
+    const isRadioActive = activeOrderChanged? isActive==="true": isActive === "true" &&
+         activeOrderId === orderId &&
+         activeOrderKey === orderKey ;
+
+   //const isRadioActive = isActive === "true";
+
 
     const titleString = contact.name + " :  " + "Edit Order";
     //console.log (titleString);
@@ -264,7 +323,7 @@ class EditOrderModal extends Component {
                    label='make this order active'
                    name='activeRadio'
                    value={this.state.orderId}
-                   checked={this.state.isActive === "true"}
+                   checked={isRadioActive}
                    onChange={this.handleRadioChange}
                />
    </Form.Field>
@@ -300,5 +359,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  {setActiveOrderId, setActiveOrderKey}
 )(EditOrderModal);
