@@ -2,7 +2,8 @@ import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setClientContact, setWorkOrder, setContracts,
-         setPayments, setDeliverys, setInvoices} from "../../actions";
+         setPayments, setDeliverys, setInvoices,
+         setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Menu, Icon} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
@@ -73,6 +74,8 @@ class Client extends React.Component {
           //console.log(orders)
           if (orders ) {
              this.props.setWorkOrder(orders);
+             //this.props.setActiveOrderKey(client.activeOrderKey);
+             //this.props.setActiveOrderId(client.activeOrderId);
          } else {
              this.props.setWorkOrder(null);
          }
@@ -138,6 +141,11 @@ class Client extends React.Component {
        }
   });
 
+    console.log ("active order  id = " + client.activeOrderId);
+    console.log ("active order key = " + client.activeOrderkey);
+
+    this.props.setActiveOrderKey(client.activeOrderKey);
+    this.props.setActiveOrderId(client.activeOrderId);
     this.props.setSelectedClientKey(clientKey);
   }
 
@@ -253,5 +261,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {setClientContact, setWorkOrder, setContracts, setPayments, setDeliverys, setInvoices}
+  {setClientContact, setWorkOrder, setContracts, setPayments,
+   setDeliverys, setInvoices, setActiveOrderId, setActiveOrderKey}
 )(Client);

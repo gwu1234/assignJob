@@ -258,3 +258,21 @@ export const setBadAccess = bad => {
     }
   }
 }
+
+export const setActiveOrderId= id => {
+  return {
+    type: actionTypes.SET_ACTIVE_ORDER_ID,
+    payload: {
+      activeId: id
+    }
+  }
+}
+
+export const setActiveOrderKey= key => {
+   return {
+      type: actionTypes.SET_ACTIVE_ORDER_KEY,
+      payload: {
+        activeKey: key
+      }
+    }
+  }
