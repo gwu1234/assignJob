@@ -14,7 +14,8 @@ class EditContractModal extends Component {
          tax: this.props.contract.tax,
          total: this.props.contract.total,
          contractId: this.props.contract.contractId,
-         selectedValue: null,
+         selectedOrderId: null,
+         selectedOrderKey:null,
      }
 }
 
@@ -71,23 +72,25 @@ class EditContractModal extends Component {
      return true;
   }
 
-  handleSelectChange = (name, event) => {
-      let value;
+  //event, data
+  handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      let selectedId = null;
+      let selectedKey = null;
+      //console.log(data.value);
+      //console.log("textContent = " + event.target.textContent);
 
-      console.log(name);
-      console.log(event);
-      console.log(event.target.value);
-      console.log(event.target.textContent);
-
-      if (event.target.value !== undefined) {
-        value = event.target.value;
-      } else {
-        value = event.target.textContent;
+      if (data !== undefined) {
+        selectedKey = data.value;
       }
-     this.setState({ selectedValue: value});
-      //let newExtraInfo = Object.assign(this.state.extraInfo, { [name]: value })
 
-      //this.setState({ extraInfo: newExtraInfo});
+      if (event.target !== undefined) {
+        selectedId = event.target.textContent;
+      }
+
+      this.setState({
+          selectedOrderId:  selectedId,
+          selectedOrderKey: selectedKey,
+       });
     }
 
   handleChange = event => {
@@ -95,6 +98,41 @@ class EditContractModal extends Component {
     //console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  selectOptions = () => {
+     const {orders} = this.props;
+     const Options = [];
+
+     for (var key in orders) {
+        const option = {
+          key: key,
+          text: <span> {orders[key].orderId} </span>,
+          value: orders[key].orderKey,
+        }
+        Options.push(option);
+     };
+     return Options;
+  }
+
+  /*selectValues= () => {
+     const {orders} = this.props;
+     const Options = [];
+
+     for (var key in orders) {
+        const option = {
+          key: key,
+          value: orders[key].orderKey,
+        }
+        Options.push(option);
+     };
+     return Options;
+  }*/
+
+  /*selectOptions = () =>[
+      { key: 1, text: 'Choice 1', value: 1 },
+      { key: 2, text: 'Choice 2', value: 2 },
+      { key: 3, text: 'Choice 3', value: 3 },
+  ];*/
 
   render() {
     const {contract, contact} = this.props;
@@ -110,14 +148,14 @@ class EditContractModal extends Component {
     }
     //console.log (titleString);
 
-    const orderOptions = [
+    /*const orderOptions = [
        { key: '001', text: 'Order-001' },
        { key: '002', text: 'Order-002' },
        { key: '003', text: 'Order-003' },
        { key: '004', text: 'Order-004' },
        { key: '005', text: 'Order-005' },
        { key: '006', text: 'Order-006' }
-     ];
+     ];*/
 
     return (
       <Modal
@@ -168,15 +206,17 @@ class EditContractModal extends Component {
                              onChange={this.handleChange} />
             </Form.Group>
         </Form>
+
         <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.5em"}}>select linked work order id: </h4>
         <Select placeholder='Select Order Id'
                 name="orders"
-                defaultValue ={"select linked work order id"}
                 text={this.state.selectedValue}
                 style={{color:"black", fontStyle:"bold", margin:"0px", padding:"0px"}}
-                onChange={(e) => this.handleSelectChange('orders', e)}
-                options={orderOptions} />
-        {this.state.selectedValue && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedValue} &nbsp; selected. Click Submit to confirm</h4>}
+                onChange={this.handleSelectChange}
+                options={this.selectOptions()}
+        />
+        {this.state.selectedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderId} &nbsp; selected. Click Submit to confirm</h4>}
+        {this.state.selectedOrderKey && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderKey} &nbsp; selected. Click Submit to confirm</h4>}
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
@@ -198,6 +238,7 @@ class EditContractModal extends Component {
 const mapStateToProps = state => ({
      contact: state.user.clientContact,
      usertag: state.user.usertag,
+     orders: state.user.workOrder,
    }
 );
 
