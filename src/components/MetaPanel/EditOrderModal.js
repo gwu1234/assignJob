@@ -88,8 +88,8 @@ console.log(order.isActive);
              //console.log(newOrder);
              orderRef.child(orderKey).update(newOrder);
 
-             if (activeOrderActive && this.props.activeOrderId !== null
-                 && this.props.activeOrderKey !== null) {
+             if (activeOrderActive && this.props.activeOrderId
+                 && this.props.activeOrderKey) {
                    console.log(this.props.activeOrderKey);
                    console.log(this.props.activeOrderId);
                    orderRef.child(this.props.activeOrderKey).update({"isActive": "false"});
