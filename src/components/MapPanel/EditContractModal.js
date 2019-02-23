@@ -14,8 +14,11 @@ class EditContractModal extends Component {
          tax: this.props.contract.tax,
          total: this.props.contract.total,
          contractId: this.props.contract.contractId,
+         linkedOrderId: this.props.contract.linkedOrderId,
+         linkedOrderKey: this.props.contract.linkedOrderKey,
          selectedOrderId: null,
-         selectedOrderKey:null,
+         selectedOrderKey: null,
+         selectOrderChange: false,
      }
 }
 
@@ -31,7 +34,7 @@ class EditContractModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, price, tax, total, contractId} = this.state;
+         const {date,work, price, tax, total, contractId, selectedOrderId, selectedOrderKey,selectOrderChange} = this.state;
          const {contact, contractKey, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
@@ -51,10 +54,22 @@ class EditContractModal extends Component {
            "contractId": String(contractId),
            "contractKey": String(contractKey),
            "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag)
+           "clientTag": String(contact.clientTag),
+           "linkedOrderId": selectedOrderId,
+           "linkedOrderKey":selectedOrderKey,
          }
          //console.log(newContract);
          contractRef.set(newContract);
+
+         if (selectOrderChange) {
+             this.setState ({
+               linkedOrderId:  selectedOrderId,
+               linkedOrderKey: selectedOrderKey,
+               selectOrderChange: false,
+               selectedOrderId:  null,
+               selectedOrderKey: null,
+             })
+         }
          this.handleOpen(false);
     }
   };
@@ -87,9 +102,15 @@ class EditContractModal extends Component {
         selectedId = event.target.textContent;
       }
 
+      if (selectedKey ==="no order" || selectedId ==="no order"){
+          selectedId = null;
+          selectedKey = null;
+      }
+
       this.setState({
           selectedOrderId:  selectedId,
           selectedOrderKey: selectedKey,
+          selectOrderChange: true,
        });
     }
 
@@ -101,7 +122,13 @@ class EditContractModal extends Component {
 
   selectOptions = () => {
      const {orders} = this.props;
-     const Options = [];
+     const Options = [
+       {
+          key: 1111,
+          text: <span>no order</span>,
+          value: "no order",
+       }
+     ];
 
      for (var key in orders) {
         const option = {
@@ -113,26 +140,6 @@ class EditContractModal extends Component {
      };
      return Options;
   }
-
-  /*selectValues= () => {
-     const {orders} = this.props;
-     const Options = [];
-
-     for (var key in orders) {
-        const option = {
-          key: key,
-          value: orders[key].orderKey,
-        }
-        Options.push(option);
-     };
-     return Options;
-  }*/
-
-  /*selectOptions = () =>[
-      { key: 1, text: 'Choice 1', value: 1 },
-      { key: 2, text: 'Choice 2', value: 2 },
-      { key: 3, text: 'Choice 3', value: 3 },
-  ];*/
 
   render() {
     const {contract, contact} = this.props;
@@ -146,16 +153,6 @@ class EditContractModal extends Component {
     if (contact) {
          titleString = contact.name + " :  " + "Edit Contract";
     }
-    //console.log (titleString);
-
-    /*const orderOptions = [
-       { key: '001', text: 'Order-001' },
-       { key: '002', text: 'Order-002' },
-       { key: '003', text: 'Order-003' },
-       { key: '004', text: 'Order-004' },
-       { key: '005', text: 'Order-005' },
-       { key: '006', text: 'Order-006' }
-     ];*/
 
     return (
       <Modal
@@ -207,7 +204,10 @@ class EditContractModal extends Component {
             </Form.Group>
         </Form>
 
-        <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.5em"}}>select linked work order id: </h4>
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>linked to work order: {this.state.linkedOrderId}</h4>}
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select work order to change</h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>not linked to work order </h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select work order to link</h4>}
         <Select placeholder='Select Order Id'
                 name="orders"
                 text={this.state.selectedValue}
@@ -216,7 +216,9 @@ class EditContractModal extends Component {
                 options={this.selectOptions()}
         />
         {this.state.selectedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderId} &nbsp; selected. Click Submit to confirm</h4>}
-        {this.state.selectedOrderKey && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderKey} &nbsp; selected. Click Submit to confirm</h4>}
+        {this.state.selectOrderChange && this.state.linkedOrderId && !this.state.selectedOrderId &&
+          <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>Deleting link to work order. Click Submit to confirm</h4>}
+
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
