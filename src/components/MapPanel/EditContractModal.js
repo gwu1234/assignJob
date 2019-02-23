@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Select} from 'semantic-ui-react';
 
 class EditContractModal extends Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class EditContractModal extends Component {
          work: this.props.contract.work,
          price: this.props.contract.price,
          tax: this.props.contract.tax,
-         total: this.props.contract.total
+         total: this.props.contract.total,
+         contractId: this.props.contract.contractId,
+         selectedValue: null,
      }
 }
 
@@ -28,7 +30,7 @@ class EditContractModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, price, tax, total} = this.state;
+         const {date,work, price, tax, total, contractId} = this.state;
          const {contact, contractKey, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
@@ -45,6 +47,7 @@ class EditContractModal extends Component {
            "price": String(price),
            "tax":   String(tax),
            "total": String(total),
+           "contractId": String(contractId),
            "contractKey": String(contractKey),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag)
@@ -68,6 +71,25 @@ class EditContractModal extends Component {
      return true;
   }
 
+  handleSelectChange = (name, event) => {
+      let value;
+
+      console.log(name);
+      console.log(event);
+      console.log(event.target.value);
+      console.log(event.target.textContent);
+
+      if (event.target.value !== undefined) {
+        value = event.target.value;
+      } else {
+        value = event.target.textContent;
+      }
+     this.setState({ selectedValue: value});
+      //let newExtraInfo = Object.assign(this.state.extraInfo, { [name]: value })
+
+      //this.setState({ extraInfo: newExtraInfo});
+    }
+
   handleChange = event => {
     //console.log([event.target.name]);
     //console.log(event.target.value);
@@ -87,6 +109,15 @@ class EditContractModal extends Component {
          titleString = contact.name + " :  " + "Edit Contract";
     }
     //console.log (titleString);
+
+    const orderOptions = [
+       { key: '001', text: 'Order-001' },
+       { key: '002', text: 'Order-002' },
+       { key: '003', text: 'Order-003' },
+       { key: '004', text: 'Order-004' },
+       { key: '005', text: 'Order-005' },
+       { key: '006', text: 'Order-006' }
+     ];
 
     return (
       <Modal
@@ -129,7 +160,23 @@ class EditContractModal extends Component {
                             name="total"
                             onChange={this.handleChange} />
            </Form.Group>
+           <Form.Group inline width='equal' >
+                 <Form.Input size ="mini"
+                             label='Contract Id'
+                             defaultValue = {contract.contractId}
+                             name="contractId"
+                             onChange={this.handleChange} />
+            </Form.Group>
         </Form>
+        <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.5em"}}>select linked work order id: </h4>
+        <Select placeholder='Select Order Id'
+                name="orders"
+                defaultValue ={"select linked work order id"}
+                text={this.state.selectedValue}
+                style={{color:"black", fontStyle:"bold", margin:"0px", padding:"0px"}}
+                onChange={(e) => this.handleSelectChange('orders', e)}
+                options={orderOptions} />
+        {this.state.selectedValue && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedValue} &nbsp; selected. Click Submit to confirm</h4>}
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
