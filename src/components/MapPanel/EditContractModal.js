@@ -208,7 +208,10 @@ class EditContractModal extends Component {
      ];
 
      for (var key in orders) {
-        if (key !== linkedOrderKey) {
+        if ( key !== linkedOrderKey
+            && !orders[key].linkedContractKey
+            && !orders[key].linkedContractId) {
+           //if (key !== linkedOrderKey) {
             const option = {
                key: key,
                text: <span> {orders[key].orderId} </span>,
