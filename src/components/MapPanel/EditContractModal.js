@@ -19,6 +19,7 @@ class EditContractModal extends Component {
          selectedOrderId: null,
          selectedOrderKey: null,
          selectOrderChange: false,
+         fieldChange: false,
      }
 }
 
@@ -27,50 +28,120 @@ class EditContractModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
+    const {date,work, price, tax, total, contractId,
+        selectedOrderId, selectedOrderKey,
+        linkedOrderId, linkedOrderKey,
+        selectOrderChange, fieldChange} = this.state;
+    const {contact, contractKey, usertag} = this.props;
+
     const event = this.nativeEvent;
     if (event) {
        //console.log(event);
        event.preventDefault();
     }
+
+    if (!selectOrderChange && !fieldChange) {
+        this.handleOpen(false);
+    }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, price, tax, total, contractId, selectedOrderId, selectedOrderKey,selectOrderChange} = this.state;
-         const {contact, contractKey, usertag} = this.props;
+         /*const {date,work, price, tax, total, contractId,
+           selectedOrderId, selectedOrderKey,
+           linkedOrderId, linkedOrderKey,
+           selectOrderChange} = this.state;
+         const {contact, contractKey, usertag} = this.props;*/
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);
          //console.log (contact.clientKey);
 
-         let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/" +contractKey;
-         const contractRef = firebase.database().ref(contractPath);
-         //console.log(contractPath);
+         if (!selectOrderChange && fieldChange) {
+              let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/" +contractKey;
+              const contractRef = firebase.database().ref(contractPath);
+              //console.log(contractPath);
 
-         const newContract = {
-           "date":  String(date),
-           "work":  String(work),
-           "price": String(price),
-           "tax":   String(tax),
-           "total": String(total),
-           "contractId": String(contractId),
-           "contractKey": String(contractKey),
-           "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag),
-           "linkedOrderId": selectedOrderId,
-           "linkedOrderKey":selectedOrderKey,
-         }
-         //console.log(newContract);
-         contractRef.set(newContract);
+              const newContract = {
+                  "date":  String(date),
+                  "work":  String(work),
+                  "price": String(price),
+                  "tax":   String(tax),
+                  "total": String(total),
+                  "contractId": String(contractId),
+                  "contractKey": String(contractKey),
+                  "clientKey": String(contact.clientKey),
+                  "clientTag": String(contact.clientTag),
+                  //"linkedOrderId": selectedOrderId,
+                  //"linkedOrderKey":selectedOrderKey,
+              }
+              //console.log(newContract);
+              contractRef.update(newContract);
 
-         if (selectOrderChange) {
-             this.setState ({
-               linkedOrderId:  selectedOrderId,
-               linkedOrderKey: selectedOrderKey,
-               selectOrderChange: false,
-               selectedOrderId:  null,
-               selectedOrderKey: null,
-             })
-         }
-         this.handleOpen(false);
+              //if (selectOrderChange) {
+              this.setState ({
+                   //linkedOrderId:  selectedOrderId,
+                   //linkedOrderKey: selectedOrderKey,
+                   //selectOrderChange: false,
+                   fieldChange: false,
+                   //selectedOrderId:  null,
+                   //selectedOrderKey: null,
+              })
+              //}
+              this.handleOpen(false);
+          }
+
+          else if (selectOrderChange) {
+               let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/" +contractKey;
+               const contractRef = firebase.database().ref(contractPath);
+               //console.log(contractPath);
+
+               const newContract = {
+                   "date":  String(date),
+                   "work":  String(work),
+                   "price": String(price),
+                   "tax":   String(tax),
+                   "total": String(total),
+                   "contractId": String(contractId),
+                   "contractKey": String(contractKey),
+                   "clientKey": String(contact.clientKey),
+                   "clientTag": String(contact.clientTag),
+                   "linkedOrderId": selectedOrderId,
+                   "linkedOrderKey":selectedOrderKey,
+               }
+               //console.log(newContract);
+               contractRef.update(newContract);
+
+               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/workorders";
+               const orderRef = firebase.database().ref(orderPath);
+
+               // a non-null work order selected
+               if (selectedOrderKey) {
+                   const newOrder = {
+                      "linkedContractId":  contractId,
+                      "linkedContractKey": contractKey,
+                    }
+                    orderRef.child(selectedOrderKey).update(newOrder);
+               }
+
+               // was linked before
+               if (linkedOrderKey) {
+                    const nullOrder = {
+                       "linkedContractId":  null,
+                       "linkedContractKey": null,
+                    }
+                    orderRef.child(linkedOrderKey).update(nullOrder);
+               }
+               //if (selectOrderChange) {
+               this.setState ({
+                    linkedOrderId:  selectedOrderId,
+                    linkedOrderKey: selectedOrderKey,
+                    selectOrderChange: false,
+                    fieldChange: false,
+                    selectedOrderId:  null,
+                    selectedOrderKey: null,
+               })
+               //}
+               this.handleOpen(false);
+           }
     }
   };
 
@@ -117,11 +188,17 @@ class EditContractModal extends Component {
   handleChange = event => {
     //console.log([event.target.name]);
     //console.log(event.target.value);
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+      fieldChange: true,
+    });
   };
 
   selectOptions = () => {
      const {orders} = this.props;
+     //const {linkedOrderId, linkedOrderKey} = this.props.contract;
+     const {linkedOrderKey} = this.props.contract;
+
      const Options = [
        {
           key: 1111,
@@ -131,12 +208,14 @@ class EditContractModal extends Component {
      ];
 
      for (var key in orders) {
-        const option = {
-          key: key,
-          text: <span> {orders[key].orderId} </span>,
-          value: orders[key].orderKey,
+        if (key !== linkedOrderKey) {
+            const option = {
+               key: key,
+               text: <span> {orders[key].orderId} </span>,
+               value: orders[key].orderKey,
+            }
+            Options.push(option);
         }
-        Options.push(option);
      };
      return Options;
   }
