@@ -294,3 +294,21 @@ export const setActiveContractKey= key => {
       }
     }
   }
+
+export const setActiveInvoiceId= id => {
+    return {
+      type: actionTypes.SET_ACTIVE_INVOICE_ID,
+      payload: {
+        activeId: id
+      }
+    }
+  }
+
+export const setActiveInvoiceKey= key => {
+    return {
+      type: actionTypes.SET_ACTIVE_INVOICE_KEY,
+      payload: {
+        activeKey: key
+      }
+    }
+  }

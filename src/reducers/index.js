@@ -41,6 +41,8 @@ const initialUserState = {
   activeOrderKey: null,
   activeContractId: null,
   activeContractKey: null,
+  activeInvoiceId: null,
+  activeInvoiceKey: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -667,6 +669,18 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             ...state,
             activeContractKey: action.payload.activeKey
    };
+
+   case actionTypes.SET_ACTIVE_INVOICE_ID:
+        return {
+             ...state,
+             activeInvoiceId: action.payload.activeId
+     };
+
+   case actionTypes.SET_ACTIVE_INVOICE_KEY:
+        return {
+             ...state,
+             activeInvoiceKey: action.payload.activeKey
+    };
 
     default:
       return state;

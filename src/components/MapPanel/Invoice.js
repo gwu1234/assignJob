@@ -2,7 +2,7 @@ import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
-//import Client from "./Client";
+import { setActiveInvoiceId, setActiveInvoiceKey} from "../../actions";
 import "./Invoice.css";
 import EditInvoiceModal from "./EditInvoiceModal";
 
@@ -38,6 +38,11 @@ class Invoice extends React.Component {
     const isActive = invoice.linkedContractId  === activeContractId ||
                      invoice.linkedContractKey === activeContractKey ;
 
+    if (isActive) {
+          this.props.setActiveInvoiceId(invoice.invoiceId);
+          this.props.setActiveInvoiceKey(invoice.invoiceKey)
+    }
+
     return (
       <Menu.Menu className ="InvoiceMenuMenu"
                  style = {isActive? {backgroundColor:"blue"}:{} }>
@@ -69,7 +74,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  {setActiveInvoiceId, setActiveInvoiceKey}
 )(Invoice);
 
 //export default Invoice;

@@ -1,6 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Payment.css";
@@ -17,7 +17,7 @@ class Payment extends React.Component {
    };
 
   render() {
-    const {payment, paymentKey} = this.props;
+    const {payment, paymentKey, activeInvoiceId, activeInvoiceKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -34,8 +34,12 @@ class Payment extends React.Component {
         }
     }
 
+    const isActive = payment.linkedInvoiceId  === activeInvoiceId ||
+                     payment.linkedInvoiceKey === activeInvoiceKey ;
+
     return (
-      <Menu.Menu className ="PaymentMenuMenu">
+      <Menu.Menu className ="PaymentMenuMenu"
+                 style = {isActive? {backgroundColor:"blue"}:{} }>
           {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
               marginTop:"0px", paddingTop:"0px",
               marginBottom:"0px", paddingBottom:"0px"}}>
@@ -56,4 +60,15 @@ class Payment extends React.Component {
   }
 }
 
-export default Payment;
+const mapStateToProps = state => ({
+     activeInvoiceId: state.user.activeInvoiceId,
+     activeInvoiceKey: state.user.activeInvoiceKey,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Payment);
+
+//export default Payment;
