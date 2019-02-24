@@ -11,6 +11,7 @@ class AddPaymentModal extends Component {
          date: "",
          amount: "",
          method: "",
+         paymentId: "",
      }
 }
 
@@ -26,7 +27,7 @@ class AddPaymentModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,amount, method} = this.state;
+         const {date,amount, method, paymentId} = this.state;
          const {contact, usertag} = this.props;
 
          let paymentPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/payments/";
@@ -39,6 +40,7 @@ class AddPaymentModal extends Component {
            "amount":  String(amount),
            "method": String(method),
            "paymentKey": String(paymentKey),
+           "paymentId": String(paymentId),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag)
          }
@@ -114,6 +116,13 @@ class AddPaymentModal extends Component {
                             label='Method'
                             placeholder='Credit Card'
                             name="method"
+                            onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal' >
+                <Form.Input size ="mini"
+                            label='Payment Id'
+                            placeholder='p-2018-003344'
+                            name="paymentId"
                             onChange={this.handleChange} />
            </Form.Group>
         </Form>
