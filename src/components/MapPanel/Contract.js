@@ -1,6 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
+import { setActiveContractId, setActiveContractKey} from "../../actions";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Contract.css";
@@ -36,6 +37,11 @@ class Contract extends React.Component {
     const isActive = contract.linkedOrderId  === activeOrderId ||
                      contract.linkedOrderKey === activeOrderKey ;
 
+    if (isActive) {
+        this.props.setActiveContractId(contract.contractId);
+        this.props.setActiveContractKey(contract.contractKey)
+    }
+
     return (
       <Menu.Menu className ="ContractMenuMenu"
                  style = {isActive? {backgroundColor:"blue"}:
@@ -69,5 +75,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  {setActiveContractId, setActiveContractKey}
 )(Contract);

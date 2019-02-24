@@ -1,6 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Invoice.css";
@@ -17,7 +17,7 @@ class Invoice extends React.Component {
    };
 
   render() {
-    const {invoice, invoiceKey} = this.props;
+    const {invoice, invoiceKey, activeContractId, activeContractKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -35,8 +35,12 @@ class Invoice extends React.Component {
         }
     }
 
+    const isActive = invoice.linkedContractId  === activeContractId ||
+                     invoice.linkedContractKey === activeContractKey ;
+
     return (
-      <Menu.Menu className ="InvoiceMenuMenu">
+      <Menu.Menu className ="InvoiceMenuMenu"
+                 style = {isActive? {backgroundColor:"blue"}:{} }>
           {invoiceDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
           marginTop:"0px", paddingTop:"0px",
           marginBottom:"0px", paddingBottom:"0px"}}>
@@ -57,4 +61,15 @@ class Invoice extends React.Component {
   }
 }
 
-export default Invoice;
+const mapStateToProps = state => ({
+     activeContractId: state.user.activeContractId,
+     activeContractKey: state.user.activeContractKey,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Invoice);
+
+//export default Invoice;

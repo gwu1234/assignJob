@@ -39,6 +39,8 @@ const initialUserState = {
   clientContactView: false,
   activeOrderId: null,
   activeOrderKey: null,
+  activeContractId: null,
+  activeContractKey: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -641,7 +643,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        mapView: true,
        companyInfoView: false,
   };
-  
+
   case actionTypes.SET_ACTIVE_ORDER_ID:
      return {
             ...state,
@@ -653,6 +655,18 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             ...state,
             activeOrderKey: action.payload.activeKey
     };
+
+  case actionTypes.SET_ACTIVE_CONTRACT_ID:
+       return {
+            ...state,
+            activeContractId: action.payload.activeId
+    };
+
+  case actionTypes.SET_ACTIVE_CONTRACT_KEY:
+       return {
+            ...state,
+            activeContractKey: action.payload.activeKey
+   };
 
     default:
       return state;

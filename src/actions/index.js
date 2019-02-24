@@ -276,3 +276,21 @@ export const setActiveOrderKey= key => {
       }
     }
   }
+
+  export const setActiveContractId= id => {
+    return {
+      type: actionTypes.SET_ACTIVE_CONTRACT_ID,
+      payload: {
+        activeId: id
+      }
+    }
+  }
+
+export const setActiveContractKey= key => {
+    return {
+      type: actionTypes.SET_ACTIVE_CONTRACT_KEY,
+      payload: {
+        activeKey: key
+      }
+    }
+  }
