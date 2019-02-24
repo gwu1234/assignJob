@@ -12,7 +12,8 @@ class AddContractModal extends Component {
          work: "",
          price: "",
          tax: "",
-         total: ""
+         total: "",
+         contractId: "",
      }
 }
 
@@ -28,7 +29,7 @@ class AddContractModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, price, tax, total} = this.state;
+         const {date,work, price, tax, total, contractId} = this.state;
          const {contact, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
@@ -46,6 +47,7 @@ class AddContractModal extends Component {
            "price": String(price),
            "tax":   String(tax),
            "total": String(total),
+           "contractId": String(contractId),
            "contractKey": String(contractKey),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag)
@@ -130,6 +132,13 @@ class AddContractModal extends Component {
                             name="total"
                             onChange={this.handleChange} />
            </Form.Group>
+           <Form.Group inline width='equal' >
+                 <Form.Input size ="mini"
+                             label='Contract Id'
+                             placeholder = 'c-2018-0001'
+                             name="contractId"
+                             onChange={this.handleChange} />
+            </Form.Group>
         </Form>
         </Modal.Content>
         <Modal.Actions>

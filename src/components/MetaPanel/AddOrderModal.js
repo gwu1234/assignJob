@@ -7,7 +7,8 @@ class AddOrderModal extends Component {
   state = {
     modalOpen: false,
     date: '',
-    work: ''
+    work: '',
+    orderId:'',
   }
 
 
@@ -21,7 +22,7 @@ class AddOrderModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work} = this.state;
+         const {date,work, orderId} = this.state;
          const {usertag, contact} = this.props;
 
          //"repos/"+usertag+"/clients/data/"+ contact.clientTag
@@ -39,6 +40,7 @@ class AddOrderModal extends Component {
            "work": String(work),
            "tag": String(orderkey),
            "orderKey": String(orderkey),
+           "orderId": String(orderId),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag),
          }
@@ -112,6 +114,13 @@ class AddOrderModal extends Component {
                             placeholder='snow removal'
                             name="work"
                             onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label='Order ID'
+                           placeholder = 'a0001187'
+                           name="orderId"
+                           onChange={this.handleChange} />
            </Form.Group>
         </Form>
         </Modal.Content>

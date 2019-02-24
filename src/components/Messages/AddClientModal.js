@@ -154,7 +154,8 @@ export default class AddClientModal extends Component {
            "emails": emails,
            "phones": phones,
            "cells": cells,
-           "clientKey": String(clientKey)
+           "clientKey": String(clientKey),
+           "tag": String(tag),
          }
          //console.log(newContact);
          const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";

@@ -11,6 +11,7 @@ class AddInvoiceModal extends Component {
     amount: "",
     tax:"",
     total:"",
+    invoiceId:""
   }
 
 
@@ -24,7 +25,7 @@ class AddInvoiceModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, amount, tax, total} = this.state;
+         const {date,work, amount, tax, total, invoiceId} = this.state;
          const {usertag, contact} = this.props;
 
          //"repos/"+usertag+"/clients/data/"+ contact.clientTag
@@ -44,6 +45,7 @@ class AddInvoiceModal extends Component {
            "tax": String(tax),
            "amount": String(amount),
            "tag": String(invoicekey),
+           "invoiceId": String(invoiceId),
            "invoiceKey": String(invoicekey),
            "clientKey": String(contact.clientKey),
            "clientTag": String(contact.clientTag),
@@ -147,6 +149,13 @@ class AddInvoiceModal extends Component {
                             name="total"
                             onChange={this.handleChange} />
            </Form.Group>
+           <Form.Group inline width='equal' >
+                <Form.Input size ="mini"
+                            label='Invoice Id'
+                            placeholder='i-2018-001188'
+                            name="invoiceId"
+                            onChange={this.handleChange} />
+          </Form.Group>
         </Form>
         </Modal.Content>
         <Modal.Actions>
