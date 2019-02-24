@@ -12,6 +12,7 @@ class EditOrderModal extends Component {
          date: this.props.delivery.date,
          work: this.props.delivery.work,
          employee: this.props.delivery.employee,
+         deliveryId: this.props.delivery.deliveryId,
          linkedOrderId: this.props.delivery.linkedOrderId,
          linkedOrderKey: this.props.delivery.linkedOrderKey,
          linkedOrderSubkey: this.props.delivery.linkedOrderSubkey,
@@ -27,7 +28,7 @@ class EditOrderModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
-    const { date,work, employee, linkedOrderId, linkedOrderKey,
+    const { date,work, employee, deliveryId, linkedOrderId, linkedOrderKey,
             linkedOrderSubkey, selectedOrderId, selectedOrderKey,
             selectOrderChange, fieldChange } = this.state;
     const {deliveryKey, contact, usertag} = this.props;
@@ -50,6 +51,7 @@ class EditOrderModal extends Component {
                 "date": String(date),
                 "work": String(work),
                 "employee": String (employee),
+                "deliveryId": String (deliveryId),
                 "deliveryKey": String(deliveryKey),
                 "clientKey": String(contact.clientKey),
                 "clientTag": String(contact.clientTag)
@@ -66,6 +68,7 @@ class EditOrderModal extends Component {
          if (selectedOrderKey) {
                const newDelivery = {
                   "linkedDeliveryKey": deliveryKey,
+                  "linkedDeliveryId": deliveryId,
                 }
                const orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag
                                     + "/workorders/" + selectedOrderKey +"/linkedDeliverys";
@@ -78,6 +81,7 @@ class EditOrderModal extends Component {
          if (linkedOrderKey) {
                const nullDelivery = {
                    "linkedDeliveryKey": null,
+                   "linkedDeliveryId": null,
                }
                const orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag
                                    + "/workorders/" + linkedOrderKey +"/linkedDeliverys/" +linkedOrderSubkey;
@@ -92,6 +96,7 @@ class EditOrderModal extends Component {
                "date": String(date),
                "work": String(work),
                "employee": String (employee),
+               "deliveryId": String (deliveryId),
                "deliveryKey": String(deliveryKey),
                "clientKey": String(contact.clientKey),
                "clientTag": String(contact.clientTag),
@@ -231,9 +236,17 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
                            label='Employee'
-                            defaultValue = {delivery.employee}
+                           defaultValue = {delivery.employee}
                            name="employee"
                            onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label='Delivery Id'
+                           defaultValue = {delivery.deliveryId}
+                           name="deliveryId"
+                           onChange={this.handleChange} />
+
            </Form.Group>
         </Form>
 

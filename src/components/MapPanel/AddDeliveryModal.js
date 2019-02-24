@@ -7,7 +7,8 @@ class AddDeliveryModal extends Component {
   state = {
     modalOpen: false,
     date: '',
-    work: ''
+    work: '',
+    deliveryId:"",
   }
 
 
@@ -22,7 +23,7 @@ class AddDeliveryModal extends Component {
 
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, employee} = this.state;
+         const {date,work, employee, deliveryId} = this.state;
          const {contact, usertag} = this.props;
 
          let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/";
@@ -34,6 +35,7 @@ class AddDeliveryModal extends Component {
              "date":  String(date),
              "work":  String(work),
              "employee": String(employee),
+             "deliveryId": String(deliveryId),
              "deliveryKey": String(deliveryKey),
              "clientKey": String(contact.clientKey),
              "clientTag": String(contact.clientTag)
@@ -104,6 +106,14 @@ class AddDeliveryModal extends Component {
                            label='Employee'
                            placeholder='Alain Dubois'
                            name="employee"
+                           onChange={this.handleChange} />
+
+           </Form.Group>
+           <Form.Group inline width='equal' >
+               <Form.Input size ="mini"
+                           label='Delivery Id'
+                           placeholder='d-00011145'
+                           name="deliveryId"
                            onChange={this.handleChange} />
 
            </Form.Group>
