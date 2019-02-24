@@ -36,6 +36,7 @@ class EditEmployeeModal extends Component {
          unassigned:[],
          newUnassigned: false,
          contactChanged: false,
+         access: this.props.employee.access,
      }
 }
 
@@ -115,7 +116,7 @@ class EditEmployeeModal extends Component {
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
          const { lastname,firstname,street,city,postcode,province,
-                 country,phone1,phone2,cell1,cell2,
+                 country,phone1,phone2,cell1,cell2, access,
                  email1,email2, assigned, unassigned,
                  newAssigned, newUnassigned, contactChanged} = this.state;
          const {usertag, employeeKey, employee } = this.props;
@@ -159,6 +160,7 @@ class EditEmployeeModal extends Component {
                 "emails": emails,
                 "phones": phones,
                 "cells": cells,
+                "access":access,
                 "tag": String (employee.tag? employee.tag: employeeKey),
              }
 
@@ -510,6 +512,13 @@ displayAssigned = assigneds =>
                             defaultValue = {email2}
                             name="email2"
                             onChange={this.handleChange} />
+           </Form.Group>
+           <Form.Group inline width='equal'>
+               <Form.Input size ="small"
+                           label='access code'
+                           defaultValue = {employee.access}
+                           name="access"
+                           onChange={this.handleChange} />
            </Form.Group>
         </Form>
         </Modal.Content>
