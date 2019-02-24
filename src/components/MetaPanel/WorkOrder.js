@@ -1,6 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./WorkOrder.css";
@@ -17,7 +17,7 @@ class WorkOrder extends React.Component {
    };
 
   render() {
-    const {order, orderKey} = this.props;
+    const {order, orderKey, activeOrderId, activeOrderKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -29,8 +29,13 @@ class WorkOrder extends React.Component {
         orderWork = order.work;
     }
 
+    const isActive = order.orderId === activeOrderId ||
+                     order.orderKey === activeOrderKey ;
+
     return (
-      <Menu.Menu className ="OrderMenuMenu">
+      <Menu.Menu className ="OrderMenuMenu"
+                 style = {isActive? {backgroundColor:"blue"}:
+                          {} }>
           {orderDate && <Menu.Item
                style = {{opacity:1.0,fontSize:"0.8em",color:"white",
                marginTop:"0px", paddingTop:"0px",
@@ -47,4 +52,15 @@ class WorkOrder extends React.Component {
   }
 }
 
-export default WorkOrder;
+const mapStateToProps = state => ({
+     activeOrderId: state.user.activeOrderId,
+     activeOrderKey: state.user.activeOrderKey,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(WorkOrder);
+
+//export default WorkOrder;

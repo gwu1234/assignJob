@@ -1,6 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Contract.css";
@@ -17,7 +17,7 @@ class Contract extends React.Component {
    };
 
   render() {
-    const {contract, contractKey} = this.props;
+    const {contract, contractKey, activeOrderId, activeOrderKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -33,11 +33,17 @@ class Contract extends React.Component {
         }
     }
 
+    const isActive = contract.linkedOrderId  === activeOrderId ||
+                     contract.linkedOrderKey === activeOrderKey ;
+
     return (
-      <Menu.Menu className ="ContractMenuMenu">
-          {contractDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-          marginTop:"0px", paddingTop:"0px",
-          marginBottom:"0px", paddingBottom:"0px"}}>
+      <Menu.Menu className ="ContractMenuMenu"
+                 style = {isActive? {backgroundColor:"blue"}:
+                          {} }>
+          {contractDate && <Menu.Item
+              style = {{ opacity:1.0,fontSize:"0.8em",color:"white",
+                         marginTop:"0px", paddingTop:"0px",
+                         marginBottom:"0px", paddingBottom:"0px" }}>
               <span> {contractDate} </span> <EditContractModal contract={contract} contractKey={contractKey} />
           </Menu.Item>}
           {contractWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
@@ -55,4 +61,13 @@ class Contract extends React.Component {
   }
 }
 
-export default Contract;
+const mapStateToProps = state => ({
+     activeOrderId: state.user.activeOrderId,
+     activeOrderKey: state.user.activeOrderKey,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Contract);
