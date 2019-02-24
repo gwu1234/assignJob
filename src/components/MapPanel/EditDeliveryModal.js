@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Select} from 'semantic-ui-react';
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -12,6 +12,13 @@ class EditOrderModal extends Component {
          date: this.props.delivery.date,
          work: this.props.delivery.work,
          employee: this.props.delivery.employee,
+         linkedOrderId: this.props.delivery.linkedOrderId,
+         linkedOrderKey: this.props.delivery.linkedOrderKey,
+         linkedOrderSubkey: this.props.delivery.linkedOrderSubkey,
+         selectedOrderId: null,
+         selectedOrderKey: null,
+         selectOrderChange: false,
+         fieldChange: false,
      }
 }
 
@@ -20,6 +27,10 @@ class EditOrderModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
+    const { date,work, employee, linkedOrderId, linkedOrderKey,
+            linkedOrderSubkey, selectedOrderId, selectedOrderKey,
+            selectOrderChange, fieldChange } = this.state;
+    const {deliveryKey, contact, usertag} = this.props;
     const event = this.nativeEvent;
     if (event) {
        //console.log(event);
@@ -27,24 +38,83 @@ class EditOrderModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, employee} = this.state;
-         const {deliveryKey, contact, usertag} = this.props;
 
-         let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
-         const deliveryRef = firebase.database().ref(deliveryPath);
-         //console.log(deliveryPath);
+         if (!selectOrderChange && fieldChange) {
 
-         const newDelivery = {
-           "date": String(date),
-           "work": String(work),
-           "employee": String (employee),
-           "deliveryKey": String(deliveryKey),
-           "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag)
+
+             let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
+             const deliveryRef = firebase.database().ref(deliveryPath);
+             //console.log(deliveryPath);
+
+             const newDelivery = {
+                "date": String(date),
+                "work": String(work),
+                "employee": String (employee),
+                "deliveryKey": String(deliveryKey),
+                "clientKey": String(contact.clientKey),
+                "clientTag": String(contact.clientTag)
+             }
+            console.log(newDelivery);
+            deliveryRef.update(newDelivery);
+            this.handleOpen(false);
+       }
+
+       else if (selectOrderChange) {
+
+         let deliverySubkey = "";
+           // a non-null order selected
+         if (selectedOrderKey) {
+               const newDelivery = {
+                  "linkedDeliveryKey": deliveryKey,
+                }
+               const orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag
+                                    + "/workorders/" + selectedOrderKey +"/linkedDeliverys";
+               const orderRef = firebase.database().ref(orderPath);
+               deliverySubkey = orderRef.push().getKey();
+               orderRef.child(deliverySubkey).update(newDelivery);
          }
-         console.log(newDelivery);
-         deliveryRef.set(newDelivery);
-         this.handleOpen(false);
+
+           // was linked to workorder before
+         if (linkedOrderKey) {
+               const nullDelivery = {
+                   "linkedDeliveryKey": null,
+               }
+               const orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag
+                                   + "/workorders/" + linkedOrderKey +"/linkedDeliverys/" +linkedOrderSubkey;
+               const orderRef = firebase.database().ref(orderPath);
+               orderRef.update(nullDelivery);
+         }
+
+           let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
+           const deliveryRef = firebase.database().ref(deliveryPath);
+
+           const newDelivery = {
+               "date": String(date),
+               "work": String(work),
+               "employee": String (employee),
+               "deliveryKey": String(deliveryKey),
+               "clientKey": String(contact.clientKey),
+               "clientTag": String(contact.clientTag),
+               "linkedOrderId": selectedOrderId,
+               "linkedOrderKey": selectedOrderKey,
+               "linkedOrderSubkey": deliverySubkey,
+           }
+             //console.log(newContract);
+           deliveryRef.update(newDelivery);
+
+           this.setState ({
+                 linkedOrderId:  selectedOrderId,
+                 linkedOrderKey: selectedOrderKey,
+                 linkedOrderSubkey: deliverySubkey,
+                 selectOrderChange: false,
+                 fieldChange: false,
+                 selectedOrderId:  null,
+                 selectedOrderKey: null,
+           })
+
+           this.handleOpen(false);
+       }
+
     }
   };
 
@@ -65,11 +135,65 @@ class EditOrderModal extends Component {
      return true;
   }
 
+handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      let selectedId = null;
+      let selectedKey = null;
+      //console.log(data.value);
+      //console.log("textContent = " + event.target.textContent);
+
+      if (data !== undefined) {
+        selectedKey = data.value;
+      }
+
+      if (event.target !== undefined) {
+        selectedId = event.target.textContent;
+      }
+
+      if (selectedKey ==="no order" || selectedId ==="no order"){
+          selectedId = null;
+          selectedKey = null;
+      }
+
+      this.setState({
+          selectedOrderId:  selectedId,
+          selectedOrderKey: selectedKey,
+          selectOrderChange: true,
+       });
+  }
+
+
   handleChange = event => {
-    //console.log([event.target.name]);
-    //console.log(event.target.value);
-    this.setState({ [event.target.name]: event.target.value });
+     this.setState({
+        [event.target.name]: event.target.value,
+        fieldChange: true,
+     });
   };
+
+  selectOptions = () => {
+     const {orders} = this.props;
+     //const {linkedOrderId, linkedOrderKey} = this.props.contract;
+     const {linkedOrderKey} = this.props.delivery;
+
+     const Options = [
+       {
+          key: 1111,
+          text: <span>no order</span>,
+          value: "no order",
+       }
+     ];
+
+     for (var key in orders) {
+        if ( key !== linkedOrderKey) {
+            const option = {
+               key: key,
+               text: <span> {orders[key].orderId} </span>,
+               value: orders[key].orderKey,
+            }
+            Options.push(option);
+        }
+     };
+     return Options;
+  }
 
   render() {
     const {delivery, contact} = this.props;
@@ -112,6 +236,23 @@ class EditOrderModal extends Component {
                            onChange={this.handleChange} />
            </Form.Group>
         </Form>
+
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>linked to work order: {this.state.linkedOrderId}</h4>}
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select work order to change</h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>not linked to work order </h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select work order to link</h4>}
+        <Select placeholder='Select Order Id'
+                name="orders"
+                text={this.state.selectedValue}
+                style={{color:"black", fontStyle:"bold", margin:"0px", padding:"0px"}}
+                onChange={this.handleSelectChange}
+                options={this.selectOptions()}
+        />
+        {this.state.selectedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderId} &nbsp; selected. Click Submit to confirm</h4>}
+        {this.state.selectOrderChange && this.state.linkedOrderId && !this.state.selectedOrderId &&
+          <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>Deleting link to work order. Click Submit to confirm</h4>}
+
+
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
@@ -133,6 +274,7 @@ class EditOrderModal extends Component {
 const mapStateToProps = state => ({
      contact: state.user.clientContact,
      usertag: state.user.usertag,
+     orders: state.user.workOrder
    }
 );
 
