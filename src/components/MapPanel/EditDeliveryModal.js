@@ -124,7 +124,7 @@ class EditOrderModal extends Component {
   };
 
   isFormValid() {
-     const {date, work, employee} = this.state;
+     const {date, work, employee, deliveryId} = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
@@ -135,6 +135,11 @@ class EditOrderModal extends Component {
      }
      if ( !employee) {
         window.alert ("employee is required");
+        return false;
+     }
+
+     if ( !deliveryId) {
+        window.alert ("delivery id is required");
         return false;
      }
      return true;

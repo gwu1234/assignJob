@@ -1,6 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Delivery.css";
@@ -17,7 +17,7 @@ class Delivery extends React.Component {
    };
 
   render() {
-    const {delivery, deliveryKey} = this.props;
+    const {delivery, deliveryKey, activeOrderId, activeOrderKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -31,8 +31,12 @@ class Delivery extends React.Component {
         employee = delivery.employee;
     }
 
+    const isActive = delivery.linkedOrderId  === activeOrderId ||
+                     delivery.linkedOrderKey === activeOrderKey ;
+
     return (
-      <Menu.Menu className ="DeliveryMenuMenu">
+      <Menu.Menu className ="DeliveryMenuMenu"
+                 style = {isActive? {backgroundColor:"blue"}: {} }>
           {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
               marginTop:"0px", paddingTop:"0px",
               marginBottom:"0px", paddingBottom:"0px"}}>
@@ -53,4 +57,15 @@ class Delivery extends React.Component {
   }
 }
 
-export default Delivery;
+const mapStateToProps = state => ({
+     activeOrderId: state.user.activeOrderId,
+     activeOrderKey: state.user.activeOrderKey,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Delivery);
+
+//export default Delivery;
