@@ -146,13 +146,18 @@ class EditContractModal extends Component {
   };
 
   isFormValid() {
-     const {date, work } = this.state;
+     const {date, work, contractId } = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
      }
      if ( !work) {
         window.alert ("work is required");
+        return false;
+     }
+
+     if ( !contractId) {
+        window.alert ("contract Id is required");
         return false;
      }
      return true;

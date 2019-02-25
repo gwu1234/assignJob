@@ -129,7 +129,7 @@ class EditInvoiceModal extends Component {
   };
 
   isFormValid() {
-     const {date, work , amount, total} = this.state;
+     const {date, work , amount, total, invoiceId} = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
@@ -144,6 +144,11 @@ class EditInvoiceModal extends Component {
      }
      if ( !total) {
         window.alert ("total is required");
+        return false;
+     }
+
+     if ( !invoiceId) {
+        window.alert ("invoice Id is required");
         return false;
      }
      return true;

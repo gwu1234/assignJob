@@ -31,8 +31,8 @@ class Delivery extends React.Component {
         employee = delivery.employee;
     }
 
-    const isActive = delivery.linkedOrderId  === activeOrderId ||
-                     delivery.linkedOrderKey === activeOrderKey ;
+    const isActive = (delivery.linkedOrderId && delivery.linkedOrderId  === activeOrderId) ||
+                     (delivery.linkedOrderKey && delivery.linkedOrderKey === activeOrderKey) ;
 
     return (
       <Menu.Menu className ="DeliveryMenuMenu"

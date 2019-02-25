@@ -126,7 +126,7 @@ class EditPaymentModal extends Component {
   };
 
   isFormValid() {
-     const {date, amount, method } = this.state;
+     const {date, amount, method, paymentId } = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
@@ -137,6 +137,11 @@ class EditPaymentModal extends Component {
      }
      if ( !method) {
         window.alert ("method is required");
+        return false;
+     }
+
+     if ( !paymentId) {
+        window.alert ("payment Id is required");
         return false;
      }
      return true;

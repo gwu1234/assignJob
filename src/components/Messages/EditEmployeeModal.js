@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 import Geocode from "react-geocode";
 import { connect } from "react-redux";
-import { Grid, Button, Header, Icon, Modal, Form, Menu} from 'semantic-ui-react';
+import { Grid, Button, Header, Icon, Modal, Form, Menu, Message} from 'semantic-ui-react';
 import DeleteEmployeeModal from "./DeleteEmployeeModal"
 import EmployeeClient from "./EmployeeClient"
 import EmployeeAssigned from "./EmployeeAssigned"
@@ -521,6 +521,9 @@ displayAssigned = assigneds =>
                            onChange={this.handleChange} />
            </Form.Group>
         </Form>
+        {employee.truckAssigned && <Message style={{marginTop: "0em", paddingTop:"0.2em", marginBottom:"0.5em", paddingBottom:"0.2em"}}>
+            <Message.Header>truck assigned: {" " + employee.truckModel + " , " + employee.truckYear} </Message.Header>
+        </Message>}
         </Modal.Content>
 
         </Grid.Row>

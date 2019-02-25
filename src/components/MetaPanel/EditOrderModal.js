@@ -168,13 +168,17 @@ console.log(order.isActive);
   };
 
   isFormValid() {
-     const {date, work } = this.state;
+     const {date, work, orderId} = this.state;
      if ( !date) {
         window.alert ("date is required");
         return false;
      }
      if ( !work) {
         window.alert ("work is required");
+        return false;
+     }
+     if ( !orderId) {
+        window.alert ("order Id is required");
         return false;
      }
      return true;
