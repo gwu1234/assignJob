@@ -86,7 +86,7 @@ class Payments extends React.Component {
                {titleString}
             </Menu.Header>
           <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
-                             color: "white", size: "tiny", overflow: "scroll", height: "35vh"}} >
+                             color: "white", size: "tiny", overflow: "scroll", height: "37vh"}} >
               {payments && this.displayPayments(paymentArray)}
               <Menu.Item style={{margin:"1em"}}>
                   <span style={{color:"white", fontStyle:"bold"}}> {modalString} </span> <AddPaymentModal />

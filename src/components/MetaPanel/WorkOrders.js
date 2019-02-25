@@ -79,7 +79,7 @@ class WorkOrders extends React.Component {
 
 
     return (
-      <Menu.Menu className ="OrdersMenuMenu">
+      <Menu.Menu className ="OrdersMenuMenu" style={{marginBottom:"0.4em"}}>
             <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
             {titleString}
             </Menu.Header>
