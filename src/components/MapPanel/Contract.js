@@ -33,18 +33,42 @@ class Contract extends React.Component {
            price = contract.price + " CAD";
         }
     }
-
-    const isActive = (contract.linkedOrderId && contract.linkedOrderId  === activeOrderId) ||
+    //console.log(contract);
+    //console.log(contract.linkedOrderId);
+    //console.log(contract.linkedOrderKey);
+    //console.log(isActive);
+    //console.log(activeOrderId);
+    //console.log(activeOrderKey);
+    let isActive = (contract.linkedOrderId && contract.linkedOrderId  === activeOrderId) ||
                      (contract.linkedOrderKey && contract.linkedOrderKey === activeOrderKey) ;
 
-    if (isActive) {
+    // it is an active work order
+    if (isActive === true) {
+        //console.log(contract);
+        console.log("active order id = " + contract.linkedOrderId);
+        console.log("active order key = " + contract.linkedOrderKey);
+        console.log("active id = " + activeOrderId);
+        console.log("active key = " + activeOrderKey);
+        //console.log(isActive);
         this.props.setActiveContractId(contract.contractId);
         this.props.setActiveContractKey(contract.contractKey)
+    }
+    // active work order changed
+    else if  ( (contract.linkedOrderId && null === activeOrderId) ||
+                 (contract.linkedOrderKey && null === activeOrderKey) ){
+        isActive = false;
+        //console.log(contract.linkedOrderId);
+        //console.log(contract.linkedOrderKey);
+        //console.log(activeOrderId);
+        //console.log(activeOrderKey);
+        //console.log(isActive);
+        this.props.setActiveContractId(null);
+        this.props.setActiveContractKey(null)
     }
 
     return (
       <Menu.Menu className ="ContractMenuMenu"
-                 style = {isActive? {backgroundColor:"blue"}:
+                 style = {isActive===true? {backgroundColor:"blue"}:
                           {} }>
           {contractDate && <Menu.Item
               style = {{ opacity:1.0,fontSize:"0.8em",color:"white",

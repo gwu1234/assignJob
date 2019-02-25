@@ -35,17 +35,23 @@ class Invoice extends React.Component {
         }
     }
 
-    const isActive = (invoice.linkedContractId && invoice.linkedContractId  === activeContractId) ||
-                     (invoice.linkedContractKey && invoice.linkedContractKey === activeContractKey) ;
+    let isActive = (invoice.linkedContractId  && invoice.linkedContractId  === activeContractId) ||
+                   (invoice.linkedContractKey && invoice.linkedContractKey === activeContractKey) ;
 
     if (isActive) {
           this.props.setActiveInvoiceId(invoice.invoiceId);
           this.props.setActiveInvoiceKey(invoice.invoiceKey)
     }
+    else if  (  (invoice.linkedContractId  && null === activeContractId) ||
+                (invoice.linkedContractKey && null === activeContractKey) ){
+        isActive = false;
+        this.props.setActiveInvoiceId(null);
+        this.props.setActiveInvoiceKey(null)
+    }
 
     return (
       <Menu.Menu className ="InvoiceMenuMenu"
-                 style = {isActive? {backgroundColor:"blue"}:{} }>
+                 style = {isActive === true? {backgroundColor:"blue"}:{} }>
           {invoiceDate && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
           marginTop:"0px", paddingTop:"0px",
           marginBottom:"0px", paddingBottom:"0px"}}>
