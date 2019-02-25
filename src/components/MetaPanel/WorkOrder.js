@@ -29,8 +29,8 @@ class WorkOrder extends React.Component {
         orderWork = order.work;
     }
 
-    const isActive = order.orderId === activeOrderId ||
-                     order.orderKey === activeOrderKey ;
+    const isActive = (order.orderId && order.orderId === activeOrderId) ||
+                     (order.orderKey && order.orderKey === activeOrderKey) ;
 
     return (
       <Menu.Menu className ="OrderMenuMenu"

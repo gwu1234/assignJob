@@ -35,8 +35,8 @@ class Invoice extends React.Component {
         }
     }
 
-    const isActive = invoice.linkedContractId  === activeContractId ||
-                     invoice.linkedContractKey === activeContractKey ;
+    const isActive = (invoice.linkedContractId && invoice.linkedContractId  === activeContractId) ||
+                     (invoice.linkedContractKey && invoice.linkedContractKey === activeContractKey) ;
 
     if (isActive) {
           this.props.setActiveInvoiceId(invoice.invoiceId);

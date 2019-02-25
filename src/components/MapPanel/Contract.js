@@ -34,8 +34,8 @@ class Contract extends React.Component {
         }
     }
 
-    const isActive = contract.linkedOrderId  === activeOrderId ||
-                     contract.linkedOrderKey === activeOrderKey ;
+    const isActive = (contract.linkedOrderId && contract.linkedOrderId  === activeOrderId) ||
+                     (contract.linkedOrderKey && contract.linkedOrderKey === activeOrderKey) ;
 
     if (isActive) {
         this.props.setActiveContractId(contract.contractId);

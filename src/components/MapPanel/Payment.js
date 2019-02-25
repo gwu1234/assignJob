@@ -34,8 +34,8 @@ class Payment extends React.Component {
         }
     }
 
-    const isActive = payment.linkedInvoiceId  === activeInvoiceId ||
-                     payment.linkedInvoiceKey === activeInvoiceKey ;
+    const isActive = (payment.linkedInvoiceId && payment.linkedInvoiceId  === activeInvoiceId) ||
+                     (payment.linkedInvoiceKey && payment.linkedInvoiceKey === activeInvoiceKey) ;
 
     return (
       <Menu.Menu className ="PaymentMenuMenu"
