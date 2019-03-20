@@ -246,9 +246,16 @@ const user_reducer = (state = initialUserState, action) => {
 
         // find truck location
         const truckList = state.trucks;
+        let dateString = null;
+
         let truckMarker = [];
         for (var key in truckList) {
            if (truckList[key].assigned && truckList[key].assigned === true) {
+              const timestamp = truckList[key].timestamp;
+              dateString = (new Date(timestamp)).toLocaleString();
+              //console.log("datestring = ");
+              //console.log(dateString);
+
               const marker = {
                   pos:
                   {
@@ -259,6 +266,7 @@ const user_reducer = (state = initialUserState, action) => {
                   truckColor: truckList[key].color,
                   truckYear: truckList[key].year,
                   employeeName: truckList[key].employeeName,
+                  dateString: dateString,
                   id:  key,
                   type: TRUCK_MARKER,
               }

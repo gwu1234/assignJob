@@ -354,6 +354,7 @@ class MapContainer extends Component {
                         truckColor = {marker.truckColor}
                         truckYear = {marker.truckYear}
                         employeeName = {marker.employeeName}
+                        dateString = {marker.dateString}
                         onClick={this.onMarkerClick}
                         type = {marker.type}
                         icon = {{
@@ -374,6 +375,7 @@ class MapContainer extends Component {
                            <h5>{"year : " + this.state.selectedPlace.truckYear + ", "
                                +"color : " + this.state.selectedPlace.truckColor }</h5>
                            <h4>{"employee : " + this.state.selectedPlace.employeeName}</h4>
+                           <h4>{"last updated  : " + this.state.selectedPlace.dateString}</h4>
 
                    </div>
             </InfoWindowEx>}
