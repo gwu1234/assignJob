@@ -9,6 +9,7 @@ import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
 import yellowDot from '../images/yellowDot2.png';
 import redStar from '../images/redStar.png';
+import snowplow from '../images/snowplow.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
@@ -21,6 +22,7 @@ const JOB_DONE = 2;
 const JOB_SOON = 3;
 
 const EMPLOYEE_MARKER = 0;
+const TRUCK_MARKER = 2;
 //const CLIENT_MARKER = 1;
 
 class MapContainer extends Component {
@@ -220,7 +222,7 @@ class MapContainer extends Component {
   };
 
     render() {
-      const {usertag, employees, markers} = this.props;
+      const {usertag, employees, markers, truckMarkers} = this.props;
       //const {markers} = this.state;
 
       /*const buttonStyle = {
@@ -242,7 +244,8 @@ class MapContainer extends Component {
            let  image = "";
            if (marker.type === EMPLOYEE_MARKER) {
                image = redStar;
-           } else if (marker.status === JOB_NEW){
+           }
+           else if (marker.status === JOB_NEW){
                image = redDot;
            }
            else if (marker.status === JOB_REPEAT)  {
@@ -292,8 +295,10 @@ class MapContainer extends Component {
                  <div>
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
-                         {this.state.selectedPlace.street && <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}> {this.state.selectedPlace.street} </span>}
-                         {this.state.selectedPlace.isAssigned && <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
+                         {this.state.selectedPlace.street &&
+                           <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}> {this.state.selectedPlace.street} </span>}
+                         {this.state.selectedPlace.isAssigned &&
+                           <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
                      <div>
                          {(this.state.selectedPlace.type !== EMPLOYEE_MARKER) &&
@@ -337,6 +342,34 @@ class MapContainer extends Component {
                      </div>
                  </div>
           </InfoWindowEx>
+
+          {truckMarkers && truckMarkers.map((marker, index)=> {
+             let  image = snowplow;
+             return (
+                   <Marker
+                        key={index}
+                        id = {index}
+                        position={marker.pos}
+                        name = {marker.name}
+                        onClick={this.onMarkerClick}
+                        type = {marker.type}
+                        icon = {{
+                            url: image,
+                            scaledSize: { width: 25, height: 25 }
+                        }}
+                    >
+                   </Marker> )
+            })}
+
+            {this.state.selectedPlace.type === TRUCK_MARKER &&
+              <InfoWindowEx
+                   marker={this.state.activeMarker}
+                   visible={this.state.showingInfoWindow}
+                   onClose={this.onClose} >
+                   <div>
+                           <h4>{this.state.selectedPlace.name}</h4>
+                   </div>
+            </InfoWindowEx>}
       </CurrentLocation>
      )
    }
@@ -344,6 +377,7 @@ class MapContainer extends Component {
 
 const mapStateToProps = state => ({
   markers: state.user.markers,
+  truckMarkers: state.user.truckMarkers,
   usertag: state.user.usertag,
   employees: state.user.employeeList,
   //timestamp: state.user.timestamp,

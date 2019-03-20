@@ -11,6 +11,7 @@ const JOB_SOON = 3;
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
+const TRUCK_MARKER = 2 ;
 
 const initialUserState = {
   currentUser: null, // user object
@@ -25,6 +26,7 @@ const initialUserState = {
   mapView: false,
   geoEncoding: GEOCODING_DONE,
   markers: [],
+  truckMarkers: [],
   contracts: null,
   payments:null,
   deliverys: null,
@@ -241,9 +243,33 @@ const user_reducer = (state = initialUserState, action) => {
            }
            clientMarkers.push(marker);
         }
+
+        // find truck location
+        const truckList = state.trucks;
+        let truckMarker = [];
+        for (var key in truckList) {
+           if (truckList[key].assigned && truckList[key].assigned === true) {
+              const marker = {
+                  pos:
+                  {
+                     lat: truckList[key].latitude,
+                     lng: truckList[key].longitude
+                  },
+                  name: truckList[key].model,
+                  id:  key,
+                  status: JOB_NEW,
+                  type: TRUCK_MARKER
+              }
+             truckMarker.push(marker);
+           }
+         }
+
+         //clientMarkers = clientMarkers.concat(truckMarker);
+
         return {
             ...state,
            markers: clientMarkers,
+           truckMarkers: truckMarker,
            mapView: true,
            clientContactView: false,
            clientView: false,
@@ -344,10 +370,33 @@ const user_reducer = (state = initialUserState, action) => {
                     deliverys: action.payload.deliverys
       };
     case actionTypes.SET_TRUCKS:
-       //console.log (action.payload.trucks);
-              return {
-                      ...state,
-                      trucks: action.payload.trucks
+       const trucks = action.payload.trucks;
+       let truckMarkers = [];
+
+       for (var key in trucks) {
+          if (trucks[key].assigned && trucks[key].assigned === true) {
+
+             const marker = {
+                 pos:
+                 {
+                    lat: trucks[key].latitude,
+                    lng: trucks[key].longitude
+                 },
+                 name: trucks[key].model,
+                 id:  key,
+                 status: JOB_NEW,
+                 type: TRUCK_MARKER
+             }
+            truckMarkers.push(marker);
+          }
+        }
+
+        const markers = state.markers;
+
+        return {
+                  ...state,
+                  trucks: action.payload.trucks,
+                  markers: markers.concat(truckMarkers),
       };
     case actionTypes.SET_REPEAT_HOURS:
      //console.log("at reducer = ::");
