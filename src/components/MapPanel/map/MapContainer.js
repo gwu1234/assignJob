@@ -350,7 +350,10 @@ class MapContainer extends Component {
                         key={index}
                         id = {index}
                         position={marker.pos}
-                        name = {marker.name}
+                        truckModel = {marker.truckModel}
+                        truckColor = {marker.truckColor}
+                        truckYear = {marker.truckYear}
+                        employeeName = {marker.employeeName}
                         onClick={this.onMarkerClick}
                         type = {marker.type}
                         icon = {{
@@ -367,7 +370,11 @@ class MapContainer extends Component {
                    visible={this.state.showingInfoWindow}
                    onClose={this.onClose} >
                    <div>
-                           <h4>{this.state.selectedPlace.name}</h4>
+                           <h3>{this.state.selectedPlace.truckModel}</h3>
+                           <h5>{"year : " + this.state.selectedPlace.truckYear + ", "
+                               +"color : " + this.state.selectedPlace.truckColor }</h5>
+                           <h4>{"employee : " + this.state.selectedPlace.employeeName}</h4>
+
                    </div>
             </InfoWindowEx>}
       </CurrentLocation>

@@ -255,10 +255,12 @@ const user_reducer = (state = initialUserState, action) => {
                      lat: truckList[key].latitude,
                      lng: truckList[key].longitude
                   },
-                  name: truckList[key].model,
+                  truckModel: truckList[key].model,
+                  truckColor: truckList[key].color,
+                  truckYear: truckList[key].year,
+                  employeeName: truckList[key].employeeName,
                   id:  key,
-                  status: JOB_NEW,
-                  type: TRUCK_MARKER
+                  type: TRUCK_MARKER,
               }
              truckMarker.push(marker);
            }
