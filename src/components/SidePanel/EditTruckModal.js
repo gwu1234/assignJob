@@ -18,6 +18,7 @@ class EditTruckModal extends Component {
          model: this.props.truck.model,
          year: this.props.truck.year,
          color: this.props.truck.color,
+         truckId: this.props.truck.truckId,
      }
 }
 
@@ -62,6 +63,7 @@ class EditTruckModal extends Component {
          "truckKey": null,
          "truckModel": null,
          "truckYear": null,
+         "truckId": null,
      }
      //console.log(truck);
      //console.log(employeePath);
@@ -92,6 +94,7 @@ class EditTruckModal extends Component {
          "truckKey": assigned.truckKey,
          "truckModel": assigned.truckModel,
          "truckYear": String(assigned.truckYear),
+         "truckId": String(assigned.truckId),
      }
      //console.log(truck);
      //console.log(employeePath);
@@ -133,9 +136,10 @@ class EditTruckModal extends Component {
     }
     //event.preventDefault();
     if (this.isFormValid(this.state)) {
-         const { contentChanged, model, year, color} = this.state;
+         const { contentChanged, model, year, color, truckId} = this.state;
          const {usertag, truckKey} = this.props;
          //const name = model + " " + year + " " + color;
+         console.log(truckId);
 
          if (contentChanged) {
 
@@ -144,6 +148,7 @@ class EditTruckModal extends Component {
                 "year": String (year),
                 "color": String(color),
                 "truckKey": String (truckKey),
+                "truckId": String (truckId),
              }
 
              const truckPath = "repos/" + usertag + "/trucks/" + truckKey;
@@ -157,7 +162,7 @@ class EditTruckModal extends Component {
   };
 
   isFormValid() {
-    const {model, year, color} = this.state;
+    const {model, year, color, truckId} = this.state;
            if (!model ){
               window.alert("model is required");
               return false;
@@ -171,6 +176,14 @@ class EditTruckModal extends Component {
               return false;
            } else if (year.length < 3) {
              window.alert("please full year format, e.g., 2018");
+             return false;
+           }
+
+           if (!truckId){
+              window.alert("truck id is required");
+              return false;
+           } else if (truckId.length < 4) {
+             window.alert("id too short, eg, GM-001");
              return false;
            }
 
@@ -235,6 +248,7 @@ class EditTruckModal extends Component {
 
         <Modal.Content>
         <Form >
+           <Form.Group inline width='equal'>
                <Form.Input size ="small"
                            label='Model'
                            placeholder = {truck.model}
@@ -242,16 +256,25 @@ class EditTruckModal extends Component {
                            name="model"
                            onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Year'
-                            placeholder= {truck.year}
-                            defaultValue = {truck.year}
-                            name="year"
+                            label='Truck Id'
+                            placeholder= {truck.truckId}
+                            defaultValue = {truck.truckId}
+                            name="truckId"
                             onChange={this.handleChange} />
+          </Form.Group>
+          <Form.Group inline width='equal'>
+                <Form.Input size ="small"
+                      label='Year'
+                      placeholder= {truck.year}
+                      defaultValue = {truck.year}
+                      name="year"
+                      onChange={this.handleChange} />
                 <Form.Input size ="small"
                             label='Color'
                             defaultValue = {truck.color}
                             name="color"
                             onChange={this.handleChange} />
+          </Form.Group>
         </Form>
         </Modal.Content>
         </Grid.Row>

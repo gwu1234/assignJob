@@ -24,6 +24,7 @@ class EmployeeTruck extends React.Component {
             truckModel: truck.model,
             truckYear: truck.year,
             truckColor: truck.color,
+            truckId: truck.truckId,
             employeeName: employee.name,
             employeeKey: employeeKey
 
