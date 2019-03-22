@@ -77,6 +77,10 @@ class WorkOrders extends React.Component {
        orderArray.push(newOrder);
     }
 
+    // sort list by the timestamp
+   orderArray.sort((a, b) =>  (new Date (b.order.date)).getTime() - (new Date (a.order.date)).getTime() );
+
+
 
     return (
       <Menu.Menu className ="OrdersMenuMenu" style={{marginBottom:"0.4em"}}>

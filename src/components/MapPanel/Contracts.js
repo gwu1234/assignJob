@@ -76,6 +76,8 @@ class Contracts extends React.Component {
        //keyArray.push(key);
        contractArray.push(newContract);
     }
+    // sort list by the timestamp
+    contractArray.sort((a, b) =>  (new Date (b.contract.date)).getTime() - (new Date (a.contract.date)).getTime() );
 
 
     return (
