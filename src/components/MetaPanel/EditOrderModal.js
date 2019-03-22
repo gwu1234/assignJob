@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setActiveOrderId, setActiveOrderKey} from "../../actions";
-import { Button, Header, Icon, Modal, Form, Radio} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Radio, Grid} from 'semantic-ui-react';
+import DateTime from 'react-datetime';
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class EditOrderModal extends Component {
          work: this.props.order.work,
          orderId: this.props.order.orderId,
          isActive: this.props.order.isActive,
+         datetime: null,
      }
 }
 
@@ -266,6 +268,17 @@ console.log(order.isActive);
     } */
   }
 
+  //handleDate(e) {
+  //  this.setState({datetime: e.target.value}, () => console.log(this.state.datetime))
+  //}
+
+  handleDate(date){
+     this.setState({
+        date: date.local().format('LL'),
+        fieldChange: true,
+     })
+  };
+
   render() {
     const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
     const {orderId, isActive, activeOrderChanged} = this.state;
@@ -301,16 +314,23 @@ console.log(order.isActive);
       >
         <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
+        <Grid style={{height: "100%", width:"100%"}}>
+        <Grid.Column style={{height: "100%", width:"50%"}}>
+        <DateTime
+            input={ true }
+            value= { this.state.date }
+            defaultValue = {order.date}
+            viewDate = {new Date (order.date)}
+            timeFormat = {false}
+            onChange={(date)=>this.handleDate(date)}
+        />
+        </Grid.Column>
+        <Grid.Column style={{height: "100%", width:"50%"}}>
         <Form >
            <Form.Group inline width='equal' >
-               <Form.Input size ="mini"
-                           label='Date'
-                            defaultValue = {order.date}
-                           name="date"
-                           onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Work'
-                             defaultValue = {order.work}
+                            defaultValue = {order.work}
                             name="work"
                             onChange={this.handleChange} />
            </Form.Group>
@@ -332,7 +352,8 @@ console.log(order.isActive);
                />
    </Form.Field>
         </Form>
-
+</Grid.Column>
+</Grid>
 
 
         </Modal.Content>
