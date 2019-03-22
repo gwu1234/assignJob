@@ -75,6 +75,9 @@ class Invoices extends React.Component {
        }
        invoiceArray.push(newInvoice);
     }
+    // sort list by the timestamp
+    invoiceArray.sort((a, b) =>  (new Date (b.invoice.date)).getTime() - (new Date (a.invoice.date)).getTime() );
+
 
 
     return (

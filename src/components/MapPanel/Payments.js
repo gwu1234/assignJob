@@ -78,6 +78,8 @@ class Payments extends React.Component {
        //keyArray.push(key);
        paymentArray.push(newPayment);
     }
+    // sort list by the timestamp
+    paymentArray.sort((a, b) =>  (new Date (b.payment.date)).getTime() - (new Date (a.payment.date)).getTime() );
 
 
     return (
