@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Grid} from 'semantic-ui-react';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 class AddPaymentModal extends Component {
   constructor(props) {
@@ -73,6 +75,23 @@ class AddPaymentModal extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleDayClick(day, modifiers = {}) {
+    if (modifiers.disabled) {
+      return;
+    }
+
+    //console.log(day);
+    //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //console.log(day.toLocaleDateString("en-US", options));
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = day.toLocaleDateString("en-US", options);
+
+    this.setState({
+       date: date,
+       fieldChange: true,
+    })
+  }
+
   render() {
     const {contact} = this.props;
     //console.log ("EditContractModal order = " );
@@ -83,7 +102,7 @@ class AddPaymentModal extends Component {
     //console.log (contact.clientKey);
     let titleString = "Add Payment";
     if (contact) {
-         titleString = contact.name + " :  " + "Add New Contract";
+         titleString = contact.name + " :  " + "Add New Payment";
     }
     //console.log (titleString);
 
@@ -98,13 +117,21 @@ class AddPaymentModal extends Component {
       >
         <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
+
+        <Grid style={{height: "100%", width:"100%"}}>
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+
+            <DayPicker
+                     onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
+                     month={new Date()}
+                     selectedDays={[new Date()]}
+            />
+
+        </Grid.Column>
+        <Grid.Column style={{height: "100%", width:"50%"}}>
+
         <Form >
            <Form.Group inline width='equal' >
-               <Form.Input size ="mini"
-                           label='Date'
-                            placeholder='Feb. 1, 2019'
-                           name="date"
-                           onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Amount'
                              placeholder='219.99'
@@ -126,10 +153,19 @@ class AddPaymentModal extends Component {
                             onChange={this.handleChange} />
            </Form.Group>
         </Form>
+        </Grid.Column>
+        </Grid>
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
-              onClick={() => this.handleOpen(false)}
+              onClick={() => {
+                 this.handleOpen(false);
+                 this.setState ({
+                   date: "",
+                   amount: "",
+                   method: "",
+                   paymentId: "",
+                 })}}
               >
               Cancel
         </Button>
