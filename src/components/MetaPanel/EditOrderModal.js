@@ -269,7 +269,7 @@ console.log(order.isActive);
     } */
   }
 
-  
+
   handleDayClick(day, modifiers = {}) {
     if (modifiers.disabled) {
       return;
@@ -329,7 +329,7 @@ console.log(order.isActive);
         <DayPicker
              onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
              month={new Date(order.date)}
-             selectedDays={[new Date(order.date)]}
+             selectedDays={[new Date(this.state.date)]}
         />
 
         </Grid.Column>
