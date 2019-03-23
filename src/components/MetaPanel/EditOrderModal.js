@@ -3,8 +3,8 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Button, Header, Icon, Modal, Form, Radio, Grid} from 'semantic-ui-react';
-import DateTime from 'react-datetime';
-//import "./react-datetime.css";
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -269,16 +269,23 @@ console.log(order.isActive);
     } */
   }
 
-  //handleDate(e) {
-  //  this.setState({datetime: e.target.value}, () => console.log(this.state.datetime))
-  //}
+  
+  handleDayClick(day, modifiers = {}) {
+    if (modifiers.disabled) {
+      return;
+    }
 
-  handleDate(date){
-     this.setState({
-        date: date.local().format('LL'),
-        fieldChange: true,
-     })
-  };
+    //console.log(day);
+    //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //console.log(day.toLocaleDateString("en-US", options));
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = day.toLocaleDateString("en-US", options);
+
+    this.setState({
+       date: date,
+       fieldChange: true,
+    })
+  }
 
   render() {
     const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
@@ -313,19 +320,18 @@ console.log(order.isActive);
         size='small'
         style={{background: "#ccc"}}
       >
-        <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fontStyle: "bold", color:"black"}}/>
         <Modal.Content>
+
         <Grid style={{height: "100%", width:"100%"}}>
-        <Grid.Column style={{height: "100%", width:"50%"}}>
-        <DateTime
-            input={ true }
-            value= { this.state.date }
-            defaultValue = {order.date}
-            viewDate = {new Date (order.date)}
-            timeFormat = {false}
-            inputProps={{readOnly:true}}
-            onChange={(date)=>this.handleDate(date)}
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+
+        <DayPicker
+             onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
+             month={new Date(order.date)}
+             selectedDays={[new Date(order.date)]}
         />
+
         </Grid.Column>
         <Grid.Column style={{height: "100%", width:"50%"}}>
         <Form >

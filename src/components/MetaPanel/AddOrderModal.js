@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Button, Header, Icon, Modal, Form, Grid} from 'semantic-ui-react';
-import DateTime from 'react-datetime';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 class AddOrderModal extends Component {
   state = {
@@ -10,6 +11,7 @@ class AddOrderModal extends Component {
     date: '',
     work: '',
     orderId:'',
+    //selectedDay:''
   }
 
 
@@ -47,6 +49,11 @@ class AddOrderModal extends Component {
          }
          //console.log(newOrder);
          orderRef.child(orderkey).set(newOrder);
+         this.setState ({
+              date: '',
+              work: '',
+              orderId:'',
+         });
          this.handleOpen(false);
     }
   };
@@ -70,12 +77,23 @@ class AddOrderModal extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleDate(date){
-     this.setState({
-        date: date.local().format('LL'),
-        fieldChange: true,
-     })
-  };
+
+  handleDayClick(day, modifiers = {}) {
+    if (modifiers.disabled) {
+      return;
+    }
+
+    //console.log(day);
+    //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //console.log(day.toLocaleDateString("en-US", options));
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = day.toLocaleDateString("en-US", options);
+
+    this.setState({
+       date: date,
+       fieldChange: true,
+    })
+  }
 
   render() {
     //const {clientname, french} = this.props;
@@ -111,26 +129,17 @@ class AddOrderModal extends Component {
         <Header icon='folder outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
         <Grid style={{height: "100%", width:"100%"}}>
-        <Grid.Column style={{height: "100%", width:"50%"}}>
-        <DateTime
-            input={ true }
-            value= { this.state.date }
-            defaultValue = {new Date()}
-            viewDate = {new Date ()}
-            timeFormat = {false}
-            inputProps={{readOnly:true}}
-            onChange={(date)=>this.handleDate(date)}
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+        <DayPicker
+             onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
+             month={new Date()}
+             selectedDays={[new Date(this.state.date)]}
         />
         </Grid.Column>
         <Grid.Column style={{height: "100%", width:"50%"}}>
 
         <Form >
            <Form.Group inline width='equal' >
-               <Form.Input size ="mini"
-                           label='Date'
-                           placeholder='December 11, 2018'
-                           name="date"
-                           onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label={worklabel}
                             placeholder='snow removal'
@@ -152,7 +161,13 @@ class AddOrderModal extends Component {
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
-              onClick={() => this.handleOpen(false)}
+              onClick={() => {
+                   this.handleOpen(false);
+                   this.setState ({
+                       date: '',
+                       work: '',
+                       orderId:'',
+                   })}}
               >
               Cancel
         </Button>
