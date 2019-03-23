@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Button, Header, Icon, Modal, Form, Radio, Grid} from 'semantic-ui-react';
 import DateTime from 'react-datetime';
+//import "./react-datetime.css";
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -322,6 +323,7 @@ console.log(order.isActive);
             defaultValue = {order.date}
             viewDate = {new Date (order.date)}
             timeFormat = {false}
+            inputProps={{readOnly:true}}
             onChange={(date)=>this.handleDate(date)}
         />
         </Grid.Column>

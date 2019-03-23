@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Grid} from 'semantic-ui-react';
+import DateTime from 'react-datetime';
 
 class AddOrderModal extends Component {
   state = {
@@ -69,6 +70,13 @@ class AddOrderModal extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleDate(date){
+     this.setState({
+        date: date.local().format('LL'),
+        fieldChange: true,
+     })
+  };
+
   render() {
     //const {clientname, french} = this.props;
     const {contact, french} = this.props;
@@ -102,6 +110,20 @@ class AddOrderModal extends Component {
       >
         <Header icon='folder outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
+        <Grid style={{height: "100%", width:"100%"}}>
+        <Grid.Column style={{height: "100%", width:"50%"}}>
+        <DateTime
+            input={ true }
+            value= { this.state.date }
+            defaultValue = {new Date()}
+            viewDate = {new Date ()}
+            timeFormat = {false}
+            inputProps={{readOnly:true}}
+            onChange={(date)=>this.handleDate(date)}
+        />
+        </Grid.Column>
+        <Grid.Column style={{height: "100%", width:"50%"}}>
+
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
@@ -122,7 +144,11 @@ class AddOrderModal extends Component {
                            name="orderId"
                            onChange={this.handleChange} />
            </Form.Group>
+
         </Form>
+        </Grid.Column>
+        </Grid>
+
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
