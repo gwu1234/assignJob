@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Grid} from 'semantic-ui-react';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 class AddDeliveryModal extends Component {
   state = {
@@ -69,6 +71,23 @@ class AddDeliveryModal extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleDayClick(day, modifiers = {}) {
+    if (modifiers.disabled) {
+      return;
+    }
+
+    //console.log(day);
+    //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //console.log(day.toLocaleDateString("en-US", options));
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = day.toLocaleDateString("en-US", options);
+
+    this.setState({
+       date: date,
+       fieldChange: true,
+    })
+  }
+
   render() {
     const {contact } = this.props;
 
@@ -88,13 +107,20 @@ class AddDeliveryModal extends Component {
       >
         <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
+        <Grid style={{height: "100%", width:"100%"}}>
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+
+        <DayPicker
+             onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
+             month={new Date()}
+             selectedDays={[new Date()]}
+         />
+
+         </Grid.Column>
+         <Grid.Column style={{height: "100%", width:"50%"}}>
         <Form >
            <Form.Group inline width='equal' >
-               <Form.Input size ="mini"
-                           label='Date'
-                           placeholder='December 11, 2018'
-                           name="date"
-                           onChange={this.handleChange} />
+            
                 <Form.Input size ="mini"
                             label='Work'
                             placeholder='snow removal'
@@ -118,10 +144,18 @@ class AddDeliveryModal extends Component {
 
            </Form.Group>
         </Form>
+        </Grid.Column>
+        </Grid>
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
-              onClick={() => this.handleOpen(false)}
+           onClick={() => {
+              this.handleOpen(false);
+              this.setState ({
+                  date: '',
+                  work: '',
+                  deliveryId:"",
+                })}}
               >
               Cancel
         </Button>

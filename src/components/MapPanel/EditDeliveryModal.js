@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Button, Header, Icon, Modal, Form, Select} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Select, Grid} from 'semantic-ui-react';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -205,6 +207,23 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
      return Options;
   }
 
+  handleDayClick(day, modifiers = {}) {
+    if (modifiers.disabled) {
+      return;
+    }
+
+    //console.log(day);
+    //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //console.log(day.toLocaleDateString("en-US", options));
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = day.toLocaleDateString("en-US", options);
+
+    this.setState({
+       date: date,
+       fieldChange: true,
+    })
+  }
+
   render() {
     const {delivery, contact} = this.props;
 
@@ -225,13 +244,21 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
       >
         <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
+
+        <Grid style={{height: "100%", width:"100%"}}>
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+
+        <DayPicker
+             onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
+             month={new Date(this.state.date)}
+             selectedDays={[new Date(this.state.date)]}
+         />
+
+         </Grid.Column>
+         <Grid.Column style={{height: "100%", width:"50%"}}>
+
         <Form >
            <Form.Group inline width='equal' >
-               <Form.Input size ="mini"
-                           label='Date'
-                            defaultValue = {delivery.date}
-                           name="date"
-                           onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Work'
                              defaultValue = {delivery.work}
@@ -270,7 +297,8 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
         {this.state.selectOrderChange && this.state.linkedOrderId && !this.state.selectedOrderId &&
           <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>Deleting link to work order. Click Submit to confirm</h4>}
 
-
+        </Grid.Column>
+        </Grid>
         </Modal.Content>
         <Modal.Actions>
         <Button color="red" size="small" inverted
