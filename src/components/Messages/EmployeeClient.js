@@ -21,6 +21,7 @@ class EmployeeClient extends React.Component {
         const {client, clientKey, employee, employeeKey} = this.props;
         const assigned = {
             clientKey: clientKey,
+            clientTag: client.tag,
             clientName: client.name,
             clientStreet: client.street,
             clientCity: client.city,

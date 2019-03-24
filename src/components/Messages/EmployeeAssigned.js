@@ -23,6 +23,7 @@ class EmployeeAssigned extends React.Component {
         const unassigned = {
             assignedKey: assignedKey,
             clientKey: assigned.clientKey,
+            clientTag: assigned.clientTag,
             clientName: assigned.clientName,
             clientStreet: assigned.clientStreet,
             clientCity: assigned.clientCity,
