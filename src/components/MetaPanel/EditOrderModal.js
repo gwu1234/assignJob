@@ -63,7 +63,7 @@ console.log(order.isActive);
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
-              //console.log(orderPath);
+              console.log(orderPath);
 
               const newOrder = {
                  "date": String(date),
@@ -73,7 +73,7 @@ console.log(order.isActive);
                  "clientKey": String(contact.clientKey),
                  "tag": String(contact.tag),
               }
-             //console.log(newOrder);
+             console.log(newOrder);
              orderRef.update(newOrder);
              //this.handleOpen(false);
        } else if (!fieldChange && activeOrderChanged) {
@@ -275,7 +275,7 @@ console.log(order.isActive);
       return;
     }
 
-    //console.log(day);
+    console.log(day);
     //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     //console.log(day.toLocaleDateString("en-US", options));
     var options = { year: 'numeric', month: 'long', day: 'numeric' };

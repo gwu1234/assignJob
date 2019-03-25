@@ -100,7 +100,7 @@ class ClientContact extends React.Component {
   displayCellHeader = (cellDisplay) =>(
             <Menu.Item
               name="cells"
-              
+
             >
               <Header
                   as='h4'
@@ -175,12 +175,12 @@ class ClientContact extends React.Component {
           <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
                {contact && address}
           </Menu.Item>
-            {contact && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
-            {emailDisplay && contact && contact.emails.length>0 && this.displayEmails (contact.emails)}
-            {contact && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
-            {phoneDisplay && contact && contact.phones.length>0 && this.displayPhones (contact.phones)}
-            {contact && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
-            {cellDisplay && contact && contact.cells.length>0 && this.displayCells (contact.cells)}
+            {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
+            {emailDisplay && contact && contact.emails && contact.emails.length>0 && this.displayEmails (contact.emails)}
+            {contact && contact.phones && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
+            {phoneDisplay && contact && contact.phones && contact.phones.length>0 && this.displayPhones (contact.phones)}
+            {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
+            {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
             {contact && editDisplay && <Menu.Item style={{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal", border: "1px dotted white", height: '2.5em'}}>
                  <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
             </Menu.Item>}
