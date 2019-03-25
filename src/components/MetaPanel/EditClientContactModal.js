@@ -43,7 +43,45 @@ class EditClientContactModal extends Component {
                  (contact.emails[2]?contact.emails[1]:''):
                  '',
      }
-}
+  }
+
+  componentWillReceiveProps(nextProps) {
+      const {contact} = nextProps;
+      if (contact) {
+
+        this.setState ( {
+
+             lastname: contact.lastname,
+             firstname: contact.firstname,
+             street: contact.street,
+             city: contact.city,
+             postcode: contact.postcode,
+             province:contact.province,
+             country: contact.country,
+             phone1: contact.phones?contact.phones[0]:'',
+             phone2: contact.phones?
+                     (contact.phones[1]?contact.phones[1]:''):
+                     '',
+             phone3: contact.phones?
+                     (contact.phones[2]?contact.phones[2]:''):
+                     '',
+             cell1: contact.cells?contact.cells[0]:'',
+             cell2: contact.cells?
+                    (contact.cells[1]?contact.cells[1]:''):
+                     '',
+             cell3: contact.cells?
+                    (contact.cells[2]?contact.cells[2]:''):
+                    '',
+             email1: contact.emails?contact.emails[0]:'',
+             email2: contact.emails?
+                     (contact.emails[1]?contact.emails[1]:''):
+                     '',
+             email3: contact.emails?
+                     (contact.emails[2]?contact.emails[1]:''):
+                     '',
+         });
+      }
+    }
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })

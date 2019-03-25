@@ -190,7 +190,8 @@ class ClientContact extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => (
+   {
      contact: state.user.clientContact,
      usertag: state.user.usertag,
      french: state.user.french
