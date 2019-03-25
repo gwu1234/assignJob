@@ -30,11 +30,15 @@ class EditInvoiceModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
-    const {date,work, amount, tax, total, invoiceId,
+    const {work, amount, tax, total, invoiceId,
         selectedContractId, selectedContractKey,
         linkedContractId, linkedContractKey,
         selectContractChange, fieldChange} = this.state;
     const {invoice, invoiceKey, usertag, contact} = this.props;
+    let {date} = this.state;
+
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    date = (new Date(date)).toLocaleDateString("en-US", options);
 
     const event = this.nativeEvent;
     if (event) {

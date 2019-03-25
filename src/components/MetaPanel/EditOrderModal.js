@@ -48,13 +48,18 @@ console.log(order.isActive);
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {date,work, orderId, isActive, fieldChange,
+         const {work, orderId, isActive, fieldChange,
                 activeOrderChanged} = this.state;
+         let {date} = this.state;
          const {orderKey, contact, usertag} = this.props;
          //console.log (orderKey);
          //console.log (contact.tag);
          //console.log (contact.name);
          //console.log (contact.clientKey);
+         var options = { year: 'numeric', month: 'long', day: 'numeric' };
+         date = (new Date(date)).toLocaleDateString("en-US", options);
+         //console.log("date = " + date);
+
          if ( !fieldChange && !activeOrderChanged ) {
               //console.log("no change, just return");
               //this.handleOpen(false);

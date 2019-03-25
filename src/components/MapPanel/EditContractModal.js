@@ -30,11 +30,16 @@ class EditContractModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
-    const {date,work, price, tax, total, contractId,
+    const {work, price, tax, total, contractId,
         selectedOrderId, selectedOrderKey,
         linkedOrderId, linkedOrderKey,
         selectOrderChange, fieldChange} = this.state;
+    let {date} = this.state;
     const {contact, contractKey, usertag} = this.props;
+
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    date = (new Date(date)).toLocaleDateString("en-US", options);
+    //console.log("date = " + date);
 
     const event = this.nativeEvent;
     if (event) {

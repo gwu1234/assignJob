@@ -30,15 +30,20 @@ class EditOrderModal extends Component {
   handleOpen = (open) => this.setState({ modalOpen: open })
 
   handleSubmit = () => {
-    const { date,work, employee, deliveryId, linkedOrderId, linkedOrderKey,
+    const { work, employee, deliveryId, linkedOrderId, linkedOrderKey,
             linkedOrderSubkey, selectedOrderId, selectedOrderKey,
             selectOrderChange, fieldChange } = this.state;
     const {deliveryKey, contact, usertag} = this.props;
+    let {date} = this.state;
     const event = this.nativeEvent;
     if (event) {
        //console.log(event);
        event.preventDefault();
     }
+
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    date = (new Date(date)).toLocaleDateString("en-US", options);
+
     //event.preventDefault();
     if (this.isFormValid()) {
 
