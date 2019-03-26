@@ -1,6 +1,20 @@
 {
   "rules": {
-    ".read": "auth !== null",
-    ".write": "auth !== null"
+    "users": {
+        ".read": "auth.email === '1234@admin.io'",
+        ".write": "auth.email === '1234@admin.io' ",
+       "jc+infojccom": {
+            ".read": "auth.email === 'info@jc.com'" ,
+            ".write": "auth.email === 'info@jc.com'",
+        },
+     },
+    "repos": {
+         ".read": "auth.email === '1234@admin.io'",
+        ".write": "auth.email === '1234@admin.io' ",
+        "jc+infojccom": {
+            ".read": "auth.email === 'info@jc.com'  || auth.email === '1234@admin.io'",
+            ".write": "auth.email === 'info@jc.com' || auth.email === '1234@admin.io' ",
+        },
+    }
   }
 }
