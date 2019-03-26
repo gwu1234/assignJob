@@ -59,26 +59,32 @@ class Login extends React.Component {
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(signedInUser => {
-          //console.log (signedInUser.user) ;
+          console.log (signedInUser.user) ;
           const emailString = signedInUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
           const nameString = signedInUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
 
           const tagName = (nameString + '+' + emailString).toLowerCase();
           const adminName = (nameString + '+' + emailString +"/admin").toLowerCase();;
-          console.log(tagName);
+          console.log("login admin path = " + adminName);
           this.props.setUserTag(tagName);
           var adminRef = this.state.usersRef.child(adminName);
 
           adminRef.once('value')
             .then((snapshot) => {
               const admin = snapshot.val();
-              console.log(admin);
+              console.log("login admin = " + admin);
               if (admin === true) {
                    this.props.setAdmin(true);
               } else {
                 this.props.setAdmin(false);
               }
-          });
+          })
+           .catch(err => {
+               console.log("reading admin error = " + err);  
+               console.error(err);
+           });
+
+
 
           const accessName = (nameString + '+' + emailString +"/access").toLowerCase();
           //console.log(accessName);
