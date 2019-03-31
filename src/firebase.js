@@ -20,12 +20,12 @@ import "firebase/storage";
   // slack
 
   var config = {
-    apiKey: "AIzaSyAUdrYEIfQWtrvkFluxpX2dNWc79tnyes0",
-    authDomain: "jobassign2.firebaseapp.com",
-    databaseURL: "https://jobassign2.firebaseio.com",
-    projectId: "jobassign2",
-    storageBucket: "jobassign2.appspot.com",
-    messagingSenderId: "224391770489"
+    apiKey: "AIzaSyCBxBrARUtxlMlCdWUDsMEIuqeWapU5mWE",
+    authDomain: "jobassign3.firebaseapp.com",
+    databaseURL: "https://jobassign3.firebaseio.com",
+    projectId: "jobassign3",
+    storageBucket: "jobassign3.appspot.com",
+    messagingSenderId: "1088029675584"
   };
   firebase.initializeApp(config);
 
