@@ -194,12 +194,18 @@ class Contact extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     contact: state.user.userContact,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  //const usertag = state.user.usertag;
+  //console.log(reposData);
+  const contact = reposData["contact"];
+  //console.log(employees);
+  return {
+     contact: contact,
      usertag: state.user.usertag,
      french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

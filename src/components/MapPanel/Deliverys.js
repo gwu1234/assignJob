@@ -109,11 +109,22 @@ class Deliverys extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     deliverys: state.user.deliverys,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let deliverys = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      deliverys = reposData["clients"]["data"][clienttag]["deliverys"];
+      //console.log(clientContact);
+  }
+  return {
+     deliverys: deliverys,
      french: state.user.french
    }
-);
+};
 
 export default connect(
   mapStateToProps,

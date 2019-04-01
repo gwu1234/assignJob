@@ -100,11 +100,22 @@ class WorkOrders extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     orders: state.user.workOrder,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let workOrders = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      workOrders = reposData["clients"]["data"][clienttag]["workorders"];
+      //console.log(clientContact);
+  }
+  return {
+     orders: workOrders,
      french: state.user.french
    }
-);
+};
 
 export default connect(
   mapStateToProps,

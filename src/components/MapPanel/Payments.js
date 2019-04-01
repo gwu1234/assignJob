@@ -99,11 +99,22 @@ class Payments extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     payments: state.user.payments,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let payments = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      payments = reposData["clients"]["data"][clienttag]["payments"];
+      //console.log(clientContact);
+  }
+  return {
+     payments: payments,
      french: state.user.french
    }
-);
+};
 
 export default connect(
   mapStateToProps,

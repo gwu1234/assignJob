@@ -1,8 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag, setUserContact,
-         setEmployeeList, setClientList, setTrucks }
+import { setCurrentUser, setUserTag, setClientList}
        from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
@@ -60,7 +59,7 @@ class UserList extends React.Component {
   findUserContact = (tag) => {
      const {userContact} = this.state;
      //console.log("usertag =" + tag);
-     const contactRef = firebase.database().ref
+     /*const contactRef = firebase.database().ref
           ("repos/" + tag +"/contact");
      //console.log("userContact = ");
      //console.log(userContact);
@@ -92,9 +91,9 @@ class UserList extends React.Component {
                 {userContact: null}
               );
           }
-      })
+      }) */
 
-      const employeeTag = "repos/" + tag +"/employees";
+      /*const employeeTag = "repos/" + tag +"/employees";
       //console.log(employeeTag);
       const employeeRef = firebase.database().ref(employeeTag)
 
@@ -106,7 +105,7 @@ class UserList extends React.Component {
            } else {
                this.props.setEmployeeList(null);
            }
-      });
+      });*/
 
       const clientsTag = "repos/" + tag +"/clients/tags";
       //console.log("clientsTag = " + clientsTag);
@@ -123,11 +122,11 @@ class UserList extends React.Component {
            }
       });
 
-      const trucksTag = "repos/" + tag +"/trucks";
+      //const trucksTag = "repos/" + tag +"/trucks";
       //console.log("clientsTag = " + clientsTag);
-      const trucksRef = firebase.database().ref(trucksTag)
+      //const trucksRef = firebase.database().ref(trucksTag)
 
-       trucksRef.on('value', snapshot => {
+       /*trucksRef.on('value', snapshot => {
             const trucks= snapshot.val();
             //console.log("user list Clients = ");
             //console.log(clients)
@@ -136,7 +135,7 @@ class UserList extends React.Component {
            } else {
                this.props.setTrucks(null);
            }
-      });
+      });*/
   };
 
   setActiveUser = user => {
@@ -186,5 +185,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserContact, setCurrentUser, setEmployeeList, setClientList, setUserTag, setTrucks}
+  { setCurrentUser, setClientList, setUserTag}
 )(UserList);

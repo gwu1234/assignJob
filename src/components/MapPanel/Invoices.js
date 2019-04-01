@@ -99,11 +99,22 @@ class Invoices extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     invoices: state.user.invoices,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let invoices = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      invoices = reposData["clients"]["data"][clienttag]["invoices"];
+      //console.log(clientContact);
+  }
+  return{
+     invoices: invoices,
      french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

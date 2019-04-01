@@ -1,9 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientContact, setWorkOrder, setContracts,
-         setPayments, setDeliverys, setInvoices,
-         setActiveOrderId, setActiveOrderKey} from "../../actions";
+import { setClientTag, setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Menu, Icon} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
@@ -41,9 +39,11 @@ class Client extends React.Component {
         return
     }
 
+    this.props.setClientTag(client.tag);
+
     //console.log(client.tag);
     //console.log(this.props.usertag)
-    const clientContact = "/repos/" + this.props.usertag
+    /*const clientContact = "/repos/" + this.props.usertag
            + "/clients/data/" + client.tag + "/contact";
     //console.log(clientContact);
 
@@ -62,9 +62,9 @@ class Client extends React.Component {
          } else {
              this.props.setClientContact(null);
          }
-    });
+    }); */
 
-    const workOrder = "/repos/" + this.props.usertag
+    /*const workOrder = "/repos/" + this.props.usertag
            + "/clients/data/" + client.tag + "/workorders";
     const workOrderRef = firebase.database().ref(workOrder)
 
@@ -79,9 +79,9 @@ class Client extends React.Component {
          } else {
              this.props.setWorkOrder(null);
          }
-    });
+    });*/
 
-    const contracts = "/repos/" + this.props.usertag
+    /*const contracts = "/repos/" + this.props.usertag
            + "/clients/data/" + client.tag + "/contracts";
     const contractsRef = firebase.database().ref(contracts)
 
@@ -94,9 +94,9 @@ class Client extends React.Component {
          } else {
              this.props.setContracts(null);
          }
-    });
+    });*/
 
-  const paymentPath = "/repos/" + this.props.usertag
+  /*const paymentPath = "/repos/" + this.props.usertag
          + "/clients/data/" + client.tag + "/payments";
   const paymentRef = firebase.database().ref(paymentPath);
 
@@ -109,9 +109,9 @@ class Client extends React.Component {
        } else {
            this.props.setPayments(null);
        }
-  });
+  });*/
 
-  const deliveryPath = "/repos/" + this.props.usertag
+  /*const deliveryPath = "/repos/" + this.props.usertag
          + "/clients/data/" + client.tag + "/deliverys";
   const deliveryRef = firebase.database().ref(deliveryPath);
 
@@ -124,9 +124,9 @@ class Client extends React.Component {
        } else {
            this.props.setDeliverys(null);
        }
-  });
+  });*/
 
-  const invoicesPath = "/repos/" + this.props.usertag
+  /*const invoicesPath = "/repos/" + this.props.usertag
          + "/clients/data/" + client.tag + "/invoices";
   const invoicesRef = firebase.database().ref(invoicesPath);
 
@@ -139,7 +139,7 @@ class Client extends React.Component {
        } else {
            this.props.setInvoices(null);
        }
-  });
+  });*/
 
     //console.log(client);
     //console.log ("active order  id = " + client.activeOrderId);
@@ -201,7 +201,7 @@ class Client extends React.Component {
 
 
   render() {
-    const {client, usertag, clientKey, french, clientContact, selectedClientKey} = this.props;
+    const {client, usertag, clientKey, french, selectedClientKey} = this.props;
     //const {display} = this.state;
 
     let name= '';
@@ -256,12 +256,11 @@ class Client extends React.Component {
 const mapStateToProps = state => ({
      usertag: state.user.usertag,
      french: state.user.french,
-     clientContact: state.user.clientContact,
+     //clientContact: state.user.clientContact,
    }
 );
 
 export default connect(
   mapStateToProps,
-  {setClientContact, setWorkOrder, setContracts, setPayments,
-   setDeliverys, setInvoices, setActiveOrderId, setActiveOrderKey}
+  {setClientTag, setActiveOrderId, setActiveOrderKey}
 )(Client);

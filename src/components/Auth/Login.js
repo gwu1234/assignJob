@@ -3,8 +3,8 @@ import firebase from "../../firebase";
 import Geocode from "react-geocode";
 //import response from "react-geocode";
 import { connect } from "react-redux";
-import {  setUserTag, setAdmin, setUserContact, setEmployeeList,
-          setClientList, setGeoEncoding, setTrucks, setBadAccess}
+import {  setUserTag, setAdmin, setReposData,
+          setClientList, setGeoEncoding, setBadAccess}
         from "../../actions";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
@@ -59,20 +59,20 @@ class Login extends React.Component {
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(signedInUser => {
-          console.log (signedInUser.user) ;
+          //console.log (signedInUser.user) ;
           const emailString = signedInUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
           const nameString = signedInUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
 
           const tagName = (nameString + '+' + emailString).toLowerCase();
           const adminName = (nameString + '+' + emailString +"/admin").toLowerCase();;
-          console.log("login admin path = " + adminName);
+          //console.log("login admin path = " + adminName);
           this.props.setUserTag(tagName);
           var adminRef = this.state.usersRef.child(adminName);
 
           adminRef.once('value')
             .then((snapshot) => {
               const admin = snapshot.val();
-              console.log("login admin = " + admin);
+              //console.log("login admin = " + admin);
               if (admin === true) {
                    this.props.setAdmin(true);
               } else {
@@ -80,7 +80,7 @@ class Login extends React.Component {
               }
           })
            .catch(err => {
-               console.log("reading admin error = " + err);  
+               console.log("reading admin error = " + err);
                console.error(err);
            });
 
@@ -106,9 +106,9 @@ class Login extends React.Component {
               }
           });
 
-          const contactTag = "repos/" + tagName +"/contact";
+          //const contactTag = "repos/" + tagName +"/contact";
           //console.log(contactTag);
-          var contactRef = firebase.database().ref(contactTag)
+          //var contactRef = firebase.database().ref(contactTag)
           //starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
           /*contactRef.on('value')
              .then((snapshot) => {
@@ -121,21 +121,26 @@ class Login extends React.Component {
                }
            })*/
 
-           contactRef.on('value', snapshot => {
+           //contactRef.on('value', snapshot => {
                 //this.setState({
                 //posts: snapshot.val()
                 //});
-                const contact = snapshot.val();
+                //const contact = snapshot.val();
                 //console.log(contact)
-                if (contact) {
-                    this.props.setUserContact(contact);
-               } else {
-                   this.props.setUserContact(null);
-               }
-          });
+                //if (contact) {
+                   /*for (var key in contact) {
+                      console.log("key = " + key);
+                      console.log(contact[key]);
+                   }*/
+                   //console.log(contact["city"]);
+                   //this.props.setUserContact(contact);
+               //} else {
+                //   this.props.setUserContact(null);
+               //}
+          //});
 
 
-          const employeeTag = "repos/" + tagName +"/employees";
+          /*const employeeTag = "repos/" + tagName +"/employees";
           //console.log(employeeTag);
           var employeeRef = firebase.database().ref(employeeTag)
 
@@ -145,7 +150,7 @@ class Login extends React.Component {
                 if (employees) {
                   if (this.isGeocodeReady(employees)) {
                       //console.log("lat and longitudes ready");
-                      this.props.setEmployeeList(employees);
+                      //this.props.setEmployeeList(employees);
                       //const GEOCODING_DONE = 1;
                       //const GEOCODING_RENEWED = 2;
                       this.props.setGeoEncoding(GEOCODING_DONE);
@@ -170,9 +175,9 @@ class Login extends React.Component {
                       //console.log(coords);
                   }
                } else {
-                   this.props.setEmployeeList(null);
+                   //this.props.setEmployeeList(null);
                }
-          });
+          }); */
 
           const clientsTag = "repos/" + tagName +"/clients/tags";
           //console.log("clientsTag = " + clientsTag);
@@ -214,7 +219,7 @@ class Login extends React.Component {
                }
           });
 
-          const trucksTag = "repos/" + tagName +"/trucks";
+          /*const trucksTag = "repos/" + tagName +"/trucks";
           //console.log("clientsTag = " + clientsTag);
           const trucksRef = firebase.database().ref(trucksTag)
 
@@ -227,6 +232,22 @@ class Login extends React.Component {
                 } else {
                    this.props.setTrucks (null);
                }
+          });*/
+
+          const reposTag = "repos/" + tagName ;
+          const reposRef = firebase.database().ref(reposTag)
+
+          reposRef.on('value', snapshot => {
+                const reposData = snapshot.val();
+                //console.log("clients Data arrived ");
+
+                if (reposData) {
+                  //const firstname = clientsData["jamiebulger+25rueviney+h9j2t2"]["contact"]["firstname"];
+                  //console.log(firstname);
+                  //const total = clientsData["jamiebulger+25rueviney+h9j2t2"]["contracts"]["0"]["total"];
+                  //console.log(total);
+                  this.props.setReposData(reposData);
+                }
           });
 
         })
@@ -395,5 +416,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserTag, setAdmin, setUserContact, setEmployeeList, setClientList, setGeoEncoding, setTrucks, setBadAccess}
+  { setUserTag, setAdmin, setReposData, setClientList, setGeoEncoding, setBadAccess}
 )(Login);

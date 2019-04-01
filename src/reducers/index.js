@@ -18,23 +18,24 @@ const initialUserState = {
   isLoading: true,
   admin: false,
   usertag: null,
-  userContact: null,
-  employeeList: null,
+  clienttag: null,
+  //userContact: null,
+  //employeeList: null,
   clientList: null,
-  clientContact: null,
-  workOrder: null,
+  //clientContact: null,
+  //workOrder: null,
   mapView: false,
   geoEncoding: GEOCODING_DONE,
   markers: [],
   truckMarkers: [],
-  contracts: null,
-  payments:null,
-  deliverys: null,
-  invoices: null,
+  //contracts: null,
+  //payments:null,
+  //deliverys: null,
+  //invoices: null,
   selectedEmployee: null,
   repeathours: 5,
   french: false,
-  trucks: [],
+  //trucks: [],
   badAccess: false,
   companyInfoView: false,
   clientView: false,
@@ -45,6 +46,7 @@ const initialUserState = {
   activeContractKey: null,
   activeInvoiceId: null,
   activeInvoiceKey: null,
+  reposData: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -72,26 +74,40 @@ const user_reducer = (state = initialUserState, action) => {
         ...state,
         currentUser: action.payload.currentUser
     };
-    case actionTypes.SET_USER_CONTACT:
+    case actionTypes.SET_REPOS_DATA:
+        //console.log(action.payload.currentUser);
+        return {
+        ...state,
+        employeeList: action.payload.reposData["employees"],
+        reposData: action.payload.reposData
+    };
+    /*case actionTypes.SET_USER_CONTACT:
     //console.log ("reducer user contact = " );
     //console.log (action.payload.userContact);
         return {
         ...state,
         userContact: action.payload.userContact
-    };
+    };*/
     case actionTypes.SET_TAG:
         //console.log ("reducer = " + action.payload.usertag);
         return {
           ...state,
           usertag: action.payload.usertag
     };
-    case actionTypes.SET_EMPLOYEE_LIST:
+    case actionTypes.SET_CLIENT_TAG:
+        //console.log ("reducer = " + action.payload.usertag);
+        return {
+          ...state,
+          clienttag: action.payload.clienttag
+    };
+
+    /*case actionTypes.SET_EMPLOYEE_LIST:
         //console.log ("reducer employees list = ");
         //console.log (action.payload.employeeList);
         return {
           ...state,
           employeeList: action.payload.employeeList
-    };
+    };*/
     case actionTypes.SET_CLIENT_LIST:
         //console.log("set_client_list");
         return {
@@ -99,27 +115,27 @@ const user_reducer = (state = initialUserState, action) => {
           clientList: action.payload.clientList,
 
     };
-    case actionTypes.SET_CLIENT_CONTACT:
+    /*case actionTypes.SET_CLIENT_CONTACT:
         //.log ("reducer client contact = " );
         //console.log (action.payload.clientContact);
         return {
         ...state,
         clientContact: action.payload.clientContact
-    };
-    case actionTypes.SET_WORK_ORDER:
+    };*/
+    /*case actionTypes.SET_WORK_ORDER:
         //console.log ("reducer work order  = " );
         //console.log (action.payload.workOrder);
         return {
         ...state,
         workOrder: action.payload.workOrder
-    };
-    case actionTypes.SET_INVOICES:
+    };*/
+    /*case actionTypes.SET_INVOICES:
         //console.log ("reducer invoices  = " );
         //console.log (action.payload.invoices);
         return {
         ...state,
         invoices: action.payload.invoices
-    };
+    };*/
     case actionTypes.SET_COMPANY_INFOVIEW:
         //console.log("SET_COMPANY_INFOVIEW");
         //console.log(action.payload.view);
@@ -340,18 +356,18 @@ const user_reducer = (state = initialUserState, action) => {
                      ...state,
                      geoEncoding: action.payload.geoEncoding
         };
-    case actionTypes.SET_CONTRACTS:
+    /*case actionTypes.SET_CONTRACTS:
            //console.log ("reducer SET_GEOENCODING = " );
            //console.log (action.payload.geoEncoding);
             return {
                      ...state,
                      contracts: action.payload.contracts
-        };
-    case actionTypes.SET_PAYMENTS:
+        };*/
+    /*case actionTypes.SET_PAYMENTS:
             return {
                     ...state,
                     payments: action.payload.payments
-        };
+        };*/
     case actionTypes.SET_CLIENT_VIEW:
             //console.log(action.payload.view);
             return {
@@ -373,13 +389,13 @@ const user_reducer = (state = initialUserState, action) => {
                     companyInfoView: false,
         };
 
-    case actionTypes.SET_DELIVERYS:
+/*    case actionTypes.SET_DELIVERYS:
      //console.log (action.payload.deliverys);
             return {
                     ...state,
                     deliverys: action.payload.deliverys
-      };
-    case actionTypes.SET_TRUCKS:
+      };*/
+    /*case actionTypes.SET_TRUCKS:
        const trucks = action.payload.trucks;
        let truckMarkers = [];
 
@@ -407,7 +423,7 @@ const user_reducer = (state = initialUserState, action) => {
                   ...state,
                   trucks: action.payload.trucks,
                   markers: markers.concat(truckMarkers),
-      };
+      };*/
     case actionTypes.SET_REPEAT_HOURS:
      //console.log("at reducer = ::");
      //console.log (action.payload.repeathours);

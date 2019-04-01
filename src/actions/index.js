@@ -35,6 +35,16 @@ export const setUserTag = tag => {
   };
 };
 
+export const setClientTag = clientTag => {
+  //console.log("action usertag = " + tag);
+  return {
+    type: actionTypes.SET_CLIENT_TAG,
+    payload: {
+      clienttag: clientTag
+    }
+  };
+};
+
 export const setClientView = view => {
   return {
     type: actionTypes.SET_CLIENT_VIEW,
@@ -92,41 +102,41 @@ export const setCurrentUser = user => {
   }
 }
 
-export const setUserContact = contact => {
+/*export const setUserContact = contact => {
   return {
     type: actionTypes.SET_USER_CONTACT,
     payload: {
       userContact: contact
     }
   }
-}
+}*/
 
-export const setClientContact = contact => {
+/*export const setClientContact = contact => {
   return {
     type: actionTypes.SET_CLIENT_CONTACT,
     payload: {
       clientContact: contact
     }
   }
-}
+}*/
 
-export const setWorkOrder = order => {
+/*export const setWorkOrder = order => {
   return {
     type: actionTypes.SET_WORK_ORDER,
     payload: {
       workOrder: order
     }
   }
-}
+}*/
 
-export const setEmployeeList = employeeList => {
+/*export const setEmployeeList = employeeList => {
   return {
     type: actionTypes.SET_EMPLOYEE_LIST,
     payload: {
       employeeList: employeeList
     }
   }
-}
+}*/
 
 export const setClientList = clientList => {
   return {
@@ -181,50 +191,50 @@ export const setGeoEncoding = geoEncoding => {
   }
 }
 
-export const setContracts = contracts => {
+/*export const setContracts = contracts => {
   return {
     type: actionTypes.SET_CONTRACTS,
     payload: {
       contracts: contracts
     }
   }
-}
+}*/
 
-export const setPayments = payments => {
+/*export const setPayments = payments => {
   return {
     type: actionTypes.SET_PAYMENTS,
     payload: {
       payments: payments
     }
   }
-}
+}*/
 
-export const setDeliverys = deliverys => {
+/*export const setDeliverys = deliverys => {
   return {
     type: actionTypes.SET_DELIVERYS,
     payload: {
       deliverys: deliverys
     }
   }
-}
+}*/
 
-export const setTrucks = trucks => {
+/*export const setTrucks = trucks => {
   return {
     type: actionTypes.SET_TRUCKS,
     payload: {
       trucks: trucks
     }
   }
-}
+}*/
 
-export const setInvoices = invoices => {
+/*export const setInvoices = invoices => {
   return {
     type: actionTypes.SET_INVOICES,
     payload: {
       invoices: invoices
     }
   }
-}
+}*/
 
 export const setUnassignedClient = () => {
   return {
@@ -312,3 +322,12 @@ export const setActiveInvoiceKey= key => {
       }
     }
   }
+
+export const setReposData = reposData => {
+    return {
+      type: actionTypes.SET_REPOS_DATA,
+      payload: {
+          reposData: reposData
+      }
+    }
+}

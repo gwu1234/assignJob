@@ -98,11 +98,22 @@ class Contracts extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     contracts: state.user.contracts,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let contracts = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      contracts = reposData["clients"]["data"][clienttag]["contracts"];
+      //console.log(clientContact);
+  }
+  return {
+     contracts: contracts,
      french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

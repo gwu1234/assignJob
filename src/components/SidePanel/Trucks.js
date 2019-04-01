@@ -71,13 +71,19 @@ class Trucks extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  //const usertag = state.user.usertag;
+  //console.log(reposData);
+  const trucks = reposData["trucks"];
+  //console.log(employees);
+  return {
      french: state.user.french,
-     trucks: state.user.trucks,
+     trucks: trucks,
      admin: state.user.admin,
      usertag: state.user.usertag,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

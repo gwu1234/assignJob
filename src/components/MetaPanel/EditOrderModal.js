@@ -387,13 +387,24 @@ console.log(order.isActive);
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let clientContact = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      //console.log(clientContact);
+  }
+  return {
+     contact: clientContact,
      usertag: state.user.usertag,
      activeOrderId:  state.user.activeOrderId,
      activeOrderKey: state.user.activeOrderKey,
    }
-);
+};
 
 export default connect(
   mapStateToProps,
