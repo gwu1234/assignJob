@@ -59,6 +59,7 @@ class Login extends React.Component {
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(signedInUser => {
+          let admin = false;
           //console.log (signedInUser.user) ;
           const emailString = signedInUser.user.email.replace(/[.,#$\[\]@ ]/g,'');
           const nameString = signedInUser.user.displayName.replace(/[.,#$\[\]@ ]/g,'');
@@ -71,7 +72,7 @@ class Login extends React.Component {
 
           adminRef.once('value')
             .then((snapshot) => {
-              const admin = snapshot.val();
+              admin = snapshot.val();
               //console.log("login admin = " + admin);
               if (admin === true) {
                    this.props.setAdmin(true);
@@ -241,11 +242,11 @@ class Login extends React.Component {
                 const reposData = snapshot.val();
                 //console.log("clients Data arrived ");
 
-                if (reposData) {
+                if (reposData["clients"] && reposData["contact"]) {
                   //const firstname = clientsData["jamiebulger+25rueviney+h9j2t2"]["contact"]["firstname"];
                   //console.log(firstname);
                   //const total = clientsData["jamiebulger+25rueviney+h9j2t2"]["contracts"]["0"]["total"];
-                  //console.log(total);
+                  console.log("setReposData ");
                   this.props.setReposData(reposData);
                 }
           });

@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag}
+import { setCurrentUser, setUserTag, setReposData}
        from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
@@ -58,6 +58,24 @@ class UserList extends React.Component {
 
   findUserContact = (tag) => {
      const {userContact} = this.state;
+
+     const reposTag = "repos/" + tag;
+     console.log(reposTag);
+     const reposRef = firebase.database().ref(reposTag)
+
+     reposRef.on('value', snapshot => {
+           const reposData = snapshot.val();
+           //console.log("clients Data arrived ");
+
+           if (reposData["clients"] && reposData["contact"]) {
+             //const firstname = clientsData["jamiebulger+25rueviney+h9j2t2"]["contact"]["firstname"];
+             //console.log(firstname);
+             //const total = clientsData["jamiebulger+25rueviney+h9j2t2"]["contracts"]["0"]["total"];
+             //console.log(total);
+             this.props.setReposData(reposData);
+           }
+     });
+
      //console.log("usertag =" + tag);
      /*const contactRef = firebase.database().ref
           ("repos/" + tag +"/contact");
@@ -185,5 +203,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setCurrentUser, setUserTag}
+  { setCurrentUser, setUserTag, setReposData}
 )(UserList);

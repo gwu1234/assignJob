@@ -164,10 +164,10 @@ const user_reducer = (state = initialUserState, action) => {
         //console.log (action.payload.mapView);
          const clients = state.clientList;
          //const timestamp = state.timestamp;
-         const repeathours = state.repeathours;
-         const date = new Date();
+         //const repeathours = state.repeathours;
+         //const date = new Date();
          // timestamp in second
-         const timestamp = Math.round(date.getTime()/1000 + 0.5);
+         //const timestamp = Math.round(date.getTime()/1000 + 0.5);
            //const timestamp = 1000;
          //console.log (timestamp);
          //console.log (repeathours);
@@ -175,13 +175,13 @@ const user_reducer = (state = initialUserState, action) => {
          let clientMarkers = [];
 
          for (var key in clients) {
-           const repeattime = clients[key].repeattime;
-           const lastservicetime = clients[key].lastservicetime;
-           const repeatseconds = repeathours * 60 * 60;
+           //const repeattime = clients[key].repeattime;
+           //const lastservicetime = clients[key].lastservicetime;
+           //const repeatseconds = repeathours * 60 * 60;
            let status = JOB_NEW;
 
            // case 1: it is a new client
-           if (!repeattime && !lastservicetime) {
+          /* if (!repeattime && !lastservicetime) {
                status = JOB_NEW;
             // case 2: it is a one time job
            } else if (repeatseconds === 0) {
@@ -250,7 +250,7 @@ const user_reducer = (state = initialUserState, action) => {
            else {
                 console.log("should bot come here");
                 status = JOB_NEW;
-           }
+           }*/
 
 
            const marker = {
@@ -458,10 +458,10 @@ const user_reducer = (state = initialUserState, action) => {
          const selectedEmployee = action.payload.selected
          const assignedClients = state.clientList;
          //const selectedtimestamp = state.timestamp;
-         const selectedrepeathours = state.repeathours;
-         const date1 = new Date();
+         //const selectedrepeathours = state.repeathours;
+         //const date1 = new Date();
          // timestamp in second
-         const selectedtimestamp = Math.round(date1.getTime()/1000 + 0.5);
+         //const selectedtimestamp = Math.round(date1.getTime()/1000 + 0.5);
          //const selectedtimestamp = 100;
          //console.log ("reducer");
          //console.log ("SET_SELECTED_EMPLOYEE");
@@ -483,13 +483,13 @@ const user_reducer = (state = initialUserState, action) => {
          for (var key in assignedJobs) {
 
              const assignedClient = assignedClients[assignedJobs[key].clientKey];
-             const repeattime = assignedClient.repeattime;
-             const lastservicetime = assignedClient.lastservicetime;
-             const repeatseconds = selectedrepeathours * 60 * 60;
+             //const repeattime = assignedClient.repeattime;
+             //const lastservicetime = assignedClient.lastservicetime;
+             //const repeatseconds = selectedrepeathours * 60 * 60;
              let status = JOB_NEW;
 
              // case 1: it is a new client
-             if (!repeattime && !lastservicetime) {
+             /*if (!repeattime && !lastservicetime) {
                  status = JOB_NEW;
               // case 2: it is a one time job
              } else if (repeatseconds === 0) {
@@ -558,7 +558,7 @@ const user_reducer = (state = initialUserState, action) => {
              else {
                   console.log("should bot come here");
                   status = JOB_NEW;
-             }
+             }*/
 
 
              const assignedMarker = {
@@ -577,7 +577,7 @@ const user_reducer = (state = initialUserState, action) => {
                  assignedKey: assignedJobs[key].assignedKey,
                  employeeKey: assignedJobs[key].employeeKey,
                  clientKey: assignedJobs[key].clientKey,
-                 clientTag: assignedClient.tag,
+                 //clientTag: assignedClient.clientTag,
              }
             selectedMarkers.push(assignedMarker);
        }
@@ -595,10 +595,10 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
 
      const allclients = state.clientList;
      //const alltimestamp = state.timestamp;
-     const allrepeathours = state.repeathours;
-     const date2 = new Date();
+     //const allrepeathours = state.repeathours;
+     //const date2 = new Date();
      // timestamp in second
-     const alltimestamp = Math.round(date2.getTime()/1000 + 0.5);
+     //const alltimestamp = Math.round(date2.getTime()/1000 + 0.5);
      //const alltimestamp = 1000;
      //console.log (alltimestamp);
      //console.log (allrepeathours);
@@ -608,13 +608,13 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
      for (var key in allclients) {
        if (!allclients[key].isAssigned) {
 
-            const repeattime = allclients[key].repeattime;
-            const lastservicetime = allclients[key].lastservicetime;
-            const repeatseconds = allrepeathours * 60 * 60;
+            //const repeattime = allclients[key].repeattime;
+            //const lastservicetime = allclients[key].lastservicetime;
+            //const repeatseconds = allrepeathours * 60 * 60;
             let status = JOB_NEW;
 
             // case 1: it is a new client
-            if (!repeattime && !lastservicetime) {
+            /*if (!repeattime && !lastservicetime) {
                 status = JOB_NEW;
              // case 2: it is a one time job
             } else if (repeatseconds === 0) {
@@ -683,7 +683,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             else {
                  console.log("should bot come here");
                  status = JOB_NEW;
-            }
+            }*/
 
 
 
