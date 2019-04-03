@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentUser, setUserTag, setClientList}
+import { setCurrentUser, setUserTag}
        from "../../actions";
 import { Menu, Icon } from "semantic-ui-react";
 import "./UserList.css";
@@ -107,7 +107,7 @@ class UserList extends React.Component {
            }
       });*/
 
-      const clientsTag = "repos/" + tag +"/clients/tags";
+      /*const clientsTag = "repos/" + tag +"/clients/tags";
       //console.log("clientsTag = " + clientsTag);
       const clientsRef = firebase.database().ref(clientsTag)
 
@@ -120,7 +120,7 @@ class UserList extends React.Component {
            } else {
                this.props.setClientList(null);
            }
-      });
+      });*/
 
       //const trucksTag = "repos/" + tag +"/trucks";
       //console.log("clientsTag = " + clientsTag);
@@ -185,5 +185,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setCurrentUser, setClientList, setUserTag}
+  { setCurrentUser, setUserTag}
 )(UserList);

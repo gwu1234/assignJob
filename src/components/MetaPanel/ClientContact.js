@@ -199,6 +199,7 @@ const mapStateToProps = state => {
    if (clienttag) {
        //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
        clientContact = reposData["clients"]["data"][clienttag]["contact"];
+       clientContact = {...clientContact, clientTag: clienttag}
        //console.log(clientContact);
    }
    //const clientContact = reposData["clients"];

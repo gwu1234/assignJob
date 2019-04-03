@@ -137,19 +137,19 @@ class Clients extends React.Component {
     //converting nested objects to object array
     const clientArray =[];
     //const keyArray = [];
-    /*for (var key in clients) {
-       console.log(clients[key]);
-       console.log(key);
+    for (var key in clients) {
+       //console.log(clients[key]);
+       //console.log(key);
        const newClient = {
          clientKey: key,
          client: clients[key]
        }
        //keyArray.push(key);
        clientArray.push(newClient);
-    }*/
+    }
 
     //console.log(clients);
-    for (var [key, value] of clients) {
+    /*for (var [key, value] of clients) {
           //console.log(key + ' === ' + value);
           //console.log(value);
           //console.log(key);
@@ -160,7 +160,7 @@ class Clients extends React.Component {
           }
           //keyArray.push(key);
           clientArray.push(newClient);
-    }
+    }*/
 
     // sort list by the lastname
     clientArray.sort((a, b) => a.client.lastname.localeCompare(b.client.lastname));
@@ -216,28 +216,22 @@ class Clients extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const reposData = state.user.reposData;
-  const usertag = state.user.usertag;
-  //const clienttag = state.user.clienttag;
+  /*const reposData = state.user.reposData;
+  //const usertag = state.user.usertag;
   let dataList = null;
-  let contactList = new Map();;
-  //console.log(clienttag);
+  let contactList = {};
+
   if (reposData) {
-      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
       dataList = reposData["clients"]["data"];
-      //console.log(dataList);
-      //for (var [key, value] of dataList) {
-      //    console.log(key + ' goes ' + value);
-      //    contactList.set(key, value["contact"]);
-      //}
       for (var key in dataList) {
-         //console.log(key);
-         contactList.set(key, dataList[key]["contact"]);
+         let contact = dataList[key]["contact"];
+         contact = {...contact, tag: key, clientTag: dataList[key]["contact"]};
+         console.log (contact) ;
+         contactList = {...contactList, [key]: contact}
       }
-      //console.log(contactList);
-  }
+  }*/
   return {
-     clients: contactList,
+     clients: state.user.clientList,
      currentUser: state.user.currentUser,
      usertag: state.user.usertag,
      admin: state.user.admin,

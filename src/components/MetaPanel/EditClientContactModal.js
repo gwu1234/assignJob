@@ -104,7 +104,7 @@ class EditClientContactModal extends Component {
   async getLocation(location) {
     try {
       let response = await Geocode.fromAddress(location.address);
-      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      console.log("RESULT:", location.address, await response.results[0].geometry.location);
       return (
         {
           lat: await response.results[0].geometry.location.lat,
@@ -149,8 +149,8 @@ class EditClientContactModal extends Component {
          }
 
          //console.log(newClient);
-         const clientPath = "repos/" + usertag + "/clients/tags/" + contact.clientKey;
-         //console.log(clientPath);
+         const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientTag +"/contact";
+         console.log(clientPath);
          const clientKey = contact.clientKey;
          const clientRef = firebase.database().ref(clientPath);
          //const clientKey = clientRef.push().getKey();

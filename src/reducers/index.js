@@ -75,9 +75,22 @@ const user_reducer = (state = initialUserState, action) => {
         currentUser: action.payload.currentUser
     };
     case actionTypes.SET_REPOS_DATA:
-        //console.log(action.payload.currentUser);
+        const reposData = action.payload.reposData;
+        let dataList = null;
+        let clientList = {};
+
+        if (reposData) {
+            dataList = reposData["clients"]["data"];
+            for (var key in dataList) {
+               let contact = dataList[key]["contact"];
+               contact = {...contact, tag: key, clientTag: dataList[key]["contact"]};
+               //console.log (contact) ;
+               clientList = {...clientList, [key]: contact}
+            }
+        }
         return {
         ...state,
+        clientList: clientList,
         employeeList: action.payload.reposData["employees"],
         reposData: action.payload.reposData
     };
@@ -108,13 +121,13 @@ const user_reducer = (state = initialUserState, action) => {
           ...state,
           employeeList: action.payload.employeeList
     };*/
-    case actionTypes.SET_CLIENT_LIST:
+    /*case actionTypes.SET_CLIENT_LIST:
         //console.log("set_client_list");
         return {
           ...state,
           clientList: action.payload.clientList,
 
-    };
+    };*/
     /*case actionTypes.SET_CLIENT_CONTACT:
         //.log ("reducer client contact = " );
         //console.log (action.payload.clientContact);

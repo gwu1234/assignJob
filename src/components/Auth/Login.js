@@ -4,7 +4,7 @@ import Geocode from "react-geocode";
 //import response from "react-geocode";
 import { connect } from "react-redux";
 import {  setUserTag, setAdmin, setReposData,
-          setClientList, setGeoEncoding, setBadAccess}
+          setGeoEncoding, setBadAccess}
         from "../../actions";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
@@ -179,7 +179,7 @@ class Login extends React.Component {
                }
           }); */
 
-          const clientsTag = "repos/" + tagName +"/clients/tags";
+          /*const clientsTag = "repos/" + tagName +"/clients/tags";
           //console.log("clientsTag = " + clientsTag);
           const clientsRef = firebase.database().ref(clientsTag)
 
@@ -217,7 +217,7 @@ class Login extends React.Component {
                } else {
                    this.props.setClientList(null);
                }
-          });
+          });*/
 
           /*const trucksTag = "repos/" + tagName +"/trucks";
           //console.log("clientsTag = " + clientsTag);
@@ -416,5 +416,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserTag, setAdmin, setReposData, setClientList, setGeoEncoding, setBadAccess}
+  { setUserTag, setAdmin, setReposData, setGeoEncoding, setBadAccess}
 )(Login);

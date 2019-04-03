@@ -138,14 +138,14 @@ export const setCurrentUser = user => {
   }
 }*/
 
-export const setClientList = clientList => {
+/*export const setClientList = clientList => {
   return {
     type: actionTypes.SET_CLIENT_LIST,
     payload: {
       clientList: clientList
     }
   }
-}
+}*/
 
 export const setMapView = () => {
   return {
