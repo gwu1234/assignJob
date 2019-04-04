@@ -1,7 +1,6 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-//import { } from "../../actions";
 import { Menu} from "semantic-ui-react";
 import "./Truck.css";
 import EditTruckModal from "./EditTruckModal";
@@ -21,9 +20,7 @@ class Truck extends React.Component {
   render() {
     const {truck, usertag, truckKey} = this.props;
     const {display} = this.state;
-
     let name= '';
-    //let address ='';
 
     if (truck) {
         name = truck.model + ", " + truck.year ;
@@ -39,7 +36,7 @@ class Truck extends React.Component {
    }
 }
 
-//export default Client;
+
 const mapStateToProps = state => ({
      usertag: state.user.usertag
    }
