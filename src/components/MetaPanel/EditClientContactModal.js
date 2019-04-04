@@ -136,7 +136,58 @@ class EditClientContactModal extends Component {
          //let tagString = name + "+" + street + "+" + postcode ;
          //const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
 
-         const newClient = {
+         let emails = [];
+         let phones = [];
+         let cells = [];
+
+         if (email1) {
+            emails.push (email1);
+         }
+         if (email2) {
+            emails.push (email2);
+         }
+         if (email3) {
+            emails.push (email3);
+         }
+
+         if (phone1) {
+            phones.push (phone1);
+         }
+         if (phone2) {
+            phones.push (phone2);
+         }
+         if (phone3) {
+            phones.push (phone3);
+         }
+
+         if (cell1) {
+            cells.push (cell1);
+         }
+         if (cell2) {
+            cells.push (cell2);
+         }
+         if (cell3) {
+            cells.push (cell3);
+         }
+
+         const newClientContact = {
+           "city":  String(city),
+           "lastname": String (lastname),
+           "firstname": String(firstname),
+           "street": String(street),
+           "name": String(name),
+           "postcode": String(postcode),
+           "country": String(country),
+           "province":  String(province),
+           "emails": emails,
+           "phones": phones,
+           "cells": cells,
+           "tag": String(contact.clientTag),
+           "clientTag": String(contact.clientTag),
+           "clientKey": String(contact.clientKey)
+         }
+
+         /*const newClient = {
            "city":  String(city),
            "lastname": String (lastname),
            "firstname": String(firstname),
@@ -146,7 +197,7 @@ class EditClientContactModal extends Component {
            "postcode": String(postcode),
            "tag": String(contact.clientTag),
            "clientKey": String(contact.clientKey)
-         }
+         }*/
 
          //console.log(newClient);
          const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientTag +"/contact";
@@ -163,10 +214,10 @@ class EditClientContactModal extends Component {
             databaseRef: clientRef
          }
 
-         this.getLocations (newClient,location);
+         this.getLocations (newClientContact,location);
          //clientRef.child(clientKey).set(newClient);
 
-         let emails = [];
+         /*let emails = [];
          let phones = [];
          let cells = [];
 
@@ -221,7 +272,7 @@ class EditClientContactModal extends Component {
          const contactRef = firebase.database().ref(contactPath);
          //const contactKey = contactRef.push().getKey();
          //console.log(contactPath);
-         contactRef.set(newContact);
+         contactRef.set(newContact);*/
 
          this.handleOpen(false);
     }
