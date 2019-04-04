@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { setActiveOrderId, setActiveOrderKey} from "../../actions";
-import { Button, Header, Icon, Modal, Form, Radio, Grid} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Radio, Grid, Dropdown, Select, Message} from 'semantic-ui-react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
@@ -12,11 +12,13 @@ class EditOrderModal extends Component {
       this.state = {
          modalOpen: false,
          fieldChange: false,
-         activeOrderChanged: false,
+         //activeOrderChanged: false,
          date: this.props.order.date,
          work: this.props.order.work,
          orderId: this.props.order.orderId,
          isActive: this.props.order.isActive,
+         isRepeat: this.props.order.isRepeat,
+         repeatTimes: this.props.order.repeatTimes,
          datetime: null,
      }
 }
@@ -48,8 +50,7 @@ componentWillUnMount() {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {work, orderId, isActive, fieldChange,
-                activeOrderChanged} = this.state;
+         const {work, orderId, isActive, fieldChange, isRepeat, repeatTimes} = this.state;
          let {date} = this.state;
          const {orderKey, contact, usertag} = this.props;
          //console.log (orderKey);
@@ -58,17 +59,17 @@ componentWillUnMount() {
          //console.log (contact.clientKey);
          var options = { year: 'numeric', month: 'long', day: 'numeric' };
          date = (new Date(date)).toLocaleDateString("en-US", options);
-         //console.log("date = " + date);
+         //console.log("fieldChange  = " + fieldChange);
 
-         if ( !fieldChange && !activeOrderChanged ) {
+         if ( !fieldChange ) {
               //console.log("no change, just return");
               //this.handleOpen(false);
               //return;
-         } else if (fieldChange && !activeOrderChanged) {
+         } else {
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
-              console.log(orderPath);
+              //console.log(orderPath);
 
               const newOrder = {
                  "date": String(date),
@@ -77,11 +78,17 @@ componentWillUnMount() {
                  "orderId" : String(orderId),
                  "clientKey": String(contact.clientKey),
                  "tag": String(contact.tag),
+                 "clientTag": String(contact.tag),
+                 "isActive": String(isActive),
+                 "isRepeat": String(isRepeat),
+                 "repeatTimes": String(repeatTimes),
               }
-             console.log(newOrder);
+             //console.log(newOrder);
              orderRef.update(newOrder);
              //this.handleOpen(false);
-       } else if (!fieldChange && activeOrderChanged) {
+       }
+
+       /*else if (!fieldChange && activeOrderChanged) {
              //console.log("fields not change, active id changed");
              //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
              //const orderRef = firebase.database().ref(orderPath);
@@ -119,8 +126,8 @@ componentWillUnMount() {
              this.props.setActiveOrderId(activeOrderId);
              this.props.setActiveOrderKey(activeOrderKey);
              //this.handleOpen(false);
-      }
-      else if (fieldChange && activeOrderChanged) {
+      }*/
+      /*else if (fieldChange && activeOrderChanged) {
             //console.log("fields not change, active id changed");
             //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
             //const orderRef = firebase.database().ref(orderPath);
@@ -128,7 +135,7 @@ componentWillUnMount() {
 
             let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/";
             const orderRef = firebase.database().ref(orderPath);
-            const activeOrderActive  = isActive === "true" ? true:false;
+            //const activeOrderActive  = isActive === "true" ? true:false;
 
             const newOrder = {
                "date": String(date),
@@ -137,7 +144,7 @@ componentWillUnMount() {
                "orderId" : String(orderId),
                "clientKey": String(contact.clientKey),
                "tag": String(contact.tag),
-               "isActive": String(activeOrderActive),
+               "isActive": String(isActive),
             }
             //console.log(newOrder);
             orderRef.child(orderKey).update(newOrder);
@@ -150,7 +157,7 @@ componentWillUnMount() {
             }
 
 
-            const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
+            /*const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
             const clientRef = firebase.database().ref(clientPath);
             //console.log(clientPath);
 
@@ -164,15 +171,14 @@ componentWillUnMount() {
 
             this.props.setActiveOrderId(activeOrderId);
             this.props.setActiveOrderKey(activeOrderKey);
-            clientRef.update(newOrderId);
+            clientRef.update(newOrderId);*/
 
             //this.handleOpen(false);
       }
-      this.setState({
-          activeOrderChanged: false,
-      });
-      this.handleOpen(false);
-    }
+       this.setState({
+          fieldChanged: false,
+       });
+       this.handleOpen(false);
   };
 
   isFormValid() {
@@ -210,68 +216,56 @@ componentWillUnMount() {
     //console.log("radio value = " + value);
     //console.log("radio checked = " + checked);
     //console.log(e);
-    const {orderId, isActive} = this.state;
-    const {activeOrderId, orderKey} = this.props;
+    let {orderId, isActive} = this.state;
+    //const {activeOrderId, orderKey} = this.props;
+
+    isActive = ( (isActive && isActive === "true") ||  // database has a isRepeat
+                 (isActive && isActive === true) ) ? // isActive is true
+                 true:false;
 
 
-    if (isActive === "true") {
+    if (isActive === true) {
           this.setState({
-              isActive: "false",
-              activeOrderChanged: true,
+              isActive: false,
+              //activeOrderChanged: true,
+              fieldChange: true,
           });
     } else {
       this.setState({
-          isActive: "true",
-          activeOrderChanged: true,
+          isActive: true,
+          //activeOrderChanged: true,
+          fieldChange: true,
         });
     }
+  }
 
-    /*if (checked) {
-       console.log("this is active work order");
-       if (orderId === activeOrderId){
-           console.log("same order id, mutiple clicks: ignore");
-           this.setState ({
-                activeOrderChanged: false,
-                activeOrderId: orderId,
-                activeOrderKey: orderKey,
-                isActive: true
-            })
-       }
-       else {
-           console.log("new order id, need to set");
+  handleRepeatChange = (e, { name, label, value, checked }) => {
+      //console.log("radio name = " + name);
+      //console.log("radio label = " + label);
+      //console.log("radio value = " + value);
+      //console.log("radio checked = " + checked);
+      //console.log(e);
 
-           this.setState ({
-                activeOrderChanged: true,
-                activeOrderId: orderId,
-                activeOrderKey: orderKey,
-                isActive: true
-            })
-       }
-    } else {
-       console.log("this is not active work order");
-       console.log("activeOrderId = " + activeOrderId);
-       console.log("orderId = " + orderId);
-       if (orderId === activeOrderId){
-           console.log("not active any more, set to null");
-           console.log("activeOrderId = " + activeOrderId);
-           console.log("orderId = " + orderId);
-           this.setState ({
-                activeOrderChanged: true,
-                activeOrderId: null,
-                activeOrderKey: null,
-                isActive: false,
-            })
-       }
-       else {
-           console.log("never was active, do nothing");
-           this.setState ({
-                activeOrderChanged: false,
-                activeOrderId: null,
-                activeOrderKey: null,
-                isActive: false,
-            })
-       }
-    } */
+      let {isRepeat, repeatChanged} = this.state;
+      //database has a IsRepeat
+      isRepeat = ( (isRepeat && isRepeat === "true") ||  // database has a isRepeat
+                   (isRepeat && isRepeat === true) ) ? // isRepeat is true
+                   true:false;
+
+      //console.log("isRepeat = " + isRepeat);
+      //console.log("repeatChanged = " + repeatChanged);
+
+      if (isRepeat === true) {
+            this.setState({
+                isRepeat: false,
+                repeatChanged: true,
+            });
+      } else {
+        this.setState({
+            isRepeat: true,
+            repeatChanged: true,
+          });
+      }
   }
 
 
@@ -280,7 +274,7 @@ componentWillUnMount() {
       return;
     }
 
-    console.log(day);
+    //console.log(day);
     //var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     //console.log(day.toLocaleDateString("en-US", options));
     var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -292,10 +286,41 @@ componentWillUnMount() {
     })
   }
 
+  dropdownOptions = () => {
+      let optionArray = [];
+
+      optionArray.push({
+          key: '0',
+          text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > {0} </span>,
+          value: 0,
+      });
+
+      for (var i = 2; i <30; i++ ){
+        //var a = String(i);
+        optionArray.push({
+           key: i,
+           text: <span style ={{fontStyle: "bold", fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}}> {i} </span>,
+           value: i,
+        });
+      }
+
+      return optionArray;
+  }
+
+
+  handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+    const selectedValue = data.value
+    console.log( data.value);
+    this.setState({
+        repeatTimes: selectedValue,
+        fieldChange: true,
+    });
+  }
+
   render() {
     const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
-    const {orderId, isActive, activeOrderChanged} = this.state;
-
+    const {orderId, activeOrderChanged} = this.state;
+    let {repeatTimes, isActive, isRepeat} = this.state;
 
 
     //console.log ("EditOrderModal order = " );
@@ -306,12 +331,19 @@ componentWillUnMount() {
     //console.log (orderKey);
     //console.log(orderId);
 
-    const isRadioActive = activeOrderChanged? isActive==="true": isActive === "true" &&
+    /*const isRadioActive = activeOrderChanged? isActive==="true": isActive === "true" &&
          activeOrderId === orderId &&
-         activeOrderKey === orderKey ;
+         activeOrderKey === orderKey ;*/
 
    //const isRadioActive = isActive === "true";
+    repeatTimes = repeatTimes? String(repeatTimes): "2";
+    isActive = ( (isActive && isActive ==="true") ||
+                 (isActive && isActive === true ) ) ?
+                 true: false;
 
+    isRepeat = ( (isRepeat && isRepeat ==="true") ||
+                 (isRepeat && isRepeat=== true ) ) ?
+                 true: false;
 
     const titleString = contact.name + " :  " + "Edit Order";
     //console.log (titleString);
@@ -360,10 +392,34 @@ componentWillUnMount() {
                    label='make this order active'
                    name='activeRadio'
                    value={this.state.orderId}
-                   checked={isRadioActive}
+                   checked={isActive}
                    onChange={this.handleRadioChange}
                />
-   </Form.Field>
+          </Form.Field>
+          <Form.Field>
+              <Radio
+                  toggle
+                  label='make this order repetitive'
+                  name='repeatRadio'
+                  value={this.state.orderId}
+                  checked={isRepeat}
+                  onChange={this.handleRepeatChange}
+              />
+         </Form.Field>
+         <Form.Field>
+              <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                  Repeat Times (0 = infinite)
+              </Message>
+
+               <Dropdown
+                  placeholder={repeatTimes}
+                  fluid
+                  selection
+                  onChange={this.handleDropdownChange}
+                  options={this.dropdownOptions()}
+               />
+
+         </Form.Field>
         </Form>
 </Grid.Column>
 </Grid>
@@ -410,3 +466,13 @@ export default connect(
   mapStateToProps,
   {setActiveOrderId, setActiveOrderKey}
 )(EditOrderModal);
+
+/*
+<Select placeholder={repeatTimes}
+    name="work orders"
+    text={"0"}
+    style={{color:"black", fontStyle:"bold", margin:"0px", padding:"0px"}}
+    onChange={this.handleDropdownChange}
+    options={this.dropdownOptions()}
+/>
+*/

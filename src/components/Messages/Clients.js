@@ -138,8 +138,8 @@ class Clients extends React.Component {
     const clientArray =[];
     //const keyArray = [];
     for (var key in clients) {
-       console.log(clients[key]);
-       console.log(key);
+       //console.log(clients[key]);
+       //console.log(key);
        const newClient = {
          clientKey: key,
          client: clients[key]
@@ -148,7 +148,7 @@ class Clients extends React.Component {
        clientArray.push(newClient);
     }
 
-    console.log(clientArray);
+    //console.log(clientArray);
     /*for (var [key, value] of clients) {
           //console.log(key + ' === ' + value);
           //console.log(value);
