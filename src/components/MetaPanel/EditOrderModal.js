@@ -25,7 +25,7 @@ class EditOrderModal extends Component {
 
 componentDidMount() {
   const {order} = this.props;
-  console.log(order.isActive);
+  //console.log(order.isActive);
 
   this.setState({
      isActive: order.isActive

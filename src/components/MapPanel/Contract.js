@@ -8,18 +8,40 @@ import "./Contract.css";
 import EditContractModal from "./EditContractModal";
 
 class Contract extends React.Component {
-
    state = {
      contractStyle: {
        visibility: 'hidden',
        height: "2px",
      },
-     //display: false,
+     isActive: false,
    };
 
+  componentDidMount(){
+     const {orders, contract, contractKey} = this.props;
+     let isActive = false;
+     const linkedOrderId = contract["linkedOrderId"];
+     const  linkedOrderKey = contract["linkedOrderKey"];
+     console.log(linkedOrderId);
+     console.log(linkedOrderKey);
+
+     for (var key in orders) {
+        console.log(key);
+        //console.log(orders[key]);
+        console.log(orders[key]["isActive"]);
+        const orderId = orders[key]["orderId"]
+        //if (key === linkedOrderKey && linkedOrderId === orderId) {
+        if (key === linkedOrderKey) {          
+           isActive = true;
+           break;
+        }
+     }
+     this.setState ({isActive: isActive});
+  }
+
+
   render() {
-    const {contract, contractKey, activeOrderId, activeOrderKey} = this.props;
-    //const {display} = this.state;
+    const {contract, contractKey} = this.props;
+    const {isActive} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
     //display && clients && this.displayClients(clients)}
@@ -39,11 +61,11 @@ class Contract extends React.Component {
     //console.log(isActive);
     //console.log(activeOrderId);
     //console.log(activeOrderKey);
-    let isActive = (contract.linkedOrderId && contract.linkedOrderId  === activeOrderId) ||
-                     (contract.linkedOrderKey && contract.linkedOrderKey === activeOrderKey) ;
+    //let isActive = (contract.linkedOrderId && contract.linkedOrderId  === activeOrderId) ||
+    //                 (contract.linkedOrderKey && contract.linkedOrderKey === activeOrderKey) ;
 
     // it is an active work order
-    if (isActive === true) {
+    /*if (isActive === true) {
         //console.log(contract);
         console.log("active order id = " + contract.linkedOrderId);
         console.log("active order key = " + contract.linkedOrderKey);
@@ -52,19 +74,19 @@ class Contract extends React.Component {
         //console.log(isActive);
         this.props.setActiveContractId(contract.contractId);
         this.props.setActiveContractKey(contract.contractKey)
-    }
+    }*/
     // active work order changed
-    else if  ( (contract.linkedOrderId && null === activeOrderId) ||
-                 (contract.linkedOrderKey && null === activeOrderKey) ){
-        isActive = false;
+    //else if  ( (contract.linkedOrderId && null === activeOrderId) ||
+    //             (contract.linkedOrderKey && null === activeOrderKey) ){
+    //    isActive = false;
         //console.log(contract.linkedOrderId);
         //console.log(contract.linkedOrderKey);
         //console.log(activeOrderId);
         //console.log(activeOrderKey);
         //console.log(isActive);
-        this.props.setActiveContractId(null);
-        this.props.setActiveContractKey(null)
-    }
+        //this.props.setActiveContractId(null);
+        //this.props.setActiveContractKey(null)
+    //}
 
     return (
       <Menu.Menu className ="ContractMenuMenu"
@@ -91,11 +113,27 @@ class Contract extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     activeOrderId: state.user.activeOrderId,
-     activeOrderKey: state.user.activeOrderKey,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let workOrders = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      workOrders = reposData["clients"]["data"][clienttag]?
+      reposData["clients"]["data"][clienttag]["workorders"] : null;
+      //console.log(clientContact);
+  }
+  return {
+     orders: workOrders,
+     french: state.user.french
    }
-);
+  //return {
+     //activeOrderId: state.user.activeOrderId,
+     //activeOrderKey: state.user.activeOrderKey,
+  // }
+};
 
 export default connect(
   mapStateToProps,
