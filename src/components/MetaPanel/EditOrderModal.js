@@ -310,7 +310,7 @@ componentWillUnMount() {
 
   handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
     const selectedValue = data.value
-    console.log( data.value);
+    //console.log( data.value);
     this.setState({
         repeatTimes: selectedValue,
         fieldChange: true,
