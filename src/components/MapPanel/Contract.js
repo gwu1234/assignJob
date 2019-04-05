@@ -13,24 +13,29 @@ class Contract extends React.Component {
        visibility: 'hidden',
        height: "2px",
      },
-     isActive: false,
+     //isActive: false,
    };
 
-  componentDidMount(){
-     const {orders, contract, contractKey} = this.props;
+  /*componentDidMount(){
+     const {orders, contract} = this.props;
      let isActive = false;
      const linkedOrderId = contract["linkedOrderId"];
      const  linkedOrderKey = contract["linkedOrderKey"];
-     console.log(linkedOrderId);
-     console.log(linkedOrderKey);
+     console.log("linkedOrderId = " + linkedOrderId);
+     console.log("linkedOrderKey = " + linkedOrderKey);
 
      for (var key in orders) {
-        console.log(key);
+        //console.log(key);
         //console.log(orders[key]);
-        console.log(orders[key]["isActive"]);
-        const orderId = orders[key]["orderId"]
+        //console.log(orders[key]["isActive"]);
+        const isOrderActive = orders[key]["isActive"];
+        console.log("order key = " + key);
+        console.log("isActive in order = " +  isOrderActive );
+
+        //const orderId = orders[key]["orderId"];
         //if (key === linkedOrderKey && linkedOrderId === orderId) {
-        if (key === linkedOrderKey) {          
+        if (key === linkedOrderKey && isOrderActive === "true") {
+           console.log("active order found key =" + key);
            isActive = true;
            break;
         }
@@ -38,13 +43,63 @@ class Contract extends React.Component {
      this.setState ({isActive: isActive});
   }
 
+  componentWillReceiveProps(nextProps) {
+      const {orders, contract} = nextProps;
+      if (orders) {
+        const {orders, contract} = this.props;
+        let isActive = false;
+        const linkedOrderId = contract["linkedOrderId"];
+        const  linkedOrderKey = contract["linkedOrderKey"];
+        console.log("linkedOrderId = " + linkedOrderId);
+        console.log("linkedOrderKey = " + linkedOrderKey);
+
+        for (var key in orders) {
+           const isOrderActive = orders[key]["isActive"];
+           console.log ("order key = " + key) ;
+           console.log("order isActive = " + isOrderActive );
+
+           if (key === linkedOrderKey && isOrderActive === "true") {
+              isActive = true;
+              console.log("active order found key =" + key);
+              break;
+           }
+        }
+        this.setState ({isActive: isActive});
+      }
+   }*/
+
 
   render() {
-    const {contract, contractKey} = this.props;
-    const {isActive} = this.state;
+    const {contract, contractKey, orders} = this.props;
+    //const {isActive} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
     //display && clients && this.displayClients(clients)}
+    //const {orders, contract} = this.props;
+    let isActive = false;
+    const linkedOrderId = contract["linkedOrderId"];
+    const  linkedOrderKey = contract["linkedOrderKey"];
+    //console.log("linkedOrderId = " + linkedOrderId);
+    //console.log("linkedOrderKey = " + linkedOrderKey);
+
+    for (var key in orders) {
+       //console.log(key);
+       //console.log(orders[key]);
+       //console.log(orders[key]["isActive"]);
+       const isOrderActive = orders[key]["isActive"];
+       //console.log("order key = " + key);
+       //console.log("isActive in order = " +  isOrderActive );
+
+       //const orderId = orders[key]["orderId"];
+       //if (key === linkedOrderKey && linkedOrderId === orderId) {
+       if (key === linkedOrderKey && isOrderActive === "true") {
+          //console.log("active order found key =" + key);
+          isActive = true;
+          break;
+       }
+    }
+    //this.setState ({isActive: isActive});
+
     let contractDate = "";
     let contractWork = "";
     let price = "";

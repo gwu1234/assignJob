@@ -2,7 +2,7 @@ import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu} from "semantic-ui-react";
-import { setActiveInvoiceId, setActiveInvoiceKey} from "../../actions";
+//import { setActiveInvoiceId, setActiveInvoiceKey} from "../../actions";
 import "./Invoice.css";
 import EditInvoiceModal from "./EditInvoiceModal";
 
@@ -13,12 +13,38 @@ class Invoice extends React.Component {
        visibility: 'hidden',
        height: "2px",
      },
-     //display: false,
+     //isActive: false,
    };
 
+
+
   render() {
-    const {invoice, invoiceKey, activeContractId, activeContractKey} = this.props;
-    //const {display} = this.state;
+    const {invoice, invoiceKey, orders} = this.props;
+    //const {isActive} = this.state;
+
+    let isActive = false;
+    const linkedOrderId = invoice["linkedOrderId"];
+    const  linkedOrderKey = invoice["linkedOrderKey"];
+    //console.log("linkedOrderId = " + linkedOrderId);
+    //console.log("linkedOrderKey = " + linkedOrderKey);
+
+    for (var key in orders) {
+       //console.log(key);
+       //console.log(orders[key]);
+       //console.log(orders[key]["isActive"]);
+       const isOrderActive = orders[key]["isActive"];
+       //console.log("order key = " + key);
+       //console.log("isActive in order = " +  isOrderActive );
+
+       //const orderId = orders[key]["orderId"];
+       //if (key === linkedOrderKey && linkedOrderId === orderId) {
+       if (key === linkedOrderKey && isOrderActive === "true") {
+          //console.log("active order found key =" + key);
+          isActive = true;
+          break;
+       }
+    }
+
     //console.log("Clients List = ");
     //console.log(clients);
     //display && clients && this.displayClients(clients)}
@@ -35,10 +61,10 @@ class Invoice extends React.Component {
         }
     }
 
-    let isActive = (invoice.linkedContractId  && invoice.linkedContractId  === activeContractId) ||
-                   (invoice.linkedContractKey && invoice.linkedContractKey === activeContractKey) ;
+    //let isActive = (invoice.linkedContractId  && invoice.linkedContractId  === activeContractId) ||
+    //               (invoice.linkedContractKey && invoice.linkedContractKey === activeContractKey) ;
 
-    if (isActive) {
+    /*if (isActive) {
           this.props.setActiveInvoiceId(invoice.invoiceId);
           this.props.setActiveInvoiceKey(invoice.invoiceKey)
     }
@@ -47,7 +73,7 @@ class Invoice extends React.Component {
         isActive = false;
         this.props.setActiveInvoiceId(null);
         this.props.setActiveInvoiceKey(null)
-    }
+    }*/
 
     return (
       <Menu.Menu className ="InvoiceMenuMenu"
@@ -72,15 +98,30 @@ class Invoice extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     activeContractId: state.user.activeContractId,
-     activeContractKey: state.user.activeContractKey,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let workOrders = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      workOrders = reposData["clients"]["data"][clienttag]?
+      reposData["clients"]["data"][clienttag]["workorders"] : null;
+      //console.log(clientContact);
+  }
+  return {
+     orders: workOrders,
+     french: state.user.french
    }
-);
+  //return {
+     //activeOrderId: state.user.activeOrderId,
+     //activeOrderKey: state.user.activeOrderKey,
+  // }
+};
 
 export default connect(
-  mapStateToProps,
-  {setActiveInvoiceId, setActiveInvoiceKey}
+  mapStateToProps, {}
 )(Invoice);
 
 //export default Invoice;

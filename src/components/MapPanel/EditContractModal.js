@@ -226,7 +226,7 @@ class EditContractModal extends Component {
            //if (key !== linkedOrderKey) {
             const option = {
                key: key,
-               text: <span> {orders[key].orderId} </span>,
+               text: <span>{orders[key].orderId}</span>,
                value: orders[key].orderKey,
             }
             Options.push(option);
@@ -363,12 +363,34 @@ class EditContractModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
-     usertag: state.user.usertag,
-     orders: state.user.workOrder,
+const mapStateToProps = state =>{
+   const reposData = state.user.reposData;
+   const usertag = state.user.usertag;
+   const clienttag = state.user.clienttag;
+   let clientContact = null;
+   let workOrders = null;
+   //console.log(clienttag);
+   if (clienttag) {
+       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+       if (reposData["clients"]["data"][clienttag]) {
+            clientContact = reposData["clients"]["data"][clienttag]["contact"];
+            clientContact = {...clientContact, clientTag: clienttag}
+       } else {
+          clientContact = {};
+       }
+       //console.log(clientContact);
+       workOrders = reposData["clients"]["data"][clienttag]?
+       reposData["clients"]["data"][clienttag]["workorders"] : null;
    }
-);
+   //const clientContact = reposData["clients"];
+   //console.log(clientContact);
+   return {
+     contact: clientContact,
+     orders: workOrders,
+     usertag: state.user.usertag,
+     french: state.user.french
+   }
+};
 
 export default connect(
   mapStateToProps,

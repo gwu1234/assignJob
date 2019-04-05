@@ -16,11 +16,17 @@ class EditInvoiceModal extends Component {
          tax: this.props.invoice.tax,
          total: this.props.invoice.total,
          invoiceId: this.props.invoice.invoiceId,
-         linkedContractId: this.props.invoice.linkedContractId,
-         linkedContractKey: this.props.invoice.linkedContractKey,
-         selectedContractId: null,
-         selectedContractKey: null,
-         selectContractChange: false,
+         //linkedContractId: this.props.invoice.linkedContractId,
+         //linkedContractKey: this.props.invoice.linkedContractKey,
+         //selectedContractId: null,
+         //selectedContractKey: null,
+         //selectContractChange: false,
+         //fieldChange: false,
+         linkedOrderId: this.props.invoice.linkedOrderId,
+         linkedOrderKey: this.props.invoice.linkedOrderKey,
+         selectedOrderId: null,
+         selectedOrderKey: null,
+         selectOrderChange: false,
          fieldChange: false,
      }
 }
@@ -31,9 +37,9 @@ class EditInvoiceModal extends Component {
 
   handleSubmit = () => {
     const {work, amount, tax, total, invoiceId,
-        selectedContractId, selectedContractKey,
-        linkedContractId, linkedContractKey,
-        selectContractChange, fieldChange} = this.state;
+        selectedOrderId, selectedOrderKey,
+        linkedOrderId, linkedOrderKey,
+        selectOrderChange, fieldChange} = this.state;
     const {invoice, invoiceKey, usertag, contact} = this.props;
     let {date} = this.state;
 
@@ -46,14 +52,14 @@ class EditInvoiceModal extends Component {
        event.preventDefault();
     }
 
-    if (!selectContractChange && !fieldChange) {
+    if (!selectOrderChange && !fieldChange) {
         this.handleOpen(false);
     }
 
     //event.preventDefault();
     if (this.isFormValid()) {
 
-         if (!selectContractChange && fieldChange) {
+         if (!selectOrderChange && fieldChange) {
               let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/invoices/" +invoiceKey;
               const invoiceRef = firebase.database().ref(invoicePath);
               //console.log(contractPath);
@@ -78,7 +84,7 @@ class EditInvoiceModal extends Component {
               this.handleOpen(false);
          }
 
-        else if (selectContractChange) {
+        else if (selectOrderChange) {
             let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/invoices/" +invoiceKey;
             const invoiceRef = firebase.database().ref(invoicePath);
               //console.log(contractPath);
@@ -93,13 +99,13 @@ class EditInvoiceModal extends Component {
                 "invoiceKey": String(invoiceKey),
                 "clientKey": String(contact.clientKey),
                 "clientTag": String(contact.tag),
-                "linkedContractId": selectedContractId,
-                "linkedContractKey":selectedContractKey,
+                "linkedOrderId": selectedOrderId,
+                "linkedOrderKey":selectedOrderKey,
             }
               //console.log(newContract);
             invoiceRef.update(newInvoice);
 
-            let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts";
+            /*let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts";
             const contractRef = firebase.database().ref(contractPath);
 
               // a non-null work order selected
@@ -109,24 +115,24 @@ class EditInvoiceModal extends Component {
                      "linkedInvoiceKey": invoiceKey,
                    }
                   contractRef.child(selectedContractKey).update(newInvoice);
-            }
+            }*/
 
               // was linked before
-            if (linkedContractKey) {
+            /*if (linkedContractKey) {
                   const nullInvoice = {
                       "linkedInvoiceId":  null,
                       "linkedInvoiceKey": null,
                   }
                   contractRef.child(linkedContractKey).update(nullInvoice);
-            }
+            }*/
               //if (selectOrderChange) {
             this.setState ({
-                  linkedContractId:  selectedContractId,
-                  linkedContractKey: selectedContractKey,
-                  selectContractChange: false,
+                  linkedOrderId:  selectedOrderId,
+                  linkedOrderKey: selectedOrderKey,
+                  selectOrderChange: false,
                   fieldChange: false,
-                  selectedContractId:  null,
-                  selectedContractKey: null,
+                  selectedOrderId:  null,
+                  selectedOrderKey: null,
             })
               //}
             this.handleOpen(false);
@@ -175,15 +181,15 @@ class EditInvoiceModal extends Component {
         selectedId = event.target.textContent;
       }
 
-      if (selectedKey ==="no contract" || selectedId ==="no contract"){
+      if (selectedKey ==="no order" || selectedId ==="no order"){
           selectedId = null;
           selectedKey = null;
       }
 
       this.setState({
-          selectedContractId:  selectedId,
-          selectedContractKey: selectedKey,
-          selectContractChange: true,
+          selectedOrderId:  selectedId,
+          selectedOrderKey: selectedKey,
+          selectOrderChange: true,
        });
     }
 
@@ -197,32 +203,31 @@ class EditInvoiceModal extends Component {
   };
 
   selectOptions = () => {
-     const {contracts} = this.props;
+     const {orders} = this.props;
      //const {linkedOrderId, linkedOrderKey} = this.props.contract;
-     const {linkedContractKey} = this.props.invoice;
+     const {linkedOrderKey} = this.props.invoice;
 
      const Options = [
        {
           key: 1111,
-          text: <span>no contract</span>,
-          value: "no contract",
+          text: <span>no order</span>,
+          value: "no order",
        }
      ];
 
-     for (var key in contracts) {
-        if ( key !== linkedContractKey
-             && !contracts[key].linkedInvoiceKey
-             && !contracts[key].linkedInvoiceId) {
-             const option = {
-                key: key,
-                text: <span> {contracts[key].contractId} </span>,
-                value: contracts[key].contractKey,
-             }
-             Options.push(option);
+     for (var key in orders) {
+        if ( key !== linkedOrderKey) {
+            const option = {
+               key: key,
+               text: <span>{orders[key].orderId}</span>,
+               value: orders[key].orderKey,
+            }
+            Options.push(option);
         }
      };
      return Options;
   }
+
 
   handleDayClick(day, modifiers = {}) {
     if (modifiers.disabled) {
@@ -325,20 +330,20 @@ class EditInvoiceModal extends Component {
         </Grid>
 
 
-        {this.state.linkedContractId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>linked to contract: {this.state.linkedContractId}</h4>}
-        {this.state.linkedContractId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select contract to change</h4>}
-        {!this.state.linkedContractId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>not linked to contract </h4>}
-        {!this.state.linkedContractId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select contract to link</h4>}
-        <Select placeholder='Select Contract Id'
-                name="contracts"
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>linked to order: {this.state.linkedOrderId}</h4>}
+        {this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select order to change</h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"2em", marginBottom:"0.0em"}}>not linked to order  </h4>}
+        {!this.state.linkedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0em", marginBottom:"0.5em"}}>select order to link</h4>}
+        <Select placeholder='Select order Id'
+                name="workorders"
                 text={this.state.selectedValue}
                 style={{color:"black", fontStyle:"bold", margin:"0px", padding:"0px"}}
                 onChange={this.handleSelectChange}
                 options={this.selectOptions()}
         />
-        {this.state.selectedContractId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedContractId} &nbsp; selected. Click Submit to confirm</h4>}
-        {this.state.selectContractChange && this.state.linkedContractId && !this.state.selectedContractId &&
-          <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>Deleting link to contract. Click Submit to confirm</h4>}
+        {this.state.selectedOrderId && <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>{this.state.selectedOrderId} &nbsp; selected. Click Submit to confirm</h4>}
+        {this.state.selectOrderChange && this.state.linkedOrderId && !this.state.selectedOrderId &&
+          <h4 style={{color:"black", margin:"0px", padding:"0px", marginTop:"0.5em"}}>Deleting link to order. Click Submit to confirm</h4>}
 
         </Modal.Content>
         <Modal.Actions>
@@ -358,13 +363,36 @@ class EditInvoiceModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
-     usertag: state.user.usertag,
-     french: state.user.french,
-     contracts: state.user.contracts,
-   }
-);
+
+const mapStateToProps = state => {
+    const reposData = state.user.reposData;
+    const usertag = state.user.usertag;
+    const clienttag = state.user.clienttag;
+    let clientContact = null;
+    let workOrders = null;
+    //console.log(clienttag);
+    if (clienttag) {
+    //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+         if (reposData["clients"]["data"][clienttag]) {
+            clientContact = reposData["clients"]["data"][clienttag]["contact"];
+            clientContact = {...clientContact, clientTag: clienttag}
+         } else {
+            clientContact = {};
+         }
+         //console.log(clientContact);
+         workOrders = reposData["clients"]["data"][clienttag]?
+         reposData["clients"]["data"][clienttag]["workorders"] : null;
+    }
+    //const clientContact = reposData["clients"];
+    //console.log(clientContact);
+    return {
+          contact: clientContact,
+          orders: workOrders,
+          usertag: state.user.usertag,
+          french: state.user.french,
+          contracts: null,
+    }
+};
 
 export default connect(
   mapStateToProps,

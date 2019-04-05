@@ -20,7 +20,9 @@ class WorkOrder extends React.Component {
     const {order, orderKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
-    //console.log(clients);
+    //console.log ("orderId in order = " + order["orderId"]);
+    //console.log ("orderKey in order = " + order["orderKey"]);
+    //console.log("order isActive = " + order["isActive"]);
     //display && clients && this.displayClients(clients)}
     let orderDate = "";
     let orderWork = "";

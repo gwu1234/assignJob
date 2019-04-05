@@ -216,7 +216,7 @@ componentWillUnMount() {
     //console.log("radio value = " + value);
     //console.log("radio checked = " + checked);
     //console.log(e);
-    let {orderId, isActive} = this.state;
+    let {isActive} = this.state;
     //const {activeOrderId, orderKey} = this.props;
 
     isActive = ( (isActive && isActive === "true") ||  // database has a isRepeat
@@ -321,11 +321,15 @@ componentWillUnMount() {
     const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
     const {orderId, activeOrderChanged} = this.state;
     let {repeatTimes, isActive, isRepeat} = this.state;
+    //let {repeatTimes, isRepeat} = this.state;
+    //let {isActive} = order;
 
 
     //console.log ("EditOrderModal order = " );
-    //console.log (order);
-    //console.log (isActive);
+    //console.log ("orderId in order = " + order["orderId"]);
+    //console.log ("orderKey in order = " + order["orderKey"]);
+    //console.log ("isActive in state = " + isActive);
+    //console.log ("isActive in order = " + order["isActive"]);
     //console.log (activeOrderId);
     //console.log (activeOrderKey);
     //console.log (orderKey);
