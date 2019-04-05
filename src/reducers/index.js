@@ -734,7 +734,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        companyInfoView: false,
   };
 
-  case actionTypes.SET_ACTIVE_ORDER_ID:
+  /*case actionTypes.SET_ACTIVE_ORDER_ID:
      return {
             ...state,
             activeOrderId: action.payload.activeId
@@ -744,7 +744,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
         return {
             ...state,
             activeOrderKey: action.payload.activeKey
-    };
+    }; */
 
   case actionTypes.SET_ACTIVE_CONTRACT_ID:
        return {

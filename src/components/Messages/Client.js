@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setClientTag, setActiveOrderId, setActiveOrderKey} from "../../actions";
+import { setClientTag} from "../../actions";
 import { Menu, Icon} from "semantic-ui-react";
 import "./Client.css";
 import AddOrderModal from "../MetaPanel/AddOrderModal";
@@ -145,8 +145,8 @@ class Client extends React.Component {
     //console.log ("active order  id = " + client.activeOrderId);
     //console.log ("active order key = " + client.activeOrderKey);
     //console.log ("active order key = " + client["activeOrderKey"]);
-    this.props.setActiveOrderKey(client.activeOrderKey);
-    this.props.setActiveOrderId(client.activeOrderId);
+    //this.props.setActiveOrderKey(client.activeOrderKey);
+    //this.props.setActiveOrderId(client.activeOrderId);
     this.props.setSelectedClientKey(clientKey);
   }
 
@@ -261,6 +261,5 @@ const mapStateToProps = state => ({
 );
 
 export default connect(
-  mapStateToProps,
-  {setClientTag, setActiveOrderId, setActiveOrderKey}
+  mapStateToProps, {setClientTag}
 )(Client);

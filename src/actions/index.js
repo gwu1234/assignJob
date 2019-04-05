@@ -269,7 +269,7 @@ export const setBadAccess = bad => {
   }
 }
 
-export const setActiveOrderId= id => {
+/*export const setActiveOrderId= id => {
   return {
     type: actionTypes.SET_ACTIVE_ORDER_ID,
     payload: {
@@ -285,7 +285,7 @@ export const setActiveOrderKey= key => {
         activeKey: key
       }
     }
-  }
+  }*/
 
   export const setActiveContractId= id => {
     return {

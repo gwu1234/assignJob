@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setActiveOrderId, setActiveOrderKey} from "../../actions";
+//import { setActiveOrderId, setActiveOrderKey} from "../../actions";
 import { Button, Header, Icon, Modal, Form, Radio, Grid, Dropdown, Select, Message} from 'semantic-ui-react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -464,7 +464,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {setActiveOrderId, setActiveOrderKey}
+  {}
 )(EditOrderModal);
 
 /*

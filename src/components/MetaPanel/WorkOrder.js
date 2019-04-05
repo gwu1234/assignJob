@@ -17,7 +17,7 @@ class WorkOrder extends React.Component {
    };
 
   render() {
-    const {order, orderKey, activeOrderId, activeOrderKey} = this.props;
+    const {order, orderKey} = this.props;
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -29,8 +29,10 @@ class WorkOrder extends React.Component {
         orderWork = order.work;
     }
 
-    const isActive = (order.orderId && order.orderId === activeOrderId) ||
-                     (order.orderKey && order.orderKey === activeOrderKey) ;
+    //const isActive = (order.orderId && order.orderId === activeOrderId) ||
+    //                 (order.orderKey && order.orderKey === activeOrderKey) ;
+
+    const isActive = order.isActive === true || order.isActive === "true";
 
     return (
       <Menu.Menu className ="OrderMenuMenu"
@@ -53,8 +55,8 @@ class WorkOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-     activeOrderId: state.user.activeOrderId,
-     activeOrderKey: state.user.activeOrderKey,
+     //activeOrderId: state.user.activeOrderId,
+     //activeOrderKey: state.user.activeOrderKey,
    }
 );
 
