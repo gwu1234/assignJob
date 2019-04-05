@@ -287,7 +287,7 @@ export const setActiveOrderKey= key => {
     }
   }*/
 
-  export const setActiveContractId= id => {
+  /*export const setActiveContractId= id => {
     return {
       type: actionTypes.SET_ACTIVE_CONTRACT_ID,
       payload: {
@@ -321,7 +321,7 @@ export const setActiveInvoiceKey= key => {
         activeKey: key
       }
     }
-  }
+  }*/
 
 export const setReposData = reposData => {
     return {

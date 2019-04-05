@@ -40,12 +40,12 @@ const initialUserState = {
   companyInfoView: false,
   clientView: false,
   clientContactView: false,
-  activeOrderId: null,
-  activeOrderKey: null,
-  activeContractId: null,
-  activeContractKey: null,
-  activeInvoiceId: null,
-  activeInvoiceKey: null,
+  //activeOrderId: null,
+  //activeOrderKey: null,
+  //activeContractId: null,
+  //activeContractKey: null,
+  //activeInvoiceId: null,
+  //activeInvoiceKey: null,
   reposData: null,
 };
 
@@ -746,7 +746,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             activeOrderKey: action.payload.activeKey
     }; */
 
-  case actionTypes.SET_ACTIVE_CONTRACT_ID:
+  /*case actionTypes.SET_ACTIVE_CONTRACT_ID:
        return {
             ...state,
             activeContractId: action.payload.activeId
@@ -768,7 +768,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
         return {
              ...state,
              activeInvoiceKey: action.payload.activeKey
-    };
+    };*/
 
     default:
       return state;

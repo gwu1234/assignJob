@@ -17,7 +17,7 @@ class EditOrderModal extends Component {
          deliveryId: this.props.delivery.deliveryId,
          linkedOrderId: this.props.delivery.linkedOrderId,
          linkedOrderKey: this.props.delivery.linkedOrderKey,
-         linkedOrderSubkey: this.props.delivery.linkedOrderSubkey,
+         //linkedOrderSubkey: this.props.delivery.linkedOrderSubkey,
          selectedOrderId: null,
          selectedOrderKey: null,
          selectOrderChange: false,
@@ -31,7 +31,7 @@ class EditOrderModal extends Component {
 
   handleSubmit = () => {
     const { work, employee, deliveryId, linkedOrderId, linkedOrderKey,
-            linkedOrderSubkey, selectedOrderId, selectedOrderKey,
+            selectedOrderId, selectedOrderKey,
             selectOrderChange, fieldChange } = this.state;
     const {deliveryKey, contact, usertag} = this.props;
     let {date} = this.state;
@@ -63,14 +63,14 @@ class EditOrderModal extends Component {
                 "clientKey": String(contact.clientKey),
                 "clientTag": String(contact.clientTag)
              }
-            console.log(newDelivery);
+            //console.log(newDelivery);
             deliveryRef.update(newDelivery);
             this.handleOpen(false);
        }
 
        else if (selectOrderChange) {
 
-         let deliverySubkey = "";
+         /*let deliverySubkey = "";
            // a non-null order selected
          if (selectedOrderKey) {
                const newDelivery = {
@@ -82,10 +82,10 @@ class EditOrderModal extends Component {
                const orderRef = firebase.database().ref(orderPath);
                deliverySubkey = orderRef.push().getKey();
                orderRef.child(deliverySubkey).update(newDelivery);
-         }
+         }*/
 
            // was linked to workorder before
-         if (linkedOrderKey) {
+         /*if (linkedOrderKey) {
                const nullDelivery = {
                    "linkedDeliveryKey": null,
                    "linkedDeliveryId": null,
@@ -94,7 +94,7 @@ class EditOrderModal extends Component {
                                    + "/workorders/" + linkedOrderKey +"/linkedDeliverys/" +linkedOrderSubkey;
                const orderRef = firebase.database().ref(orderPath);
                orderRef.update(nullDelivery);
-         }
+         }*/
 
            let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
            const deliveryRef = firebase.database().ref(deliveryPath);
@@ -109,7 +109,6 @@ class EditOrderModal extends Component {
                "clientTag": String(contact.clientTag),
                "linkedOrderId": selectedOrderId,
                "linkedOrderKey": selectedOrderKey,
-               "linkedOrderSubkey": deliverySubkey,
            }
              //console.log(newContract);
            deliveryRef.update(newDelivery);
@@ -117,7 +116,6 @@ class EditOrderModal extends Component {
            this.setState ({
                  linkedOrderId:  selectedOrderId,
                  linkedOrderKey: selectedOrderKey,
-                 linkedOrderSubkey: deliverySubkey,
                  selectOrderChange: false,
                  fieldChange: false,
                  selectedOrderId:  null,
@@ -322,12 +320,40 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
-     usertag: state.user.usertag,
-     orders: state.user.workOrder
+const mapStateToProps = state => {
+   const reposData = state.user.reposData;
+   const usertag = state.user.usertag;
+   const clienttag = state.user.clienttag;
+   let clientContact = null;
+   let workOrders = null;
+   let invoices = null;
+
+   //console.log(clienttag);
+   if (clienttag) {
+       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+       if (reposData["clients"]["data"][clienttag]) {
+            clientContact = reposData["clients"]["data"][clienttag]["contact"];
+            clientContact = {...clientContact, clientTag: clienttag}
+       } else {
+          clientContact = {};
+       }
+       //console.log(clientContact);
+       workOrders = reposData["clients"]["data"][clienttag]?
+       reposData["clients"]["data"][clienttag]["workorders"] : null;
+
+      // invoices = reposData["clients"]["data"][clienttag]?
+      // reposData["clients"]["data"][clienttag]["invoices"] : null;
    }
-);
+   //const clientContact = reposData["clients"];
+   //console.log(clientContact);
+   return {
+     contact: clientContact,
+     orders: workOrders,
+     usertag: state.user.usertag,
+     french: state.user.french,
+     //invoices: invoices,
+   }
+};
 
 export default connect(
   mapStateToProps,

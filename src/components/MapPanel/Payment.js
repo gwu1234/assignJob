@@ -17,7 +17,30 @@ class Payment extends React.Component {
    };
 
   render() {
-    const {payment, paymentKey, activeInvoiceId, activeInvoiceKey} = this.props;
+    const {payment, paymentKey, orders} = this.props;
+
+    let isActive = false;
+    const linkedOrderId = payment["linkedOrderId"];
+    const  linkedOrderKey = payment["linkedOrderKey"];
+    //console.log("linkedOrderId = " + linkedOrderId);
+    //console.log("linkedOrderKey = " + linkedOrderKey);
+
+    for (var key in orders) {
+       //console.log(key);
+       //console.log(orders[key]);
+       //console.log(orders[key]["isActive"]);
+       const isOrderActive = orders[key]["isActive"];
+       //console.log("order key = " + key);
+       //console.log("isActive in order = " +  isOrderActive );
+
+       //const orderId = orders[key]["orderId"];
+       //if (key === linkedOrderKey && linkedOrderId === orderId) {
+       if (key === linkedOrderKey && isOrderActive === "true") {
+          //console.log("active order found key =" + key);
+          isActive = true;
+          break;
+       }
+    }
     //const {display} = this.state;
     //console.log("Clients List = ");
     //console.log(clients);
@@ -34,8 +57,8 @@ class Payment extends React.Component {
         }
     }
 
-    const isActive = (payment.linkedInvoiceId && payment.linkedInvoiceId  === activeInvoiceId) ||
-                     (payment.linkedInvoiceKey && payment.linkedInvoiceKey === activeInvoiceKey) ;
+    //const isActive = (payment.linkedInvoiceId && payment.linkedInvoiceId  === activeInvoiceId) ||
+    //                 (payment.linkedInvoiceKey && payment.linkedInvoiceKey === activeInvoiceKey) ;
 
     return (
       <Menu.Menu className ="PaymentMenuMenu"
@@ -60,11 +83,23 @@ class Payment extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-     activeInvoiceId: state.user.activeInvoiceId,
-     activeInvoiceKey: state.user.activeInvoiceKey,
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let workOrders = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      workOrders = reposData["clients"]["data"][clienttag]?
+      reposData["clients"]["data"][clienttag]["workorders"] : null;
+      //console.log(clientContact);
+  }
+  return {
+     orders: workOrders,
+     french: state.user.french
    }
-);
+};
 
 export default connect(
   mapStateToProps,

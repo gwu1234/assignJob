@@ -1,7 +1,7 @@
 import React from "react";
 //import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setActiveContractId, setActiveContractKey} from "../../actions";
+//import { setActiveContractId, setActiveContractKe} from "../../actions";
 import { Menu} from "semantic-ui-react";
 //import Client from "./Client";
 import "./Contract.css";
@@ -192,5 +192,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {setActiveContractId, setActiveContractKey}
+  {}
 )(Contract);
