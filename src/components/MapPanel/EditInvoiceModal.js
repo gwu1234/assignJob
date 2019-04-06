@@ -179,6 +179,8 @@ class EditInvoiceModal extends Component {
 
       if (event.target !== undefined) {
         selectedId = event.target.textContent;
+        // remove blank space in the string
+        selectedId = selectedId.replace(/ /g,'');
       }
 
       if (selectedKey ==="no order" || selectedId ==="no order"){

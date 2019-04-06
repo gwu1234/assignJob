@@ -162,6 +162,9 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
 
       if (event.target !== undefined) {
         selectedId = event.target.textContent;
+        //str = str.replace(/\s/g,'');
+        // remove blank space in the string
+        selectedId = selectedId.replace(/ /g,'');
       }
 
       if (selectedKey ==="no order" || selectedId ==="no order"){
@@ -201,7 +204,7 @@ handleSelectChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) =>
         if ( key !== linkedOrderKey) {
             const option = {
                key: key,
-               text: <span> {orders[key].orderId} </span>,
+               text: <span>{orders[key].orderId}</span>,
                value: orders[key].orderKey,
             }
             Options.push(option);
