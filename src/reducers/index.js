@@ -4,10 +4,12 @@ import * as actionTypes from "../actions/types";
 const GEOCODING_DONE = 1;
 //const GEOCODING_RENEWED = 2;
 
-const JOB_NEW = 0;
-const JOB_REPEAT = 1;
-const JOB_DONE = 2;
-const JOB_SOON = 3;
+const JOB_NOT_ACTIVE = 0;
+const JOB_NEW = 1;
+const JOB_ASSIGNED = 2;
+const JOB_PROGRESS = 3;
+const JOB_DONE = 4;
+
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
@@ -83,7 +85,7 @@ const user_reducer = (state = initialUserState, action) => {
             dataList = reposData["clients"]["data"];
             for (var key in dataList) {
                let contact = dataList[key]["contact"];
-               contact = {...contact, tag: key, clientTag: dataList[key]["contact"]};
+               contact = {...contact, tag: key, clientTag: key};
                //console.log (contact) ;
                clientList = {...clientList, [key]: contact}
             }
@@ -94,13 +96,7 @@ const user_reducer = (state = initialUserState, action) => {
         employeeList: action.payload.reposData["employees"],
         reposData: action.payload.reposData
     };
-    /*case actionTypes.SET_USER_CONTACT:
-    //console.log ("reducer user contact = " );
-    //console.log (action.payload.userContact);
-        return {
-        ...state,
-        userContact: action.payload.userContact
-    };*/
+
     case actionTypes.SET_TAG:
         //console.log ("reducer = " + action.payload.usertag);
         return {
@@ -114,41 +110,6 @@ const user_reducer = (state = initialUserState, action) => {
           clienttag: action.payload.clienttag
     };
 
-    /*case actionTypes.SET_EMPLOYEE_LIST:
-        //console.log ("reducer employees list = ");
-        //console.log (action.payload.employeeList);
-        return {
-          ...state,
-          employeeList: action.payload.employeeList
-    };*/
-    /*case actionTypes.SET_CLIENT_LIST:
-        //console.log("set_client_list");
-        return {
-          ...state,
-          clientList: action.payload.clientList,
-
-    };*/
-    /*case actionTypes.SET_CLIENT_CONTACT:
-        //.log ("reducer client contact = " );
-        //console.log (action.payload.clientContact);
-        return {
-        ...state,
-        clientContact: action.payload.clientContact
-    };*/
-    /*case actionTypes.SET_WORK_ORDER:
-        //console.log ("reducer work order  = " );
-        //console.log (action.payload.workOrder);
-        return {
-        ...state,
-        workOrder: action.payload.workOrder
-    };*/
-    /*case actionTypes.SET_INVOICES:
-        //console.log ("reducer invoices  = " );
-        //console.log (action.payload.invoices);
-        return {
-        ...state,
-        invoices: action.payload.invoices
-    };*/
     case actionTypes.SET_COMPANY_INFOVIEW:
         //console.log("SET_COMPANY_INFOVIEW");
         //console.log(action.payload.view);
@@ -160,116 +121,75 @@ const user_reducer = (state = initialUserState, action) => {
         mapView: false,
     };
     case actionTypes.SET_MAP_VIEW:
-         //console.log ("reducer SET_MAP_View  " );
-        //console.log (action.payload.mapView);
          const clients = state.clientList;
-         //const timestamp = state.timestamp;
-         //const repeathours = state.repeathours;
-         //const date = new Date();
-         // timestamp in second
-         //const timestamp = Math.round(date.getTime()/1000 + 0.5);
-           //const timestamp = 1000;
-         //console.log (timestamp);
-         //console.log (repeathours);
+         const clientData = state.reposData["clients"]["data"];
 
          let clientMarkers = [];
+         for (var clientKey in clients) {
+           let status = JOB_NOT_ACTIVE;
+           const {workorders} = clientData[clientKey];
 
-         for (var key in clients) {
-           //const repeattime = clients[key].repeattime;
-           //const lastservicetime = clients[key].lastservicetime;
-           //const repeatseconds = repeathours * 60 * 60;
-           let status = JOB_NEW;
+           let statusArray = [];
+           let activeOrders = 0;
+           for (var orderKey in workorders) {
+              let {isActive,isRepeat,repeatTimes,deliveryTimes} = workorders[orderKey];
+              let statusArray = [];
+              let statusAccount = 0;
 
-           // case 1: it is a new client
-          /* if (!repeattime && !lastservicetime) {
-               status = JOB_NEW;
-            // case 2: it is a one time job
-           } else if (repeatseconds === 0) {
-               if (!repeattime && lastservicetime) {
-                   status = JOB_DONE;
-               } else if (repeattime && !lastservicetime) {
-                   status = JOB_REPEAT;
-               } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
-                  status = JOB_DONE;
-               } else {
-                  status = JOB_REPEAT;
-               }
-           }
-           // case 3: should not happen, no service record, but repeat button pressed
-           // by accident
-           else if (repeattime && !lastservicetime){
-               const remainingseconds = repeatseconds - (timestamp - repeattime);
-               if (remainingseconds < 5 ) {
-                   status = JOB_NEW;
-               } else {
-                   status = JOB_REPEAT;
-               }
-           }
-           // case 4: repeat button pressed after being serviced
-           else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-               const remainingseconds = repeatseconds - (timestamp - repeattime);
-               if (remainingseconds < 5 ) {
-                   status = JOB_NEW;
-               } else {
-                   status = JOB_REPEAT;
-               }
-           }
-           // case 5: no repeat button pressed after being serviced
-           else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-                const remainingseconds = repeatseconds - (timestamp - lastservicetime);
-                // 20 minutes before delivery time, it is a JOB_DONE
-                if (remainingseconds > 60 * 20 ) {
-                    status = JOB_DONE;
-                }
-                // between 20 minutes and 5 seconds, a job need to be repeated soon
-                else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                   status = JOB_SOON
-                }
-                // it is a job to be done asap
-                else {
-                    status = JOB_NEW;
-                }
-           }
-           // case 6: repeat button never pressed
-           else if (!repeattime && lastservicetime) {
-                const remainingseconds = repeatseconds - (timestamp - lastservicetime);
-                // 20 minutes before delivery time, it is a JOB_DONE
-                if (remainingseconds > 60 * 20 ) {
-                    status = JOB_DONE;
-                }
-                // between 20 minutes and 5 seconds, a job need to be repeated soon
-                else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                    status = JOB_SOON
-                }
-                // it is a job to be done asap
-                else {
-                    status = JOB_NEW;
-                }
-           }
-           // should not come
-           else {
-                console.log("should bot come here");
-                status = JOB_NEW;
-           }*/
+              isActive = (isActive && isActive === "true")? true:false;
+              isRepeat = (isRepeat && isRepeat === "true")? true:false;
+              repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+              deliveryTimes = deliveryTimes? parseInt(deliveryTimes, 10) : 0;
+              //console.log(isActive);
+              //console.log(isRepeat);
+              //console.log(repeatTimes);
+              //console.log(deliveryTimes);
 
+              if (isActive) {
+                  if (!isRepeat && deliveryTimes > 0) {
+                     //status = JOB_DONE;
+                     statusArray.push(JOB_DONE);
+                  } else if (isRepeat && repeatTimes === 0) {
+                     statusArray.push(JOB_PROGRESS);
+                  } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                     statusArray.push(JOB_DONE);
+                  } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
+                     statusArray.push(JOB_PROGRESS);
+                  }
+                  else {
+                    statusArray.push(JOB_NEW);
+                  }
+                  activeOrders ++;
+              }
+
+              if (activeOrders) {
+                 status = statusArray[0];
+              }
+              for (var i=0; i++; i < activeOrders) {
+                  status = status < statusArray[i]? status: statusArray[i];
+              }
+           }
 
            const marker = {
-             pos:
-             {
-                lat: clients[key].lat,
-                lng: clients[key].lng
-             },
-             name: clients[key].name,
-             id:  key,
-             status: status,
-             isAssigned: clients[key].isAssigned,
-             employeeName: clients[key].employeeName,
-             street: clients[key].street,
-             assignedKey: clients[key].assignedKey,
-             employeeKey: clients[key].employeeKey,
-             clientTag: clients[key].tag,
-             clientKey: key
+               pos:
+               {
+                 lat: clients[clientKey].lat,
+                 lng: clients[clientKey].lng
+               },
+               name: clients[clientKey].name,
+               id:  clientKey,
+               status: status,
+               isAssigned: clients[clientKey].isAssigned,
+               employeeName: clients[clientKey].employeeName,
+               street: clients[clientKey].street,
+               city: clients[clientKey].city,
+               assignedKey: clients[clientKey].assignedKey,
+               employeeKey: clients[clientKey].employeeKey,
+               clientTag: clients[clientKey].clientTag,
+               clientKey: clientKey,
+               activeOrders: activeOrders,
            }
+
            clientMarkers.push(marker);
         }
 

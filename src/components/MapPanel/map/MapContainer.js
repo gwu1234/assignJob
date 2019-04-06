@@ -16,10 +16,11 @@ import MapUnassignModal from './MapUnassign';
 import MapAssignModal from './MapAssign';
 import {Button, Icon} from 'semantic-ui-react';
 
-const JOB_NEW = 0;
-const JOB_REPEAT = 1;
-const JOB_DONE = 2;
-const JOB_SOON = 3;
+const JOB_NOT_ACTIVE = 0;
+const JOB_NEW = 1;
+const JOB_ASSIGNED = 2;
+const JOB_PROGRESS = 3;
+const JOB_DONE = 4;
 
 const EMPLOYEE_MARKER = 0;
 const TRUCK_MARKER = 2;
@@ -165,7 +166,7 @@ class MapContainer extends Component {
        ));
 
      if (equalPos >= 0) {
-       markers[equalPos].status = JOB_REPEAT;
+       markers[equalPos].status = JOB_PROGRESS;
      }
 
      this.setState({
@@ -248,13 +249,13 @@ class MapContainer extends Component {
            else if (marker.status === JOB_NEW){
                image = redDot;
            }
-           else if (marker.status === JOB_REPEAT)  {
+           else if (marker.status === JOB_PROGRESS)  {
                image = blueDot;
            }
            else if (marker.status === JOB_DONE) {
                image = greenDot;
            }
-           else if (marker.status === JOB_SOON) {
+           else if (marker.status === JOB_NOT_ACTIVE) {
                image = yellowDot;
            }
            else {
@@ -280,6 +281,7 @@ class MapContainer extends Component {
                       clientPostcode={marker.postcode}
                       clientLat={marker.lat}
                       clientLng={marker.lng}
+                      activeOrders = {marker.activeOrders}
                       icon = {{
                           url: image,
                           scaledSize: { width: 13, height: 13 }
@@ -295,8 +297,14 @@ class MapContainer extends Component {
                  <div>
                      <div>
                          <h3>{this.state.selectedPlace.name}</h3>
-                         {this.state.selectedPlace.street &&
-                           <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}> {this.state.selectedPlace.street} </span>}
+                         {this.state.selectedPlace.clientStreet &&
+                               <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
+                                   {this.state.selectedPlace.clientStreet} </span>}
+                         {this.state.selectedPlace.clientCity &&
+                               <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
+                                   {this.state.selectedPlace.clientCity} </span>}
+                         {this.state.selectedPlace.activeOrders &&
+                                     <h5>active workorders: &nbsp; {this.state.selectedPlace.activeOrders}</h5>}
                          {this.state.selectedPlace.isAssigned &&
                            <h5>employee: &nbsp; {this.state.selectedPlace.employeeName}</h5>}
                      </div>
