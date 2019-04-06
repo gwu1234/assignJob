@@ -127,22 +127,34 @@ const user_reducer = (state = initialUserState, action) => {
          let clientMarkers = [];
          for (var clientKey in clients) {
            let status = JOB_NOT_ACTIVE;
-           const {workorders} = clientData[clientKey];
+           const {workorders, deliverys} = clientData[clientKey];
 
            let statusArray = [];
            let activeOrders = 0;
+           let deliveryTimes = 0;
            for (var orderKey in workorders) {
-              let {isActive,isRepeat,repeatTimes,deliveryTimes} = workorders[orderKey];
+              let {isActive,isRepeat,repeatTimes} = workorders[orderKey];
               let statusArray = [];
               let statusAccount = 0;
 
               isActive = (isActive && isActive === "true")? true:false;
               isRepeat = (isRepeat && isRepeat === "true")? true:false;
               repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
-              deliveryTimes = deliveryTimes? parseInt(deliveryTimes, 10) : 0;
-              //console.log(isActive);
-              //console.log(isRepeat);
-              //console.log(repeatTimes);
+              //deliveryTimes = deliveryTimes? parseInt(deliveryTimes, 10) : 0;
+
+              // need to calculate deliveryTimes
+              //console.log(orderKey);
+              for (var deliveryKey in deliverys) {
+                 let {linkedOrderKey} = deliverys[deliveryKey];
+                 //console.log(linkedOrderKey);
+                 //console.log(orderKey);
+
+                 if (linkedOrderKey === orderKey) {
+                     //console.log("delivery found");
+                     deliveryTimes ++;
+                 }
+              }
+
               //console.log(deliveryTimes);
 
               if (isActive) {
