@@ -206,7 +206,8 @@ const user_reducer = (state = initialUserState, action) => {
         }
 
         // find truck location
-        const truckList = state.trucks;
+        //const truckList = state.trucks;
+        const truckList = state.reposData["trucks"];
         let dateString = null;
 
         let truckMarker = [];
