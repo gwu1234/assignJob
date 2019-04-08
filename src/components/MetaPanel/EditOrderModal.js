@@ -121,27 +121,53 @@ componentWillUnMount() {
              //this.handleOpen(false);
 
              const employeePath = "repos/" + usertag + "/employees/" + tag
-                   + "/assigned/" + contact.tag + "/" + orderKey;
+                   + "/assigned/" + contact.tag;
              //console.log("employee path = " + employeePath);
              const employeeRef = firebase.database().ref(employeePath);
 
              const newAssigned = {
-                "date": String(date),
-                "work": String(work),
-                "orderKey": String(orderKey),
-                "orderId" : String(orderId),
-                "clientKey": String(contact.clientKey),
-                "tag": String(contact.tag),
-                "clientTag": String(contact.tag),
-                "isActive": String(isActive),
-                "isRepeat": String(isRepeat),
-                "repeatTimes": String(repeatTimes),
-                "previousDelivery" : String(previousDelivery),
-                "previousTimeStamp" : String(previousTimeStamp),
+               "clientCity":  String(contact.city),
+               "clientLastname": String (contact.lastname),
+               "clientFirstname": String(contact.firstname),
+               "clientStreet": String(contact.street),
+               "clientName": String(contact.name),
+               "clientPostcode": String(contact.postcode),
+               "clientLat": String(contact.lat),
+               "clientLng": String(contact.lng),
+                /*"workorders": {
+                     [orderKey]: {
+                         "date": String(date),
+                         "work": String(work),
+                         "orderKey": String(orderKey),
+                         "orderId" : String(orderId),
+                         "clientKey": String(contact.clientKey),
+                         "tag": String(contact.tag),
+                         "clientTag": String(contact.tag),
+                         "isActive": String(isActive),
+                         "isRepeat": String(isRepeat),
+                         "repeatTimes": String(repeatTimes),
+                         "previousDelivery" : String(previousDelivery),
+                         "previousTimeStamp" : String(previousTimeStamp),
+                     }
+                }*/
              }
-            //console.log(newAssigned);
+            console.log(newAssigned);
 
             employeeRef.update(newAssigned);
+            employeeRef.child("workorders").child(orderKey).update ({
+              "date": String(date),
+              "work": String(work),
+              "orderKey": String(orderKey),
+              "orderId" : String(orderId),
+              "clientKey": String(contact.clientKey),
+              "tag": String(contact.tag),
+              "clientTag": String(contact.tag),
+              "isActive": String(isActive),
+              "isRepeat": String(isRepeat),
+              "repeatTimes": String(repeatTimes),
+              "previousDelivery" : String(previousDelivery),
+              "previousTimeStamp" : String(previousTimeStamp),              
+            })
          }
          else if (isEmployeeUnassigned) {
               //console.log("fields change, active id not changed");
@@ -175,22 +201,7 @@ componentWillUnMount() {
                    + "/assigned/" + contact.tag + "/" + orderKey;
              //console.log("employee path = " + employeePath);
              const employeeRef = firebase.database().ref(employeePath);
-
-             /*const newAssigned = {
-                "date": String(date),
-                "work": String(work),
-                "orderKey": String(orderKey),
-                "orderId" : String(orderId),
-                "clientKey": String(contact.clientKey),
-                "tag": String(contact.tag),
-                "clientTag": String(contact.tag),
-                "isActive": String(isActive),
-                "isRepeat": String(isRepeat),
-                "repeatTimes": String(repeatTimes),
-             }*/
-            //console.log(employeePath);
-
-            employeeRef.set(null);
+             employeeRef.set(null);
          }
          else {
               //console.log("fields change, active id not changed");
