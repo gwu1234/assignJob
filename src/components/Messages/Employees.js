@@ -92,13 +92,13 @@ class Employees extends React.Component {
 }
 
 const mapStateToProps = state => {
-   const reposData = state.user.reposData;
+   //const reposData = state.user.reposData;
    //const usertag = state.user.usertag;
    //console.log(reposData);
-   const employees = reposData["employees"];
+   //const employees = reposData["employees"];
    //console.log(employees);
    return {
-     employees: employees,
+     employees: state.employeeList,
      usertag: state.user.usertag,
      french: state.user.french
    }

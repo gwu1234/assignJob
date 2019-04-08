@@ -20,6 +20,10 @@ class EditOrderModal extends Component {
          isRepeat: this.props.order.isRepeat,
          repeatTimes: this.props.order.repeatTimes,
          datetime: null,
+         isEmployeeAssigned : false,
+         employeeAssigned : null,
+         isEmployeeUnassigned : false,
+         employeeUnassignedKey : null,
      }
 }
 
@@ -42,6 +46,20 @@ componentWillUnMount() {
 
   handleOpen = (open) => this.setState({ modalOpen: open })
 
+  findPreviousDelivery = (orderKey) => {
+     const {deliverys} = this.props;
+     let previousDeliverys = 0;
+
+     for (var deliveryKey in deliverys) {
+        let {linkedOrderKey} = deliverys[deliveryKey];
+
+        if (linkedOrderKey === orderKey) {
+            previousDeliverys ++;
+        }
+     }
+     return previousDeliverys;
+  }
+
   handleSubmit = () => {
     const event = this.nativeEvent;
     if (event) {
@@ -50,7 +68,10 @@ componentWillUnMount() {
     }
     //event.preventDefault();
     if (this.isFormValid()) {
-         const {work, orderId, isActive, fieldChange, isRepeat, repeatTimes} = this.state;
+         const {work, orderId, isActive, fieldChange, isRepeat, repeatTimes,
+                isEmployeeAssigned, employeeAssigned,
+                isEmployeeUnassigned, employeeUnassignedKey} = this.state;
+
          let {date} = this.state;
          const {orderKey, contact, usertag} = this.props;
          //console.log (orderKey);
@@ -65,7 +86,113 @@ componentWillUnMount() {
               //console.log("no change, just return");
               //this.handleOpen(false);
               //return;
-         } else {
+         }
+         else if (isEmployeeAssigned) {
+              //console.log("fields change, active id not changed");
+              let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
+              const orderRef = firebase.database().ref(orderPath);
+              const {tag,firstname,lastname} = employeeAssigned;
+
+              const previousDelivery = this.findPreviousDelivery(orderKey);
+              //console.log(previousDelivery);
+              const previousTimeStamp = (new Date()).getTime();
+              //console.log(previousTimeStamp);
+
+              const updateOrder = {
+                 "date": String(date),
+                 "work": String(work),
+                 "orderKey": String(orderKey),
+                 "orderId" : String(orderId),
+                 "clientKey": String(contact.clientKey),
+                 "tag": String(contact.tag),
+                 "clientTag": String(contact.tag),
+                 "isActive": String(isActive),
+                 "isRepeat": String(isRepeat),
+                 "repeatTimes": String(repeatTimes),
+                 "employeeKey": tag,
+                 "employeeTag": tag,
+                 "employeeFirstname": firstname,
+                 "employeeLastName" : lastname,
+                 "isEmployeeAssigned" : "true",
+              }
+             //console.log(updateOrder);
+             //console.log("order path = " + orderPath);
+             orderRef.update(updateOrder);
+             //this.handleOpen(false);
+
+             const employeePath = "repos/" + usertag + "/employees/" + tag
+                   + "/assigned/" + contact.tag + "/" + orderKey;
+             //console.log("employee path = " + employeePath);
+             const employeeRef = firebase.database().ref(employeePath);
+
+             const newAssigned = {
+                "date": String(date),
+                "work": String(work),
+                "orderKey": String(orderKey),
+                "orderId" : String(orderId),
+                "clientKey": String(contact.clientKey),
+                "tag": String(contact.tag),
+                "clientTag": String(contact.tag),
+                "isActive": String(isActive),
+                "isRepeat": String(isRepeat),
+                "repeatTimes": String(repeatTimes),
+                "previousDelivery" : String(previousDelivery),
+                "previousTimeStamp" : String(previousTimeStamp),
+             }
+            //console.log(newAssigned);
+
+            employeeRef.update(newAssigned);
+         }
+         else if (isEmployeeUnassigned) {
+              //console.log("fields change, active id not changed");
+              let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
+              const orderRef = firebase.database().ref(orderPath);
+              //const {tag,firstname,lastname} = employeeAssigned;
+
+              const updateOrder = {
+                 "date": String(date),
+                 "work": String(work),
+                 "orderKey": String(orderKey),
+                 "orderId" : String(orderId),
+                 "clientKey": String(contact.clientKey),
+                 "tag": String(contact.tag),
+                 "clientTag": String(contact.tag),
+                 "isActive": String(isActive),
+                 "isRepeat": String(isRepeat),
+                 "repeatTimes": String(repeatTimes),
+                 "employeeKey": null,
+                 "employeeTag": null,
+                 "employeeFirstname": null,
+                 "employeeLastName" : null,
+                 "isEmployeeAssigned" : "false",
+              }
+             //console.log(updateOrder);
+             //console.log("order path = " + orderPath);
+             orderRef.update(updateOrder);
+             //this.handleOpen(false);
+
+             const employeePath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
+                   + "/assigned/" + contact.tag + "/" + orderKey;
+             //console.log("employee path = " + employeePath);
+             const employeeRef = firebase.database().ref(employeePath);
+
+             /*const newAssigned = {
+                "date": String(date),
+                "work": String(work),
+                "orderKey": String(orderKey),
+                "orderId" : String(orderId),
+                "clientKey": String(contact.clientKey),
+                "tag": String(contact.tag),
+                "clientTag": String(contact.tag),
+                "isActive": String(isActive),
+                "isRepeat": String(isRepeat),
+                "repeatTimes": String(repeatTimes),
+             }*/
+            //console.log(employeePath);
+
+            employeeRef.set(null);
+         }
+         else {
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
@@ -87,92 +214,6 @@ componentWillUnMount() {
              orderRef.update(newOrder);
              //this.handleOpen(false);
        }
-
-       /*else if (!fieldChange && activeOrderChanged) {
-             //console.log("fields not change, active id changed");
-             //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
-             //const orderRef = firebase.database().ref(orderPath);
-             //console.log(orderPath);
-             let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/";
-             const orderRef = firebase.database().ref(orderPath);
-             const activeOrderActive  = isActive === "true" ? true:false;
-             const newOrder = {
-
-                "isActive": String(activeOrderActive),
-             }
-             //console.log(newOrder);
-             orderRef.child(orderKey).update(newOrder);
-
-             if (activeOrderActive && this.props.activeOrderId
-                 && this.props.activeOrderKey) {
-                   console.log(this.props.activeOrderKey);
-                   console.log(this.props.activeOrderId);
-                   orderRef.child(this.props.activeOrderKey).update({"isActive": "false"});
-             }
-
-             const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
-             const clientRef = firebase.database().ref(clientPath);
-             //console.log(clientPath);
-
-             const  activeOrderId  = isActive === "true" ? orderId:null;
-             const activeOrderKey = isActive === "true" ? orderKey:null;
-             const newOrderId = {
-                 "activeOrderId" : String(activeOrderId),
-                 "activeOrderKey": String(activeOrderKey),
-             }
-
-             clientRef.update(newOrderId);
-
-             this.props.setActiveOrderId(activeOrderId);
-             this.props.setActiveOrderKey(activeOrderKey);
-             //this.handleOpen(false);
-      }*/
-      /*else if (fieldChange && activeOrderChanged) {
-            //console.log("fields not change, active id changed");
-            //let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
-            //const orderRef = firebase.database().ref(orderPath);
-            //console.log(orderPath);
-
-            let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/";
-            const orderRef = firebase.database().ref(orderPath);
-            //const activeOrderActive  = isActive === "true" ? true:false;
-
-            const newOrder = {
-               "date": String(date),
-               "work": String(work),
-               "orderKey": String(orderKey),
-               "orderId" : String(orderId),
-               "clientKey": String(contact.clientKey),
-               "tag": String(contact.tag),
-               "isActive": String(isActive),
-            }
-            //console.log(newOrder);
-            orderRef.child(orderKey).update(newOrder);
-
-            if (activeOrderActive && this.props.activeOrderId !== null
-                && this.props.activeOrderKey !== null) {
-                  console.log(this.props.activeOrderKey);
-                  console.log(this.props.activeOrderId);
-                  orderRef.child(this.props.activeOrderKey).update({"isActive": "false"});
-            }
-
-
-            /*const clientPath = "repos/"+usertag+"/clients/tags/"+ contact.clientKey;
-            const clientRef = firebase.database().ref(clientPath);
-            //console.log(clientPath);
-
-            const activeOrderId  = isActive === "true" ? orderId:null;
-            const activeOrderKey = isActive === "true" ? orderKey:null;
-
-            const newOrderId = {
-                "activeOrderId" : String(activeOrderId),
-                "activeOrderKey": String(activeOrderKey),
-            }
-
-            this.props.setActiveOrderId(activeOrderId);
-            this.props.setActiveOrderKey(activeOrderKey);
-            clientRef.update(newOrderId);*/
-
             //this.handleOpen(false);
       }
        this.setState({
@@ -307,20 +348,82 @@ componentWillUnMount() {
       return optionArray;
   }
 
+  employeeOptions = () => {
+      const {employees, order} = this.props;
+      let employeeOptions = [];
+
+      //console.log (order);
+      const isEmployeeAssigned = order.isEmployeeAssigned? (order.isEmployeeAssigned==="true"? true: false): false;
+      //console.log(employeeAssigned);
+
+      if (isEmployeeAssigned === false) {
+          for (var key in employees) {
+             employeeOptions.push({
+                   key: key,
+                   text: <span style ={{fontStyle: "bold", fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}}> {employees[key].name} </span>,
+                   value: key,
+              });
+          }
+      }
+      else  {
+          employeeOptions.push({
+             key: '1234',
+             text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > {"delete assignment"} </span>,
+             value: "none",
+          });
+      }
+      return employeeOptions;
+  }
 
   handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
-    const selectedValue = data.value
-    //console.log( data.value);
-    this.setState({
-        repeatTimes: selectedValue,
-        fieldChange: true,
-    });
+      const selectedValue = data.value
+      //console.log( data.value);
+      this.setState({
+         repeatTimes: selectedValue,
+         fieldChange: true,
+      });
+  }
+
+
+  selectEmployee = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      const {employees, clienttag, order} = this.props;
+      const employeeKey = data.value;
+
+      //console.log(order);
+      if (employeeKey !== "none") {
+           //console.log("employee tag = " + employees[employeeKey].tag);
+           //console.log("employee name = " + employees[employeeKey].name);
+           //console.log("client tag = " + clienttag);
+           this.setState({
+             isEmployeeAssigned : true,
+             employeeAssigned : employees[employeeKey],
+             isEmployeeUnassigned: false,
+             fieldChange: true,
+           });
+      } else {
+          const employeeAssignedKey = order["employeeKey"];
+          console.log(employeeAssignedKey);
+
+          if (employeeAssignedKey) {
+               this.setState({
+                   isEmployeeAssigned : false,
+                   employeeUnassignedKey : employeeAssignedKey,
+                   isEmployeeUnassigned: true,
+                   fieldChange: true,
+               });
+          }
+      }
   }
 
   render() {
     const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
     const {orderId, activeOrderChanged} = this.state;
     let {repeatTimes, isActive, isRepeat} = this.state;
+    let {isEmployeeAssigned, employeeFirstname, employeeLastName} = order;
+    const employeeName = employeeFirstname + ", " + employeeLastName;
+    isEmployeeAssigned = isEmployeeAssigned?(isEmployeeAssigned==="true"? true:false): false;
+
+
     //let {repeatTimes, isRepeat} = this.state;
     //let {isActive} = order;
 
@@ -334,10 +437,6 @@ componentWillUnMount() {
     //console.log (activeOrderKey);
     //console.log (orderKey);
     //console.log(orderId);
-
-    /*const isRadioActive = activeOrderChanged? isActive==="true": isActive === "true" &&
-         activeOrderId === orderId &&
-         activeOrderKey === orderKey ;*/
 
    //const isRadioActive = isActive === "true";
     repeatTimes = repeatTimes? String(repeatTimes): "2";
@@ -424,6 +523,32 @@ componentWillUnMount() {
                />
 
          </Form.Field>
+         {isActive && !isEmployeeAssigned && <Form.Field>
+              <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                  Assign this workorder to an employee
+              </Message>
+
+               <Dropdown
+                  placeholder="employee name"
+                  fluid
+                  selection
+                  onChange={this.selectEmployee}
+                  options={this.employeeOptions()}
+               />
+         </Form.Field>}
+         {isActive && isEmployeeAssigned && <Form.Field>
+              <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                  this workorder is asigned to employee: {employeeName}, select delete employee to unassign
+              </Message>
+
+               <Dropdown
+                  placeholder="employee name"
+                  fluid
+                  selection
+                  onChange={this.selectEmployee}
+                  options={this.employeeOptions()}
+               />
+         </Form.Field>}
         </Form>
 </Grid.Column>
 </Grid>
@@ -452,17 +577,19 @@ const mapStateToProps = state => {
   const usertag = state.user.usertag;
   const clienttag = state.user.clienttag;
   let clientContact = null;
+  let deliverys = null;
   //console.log(clienttag);
   if (clienttag) {
       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
       clientContact = reposData["clients"]["data"][clienttag]["contact"];
-      //console.log(clientContact);
+      deliverys = reposData["clients"]["data"][clienttag]["deliverys"];
   }
   return {
      contact: clientContact,
      usertag: state.user.usertag,
-     activeOrderId:  state.user.activeOrderId,
-     activeOrderKey: state.user.activeOrderKey,
+     employees: state.user.employeeList,
+     clienttag: state.user.clienttag,
+     deliverys: deliverys,
    }
 };
 

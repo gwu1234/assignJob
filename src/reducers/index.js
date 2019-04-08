@@ -22,7 +22,7 @@ const initialUserState = {
   usertag: null,
   clienttag: null,
   //userContact: null,
-  //employeeList: null,
+  employeeList: null,
   clientList: null,
   //clientContact: null,
   //workOrder: null,
@@ -91,10 +91,10 @@ const user_reducer = (state = initialUserState, action) => {
             }
         }
         return {
-        ...state,
-        clientList: clientList,
-        employeeList: action.payload.reposData["employees"],
-        reposData: action.payload.reposData
+           ...state,
+           clientList: clientList,
+           employeeList: action.payload.reposData["employees"],
+           reposData: action.payload.reposData
     };
 
     case actionTypes.SET_TAG:
@@ -250,11 +250,6 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_EMPLOYEE_VIEW:
         const employees = state.employeeList;
         let employeeMarkers = [];
-        //console.log ("reducer");
-        //console.log ("SET_EMPLOYEE_VIEW");
-
-        //console.log (timestamp);
-        //console.log (repeathours);
 
         for (var key in employees) {
             let status = JOB_NEW;
@@ -274,7 +269,6 @@ const user_reducer = (state = initialUserState, action) => {
             }
            employeeMarkers.push(marker);
       }
-      //console.log(markers);
 
       return {
           ...state,
