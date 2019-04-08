@@ -177,7 +177,7 @@ class EditEmployeeModal extends Component {
              //employeeRef.update(newEmployee);
          }
 
-         if (newAssigned) {
+         /*if (newAssigned) {
              const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
              const assignedRef = firebase.database().ref(assignedPath);
 
@@ -196,9 +196,9 @@ class EditEmployeeModal extends Component {
                  assignedClientRef.child("employeeKey").set(assigned[key].employeeKey);
                  assignedClientRef.child("assignedKey").set(assignedKey);
              }
-         }
+         }*/
 
-         if (newUnassigned) {
+         /*if (newUnassigned) {
                //const assignedPath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
                //const assignedClientPath = "repos/" + usertag + "/clients/tags/" + assigned[key].clientKey;
                //const unassignedEmployeePath = "repos/" + usertag + "/employees/" + employeeKey +"/assigned";
@@ -222,7 +222,7 @@ class EditEmployeeModal extends Component {
                   unassignedClientRef.child("employeeKey").set(null);
                   unassignedClientRef.child("assignedKey").set(null);
               }
-         }
+         }*/
 
          this.handleCancel();
     }
@@ -279,7 +279,7 @@ class EditEmployeeModal extends Component {
       });
   };
 
-  addAssigned = assigned => {
+  /*addAssigned = assigned => {
      let previous = this.state.assigned;
      //console.log(assigned);
      previous.push(assigned);
@@ -288,9 +288,9 @@ class EditEmployeeModal extends Component {
          newAssigned: true,
     });
     //console.log(this.state.newAssigned);
-  }
+  }*/
 
-  addUnassigned = unassigned => {
+  /*addUnassigned = unassigned => {
      let previous = this.state.unassigned;
      //console.log(assigned);
      previous.push(unassigned);
@@ -299,9 +299,9 @@ class EditEmployeeModal extends Component {
          newUnassigned: true,
     });
     //console.log(this.state.newUnassigned);
-  }
+  }*/
 
-  isNewAssigned (clientKey) {
+  /*isNewAssigned (clientKey) {
       const {assigned} = this.state;
       let result = false;
 
@@ -314,11 +314,11 @@ class EditEmployeeModal extends Component {
           }
        }
       return result;
-  }
+  }*/
 
   //assignedKey: key,
   //assigned: employee.assigned[key]
-displayAssigned = assigneds =>
+/*displayAssigned = assigneds =>
    assigneds.length > 0 &&
    assigneds.map(assigned => (
        <EmployeeAssigned
@@ -329,9 +329,9 @@ displayAssigned = assigneds =>
            assigned = {assigned.assigned}
            addUnassigned={(unassigned)=>this.addUnassigned(unassigned)}
        />
-  ));
+  ));*/
 
-  displayClients = clients =>
+/*  displayClients = clients =>
      clients.length > 0 &&
      clients.map(client => (
          <EmployeeClient
@@ -342,12 +342,12 @@ displayAssigned = assigneds =>
              employeeKey={this.props.employeeKey}
              addAssigned={(assigned)=>this.addAssigned(assigned)}
          />
-    ));
+    ));*/
 
 
   render() {
     const {employee, clients, french} = this.props;
-    const {assigned, unassigned} = this.state;
+    //const {assigned, unassigned} = this.state;
 
     let titleString = "Edit Employee : " + employee.name;
     if (french) {
@@ -388,7 +388,7 @@ displayAssigned = assigneds =>
 
 
     //converting nested objects to object array
-    const clientArray =[];
+    /*const clientArray =[];
     for (var key in clients) {
        const newClient = {
          clientKey: key,
@@ -398,7 +398,7 @@ displayAssigned = assigneds =>
           && !this.isNewAssigned (key) ) {
            clientArray.push(newClient);
        }
-    }
+    }*/
 
     //converting nested objects to object array
     const assignedArray = [];
@@ -415,13 +415,13 @@ displayAssigned = assigneds =>
        assignedArray.push(assignedClient);
     }
 
-    const newAssignedNotice = assigned.length
+    /*const newAssignedNotice = assigned.length
                  + " New Clients Just Assigned to " + employee.name
                  + " , Click Submit to Commit ";
 
     const unassignedNotice = "Removing " + unassigned.length
                   + " Clients from " + employee.name + " Job List"
-                  + " , Click Submit to Commit ";
+                  + " , Click Submit to Commit ";*/
 
     return (
       <Modal
@@ -527,39 +527,6 @@ displayAssigned = assigneds =>
         </Modal.Content>
 
         </Grid.Row>
-        <Grid.Row columns='equal' style={{width: "100%", marginTop:"0px", paddingTop:"0px"}}>
-        <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
-           <Menu.Menu >
-               {assignedArray.length>0 && this.displayAssigned(assignedArray)}
-           </Menu.Menu>
-        </Grid.Column >
-        <Grid.Column style={{height: "200px", border: "1px dotted white", overflow: "scroll"}}>
-             <Menu.Menu >
-                {clientArray.length>0 && this.displayClients(clientArray)}
-            </Menu.Menu>
-        </Grid.Column>
-        </Grid.Row>
-        {assigned.length >0 && <Grid.Row columns='equal' style=
-                {{ width: "100%"}}>
-            <Menu.Menu >
-               <Menu.Item >
-                  <span style={{color: "green", fontStyle:"bold", fontSize: "1.5em"}}>
-                        {newAssignedNotice}
-                  </span>
-              </Menu.Item>
-            </Menu.Menu>
-        </Grid.Row> }
-
-        {unassigned.length >0 && <Grid.Row columns='equal' style=
-                {{ width: "100%"}}>
-            <Menu.Menu >
-               <Menu.Item >
-                  <span style={{color: "red", fontStyle:"bold", fontSize: "1.3em"}}>
-                        {unassignedNotice}
-                  </span>
-              </Menu.Item>
-            </Menu.Menu>
-        </Grid.Row> }
       </Grid>
 
 

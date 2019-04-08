@@ -98,7 +98,7 @@ const mapStateToProps = state => {
    //const employees = reposData["employees"];
    //console.log(employees);
    return {
-     employees: state.employeeList,
+     employees: state.user.employeeList,
      usertag: state.user.usertag,
      french: state.user.french
    }
