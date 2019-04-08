@@ -166,7 +166,7 @@ componentWillUnMount() {
               "isRepeat": String(isRepeat),
               "repeatTimes": String(repeatTimes),
               "previousDelivery" : String(previousDelivery),
-              "previousTimeStamp" : String(previousTimeStamp),              
+              "previousTimeStamp" : String(previousTimeStamp),
             })
          }
          else if (isEmployeeUnassigned) {
@@ -198,7 +198,7 @@ componentWillUnMount() {
              //this.handleOpen(false);
 
              const employeePath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
-                   + "/assigned/" + contact.tag + "/" + orderKey;
+                   + "/assigned/" + contact.tag + "/workorders/" + orderKey;
              //console.log("employee path = " + employeePath);
              const employeeRef = firebase.database().ref(employeePath);
              employeeRef.set(null);
