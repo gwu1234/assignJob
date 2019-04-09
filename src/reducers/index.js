@@ -429,122 +429,91 @@ const user_reducer = (state = initialUserState, action) => {
                     truckMarkers:[],
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
-     //console.log ("reducer");
-     //console.log ("SET_UNASSIGNED_CLIENTS");
+      //const clients = state.clientList;
+      const allClientData = state.reposData["clients"]["data"];
 
-     const allclients = state.clientList;
-     //const alltimestamp = state.timestamp;
-     //const allrepeathours = state.repeathours;
-     //const date2 = new Date();
-     // timestamp in second
-     //const alltimestamp = Math.round(date2.getTime()/1000 + 0.5);
-     //const alltimestamp = 1000;
-     //console.log (alltimestamp);
-     //console.log (allrepeathours);
+      let unClientMarkers = [];
+      let status = JOB_NOT_ACTIVE;
+      let statusArray =[];
+      let activeOrderAccount = 0;
 
-     let unClientMarkers = [];
+      for (var dataKey in allClientData) {
+           const {contact, workorders, deliverys} = allClientData[dataKey];
+           statusArray.length = 0; // clear array
+           activeOrderAccount = 0;
 
-     for (var key in allclients) {
-       if (!allclients[key].isAssigned) {
+           // step 1: find active workorders for this clients
+           for (var workKey in workorders) {
+              let {isActive, isRepeat, repeatTimes, isEmployeeAssigned} = workorders[workKey];
+              isActive = isActive? (isActive === "true"? true: false) : false;
+              isRepeat = isRepeat? (isRepeat === "true"? true: false) : false;
+              repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+              isEmployeeAssigned = isEmployeeAssigned? (isEmployeeAssigned === "true"? true: false) : false;
 
-            //const repeattime = allclients[key].repeattime;
-            //const lastservicetime = allclients[key].lastservicetime;
-            //const repeatseconds = allrepeathours * 60 * 60;
-            let status = JOB_NEW;
+              // ignore not active work orders and ignore assigned order
+              if (!isActive || isEmployeeAssigned) {
+                  continue;
+              }
 
-            // case 1: it is a new client
-            /*if (!repeattime && !lastservicetime) {
-                status = JOB_NEW;
-             // case 2: it is a one time job
-            } else if (repeatseconds === 0) {
-                if (!repeattime && lastservicetime) {
-                    status = JOB_DONE;
-                } else if (repeattime && !lastservicetime) {
-                    status = JOB_REPEAT;
-                } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
-                   status = JOB_DONE;
-                } else {
-                   status = JOB_REPEAT;
-                }
-            }
-            // case 3: should not happen, no service record, but repeat button pressed
-            // by accident
-            else if (repeattime && !lastservicetime){
-                const remainingseconds = repeatseconds - (alltimestamp - repeattime);
-                if (remainingseconds < 5 ) {
-                    status = JOB_NEW;
-                } else {
-                    status = JOB_REPEAT;
-                }
-            }
-            // case 4: repeat button pressed after being serviced
-            else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-                const remainingseconds = repeatseconds - (alltimestamp - repeattime);
-                if (remainingseconds < 5 ) {
-                    status = JOB_NEW;
-                } else {
-                    status = JOB_REPEAT;
-                }
-            }
-            // case 5: no repeat button pressed after being serviced
-            else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-                 const remainingseconds = repeatseconds - (alltimestamp - lastservicetime);
-                 // 20 minutes before delivery time, it is a JOB_DONE
-                 if (remainingseconds > 60 * 20 ) {
-                     status = JOB_DONE;
+              // step 2, for an active workorder, find clientTag, and orderKey, and repeatTimes
+              //clientTag = workorders[workKey]["clientTag"];
+              activeOrderAccount ++;
+
+              //let clientTag = null;
+              let orderKey = workKey;
+
+              // step 3, for this active workorder, find deliveryTimes
+              let deliveryTimes = 0;
+              let linkedOrderKey = null;
+              for (var deliveryKey in deliverys) {
+                 linkedOrderKey = deliverys[deliveryKey]["linkedOrderKey"];
+                 if (orderKey && linkedOrderKey && orderKey===linkedOrderKey) {
+                    deliveryTimes ++;
                  }
-                 // between 20 minutes and 5 seconds, a job need to be repeated soon
-                 else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                    status = JOB_SOON
-                 }
-                 // it is a job to be done asap
-                 else {
-                     status = JOB_NEW;
-                 }
-            }
-            // case 6: repeat button never pressed
-            else if (!repeattime && lastservicetime) {
-                 const remainingseconds = repeatseconds - (alltimestamp - lastservicetime);
-                 // 20 minutes before delivery time, it is a JOB_DONE
-                 if (remainingseconds > 60 * 20 ) {
-                     status = JOB_DONE;
-                 }
-                 // between 20 minutes and 5 seconds, a job need to be repeated soon
-                 else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                     status = JOB_SOON
-                 }
-                 // it is a job to be done asap
-                 else {
-                     status = JOB_NEW;
-                 }
-            }
-            // should not come
-            else {
-                 console.log("should bot come here");
-                 status = JOB_NEW;
-            }*/
+              }
 
+              if (!isRepeat && deliveryTimes > 0) {
+                 //status = JOB_DONE;
+                 statusArray.push(JOB_DONE);
+              } else if (isRepeat && repeatTimes === 0) {
+                 statusArray.push(JOB_NEW);
+              } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                 statusArray.push(JOB_DONE);
+              } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
+                 statusArray.push(JOB_PROGRESS);
+              }
+              else {
+                statusArray.push(JOB_NEW);
+              }
+           }
 
+           // step 4, if this client has active workorders, save to array
+           if (activeOrderAccount) {
+              status = statusArray[0];
 
-            const marker = {
-            pos:
-            {
-               lat: allclients[key].lat,
-               lng: allclients[key].lng
-            },
-            name: allclients[key].name,
-            street: allclients[key].street,
-            city: allclients[key].city,
-            postcode: allclients[key].postcode,
-            lat: allclients[key].lat,
-            lng: allclients[key].lng,
-            clientTag: allclients[key].tag,
-            clientKey: key,
-            id:  key,
-            status: status,
-          }
-          unClientMarkers.push(marker);
-      }
+              for (var i=0; i++; i < activeOrderAccount) {
+                 status = status < statusArray[i]? status: statusArray[i];
+              }
+
+              const marker = {
+                pos:
+                {
+                 lat: contact.lat,
+                 lng: contact.lng
+                },
+                name: contact.name,
+                street: contact.street,
+                city: contact.city,
+                postcode: contact.postcode,
+                lat: contact.lat,
+                lng: contact.lng,
+                clientTag: contact.clientTag,
+                clientKey: contact.clientTag,
+                id:  dataKey,
+                status: status,
+             }
+             unClientMarkers.push(marker);
+           }
     }
 
     const allemployees = state.employeeList;
