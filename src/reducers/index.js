@@ -134,8 +134,8 @@ const user_reducer = (state = initialUserState, action) => {
            let deliveryTimes = 0;
            for (var orderKey in workorders) {
               let {isActive,isRepeat,repeatTimes} = workorders[orderKey];
-              let statusArray = [];
-              let statusAccount = 0;
+              statusArray = [];
+              activeOrders = 0;
 
               isActive = (isActive && isActive === "true")? true:false;
               isRepeat = (isRepeat && isRepeat === "true")? true:false;
@@ -296,18 +296,7 @@ const user_reducer = (state = initialUserState, action) => {
                      ...state,
                      geoEncoding: action.payload.geoEncoding
         };
-    /*case actionTypes.SET_CONTRACTS:
-           //console.log ("reducer SET_GEOENCODING = " );
-           //console.log (action.payload.geoEncoding);
-            return {
-                     ...state,
-                     contracts: action.payload.contracts
-        };*/
-    /*case actionTypes.SET_PAYMENTS:
-            return {
-                    ...state,
-                    payments: action.payload.payments
-        };*/
+
     case actionTypes.SET_CLIENT_VIEW:
             //console.log(action.payload.view);
             return {
@@ -329,41 +318,6 @@ const user_reducer = (state = initialUserState, action) => {
                     companyInfoView: false,
         };
 
-/*    case actionTypes.SET_DELIVERYS:
-     //console.log (action.payload.deliverys);
-            return {
-                    ...state,
-                    deliverys: action.payload.deliverys
-      };*/
-    /*case actionTypes.SET_TRUCKS:
-       const trucks = action.payload.trucks;
-       let truckMarkers = [];
-
-       for (var key in trucks) {
-          if (trucks[key].assigned && trucks[key].assigned === true) {
-
-             const marker = {
-                 pos:
-                 {
-                    lat: trucks[key].latitude,
-                    lng: trucks[key].longitude
-                 },
-                 name: trucks[key].model,
-                 id:  key,
-                 status: JOB_NEW,
-                 type: TRUCK_MARKER
-             }
-            truckMarkers.push(marker);
-          }
-        }
-
-        const markers = state.markers;
-
-        return {
-                  ...state,
-                  trucks: action.payload.trucks,
-                  markers: markers.concat(truckMarkers),
-      };*/
     case actionTypes.SET_REPEAT_HOURS:
      //console.log("at reducer = ::");
      //console.log (action.payload.repeathours);
@@ -383,15 +337,7 @@ const user_reducer = (state = initialUserState, action) => {
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected
-         const assignedClients = state.clientList;
-         //const selectedtimestamp = state.timestamp;
-         //const selectedrepeathours = state.repeathours;
-         //const date1 = new Date();
-         // timestamp in second
-         //const selectedtimestamp = Math.round(date1.getTime()/1000 + 0.5);
-         //const selectedtimestamp = 100;
-         //console.log ("reducer");
-         //console.log ("SET_SELECTED_EMPLOYEE");
+         console.log (selectedEmployee);
 
          let selectedMarkers = [];
          const selectedMarker = {
@@ -409,101 +355,66 @@ const user_reducer = (state = initialUserState, action) => {
          const assignedJobs = selectedEmployee.assigned;
          for (var key in assignedJobs) {
 
-             const assignedClient = assignedClients[assignedJobs[key].clientKey];
-             //const repeattime = assignedClient.repeattime;
-             //const lastservicetime = assignedClient.lastservicetime;
-             //const repeatseconds = selectedrepeathours * 60 * 60;
-             let status = JOB_NEW;
+             const {clientLat, clientLng, clientName, clientStreet, workorders} = assignedJobs[key];
 
-             // case 1: it is a new client
-             /*if (!repeattime && !lastservicetime) {
-                 status = JOB_NEW;
-              // case 2: it is a one time job
-             } else if (repeatseconds === 0) {
-                 if (!repeattime && lastservicetime) {
-                     status = JOB_DONE;
-                 } else if (repeattime && !lastservicetime) {
-                     status = JOB_REPEAT;
-                 } else if (repeattime && lastservicetime && lastservicetime>repeattime) {
-                    status = JOB_DONE;
-                 } else {
-                    status = JOB_REPEAT;
-                 }
-             }
-             // case 3: should not happen, no service record, but repeat button pressed
-             // by accident
-             else if (repeattime && !lastservicetime){
-                 const remainingseconds = repeatseconds - (selectedtimestamp - repeattime);
-                 if (remainingseconds < 5 ) {
-                     status = JOB_NEW;
-                 } else {
-                     status = JOB_REPEAT;
-                 }
-             }
-             // case 4: repeat button pressed after being serviced
-             else if (repeattime && lastservicetime && repeattime>lastservicetime ){
-                 const remainingseconds = repeatseconds - (selectedtimestamp - repeattime);
-                 if (remainingseconds < 5 ) {
-                     status = JOB_NEW;
-                 } else {
-                     status = JOB_REPEAT;
-                 }
-             }
-             // case 5: no repeat button pressed after being serviced
-             else if (repeattime && lastservicetime && repeattime<lastservicetime ){
-                  const remainingseconds = repeatseconds - (selectedtimestamp - lastservicetime);
-                  // 20 minutes before delivery time, it is a JOB_DONE
-                  if (remainingseconds > 60 * 20 ) {
-                      status = JOB_DONE;
-                  }
-                  // between 20 minutes and 5 seconds, a job need to be repeated soon
-                  else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                     status = JOB_SOON
-                  }
-                  // it is a job to be done asap
-                  else {
-                      status = JOB_NEW;
-                  }
-             }
-             // case 6: repeat button never pressed
-             else if (!repeattime && lastservicetime) {
-                  const remainingseconds = repeatseconds - (selectedtimestamp - lastservicetime);
-                  // 20 minutes before delivery time, it is a JOB_DONE
-                  if (remainingseconds > 60 * 20 ) {
-                      status = JOB_DONE;
-                  }
-                  // between 20 minutes and 5 seconds, a job need to be repeated soon
-                  else if (remainingseconds <= 60*20 && remainingseconds > 5) {
-                      status = JOB_SOON
-                  }
-                  // it is a job to be done asap
-                  else {
-                      status = JOB_NEW;
-                  }
-             }
-             // should not come
-             else {
-                  console.log("should bot come here");
-                  status = JOB_NEW;
-             }*/
+             let statusArray = [];
+             let activeOrder= 0;
+             let status = 0;
 
+             for (var orderKey in workorders) {
+                 //console.log(orderKey);
+                 //console.log(workorders[orderKey]);
+                 let {isActive,isRepeat,repeatTimes, previousDelivery} = workorders[orderKey];
+                 statusArray = [];
+                 activeOrder= 0;
+
+                 isActive = (isActive && isActive === "true")? true:false;
+                 isRepeat = (isRepeat && isRepeat === "true")? true:false;
+                 repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+                 previousDelivery = previousDelivery? parseInt(previousDelivery, 10) : 0;
+                 let deliveryTimes = previousDelivery;
+
+                 if (!isRepeat && deliveryTimes > 0) {
+                    //status = JOB_DONE;
+                    statusArray.push(JOB_DONE);
+                 } else if (isRepeat && repeatTimes === 0) {
+                    statusArray.push(JOB_PROGRESS);
+                 } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                    statusArray.push(JOB_DONE);
+                 } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
+                    statusArray.push(JOB_PROGRESS);
+                 }
+                 else {
+                   statusArray.push(JOB_NEW);
+                 }
+                 activeOrder ++;
+             }
+
+             if (activeOrder) {
+                status = statusArray[0];
+             }
+             for (var i=0; i++; i < activeOrder) {
+                 status = status < statusArray[i]? status: statusArray[i];
+             }
+
+             //let status = JOB_NEW;
 
              const assignedMarker = {
                  pos:
                  {
-                    lat: assignedJobs[key].clientLat,
-                    lng: assignedJobs[key].clientLng
+                    lat: clientLat,
+                    lng: clientLng
                  },
-                 name: assignedJobs[key].clientName,
-                 id:  assignedJobs[key].assignedKey,
+                 name: clientName,
+                 id:  key,
                  status: status,
-                 street: assignedJobs[key].clientStreet,
+                 street: clientStreet,
                  type: CLIENT_MARKER,
                  isAssigned: true,
                  employeeName: selectedEmployee.name,
-                 assignedKey: assignedJobs[key].assignedKey,
-                 employeeKey: assignedJobs[key].employeeKey,
-                 clientKey: assignedJobs[key].clientKey,
+                 //assignedKey: assignedJobs[key].assignedKey,
+                 //employeeKey: assignedJobs[key].employeeKey,
+                 //clientKey: assignedJobs[key].clientKey,
                  //clientTag: assignedClient.clientTag,
              }
             selectedMarkers.push(assignedMarker);
@@ -515,6 +426,7 @@ const user_reducer = (state = initialUserState, action) => {
                     clientView: false,
                     mapView: true,
                     companyInfoView: false,
+                    truckMarkers:[],
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
      //console.log ("reducer");
