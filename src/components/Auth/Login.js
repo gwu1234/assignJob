@@ -3,8 +3,7 @@ import firebase from "../../firebase";
 import Geocode from "react-geocode";
 //import response from "react-geocode";
 import { connect } from "react-redux";
-import {  setUserTag, setAdmin, setReposData,
-          setGeoEncoding, setBadAccess}
+import {  setUserTag, setAdmin, setReposData, setBadAccess}
         from "../../actions";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
@@ -85,8 +84,6 @@ class Login extends React.Component {
                console.error(err);
            });
 
-
-
           const accessName = (nameString + '+' + emailString +"/access").toLowerCase();
           //console.log(accessName);
           var accessRef = this.state.usersRef.child(accessName);
@@ -106,134 +103,6 @@ class Login extends React.Component {
                  this.props.setBadAccess(false);
               }
           });
-
-          //const contactTag = "repos/" + tagName +"/contact";
-          //console.log(contactTag);
-          //var contactRef = firebase.database().ref(contactTag)
-          //starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
-          /*contactRef.on('value')
-             .then((snapshot) => {
-                const contact = snapshot.val();
-                console.log(contact)
-                if (contact) {
-                    this.props.setUserContact(contact);
-               } else {
-                   this.props.setUserContact(null);
-               }
-           })*/
-
-           //contactRef.on('value', snapshot => {
-                //this.setState({
-                //posts: snapshot.val()
-                //});
-                //const contact = snapshot.val();
-                //console.log(contact)
-                //if (contact) {
-                   /*for (var key in contact) {
-                      console.log("key = " + key);
-                      console.log(contact[key]);
-                   }*/
-                   //console.log(contact["city"]);
-                   //this.props.setUserContact(contact);
-               //} else {
-                //   this.props.setUserContact(null);
-               //}
-          //});
-
-
-          /*const employeeTag = "repos/" + tagName +"/employees";
-          //console.log(employeeTag);
-          var employeeRef = firebase.database().ref(employeeTag)
-
-           employeeRef.on('value', snapshot => {
-                const employees = snapshot.val();
-                //console.log(employees)
-                if (employees) {
-                  if (this.isGeocodeReady(employees)) {
-                      //console.log("lat and longitudes ready");
-                      //this.props.setEmployeeList(employees);
-                      //const GEOCODING_DONE = 1;
-                      //const GEOCODING_RENEWED = 2;
-                      this.props.setGeoEncoding(GEOCODING_DONE);
-                  }
-                  else {
-                      const addresses =[];
-                       for (var key in employees) {
-                         if (!employees[key].lat || !employees[key].lng ){
-                             const addressStr =   employees[key].street + ", "
-                                         + employees[key].city + ", "
-                                         + employees[key].postcode;
-
-                             const address = {
-                                 address: addressStr,
-                                 key : key
-                             }
-                             addresses.push (address);
-                         }
-                      }
-                      this.getLocations(employees, addresses, true);
-                      //console.log(coords.length);
-                      //console.log(coords);
-                  }
-               } else {
-                   //this.props.setEmployeeList(null);
-               }
-          }); */
-
-          /*const clientsTag = "repos/" + tagName +"/clients/tags";
-          //console.log("clientsTag = " + clientsTag);
-          const clientsRef = firebase.database().ref(clientsTag)
-
-           clientsRef.on('value', snapshot => {
-                const clients= snapshot.val();
-                //console.log("user list Clients = ");
-                //console.log(clients)
-                if (clients) {
-                    if (this.isGeocodeReady(clients)) {
-                        //console.log("lat and longitudes ready");
-                        this.props.setClientList(clients);
-                        //const GEOCODING_DONE = 1;
-                        //const GEOCODING_RENEWED = 2;
-                        this.props.setGeoEncoding(GEOCODING_DONE);
-                    }
-                    else {
-                        const addresses =[];
-                         for (var key in clients) {
-                           if (!clients[key].lat || !clients[key].lng ){
-                               const addressStr =   clients[key].street + ", "
-                                           + clients[key].city + ", "
-                                           + clients[key].postcode;
-
-                               const address = {
-                                   address: addressStr,
-                                   key : key
-                               }
-                               addresses.push (address);
-                           }
-                        }
-                        this.getLocations(clients, addresses, false);
-                        //console.log(coords.length);
-                        //console.log(coords);
-                    }
-               } else {
-                   this.props.setClientList(null);
-               }
-          });*/
-
-          /*const trucksTag = "repos/" + tagName +"/trucks";
-          //console.log("clientsTag = " + clientsTag);
-          const trucksRef = firebase.database().ref(trucksTag)
-
-           trucksRef.on('value', snapshot => {
-                const trucks= snapshot.val();
-                //console.log("truck list = ");
-                //console.log(trucks)
-                if (trucks) {
-                  this.props.setTrucks (trucks)
-                } else {
-                   this.props.setTrucks (null);
-               }
-          });*/
 
           const reposTag = "repos/" + tagName ;
           const reposRef = firebase.database().ref(reposTag)
@@ -274,50 +143,6 @@ class Login extends React.Component {
            }
         }
         return result;
-  }
-
-  async getLocations(clients, locations, isEmployee) {
-    Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
-    const coords = []
-    for (const l of locations) {
-      const r = await this.getLocation(l)
-      if (r == null) continue; // or display error message or whatever
-      coords.push(r)
-      clients[r.key].lng = r.lng;
-      clients[r.key].lat = r.lat;
-      //this.setState({annotations}); // move this after the loop if you want only one update
-    }
-    //console.log(coords);
-    //console.log(coords.length);
-    //console.log(clients);
-    if (isEmployee) {
-       this.props.setEmployeeList(clients);
-       this.props.setGeoEncoding(GEOCODING_RENEWED);
-    } else {
-       this.props.setClientList(clients);
-       this.props.setGeoEncoding(GEOCODING_RENEWED);
-    }
-    //this.props.setLatLng (coords);
-    //return coords;
-  }
-
-  async getLocation(location) {
-    try {
-      let response = await Geocode.fromAddress(location.address);
-      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
-      return (
-        {
-          address: location.address,
-          key: location.key,
-          lat: await response.results[0].geometry.location.lat,
-          lng: await response.results[0].geometry.location.lng
-        }
-      );
-    }
-    catch(err) {
-      console.log("Error fetching geocode lat and lng:", err);
-    }
-    return null;
   }
 
 
@@ -417,5 +242,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserTag, setAdmin, setReposData, setGeoEncoding, setBadAccess}
+  { setUserTag, setAdmin, setReposData, setBadAccess}
 )(Login);

@@ -134,8 +134,8 @@ const user_reducer = (state = initialUserState, action) => {
            let deliveryTimes = 0;
            for (var orderKey in workorders) {
               let {isActive,isRepeat,repeatTimes} = workorders[orderKey];
-              statusArray = [];
-              activeOrders = 0;
+              //statusArray = [];
+              //activeOrders = 0;
 
               isActive = (isActive && isActive === "true")? true:false;
               isRepeat = (isRepeat && isRepeat === "true")? true:false;
@@ -144,6 +144,7 @@ const user_reducer = (state = initialUserState, action) => {
 
               // need to calculate deliveryTimes
               //console.log(orderKey);
+              deliveryTimes = 0;
               for (var deliveryKey in deliverys) {
                  let {linkedOrderKey} = deliverys[deliveryKey];
                  //console.log(linkedOrderKey);
