@@ -163,7 +163,11 @@ class Clients extends React.Component {
     }*/
 
     // sort list by the lastname
-    clientArray.sort((a, b) => a.client.lastname.localeCompare(b.client.lastname));
+    clientArray.sort((a, b) => {
+      if (a.client && b.client) {
+          return a.client.lastname.localeCompare(b.client.lastname);
+      }
+    });
 
     //if (geoEncoding == GEOCODING_RENEWED) {
     //   this.updateClients(clients);

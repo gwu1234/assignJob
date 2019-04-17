@@ -30,6 +30,7 @@ const initialUserState = {
   geoEncoding: GEOCODING_DONE,
   markers: [],
   truckMarkers: [],
+  employeeMarkers:[],
   //contracts: null,
   //payments:null,
   //deliverys: null,
@@ -162,7 +163,14 @@ const user_reducer = (state = initialUserState, action) => {
                   if (!isRepeat && deliveryTimes > 0) {
                      //status = JOB_DONE;
                      statusArray.push(JOB_DONE);
-                  } else if (isRepeat && repeatTimes === 0) {
+                  } else if (!isRepeat && deliveryTimes === 0) {
+                     //status = JOB_DONE;
+                     statusArray.push(JOB_NEW);
+                  }
+                  else if (isRepeat && repeatTimes === 0 && deliveryTimes === 0) {
+                     statusArray.push(JOB_DONE);
+                  }
+                  else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
                      statusArray.push(JOB_PROGRESS);
                   } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
                      statusArray.push(JOB_DONE);
@@ -175,12 +183,36 @@ const user_reducer = (state = initialUserState, action) => {
                   activeOrders ++;
               }
 
-              if (activeOrders) {
+              /*if (activeOrders) {
                  status = statusArray[0];
               }
               for (var i=0; i++; i < activeOrders) {
-                  status = status < statusArray[i]? status: statusArray[i];
+                  status = status <= statusArray[i]? status: statusArray[i];
               }
+              if (activeOrders ===2 ) {
+                 console.log(status);
+                 console.log(statusArray);
+                 console.log();
+              } */
+           }
+
+           if (statusArray.length > 0) {
+              status = statusArray[0];
+              //console.log(statusArray.length);
+           }
+
+           var i= 0;
+           for (i = 0; i < statusArray.length; i++) {
+               status = status <= statusArray[i]? status: statusArray[i];
+               //console.log(status);
+               //console.log(statusArray[i]);
+           }
+
+           if (activeOrders ===2 ) {
+              //console.log(activeOrders);
+              console.log(status);
+              console.log(statusArray);
+              console.log(clients[clientKey]);
            }
 
            const marker = {
@@ -192,15 +224,12 @@ const user_reducer = (state = initialUserState, action) => {
                name: clients[clientKey].name,
                id:  clientKey,
                status: status,
-               isAssigned: clients[clientKey].isAssigned,
-               employeeName: clients[clientKey].employeeName,
                street: clients[clientKey].street,
                city: clients[clientKey].city,
-               assignedKey: clients[clientKey].assignedKey,
-               employeeKey: clients[clientKey].employeeKey,
                clientTag: clients[clientKey].clientTag,
                clientKey: clientKey,
                activeOrders: activeOrders,
+               type: CLIENT_MARKER,
            }
 
            clientMarkers.push(marker);
@@ -243,6 +272,7 @@ const user_reducer = (state = initialUserState, action) => {
             ...state,
            markers: clientMarkers,
            truckMarkers: truckMarker,
+           employeeMarkers:[],
            mapView: true,
            clientContactView: false,
            clientView: false,
@@ -264,8 +294,10 @@ const user_reducer = (state = initialUserState, action) => {
                    lng: employees[key].lng
                 },
                 name: employees[key].name,
+                street: employees[key].street,
+                city: employees[key].city,
                 id:  key,
-                status: status,
+
                 type: EMPLOYEE_MARKER
             }
            employeeMarkers.push(marker);
@@ -273,7 +305,8 @@ const user_reducer = (state = initialUserState, action) => {
 
       return {
           ...state,
-         markers: employeeMarkers,
+         employeeMarkers: employeeMarkers,
+         markers:[],
          mapView: true,
          clientContactView: false,
          clientView: false,
@@ -512,12 +545,13 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                 clientKey: contact.clientTag,
                 id:  dataKey,
                 status: status,
+                type: CLIENT_MARKER,
              }
              unClientMarkers.push(marker);
            }
     }
 
-    const allemployees = state.employeeList;
+    /*const allemployees = state.employeeList;
     //let allemployeeMarkers = [];
 
     for (var key in allemployees) {
@@ -532,11 +566,13 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
             type: EMPLOYEE_MARKER
         }
        unClientMarkers.push(marker);
-    }
+    }*/
 
     return {
         ...state,
        markers: unClientMarkers,
+       employeeMarkers:[],
+       truckMarkers:[],
        clientContactView: false,
        clientView: false,
        mapView: true,
