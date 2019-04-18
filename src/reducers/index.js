@@ -160,30 +160,38 @@ const user_reducer = (state = initialUserState, action) => {
               }
 
               //console.log(deliveryTimes);
-
+              let theStatus = JOB_NOT_ACTIVE;
               if (isActive) {
                   if (!isRepeat && deliveryTimes > 0) {
                      //status = JOB_DONE;
                      statusArray.push(JOB_DONE);
+                     theStatus = JOB_DONE;
                   } else if (!isRepeat && deliveryTimes === 0) {
                      //status = JOB_DONE;
                      statusArray.push(JOB_NEW);
+                     theStatus = JOB_NEW;
                   }
                   else if (isRepeat && repeatTimes === 0 && deliveryTimes === 0) {
                      statusArray.push(JOB_DONE);
+                     theStatus = JOB_DONE;
                   }
                   else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
                      statusArray.push(JOB_PROGRESS);
+                     theStatus = JOB_PROGRESS;
                   } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
                      statusArray.push(JOB_DONE);
+                     theStatus = JOB_DONE;
                   } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
                      statusArray.push(JOB_PROGRESS);
+                     theStatus = JOB_PROGRESS;
                   }
                   else {
                     statusArray.push(JOB_NEW);
+                    theStatus = JOB_NEW;
                   }
                   activeOrders ++;
-                  orders.push (workorders[orderKey]);
+                  //orders.push (workorders[orderKey]);
+                  orders.push ({...workorders[orderKey], orderStatus: theStatus});
               }
 
               /*if (activeOrders) {

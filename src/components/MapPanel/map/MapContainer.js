@@ -258,10 +258,21 @@ class MapContainer extends Component {
   };
 
   dropdownOptions = (orders) => {
+      const statusList = [
+        "JOB_NOT_ACTIVE",
+        "JOB_NEW",
+        "JOB_ASSIGNED",
+        "JOB_PROGRESS",
+        "JOB_DONE"
+      ];
+
       let optionArray = [];
 
       for (var i = 0; i <orders.length; i++ ){
-        const displayString = "order id: " + orders[i].orderId + ", order work: " + orders[i].work;
+        console.log(orders[i]);
+        const displayString = "order id: " + orders[i].orderId
+                              + ", order work: " + orders[i].work
+                              + ", order status: " + statusList[orders[i].orderStatus];
         optionArray.push({
            key: orders[i].orderKey,
            text: <span style = {styles.dropdownText}> {displayString} </span>,
@@ -588,7 +599,7 @@ const styles = {
       alignItems: 'center',
       justifyContent:'center',
       width: 200,
-      height: 200,
+      height: 230,
     },
 };
 
