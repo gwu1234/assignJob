@@ -15,7 +15,7 @@ import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
 import MapAssignModal from './MapAssign';
-import {Button, Icon} from 'semantic-ui-react';
+import {Button, Icon, Dropdown} from 'semantic-ui-react';
 //import svgMarker from './svgMarker';
 
 const JOB_NOT_ACTIVE = 0;
@@ -246,8 +246,40 @@ class MapContainer extends Component {
   };
 
 
+  displayActiveOrders = (orders) =>{
+     if (orders.length > 0) {
+         orders = orders.map(order => {
+            return (
+                <p>{order.work}</p>
+            )
+         });
+         return orders;
+    }
+  };
 
+  dropdownOptions = (orders) => {
+      let optionArray = [];
 
+      for (var i = 0; i <orders.length; i++ ){
+        const displayString = "order id: " + orders[i].orderId + ", order work: " + orders[i].work;
+        optionArray.push({
+           key: orders[i].orderKey,
+           text: <span style = {styles.dropdownText}> {displayString} </span>,
+           value: orders[i].orderId,
+        });
+      }
+
+      return optionArray;
+  }
+
+  handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      const selectedValue = data.value
+      console.log( data.value);
+      this.setState({
+         orderId: selectedValue,
+         orderChange: true,
+      });
+  }
 
     render() {
       const {usertag, employees, markers, truckMarkers, employeeMarkers} = this.props;
@@ -301,6 +333,7 @@ class MapContainer extends Component {
                       clientPostcode={marker.postcode}
                       clientLat={marker.lat}
                       clientLng={marker.lng}
+                      activeOrdersNumber = {marker.activeOrdersNumber}
                       activeOrders = {marker.activeOrders}
                       icon = {{
                           url: image,
@@ -317,33 +350,24 @@ class MapContainer extends Component {
                  onClose={this.onClose} >
                  <div style={styles.calloutContainer}>
                      <div>
-                         <h3>{this.state.selectedPlace.name}</h3>
-                         {this.state.selectedPlace.clientStreet &&
-                               <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
-                                   {this.state.selectedPlace.clientStreet} </span>}
-                         {this.state.selectedPlace.clientCity &&
-                               <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
-                                   {this.state.selectedPlace.clientCity} </span>}
-                         {this.state.selectedPlace.activeOrders &&
-                                     <h5>active workorders: &nbsp; {this.state.selectedPlace.activeOrders}</h5>}
+                         <p style={styles.calloutName}>{this.state.selectedPlace.name}</p>
+                         <span style={styles.calloutAddress}>
+                            {this.state.selectedPlace.clientStreet} , &nbsp;
+                            {this.state.selectedPlace.clientCity} </span>
+                         <p style={styles.calloutOrder}>active workorders: &nbsp; {this.state.selectedPlace.activeOrdersNumber}</p>
                      </div>
-
-                     <div>
-                          <MapAssignModal
-                              clientKey={this.state.selectedPlace.clientKey}
-                              clientName={this.state.selectedPlace.name}
-                              clientStreet={this.state.selectedPlace.clientStreet}
-                              clientCity={this.state.selectedPlace.clientCity}
-                              clientPostcode={this.state.selectedPlace.clientPostcode}
-                              clientLat={this.state.selectedPlace.clientLat}
-                              clientLng={this.state.selectedPlace.clientLng}
-                              usertag={usertag}
-                              employees={employees}
-                              onClose={()=>this.onClose()}
+                     <div style={styles.dropdownContainer}>
+                           <Dropdown
+                              placeholder="active orders"
+                              fluid
+                              selection
+                              onChange={this.handleDropdownChange}
+                              options={this.dropdownOptions(this.state.selectedPlace.activeOrders)}
                           />
-
-                          <Button icon size="mini" color="red" onClick={this.onClose}>
-                                    <Icon name='cancel' size ="large"/> Cancel
+                     </div>
+                     <div style={styles.calloutButtonContainer}>
+                          <Button icon size="mini" color="green" onClick={this.onClose}>
+                                    <Icon name='cancel' size ="large"/> Close
                           </Button>
                      </div>
                  </div>
@@ -379,7 +403,7 @@ class MapContainer extends Component {
                      onClose={this.onClose} >
                      <div>
                          <div>
-                             <h3>{this.state.selectedPlace.name}</h3>
+                             <Text>{this.state.selectedPlace.name}</Text>
                              {this.state.selectedPlace.street &&
                                    <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
                                        {this.state.selectedPlace.street} </span>}
@@ -497,19 +521,74 @@ const styles = {
     fontSize: 10,
     marginBottom: 0,
   },
-  calloutText: {
+  calloutName: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 15,
     color:'black',
     marginBottom: 0,
+    marginTop: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
+  calloutAddress: {
+    fontWeight: 'normal',
+    textAlign: 'center',
+    fontSize: 14,
+    color:'black',
+    marginBottom: 0,
+    marginTop: 3,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  calloutOrder: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 14,
+    color:'black',
+    marginBottom: 0,
+    marginTop: 3,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  calloutTextContainer: {
+      flex: 1,
+      flexGrow: 1,
+      width: 200,
+      height: 80,
+      borderWidth: 2,
+      borderColor: 'green',
+      borderStyle: 'dashed',
+      margin: 0,
+      padding: 0,
+      marginTop: 2,
+    },
+    dropdownContainer: {
+      width: 200,
+      height: 60,
+      marginTop: 3,
+      marginBottom: 3,
+    },
+    dropdownText: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      fontSize: 13,
+      color:'black',
+      marginBottom: 0,
+      marginTop: 2,
+      marginBottom:2,
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    calloutButtonContainer: {
+        marginTop: 5,
+      },
   calloutContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent:'center',
       width: 200,
-      height: 230,
+      height: 200,
     },
 };
 

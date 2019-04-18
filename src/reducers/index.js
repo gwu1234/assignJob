@@ -126,6 +126,7 @@ const user_reducer = (state = initialUserState, action) => {
          const clientData = state.reposData["clients"]["data"];
 
          let clientMarkers = [];
+         //let orders = [];
          for (var clientKey in clients) {
            let status = JOB_NOT_ACTIVE;
            const {workorders, deliverys} = clientData[clientKey];
@@ -133,6 +134,7 @@ const user_reducer = (state = initialUserState, action) => {
            let statusArray = [];
            let activeOrders = 0;
            let deliveryTimes = 0;
+           let orders = [];
            for (var orderKey in workorders) {
               let {isActive,isRepeat,repeatTimes} = workorders[orderKey];
               //statusArray = [];
@@ -181,6 +183,7 @@ const user_reducer = (state = initialUserState, action) => {
                     statusArray.push(JOB_NEW);
                   }
                   activeOrders ++;
+                  orders.push (workorders[orderKey]);
               }
 
               /*if (activeOrders) {
@@ -208,12 +211,12 @@ const user_reducer = (state = initialUserState, action) => {
                //console.log(statusArray[i]);
            }
 
-           if (activeOrders ===2 ) {
+           //if (activeOrders ===2 ) {
               //console.log(activeOrders);
-              console.log(status);
-              console.log(statusArray);
-              console.log(clients[clientKey]);
-           }
+            //  console.log(status);
+            //  console.log(statusArray);
+            //  console.log(clients[clientKey]);
+           //}
 
            const marker = {
                pos:
@@ -228,7 +231,8 @@ const user_reducer = (state = initialUserState, action) => {
                city: clients[clientKey].city,
                clientTag: clients[clientKey].clientTag,
                clientKey: clientKey,
-               activeOrders: activeOrders,
+               activeOrdersNumber: activeOrders,
+               activeOrders: orders,
                type: CLIENT_MARKER,
            }
 
@@ -522,11 +526,11 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
            }
 
            // step 4, if this client has active workorders, save to array
-           if (activeOrderAccount) {
+          if (activeOrderAccount) {
               status = statusArray[0];
 
-              for (var i=0; i++; i < activeOrderAccount) {
-                 status = status < statusArray[i]? status: statusArray[i];
+              for (var i=0; i < activeOrderAccount; i++) {
+                 status = status <= statusArray[i]? status: statusArray[i];
               }
 
               const marker = {
@@ -548,7 +552,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                 type: CLIENT_MARKER,
              }
              unClientMarkers.push(marker);
-           }
+        }
     }
 
     /*const allemployees = state.employeeList;
