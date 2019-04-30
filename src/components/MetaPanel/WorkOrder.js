@@ -5,6 +5,8 @@ import { Menu, Image} from "semantic-ui-react";
 //import Client from "./Client";
 import "./WorkOrder.css";
 import EditOrderModal from "./EditOrderModal";
+import PhotoViewModal from "./PhotoViewModal";
+
 
 class WorkOrder extends React.Component {
 
@@ -122,12 +124,30 @@ class WorkOrder extends React.Component {
       });
   }
 
+
   //{this.displayThumbs()}
-  displayThumbs = thumbs =>
-   thumbs.length > 0 &&
-   thumbs.map(thumb => (
-       <Image src={thumb.url}  style={{height:"40px", width:"40px"}}/>
-  ));
+  displayThumbs = thumbs => {
+    const {usertag, order} = this.props;
+    const {clientTag, orderKey} = order;
+     //console.log("onImagePress");
+     //console.log("clientTag = " + clientTag);
+     //console.log("orderKey = " + orderKey);
+     //console.log("photoTag = " + photoTag);
+     //const photoName = photoTag + ".jpg";
+     //const photoPath = usertag + "/" + clientTag + "/" + orderKey + "/photo/" + photoTag + "/" + photoName;
+     //console.log("photoPath = ");
+     //console.log(photoPath);
+     if (thumbs.length > 0 ) {
+       return (thumbs.map(thumb => {
+          const photoName = thumb.photoTag + ".jpg";
+          const photoPath = usertag + "/" + clientTag + "/" + orderKey + "/photo/" + thumb.photoTag + "/" + photoName;
+          //console.log("photoPath = ");
+          //console.log(photoPath);
+          return (<PhotoViewModal url={thumb.url}  key={thumb.photoTag} photoPath = {photoPath} photoName = {photoName} />);
+     }));
+   };
+}
+
 
   render() {
     const {order, orderKey} = this.props;
