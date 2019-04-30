@@ -48,7 +48,7 @@ class WorkOrders extends React.Component {
    displayOrders = orders =>
       orders.length > 0 &&
       orders.map(order => (
-          <WorkOrder orderKey={order.orderKey} key={order.orderKey} order={order.order} />
+          <WorkOrder orderKey={order.orderKey} key={order.orderKey} order={order.order} usertag={this.props.usertag} />
      ));
 
 
@@ -114,7 +114,8 @@ const mapStateToProps = state => {
   }
   return {
      orders: workOrders,
-     french: state.user.french
+     french: state.user.french,
+     usertag:state.user.usertag,
    }
 };
 
