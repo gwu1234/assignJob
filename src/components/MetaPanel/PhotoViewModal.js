@@ -49,10 +49,10 @@ componentWillUnMount() {
         onClose={this.handleClose}
         basic
         size='large'
-        style={{background: "#ccc", height:"500px", width:"400px"}}
+        style={{background: "#ccc", height:"600px", width:"500px"}}
       >
         <Modal.Content>
-            <Image src={photoUrl} size='huge' style ={{height:"400px", width:"400px"}}/>
+            <Image src={photoUrl} size='huge' style ={{height:"500px", width:"500px"}}/>
         </Modal.Content>
         <Modal.Actions>
 
