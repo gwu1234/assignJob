@@ -331,7 +331,8 @@ const mapStateToProps = state => {
   //console.log(clienttag);
   if (clienttag) {
       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
-      clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]?
+             reposData["clients"]["data"][clienttag]["contact"]:{};
       //console.log(clientContact);
   }
   return {
