@@ -78,18 +78,39 @@ class Employees extends React.Component {
     </Menu.Header>*/
 
     return (
-      <Menu.Menu className="EmployeesMenuMenu" >
-      <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+      <Menu.Menu style={styles.container} >
+      <Menu.Header style={styles.menuHeader}>
           {titleString}
          <AddEmployeeModal usertag = {this.props.usertag}/>
-        </Menu.Header>
-        <Menu.Menu >
+      </Menu.Header>
+      <Menu.Menu style={styles.menuMenu}>
            {employees && this.displayEmployees(employeeArray)}
-        </Menu.Menu>
+      </Menu.Menu>
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "7%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "93%",
+  },
+};
 
 const mapStateToProps = state => {
    //const reposData = state.user.reposData;

@@ -27,15 +27,33 @@ class Truck extends React.Component {
     }
 
     return (
-      <Menu.Menu className="TruckMenuMenu">
-      <Menu.Item  style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
+      <Menu.Menu style={styles.container}>
+      <Menu.Item  style={styles.name} onClick={() => this.toggleDisplay(display)}>
            {truck && name} &nbsp; &nbsp; <EditTruckModal Modal open={false} truck = {truck} usertag = {usertag} truckKey = {truckKey}/>
       </Menu.Item>
          </Menu.Menu>
      );
    }
 }
-
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+    marginTop: "0px",
+    marginBottom: "0px",
+    paddingTop:"5px",
+    paddingBottom:"5px",
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
+  name: {
+    fontSize: "0.9em",
+    fontWeight: "normal",
+    color: "black",
+    opacity: 1.0,
+  },
+};
 
 const mapStateToProps = state => ({
      usertag: state.user.usertag

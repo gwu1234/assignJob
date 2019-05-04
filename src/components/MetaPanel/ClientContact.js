@@ -156,15 +156,23 @@ class ClientContact extends React.Component {
           <Menu.Item style={styles.address}>
                {contact && address}
           </Menu.Item>
+          <Menu.Menu style={styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
             {emailDisplay && contact && contact.emails && contact.emails.length>0 && this.displayEmails (contact.emails)}
+          </Menu.Menu>
+          <Menu.Menu style={styles.emailMenu}>
             {contact && contact.phones && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
             {phoneDisplay && contact && contact.phones && contact.phones.length>0 && this.displayPhones (contact.phones)}
+          </Menu.Menu>
+          <Menu.Menu style={styles.emailMenu}>
             {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
+          </Menu.Menu>
+          <Menu.Menu style={styles.emailMenu}>
             {contact && editDisplay && <Menu.Item style={styles.editItem}>
                  <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
             </Menu.Item>}
+          </Menu.Menu>
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -201,6 +209,17 @@ const styles = {
     borderWidth:"2px",
     borderColor:"#b0caf4",
   },
+  emailMenu: {
+    paddingTop: "20px",
+    paddingBottom: "10px",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
   email: {
     paddingTop: "5px",
     paddingBottom: "2px",
@@ -216,9 +235,6 @@ const styles = {
     fontWeight: "bold",
     color: "black",
     opacity: 1.0,
-    borderStyle:"solid",
-    borderWidth:"2px",
-    borderColor:"#b0caf4",
   },
 };
 

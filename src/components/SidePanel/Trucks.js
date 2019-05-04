@@ -58,12 +58,12 @@ class Trucks extends React.Component {
     }
 
     return (
-      <Menu.Menu className="TrucksMenuMenu" >
-      <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+      <Menu.Menu style={styles.container} >
+      <Menu.Header style={styles.menuHeader}>
           {titleString}
           <AddTruckModal usertag = {usertag}/>
         </Menu.Header>
-        <Menu.Menu style={{opacity: 1.0, fontSize: "1.0em",color: "white", fontStyle: "bold", marginTop:"0.4em", marginBottom:"0.4em"}}>
+        <Menu.Menu style={styles.menuMenu}>
           {trucks && this.displayTrucks(truckArray)}
         </Menu.Menu>
       </Menu.Menu>
@@ -83,6 +83,27 @@ const mapStateToProps = state => {
      admin: state.user.admin,
      usertag: state.user.usertag,
    }
+};
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "7%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "93%",
+  },
 };
 
 export default connect(

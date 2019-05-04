@@ -128,37 +128,37 @@ class App extends React.Component {
         {!admin && !mapView && companyInfoView && !clientView && !clientContactView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style=
-                 {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "32.8%", height:"100%", marginRight:"3px", padding:"0px"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{ padding: "0.1em", width:"100%"}}
                  >
                    <Contact />
                  </Menu>
             </Grid.Column>
             <Grid.Column style=
-                 {{width: "33%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "32.8%", height:"100%", marginLeft:"3px", marginRight:"3px", padding:"0px"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{ padding: "0.1em", width:"100%"}}
                  >
                    <Employees/>
                  </Menu>
             </Grid.Column>
             <Grid.Column style=
-                 {{width: "34%", height:"100%", margin:"0px", padding:"0px"}}>
+                 {{width: "32.8%", height:"100%", marginLeft:"3px", padding:"0px"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{ padding: "0.1em", width:"100%"}}
                  >
                     <Trucks/>
                  </Menu>
@@ -293,27 +293,27 @@ class App extends React.Component {
         </Grid.Row>}
 
         {!admin && !mapView && !companyInfoView && !clientView && clientContactView &&
-          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px", backgroundImage: `url(${Background})`}}>
                 <Grid.Column style=
-                     {{width: "50%", height:"100%", margin:"0px", padding:"0px"}}>
+                     {{width: "49.6%", height:"100%", marginRight:"5px", padding:"0px"}}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", height:"92vh"}}
+                       style={{ padding: "0.1em", width:"100%", height:"92vh"}}
                      >
                        <Clients/>
                      </Menu>
                 </Grid.Column>
                 <Grid.Column style=
-                     {{width: "50%", height:"100%", margin:"0px", padding:"0px"}}>
+                     {{width: "49.6%", height:"100%", marginLeft:"5px", padding:"0px"}}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                       style={{ padding: "0.1em", width:"100%"}}
                      >
                       <ClientContact />
 
@@ -403,10 +403,9 @@ const styles = {
     margin:"0px",
     padding:"0px",
     marginLeft:"2px",
-    marginRight:"2px",    
+    marginRight:"2px",
   },
   MenuContainer: {
-    background: "#f2f5f7",
     padding: "2px",
     width:"100%",
     height:"100%",

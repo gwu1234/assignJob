@@ -15,13 +15,7 @@ class Employee extends React.Component {
     emails.map(email => (
       <Menu.Item
         key={email}
-        style={{
-            opacity: "1.0",
-            fontSize: "0.7em",
-            color: "white",
-            marginLeft: "2.0em",
-            visibility: this.state.visibility
-        }}
+        style={styles.email}
       >
         {email}
       </Menu.Item>
@@ -32,8 +26,7 @@ class Employee extends React.Component {
           name='emails'
         >
           <Header
-              as='h4'
-              style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+              style={styles.email}
           >
               emails:
           </Header>
@@ -45,8 +38,7 @@ class Employee extends React.Component {
             name="phones"
           >
             <Header
-                as='h4'
-                style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+                style={styles.email}
             >
                 phones
             </Header>
@@ -58,12 +50,7 @@ class Employee extends React.Component {
       phones.map(phone => (
         <Menu.Item
           key={phone}
-          style={{
-              opacity: "1.0",
-              fontSize: "0.7em",
-              color: "white",
-              marginLeft: "2.0em"
-          }}
+          style={styles.email}
         >
           {phone}
         </Menu.Item>
@@ -74,8 +61,7 @@ class Employee extends React.Component {
               name="cells"
             >
               <Header
-                  as='h4'
-                  style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+                  style={styles.email}
               >
                   cells:
               </Header>
@@ -87,12 +73,7 @@ class Employee extends React.Component {
         cells.map(cell => (
           <Menu.Item
             key={cell}
-            style={{
-                opacity: "1.0",
-                fontSize: "0.7em",
-                color: "white",
-                marginLeft: "2.0em"
-            }}
+            style={styles.email}
           >
             {cell}
           </Menu.Item>
@@ -123,11 +104,11 @@ toggleDisplay = (display) => {
     }
 
     return (
-      <Menu.Menu className="EmployeeMenuMenu" >
-         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
+      <Menu.Menu style={styles.container}>
+         <Menu.Item style={styles.name} onClick={() => this.toggleDisplay(display)}>
               {employee && name} &nbsp; &nbsp; <EditEmployeeModal Modal open={false} employee = {employee} usertag = {usertag} employeeKey = {employeeKey}/>
          </Menu.Item>
-         <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white", fontStyle: "bold"}} onClick={() => this.toggleDisplay(display)}>
+         <Menu.Item style={styles.address} onClick={() => this.toggleDisplay(display)}>
               {display && employee && address}
          </Menu.Item>
             {display && employee && employee.emails && employee.emails.length>0 && this.displayEmailHeader ()}
@@ -140,6 +121,45 @@ toggleDisplay = (display) => {
      );
    }
 }
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+    marginTop: "0px",
+    marginBottom: "0px",
+    paddingTop:"3px",
+    paddingBottom:"3px",
+  },
+  name: {
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    fontSize: "0.9em",
+    fontWeight: "normal",
+    color: "black",
+    opacity: 1.0,
+  },
+  address: {
+    paddingTop: "4px",
+    paddingBottom: "4px",
+    fontSize: "0.9em",
+    fontWeight: "normal",
+    color: "black",
+    opacity: 1.0,
+  },
+  email: {
+    paddingTop: "5px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "normal",
+    color: "black",
+    opacity: 1.0,
+  },
+};
+
 //export default Employee;
 const mapStateToProps = state => ({
      usertag: state.user.usertag

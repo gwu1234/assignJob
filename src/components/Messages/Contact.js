@@ -41,13 +41,7 @@ class Contact extends React.Component {
     emails.map(email => (
       <Menu.Item
         key={email}
-        style={{
-            opacity: "1.0",
-            fontSize: "0.7em",
-            color: "white",
-            marginLeft: "2.0em",
-            visibility: 'visible'
-        }}
+        style = {styles.email}
       >
         {email}
       </Menu.Item>
@@ -58,8 +52,7 @@ class Contact extends React.Component {
           name='emails'
         >
           <Header
-              as='h4'
-              style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+            style = {styles.email}
           >
               emails:
           </Header>
@@ -71,10 +64,9 @@ class Contact extends React.Component {
             name="phones"
           >
             <Header
-                as='h4'
-                style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+                style = {styles.email}
             >
-                phones
+                phones:
             </Header>
           </Menu.Item>
         );
@@ -84,12 +76,7 @@ class Contact extends React.Component {
       phones.map(phone => (
         <Menu.Item
           key={phone}
-          style={{
-              opacity: "1.0",
-              fontSize: "0.7em",
-              color: "white",
-              marginLeft: "2.0em"
-          }}
+          style = {styles.email}
         >
           {phone}
         </Menu.Item>
@@ -100,8 +87,7 @@ class Contact extends React.Component {
               name="cells"
             >
               <Header
-                  as='h4'
-                  style={{opacity: 1.0, fontSize: "0.8em",fontStyle: "bold", color: "white"}}
+                  style = {styles.email}
               >
                   cells:
               </Header>
@@ -113,12 +99,7 @@ class Contact extends React.Component {
         cells.map(cell => (
           <Menu.Item
             key={cell}
-            style={{
-                opacity: "1.0",
-                fontSize: "0.7em",
-                color: "white",
-                marginLeft: "2.0em"
-            }}
+            style = {styles.email}
           >
             {cell}
           </Menu.Item>
@@ -170,29 +151,97 @@ class Contact extends React.Component {
     }
 
     return (
-      <Menu.Menu className="ContactMenuMenu" >
-            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+      <Menu.Menu style={styles.container} >
+            <Menu.Header style={styles.menuHeader}>
                 {titleString}
             </Menu.Header>
-          <Menu.Menu style = {{visibility: "visible"}}>
-          <Menu.Item style={{opacity: 1.0, fontSize: "0.8em",color: "white"}}>
+          <Menu.Menu style = {styles.menuMenu}>
+          <Menu.Item style={styles.address}>
                {contact && address}
           </Menu.Item>
+          <Menu.Menu style = {styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (true)}
             {contact && contact.emails && contact.emails.length>0 && this.displayEmails (contact.emails)}
+          </Menu.Menu>
+          <Menu.Menu style = {styles.emailMenu}>
             {contact && contact.phones && contact.phones.length>0 && this.displayPhoneHeader (true)}
             {contact && contact.phones && contact.phones.length>0 && this.displayPhones (contact.phones)}
+          </Menu.Menu>
             {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (true)}
             {contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
-            {contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"white", border: '1px dotted white'}}>
+          <Menu.Menu style = {styles.emailMenu}>
+            {contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"black"}}>
                        <span> {modalTitle} </span>
                        <EditContactModal contact = {contact} usertag = {usertag} french={french}/>
                        </Menu.Item> }
+           </Menu.Menu>
           </Menu.Menu>
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "7%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "93%",
+  },
+  address: {
+    paddingTop: "20px",
+    paddingBottom: "10px",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
+  emailMenu: {
+    paddingTop: "20px",
+    paddingBottom: "10px",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
+  email: {
+    paddingTop: "5px",
+    paddingBottom: "2px",
+    fontSize: "1.0em",
+    fontWeight: "normal",
+    color: "black",
+    opacity: 1.0,
+  },
+  editItem: {
+    paddingTop: "20px",
+    paddingBottom: "2px",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
+};
 
 const mapStateToProps = state => {
   const reposData = state.user.reposData;
