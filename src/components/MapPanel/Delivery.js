@@ -59,27 +59,51 @@ class Delivery extends React.Component {
     //                 (delivery.linkedOrderKey && delivery.linkedOrderKey === activeOrderKey) ;
 
     return (
-      <Menu.Menu className ="DeliveryMenuMenu"
-                 style = {isActive? {backgroundColor:"blue"}: {} }>
-          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}}>
+      <Menu.Menu style = {isActive? {...styles.container, ...styles.active}: styles.container }>
+          {date && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
               <span> {date} </span> <EditDeliveryModal delivery={delivery} deliveryKey={deliveryKey} />
           </Menu.Item>}
-          {work && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-               marginTop:"0px", paddingTop:"0px",
-               marginBottom:"0px", paddingBottom:"0px"}} >
+          {work && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {work}
           </Menu.Item>}
-          {employee && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}} >
+          {employee && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {employee}
           </Menu.Item>}
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    position: "relative",
+    borderStyle:"solid",
+    borderWidth:"3px",
+    borderColor:"#b0caf4",
+    height:"70px",
+  },
+  active: {
+    backgroundColor: "rgba(0,0,255,0.5)",
+  },
+  item: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+  },
+  activeItem: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "white",
+    opacity: 1.0,
+  },
+};
 
 const mapStateToProps = state => {
   const reposData = state.user.reposData;

@@ -170,41 +170,74 @@ class WorkOrder extends React.Component {
     const isActive = order.isActive === true || order.isActive === "true";
 
     return (
-      <Menu.Menu className ="OrderMenuMenu"
-                 style = {isActive?
-                              thumbs.length> 0? {height:"130px", backgroundColor:"blue"}:
-                              {height:"70px", backgroundColor:"blue"}
-                              :
-                              thumbs.length> 0? {height:"130px"}: {}
-                          }>
-          {orderDate && <Menu.Item
-               style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-               marginTop:"0px", paddingTop:"0px",
-               marginBottom:"0px", paddingBottom:"0px"}}>
+      <Menu.Menu style = {isActive?
+            thumbs.length> 0? {...styles.container, ...styles.active, ...styles.thumb}:
+            {...styles.container, ...styles.active}
+            :
+            thumbs.length> 0? {...styles.container, ...styles.thumb}: {...styles.container}
+      }>
+          {orderDate && <Menu.Item style = {isActive? styles.activeItem:styles.item}>
               <span> Date: {orderDate} </span> <EditOrderModal order={order} orderKey={orderKey} />
           </Menu.Item>}
-          {orderWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-               marginTop:"0px", paddingTop:"0px",
-               marginBottom:"0px", paddingBottom:"0px"}} >
+          {orderWork && <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
               Work: {orderWork}
           </Menu.Item>}
-          {status && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-               marginTop:"0px", paddingTop:"0px",
-               marginBottom:"0px", paddingBottom:"0px"}} >
+          {status && <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
               Status: {status}
           </Menu.Item>}
-          {thumbs.length > 0 && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-               marginTop:"0px", paddingTop:"0px",
-               marginBottom:"0px", paddingBottom:"0px"}} >
+          {thumbs.length > 0 && <Menu.Item style = {isActive? styles.activeItem:styles.item }>
                photos: {thumbs.length}
           </Menu.Item>}
-          {thumbs.length > 0 && <Image.Group size='mini' style={{marginTop:"15px", marginLeft:"15px"}}>
+          {thumbs.length > 0 && <Menu style={styles.picMenu}k>
                {this.displayThumbs(thumbs)}
-          </Image.Group>}
+        </Menu>}
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    position: "relative",
+    borderStyle:"solid",
+    borderWidth:"3px",
+    borderColor:"#b0caf4",
+    height:"70px",
+  },
+  active: {
+    backgroundColor: "rgba(0,0,255,0.5)",
+  },
+  thumb: {
+    height:"150px",
+  },
+  item: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+  },
+  activeItem: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "white",
+    opacity: 1.0,
+  },
+  picMenu: {
+    width:"90%",
+    position: "relative",
+    marginTop:"10px",
+    marginLeft:"15px",
+    marginRight:"20px",
+    overflow: "scroll",
+    backgroundColor: "#ed9476",
+  },
+};
 
 const mapStateToProps = state => ({
      //activeOrderId: state.user.activeOrderId,

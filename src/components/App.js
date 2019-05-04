@@ -38,7 +38,7 @@ class App extends React.Component {
     //console.log("App clientView  = " + clientView);
 
     return (
-      <Grid className ="app" style={{width: "100%", backgroundImage: `url(${Background})`}}>
+      <Grid style={styles.container}>
         <TopPanel/>
         {admin && !mapView && !companyInfoView && !clientView && !clientContactView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
@@ -174,55 +174,51 @@ class App extends React.Component {
           </Grid.Row>}
 
         {!admin && !mapView && !companyInfoView && clientView && !clientContactView &&
-          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
-                <Grid.Column style=
-                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
+          <Grid.Row style={styles.mainRow}>
+                <Grid.Column style={styles.leftColumn}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%", height:"92vh"}}
+                       style={styles.MenuContainer}
                      >
                        <Clients/>
                      </Menu>
                 </Grid.Column>
-                <Grid.Column style=
-                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
+                <Grid.Column style={styles.middleColumn}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                       style={styles.MenuContainer}
                      >
                      <WorkOrders />
                      <Contracts />
 
                      </Menu>
                 </Grid.Column>
-                <Grid.Column style=
-                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
+                <Grid.Column style={styles.middleColumn}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                       style={styles.MenuContainer}
                      >
                      <Invoices />
                      <Payments />
 
                      </Menu>
                 </Grid.Column>
-                <Grid.Column style=
-                     {{width: "25%", height:"100%", margin:"0px", padding:"0px"}}>
+                <Grid.Column style={styles.rightColumn}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                       style={styles.MenuContainer}
                      >
                       <Deliverys />
                      </Menu>
@@ -237,7 +233,7 @@ class App extends React.Component {
                   inverted
                   floated
                   vertical
-                  style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
+                  style={{ background: "#F2D79F", fontSize: "1.2rem", width:"100%",
                        height:"100%", margin:"0px", padding:"0px"}}>
                       <UserList currentUser={currentUser} />
                   </Menu>
@@ -371,6 +367,52 @@ class App extends React.Component {
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "100vh",
+    width: "100vw",
+    background: "#92c2e8",
+    padding: "0.0em",
+    backgroundImage: `url(${Background})`,
+  },
+  mainRow: {
+    width: "100vw",
+    height:"92vh",
+    margin:"0px",
+    padding:"0px",
+    marginTop:"3px",
+  },
+  leftColumn: {
+    width: "24.8%",
+    height:"100%",
+    margin:"0px",
+    padding:"0px",
+    marginRight:"1px",
+  },
+  rightColumn: {
+    width: "24.8%",
+    height:"100%",
+    margin:"0px",
+    padding:"0px",
+    marginLeft:"1px",
+  },
+  middleColumn: {
+    width: "24.8%",
+    height:"100%",
+    margin:"0px",
+    padding:"0px",
+    marginLeft:"2px",
+    marginRight:"2px",    
+  },
+  MenuContainer: {
+    background: "#f2f5f7",
+    padding: "2px",
+    width:"100%",
+    height:"100%",
+    backgroundImage: `url(${Background})`,
+  },
+};
 
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser,

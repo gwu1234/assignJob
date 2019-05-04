@@ -44,7 +44,7 @@ componentWillUnMount() {
 
     return (
       <Modal
-        trigger={<Image src={photoUrl}  key={photoTag} style={{height:"40px", width:"40px"}} onClick={() => this.handleOpen(true)}/>}
+        trigger={<Image src={photoUrl}  key={photoTag} style={{height:"40px", width:"40px", margin:"5px"}} onClick={() => this.handleOpen(true)}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic

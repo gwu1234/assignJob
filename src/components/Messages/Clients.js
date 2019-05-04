@@ -204,20 +204,39 @@ class Clients extends React.Component {
     //}
 
     return (
-      <Menu.Menu className ="ClientsMenuMenu" style={{height:"92vh"}}>
-            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+      <Menu.Menu style={styles.container}>
+            <Menu.Header style={styles.menuHeader}>
                 {titleString}
                 <AddClientModal open={false} userName={userName} usertag = {usertag}/>
             </Menu.Header>
-          <Menu.Menu style={{visibility: "visible", paddingTop: "0.0em", position: "relative",
-                             color: "white",size: "tiny",
-                             overflow: "scroll", height: "84vh"}} >
+          <Menu.Menu style={styles.menuMenu} >
               {display && clientArray.length>0 && this.displayClients(clientArray)}
           </Menu.Menu>
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "7%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "93%",
+  },
+};
 
 const mapStateToProps = state => {
   /*const reposData = state.user.reposData;

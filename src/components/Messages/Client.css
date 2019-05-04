@@ -2,9 +2,11 @@
   padding-top: 0.2em;
   padding-bottom: 0.1em;
   position: relative;
-  color: white;
+  color: black;
   size: tiny;
-  border: 1px dotted brown;
+  border-style:solid;
+  border-width:2px;
+  border-color:#b0caf4;
 }
 
 .ClientMenuItem {

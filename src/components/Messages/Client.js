@@ -224,26 +224,15 @@ class Client extends React.Component {
     }
 
     return (
-      <Menu.Menu className="ClientMenuMenu">
+      <Menu.Menu style={styles.container}>
          <Menu.Item style = {selectedClientKey===clientKey?
-                 {opacity: 1.0, color: "white", fontSize: "0.9em",
-                 fontStyle: "bold", backgroundColor:"blue",
-                 marginTop:"0px", paddingTop:"0px",
-                 marginBottom:"0px", paddingBottom:"0px"}
-                 :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal",
-                  marginTop:"0px", paddingTop:"0px",
-                  marginBottom:"0px", paddingBottom:"0px"}}
+                 styles.selectedName : styles.notselectedName}
               onClick={() => this.onButtonClick()}>
               {client && name}
          </Menu.Item>
          <Menu.Item
               style = {selectedClientKey===clientKey?
-                      {opacity: 1.0, color: "white", fontSize: "0.9em", fontStyle: "bold", backgroundColor:"blue",
-                      marginTop:"0px", paddingTop:"0px",
-                      marginBottom:"0px", paddingBottom:"0px"}
-                      :{opacity: 1.0, color: "white", fontSize: "0.8em", fontStyle: "normal",
-                      marginTop:"0px", paddingTop:"0px",
-                      marginBottom:"0px", paddingBottom:"0px"}}
+                      styles.selectedCity : styles.notselectedCity}
                       onClick={() => this.onButtonClick()}>
               {client && city }
          </Menu.Item>
@@ -251,6 +240,53 @@ class Client extends React.Component {
      );
    }
 }
+
+const styles = {
+  container: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    position: "relative",
+    borderStyle:"solid",
+    borderWidth:"2px",
+    borderColor:"#b0caf4",
+  },
+  selectedName: {
+    opacity: 1.0,
+    color: "white",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    backgroundColor:"rgba(0,0,255,0.5)",
+    paddingTop:"2px",
+    paddingBottom:"2px",
+    paddingLeft: "15px"
+  },
+  notselectedName: {
+    opacity: 1.0,
+    color: "black",
+    fontSize: "1.0em",
+    fontWeight: "bold",
+    paddingTop:"2px",
+    paddingBottom:"2px",
+    paddingLeft: "15px"
+  },
+  selectedCity: {
+    opacity: 1.0,
+    color: "white",
+    fontSize: "0.8em",
+    fontWeight: "normal",
+    backgroundColor:"rgba(0,0,255,0.5)",
+    paddingTop: "1px",
+    paddingLeft: "15px"
+  },
+  notselectedCity: {
+    opacity: 1.0,
+    color: "black",
+    fontSize: "0.8em",
+    fontStyle: "normal",
+    paddingTop: "1px",
+    paddingLeft: "15px"
+  },
+};
 
 //export default Client;
 const mapStateToProps = state => ({

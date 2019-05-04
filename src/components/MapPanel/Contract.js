@@ -144,29 +144,52 @@ class Contract extends React.Component {
     //}
 
     return (
-      <Menu.Menu className ="ContractMenuMenu"
-                 style = {isActive===true? {backgroundColor:"blue"}:
-                          {} }>
-          {contractDate && <Menu.Item
-              style = {{ opacity:1.0,fontSize:"0.8em",color:"white",
-                         marginTop:"0px", paddingTop:"0px",
-                         marginBottom:"0px", paddingBottom:"0px" }}>
+      <Menu.Menu style = {isActive===true? {...styles.container, ...styles.active}:
+                          styles.container}>
+          {contractDate && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
               <span> {contractDate} </span> <EditContractModal contract={contract} contractKey={contractKey} />
           </Menu.Item>}
-          {contractWork && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}} >
+          {contractWork && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {contractWork}
           </Menu.Item>}
-          {price && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-             marginTop:"0px", paddingTop:"0px",
-             marginBottom:"0px", paddingBottom:"0px"}} >
+          {price && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {price}
           </Menu.Item>}
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    position: "relative",
+    borderStyle:"solid",
+    borderWidth:"3px",
+    borderColor:"#b0caf4",
+    height:"70px",
+  },
+  active: {
+    backgroundColor: "rgba(0,0,255,0.5)",
+  },
+  item: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+  },
+  activeItem: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "white",
+    opacity: 1.0,
+  },
+};
 
 const mapStateToProps = state => {
   const reposData = state.user.reposData;
@@ -189,6 +212,8 @@ const mapStateToProps = state => {
      //activeOrderKey: state.user.activeOrderKey,
   // }
 };
+
+
 
 export default connect(
   mapStateToProps,

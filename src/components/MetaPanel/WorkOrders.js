@@ -83,22 +83,42 @@ class WorkOrders extends React.Component {
 
 
     return (
-      <Menu.Menu className ="OrdersMenuMenu" style={{marginBottom:"0.4em"}}>
-            <Menu.Header as="h5" style={{textAlign:"center", top:"0em", paddingTop:'0em'}}>
+      <Menu.Menu style={styles.container}>
+            <Menu.Header style={styles.menuHeader}>
             {titleString}
             </Menu.Header>
-          <Menu.Menu style={{visibility: "visible",paddingTop: "0.0em",position: "relative",
-                     color: "white", size: "tiny", overflow: "scroll",
-                     height: "37vh"}} >
+          <Menu.Menu style={styles.menuMenu} >
               {orders && this.displayOrders(orderArray)}
-              <Menu.Item style={{margin:"1em"}}>
-                  <span style={{color:"white", fontStyle:"bold"}}> add new order</span> <AddOrderModal />
+              <Menu.Item style={{margin:"2px"}}>
+                  <span style={{color:"black", fontWeight:"bold"}}> add new order</span> <AddOrderModal />
               </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "49.6%",
+    background: "#92c2e8",
+    marginBottom:"3px",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "15%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "85%",
+  },
+};
 
 const mapStateToProps = state => {
   const reposData = state.user.reposData;
