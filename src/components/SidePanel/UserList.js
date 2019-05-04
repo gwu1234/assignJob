@@ -169,7 +169,9 @@ class UserList extends React.Component {
         name = {user.name}
         style={{
             opacity: "1.0",
-            fontSize: "0.8em",
+            fontSize: "0.9em",
+            color: "black",
+            fontWeight: "bold",
         }}
         active={user.tag === this.state.activeUser}
       >
@@ -187,15 +189,38 @@ class UserList extends React.Component {
        titleString = "compagne liste";
     }
     return (
-        <Menu.Menu className = "MenuMenu" >
-           <Menu.Header as="h5" className="MenuHeader">
+        <Menu.Menu style={styles.container} >
+           <Menu.Header style={styles.menuHeader}>
               <span> {titleString} </span>
            </Menu.Header>
+           <Menu.Menu style={styles.menuMenu}>
            {this.displayUsers(users)}
+           </Menu.Menu>
         </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    height: "100%",
+    background: "#92c2e8",
+  },
+  menuHeader: {
+    paddingTop:"8px",
+    paddingBottom: "8px",
+    textAlign: "center",
+    color: "black",
+    fontSize:"1.2em",
+    fontWeight:"bold",
+    height: "7%",
+  },
+  menuMenu: {
+    position: "relative",
+    overflow: "scroll",
+    height: "93%",
+  },
+};
 
 const mapStateToProps = state => ({
    french: state.user.french,

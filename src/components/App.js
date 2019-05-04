@@ -48,8 +48,7 @@ class App extends React.Component {
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
-                         height:"100%", margin:"0px", padding:"0px"}}>
+                   style={{ width:"100%", height:"100%", margin:"0px", padding:"0px"}}>
                        <UserList currentUser={currentUser} />
                  </Menu>
             </Grid.Column>
@@ -63,8 +62,7 @@ class App extends React.Component {
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
-                         height:"100%", margin:"0px", padding:"0px"}}>
+                   style={{ width:"100%", height:"100%", margin:"0px", padding:"0px"}}>
                        <UserList currentUser={currentUser} />
                  </Menu>
             </Grid.Column>
@@ -75,50 +73,46 @@ class App extends React.Component {
         </Grid.Row>}
 
         {admin && !mapView && companyInfoView && !clientView && !clientContactView &&
-          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
-            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"88%"}}>
+          <Grid.Row style={styles.mainRow}>
+            <Grid.Column style={{...styles.column, width:"12%"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
-                         height:"100%", margin:"0px", padding:"0px"}}>
+                   style={{ width:"100%",padding:"0px"}}>
                        <UserList currentUser={currentUser} />
                  </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                 {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"29.1%"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{  padding: "0.1em", width:"100%"}}
                  >
                    <Contact />
                  </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                 {{width: "30%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"29.1%"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{ padding: "0.1em", width:"100%"}}
                  >
                    <Employees/>
                  </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                 {{width: "29%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"29.1%"}}>
                  <Menu
                    size="large"
                    inverted
                    floated
                    vertical
-                   style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                   style={{ padding: "0.1em", width:"100%"}}
                  >
                     <Trucks/>
                  </Menu>
@@ -126,7 +120,7 @@ class App extends React.Component {
         </Grid.Row>}
 
         {!admin && !mapView && companyInfoView && !clientView && !clientContactView &&
-          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+          <Grid.Row style={styles.mainRow}>
             <Grid.Column style=
                  {{width: "32.8%", height:"100%", marginRight:"3px", padding:"0px"}}>
                  <Menu
@@ -226,66 +220,61 @@ class App extends React.Component {
             </Grid.Row>}
 
        {admin && !mapView && !companyInfoView && clientView && !clientContactView &&
-         <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
-            <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
+         <Grid.Row style={styles.mainRow}>
+            <Grid.Column style={{...styles.column, width:"11.2%"}}>
                 <Menu
                   size="large"
                   inverted
                   floated
                   vertical
-                  style={{ background: "#F2D79F", fontSize: "1.2rem", width:"100%",
-                       height:"100%", margin:"0px", padding:"0px"}}>
+                  style={{ padding: "0.1em", width:"100%", height:"100%"}}>
                       <UserList currentUser={currentUser} />
                   </Menu>
             </Grid.Column>
 
-            <Grid.Column style=
-                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"22%"}}>
                   <Menu
                      size="large"
                      inverted
                      floated
                      vertical
-                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
                    >
                        <Clients/>
                    </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"22%"}}>
                   <Menu
                      size="large"
                      inverted
                      floated
                      vertical
-                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
                    >
                    <WorkOrders />
                    <Contracts />
 
                   </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                  {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"22%"}}>
                   <Menu
                      size="large"
                      inverted
                      floated
                      vertical
-                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
                    >
                    <Invoices />
                    <Payments />
                   </Menu>
             </Grid.Column>
-            <Grid.Column style=
-                         {{width: "22%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.column, width:"22%"}}>
                   <Menu
                       size="large"
                       inverted
                       floated
                       vertical
-                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                      style={{ padding: "0.1em", width:"100%", height:"100%"}}
                   >
                         <Deliverys />
                   </Menu>
@@ -323,15 +312,14 @@ class App extends React.Component {
             </Grid.Row>}
 
         {admin && !mapView && !companyInfoView && !clientView && clientContactView &&
-         <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
+         <Grid.Row style={styles.mainRow}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                 <Menu
                   size="large"
                   inverted
                   floated
                   vertical
-                  style={{ background: "#4c3c4c", fontSize: "1.2rem", width:"100%",
-                       height:"100%", margin:"0px", padding:"0px"}}>
+                  style={{ padding: "0.1em", width:"100%", height:"100%"}}>
                       <UserList currentUser={currentUser} />
                   </Menu>
             </Grid.Column>
@@ -343,7 +331,7 @@ class App extends React.Component {
                      inverted
                      floated
                      vertical
-                     style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
                    >
                        <Clients/>
                    </Menu>
@@ -356,7 +344,7 @@ class App extends React.Component {
                       inverted
                       floated
                       vertical
-                      style={{ background: "#4c3c4c", fontSize: "1.2rem" , padding: "0.1em", width:"100%"}}
+                      style={{ padding: "0.1em", width:"100%", height:"100%"}}
                   >
                         <ClientContact />
                   </Menu>
@@ -404,6 +392,13 @@ const styles = {
     padding:"0px",
     marginLeft:"2px",
     marginRight:"2px",
+  },
+  column: {
+    height:"100%",
+    margin:"0px",
+    padding:"0px",
+    marginLeft:"1px",
+    marginRight:"1px",
   },
   MenuContainer: {
     padding: "2px",
