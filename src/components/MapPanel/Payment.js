@@ -9,10 +9,10 @@ import EditPaymentModal from "./EditPaymentModal";
 class Payment extends React.Component {
 
    state = {
-     contractStyle: {
-       visibility: 'hidden',
-       height: "2px",
-     },
+     //contractStyle: {
+    //   visibility: 'hidden',
+    //   height: "2px",
+    // },
      //display: false,
    };
 
@@ -61,27 +61,52 @@ class Payment extends React.Component {
     //                 (payment.linkedInvoiceKey && payment.linkedInvoiceKey === activeInvoiceKey) ;
 
     return (
-      <Menu.Menu className ="PaymentMenuMenu"
-                 style = {isActive? {backgroundColor:"blue"}:{} }>
-          {date && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}}>
+      <Menu.Menu style = {isActive===true? {...styles.container, ...styles.active}:
+                          styles.container}>
+          {date && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
               <span> {date} </span> <EditPaymentModal payment={payment} paymentKey={paymentKey} />
           </Menu.Item>}
-          {amount && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}} >
+          {amount && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {amount}
           </Menu.Item>}
-          {method && <Menu.Item style = {{opacity:1.0,fontSize:"0.8em",color:"white",
-              marginTop:"0px", paddingTop:"0px",
-              marginBottom:"0px", paddingBottom:"0px"}} >
+          {method && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {method}
           </Menu.Item>}
       </Menu.Menu>
     );
   }
 }
+
+const styles = {
+  container: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    position: "relative",
+    borderStyle:"solid",
+    borderWidth:"3px",
+    borderColor:"#b0caf4",
+    height:"70px",
+  },
+  active: {
+    backgroundColor: "rgba(0,0,255,0.5)",
+  },
+  item: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "black",
+    opacity: 1.0,
+  },
+  activeItem: {
+    paddingTop: "1px",
+    paddingBottom: "2px",
+    fontSize: "0.9em",
+    fontWeight: "bold",
+    color: "white",
+    opacity: 1.0,
+  },
+};
 
 const mapStateToProps = state => {
   const reposData = state.user.reposData;

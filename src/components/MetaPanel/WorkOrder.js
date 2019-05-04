@@ -235,7 +235,7 @@ const styles = {
     marginLeft:"15px",
     marginRight:"20px",
     overflow: "scroll",
-    backgroundColor: "#ed9476",
+    backgroundColor: "rgba(0,0,255,0.1)",
   },
 };
 
