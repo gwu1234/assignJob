@@ -1,4 +1,4 @@
-import React, { Component, View, Text,  } from 'react';
+import React, { Component, View, Text } from 'react';
 import { GoogleApiWrapper, Marker } from 'google-maps-react';
 //import { GiCircle } from "react-icons/gi";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
 import MapAssignModal from './MapAssign';
-import {Button, Icon, Dropdown} from 'semantic-ui-react';
+import {Button, Icon, Dropdown, Header} from 'semantic-ui-react';
 //import svgMarker from './svgMarker';
 
 const JOB_NOT_ACTIVE = 0;
@@ -62,9 +62,9 @@ class MapContainer extends Component {
   }
 
   onMarkerClick = (props, marker, e) =>{
-    //console.log("onMarkerClick");
-    //console.log(marker);
-    //console.log (props);
+    console.log("onMarkerClick");
+    console.log(marker);
+    console.log (props);
 
     this.setState({
       selectedPlace: props,
@@ -397,8 +397,8 @@ class MapContainer extends Component {
                           street = {marker.street}
                           type = {marker.type}
                           city={marker.city}
-                          employeeLat={marker.lat}
-                          employeeLng={marker.lng}
+                          employeeLat={marker.pos.lat}
+                          employeeLng={marker.pos.lng}
                           icon = {{
                               url: image,
                               scaledSize: { width: 15, height: 15 }
@@ -414,35 +414,15 @@ class MapContainer extends Component {
                      onClose={this.onClose} >
                      <div>
                          <div>
-                             <Text>{this.state.selectedPlace.name}</Text>
-                             {this.state.selectedPlace.street &&
-                                   <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
-                                       {this.state.selectedPlace.street} </span>}
-                             {this.state.selectedPlace.city &&
-                                   <span style={{fontSize:"1.0em", fontStyle:"bold", color:"black"}}>
-                                       {this.state.selectedPlace.city} </span>}
+                             <p style={styles.calloutName}>{this.state.selectedPlace.name}</p>
+                              <span style={styles.calloutAddress}>
+                             {this.state.selectedPlace.street} , &nbsp;
+                             {this.state.selectedPlace.city} </span>
                          </div>
                          <div style={{marginTop: "2.0em"}}>
                               <Button icon size="mini" color="green" onClick={this.onClose}>
                                   <Icon name='cancel' size ="large"/> Close
                               </Button>
-                         </div>
-                         <div>
-                            {!this.state.selectedPlace.isAssigned && <h5> &nbsp;</h5>}
-                            {!this.state.selectedPlace.isAssigned &&
-                              this.state.selectedPlace.type !== EMPLOYEE_MARKER &&
-                                <MapAssignModal
-                                     clientKey={this.state.selectedPlace.clientKey}
-                                     clientName={this.state.selectedPlace.name}
-                                     clientStreet={this.state.selectedPlace.clientStreet}
-                                     clientCity={this.state.selectedPlace.clientCity}
-                                     clientPostcode={this.state.selectedPlace.clientPostcode}
-                                     clientLat={this.state.selectedPlace.clientLat}
-                                     clientLng={this.state.selectedPlace.clientLng}
-                                     usertag={usertag}
-                                     employees={employees}
-                                     onClose={()=>this.onClose()}
-                                    />}
                          </div>
                      </div>
               </InfoWindowEx> }

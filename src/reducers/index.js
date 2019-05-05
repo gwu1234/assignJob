@@ -312,6 +312,7 @@ const user_reducer = (state = initialUserState, action) => {
 
                 type: EMPLOYEE_MARKER
             }
+            console.log(marker);
            employeeMarkers.push(marker);
       }
 
