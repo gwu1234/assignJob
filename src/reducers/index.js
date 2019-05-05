@@ -36,7 +36,7 @@ const initialUserState = {
   //deliverys: null,
   //invoices: null,
   selectedEmployee: null,
-  repeathours: 5,
+  //repeathours: 5,
   french: false,
   //trucks: [],
   badAccess: false,
@@ -364,13 +364,13 @@ const user_reducer = (state = initialUserState, action) => {
                     companyInfoView: false,
         };
 
-    case actionTypes.SET_REPEAT_HOURS:
+    /*case actionTypes.SET_REPEAT_HOURS:
      //console.log("at reducer = ::");
      //console.log (action.payload.repeathours);
             return {
                    ...state,
                    repeathours: action.payload.repeathours
-      };
+      };*/
     case actionTypes.SET_FRENCH:
             return {
                    ...state,

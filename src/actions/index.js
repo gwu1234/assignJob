@@ -242,14 +242,14 @@ export const setUnassignedClient = () => {
   }
 }
 
-export const setRepeatHours= repeathours => {
+/*export const setRepeatHours= repeathours => {
   return {
     type: actionTypes.SET_REPEAT_HOURS,
     payload: {
       repeathours: repeathours
     }
   }
-}
+}*/
 //export const SET_FRENCH= "SET_FRENCH";
 export const setFrench = french => {
   return {

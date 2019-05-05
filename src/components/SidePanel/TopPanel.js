@@ -74,15 +74,15 @@ class TopPanel extends React.Component {
          return [];
       }
 
-      const repeattimer= {
-        key: "repeathour",
-        text: <RepeatModal french={french}/>
-      }
+      //const repeattimer= {
+      //  key: "repeathour",
+      //  text: <RepeatModal french={french}/>
+      //}
       const datareader= {
         key: "datareader",
         text: <InputFileReader usertag={this.props.usertag} french={french}/>
       }
-      optionArray.push(repeattimer);
+      //optionArray.push(repeattimer);
       optionArray.push(datareader);
       return optionArray;
    }

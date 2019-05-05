@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button, Header, Modal, Form} from 'semantic-ui-react';
-import {setRepeatHours} from "../../actions";
+//import {setRepeatHours} from "../../actions";
 // 10 seconds
 //const TIMER_INTERVAL = 3;
 
@@ -68,7 +68,7 @@ class RepeatModal extends Component {
     if (this.isFormValid()) {
        //this.setState({ modalOpen: false })
        const {repeathour} = this.state;
-       this.props.setRepeatHours(repeathour);
+       //this.props.setRepeatHours(repeathour);
        this.handleClose();
     }
   };
@@ -151,7 +151,9 @@ class RepeatModal extends Component {
 //   }
 //);
 
-export default connect(
-  null,
-  {setRepeatHours}
-)(RepeatModal);
+//export default connect(
+//  null,
+//  {setRepeatHours}
+//)(RepeatModal);
+
+export default RepeatModal;
