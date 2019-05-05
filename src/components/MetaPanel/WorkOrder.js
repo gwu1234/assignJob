@@ -19,7 +19,7 @@ class WorkOrder extends React.Component {
      work: null,
      isRepeat: null,
      repeatTimes: null,
-     deliverys: null,
+     deliveryTimes: null,
      thumbPath: null,
      photoPath: null,
      thumbs: [],
@@ -27,28 +27,37 @@ class WorkOrder extends React.Component {
    };
 
    componentDidMount() {
-     const { usertag, order} = this.props;
+     const { usertag, order, deliverys} = this.props;
      const {clientTag, orderKey, photo} = order;
      let {thumbs} = this.state;
      //const {order} = this.props;
      //const {photo} = order;
 
-     console.log(photo);
+     //console.log(photo);
+     let deliveryTimes = 0 ;
+     for (var key in deliverys) {
+        if (orderKey === deliverys[key].linkedOrderKey) {
+           deliveryTimes ++;
+        }
+     }
 
      const isRepeat = order.isRepeat?(order.isRepeat==="true"?true:false):false;
-     const previousDelivery = order.previousDelivery?parseInt (order.previousDelivery):0 ;
-     const presentDelivery = order.presentDelivery? parseInt (order.presentDelivery):0 ;
-     const deliverys = previousDelivery + presentDelivery;
-     const repeatTimes = order.repeatTimes?parseInt (order.repeatTimes):0;
+     //const previousDelivery = order.previousDelivery?parseInt (order.previousDelivery):0 ;
+     //const presentDelivery = order.presentDelivery? parseInt (order.presentDelivery):0 ;
+     //const deliverys = previousDelivery + presentDelivery;
+     let repeatTimes = 0;
+     if (order.repeatTimes !== "undefined") {
+        repeatTimes = order.repeatTimes?parseInt(order.repeatTimes):0;
+     }
 
      let status = "NEW";
      if (isRepeat){
-       if (deliverys >= repeatTimes) {
+       if (deliveryTimes >= repeatTimes) {
          status = "DONE";
-       } else if (deliverys > 0) {
+       } else if (deliveryTimes > 0) {
          status = "PROGRESS";
        }
-     } else if (deliverys >=1) {
+     } else if (deliveryTimes >=1) {
         status = "DONE";
      }
 
@@ -58,7 +67,7 @@ class WorkOrder extends React.Component {
           work: order.work,
           isRepeat: isRepeat,
           repeatTimes: repeatTimes,
-          deliverys: deliverys,
+          deliveryTimes: deliveryTimes,
           status: status,
       });
 
@@ -112,7 +121,7 @@ class WorkOrder extends React.Component {
        });
      };
 
-     this.setState ({
+     /*this.setState ({
           ...this.state,
           orderId: order.orderId,
           work: order.work,
@@ -121,7 +130,7 @@ class WorkOrder extends React.Component {
           deliverys: deliverys,
           status: status,
           //thumbs: thumbs,
-      });
+      });*/
   }
 
 
@@ -151,7 +160,7 @@ class WorkOrder extends React.Component {
 
   render() {
     const {order, orderKey} = this.props;
-    const {thumbs, status} = this.state;
+    const {thumbs, status, isRepeat, repeatTimes, deliveryTimes} = this.state;
     //console.log("Clients List = ");
     //console.log ("orderId in order = " + order["orderId"]);
     //console.log ("orderKey in order = " + order["orderKey"]);
@@ -182,6 +191,15 @@ class WorkOrder extends React.Component {
           {orderWork && <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
               Work: {orderWork}
           </Menu.Item>}
+          <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
+              Is Repeatable: {String(isRepeat)}
+          </Menu.Item>
+          <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
+              Repeat Time: {repeatTimes}
+          </Menu.Item>
+          <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
+              Delivery Time: {deliveryTimes}
+          </Menu.Item>
           {status && <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
               Status: {status}
           </Menu.Item>}
@@ -204,26 +222,26 @@ const styles = {
     borderStyle:"solid",
     borderWidth:"3px",
     borderColor:"#b0caf4",
-    height:"70px",
+    height:"95px",
   },
   active: {
     backgroundColor: "rgba(0,0,255,0.5)",
   },
   thumb: {
-    height:"150px",
+    height:"180px",
   },
   item: {
     paddingTop: "1px",
-    paddingBottom: "2px",
-    fontSize: "0.9em",
+    paddingBottom: "1px",
+    fontSize: "0.8em",
     fontWeight: "bold",
     color: "black",
     opacity: 1.0,
   },
   activeItem: {
     paddingTop: "1px",
-    paddingBottom: "2px",
-    fontSize: "0.9em",
+    paddingBottom: "1px",
+    fontSize: "0.8em",
     fontWeight: "bold",
     color: "white",
     opacity: 1.0,
@@ -239,11 +257,23 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({
-     //activeOrderId: state.user.activeOrderId,
-     //activeOrderKey: state.user.activeOrderKey,
+const mapStateToProps = state => {
+   const reposData = state.user.reposData;
+   const usertag = state.user.usertag;
+   const clienttag = state.user.clienttag;
+   let deliverys = null;
+   //console.log(clienttag);
+   if (clienttag) {
+       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+       if (reposData["clients"]["data"][clienttag]) {
+            deliverys = reposData["clients"]["data"][clienttag]?
+            reposData["clients"]["data"][clienttag]["deliverys"]: {};
+       }
    }
-);
+   return {
+     deliverys: deliverys,
+   }
+};
 
 export default connect(
   mapStateToProps,
