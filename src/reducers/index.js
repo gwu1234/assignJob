@@ -488,13 +488,17 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
            const {contact, workorders, deliverys} = allClientData[dataKey];
            statusArray.length = 0; // clear array
            activeOrderAccount = 0;
-
+           //let statusArray = [];
+           //let activeOrders = 0;
+           let deliveryTimes = 0;
+           let orders = [];
            // step 1: find active workorders for this clients
            for (var workKey in workorders) {
               let {isActive, isRepeat, repeatTimes, isEmployeeAssigned} = workorders[workKey];
               isActive = isActive? (isActive === "true"? true: false) : false;
               isRepeat = isRepeat? (isRepeat === "true"? true: false) : false;
-              repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+              repeatTimes = repeatTimes? (repeatTimes === "undefined" ?
+                                           parseInt(repeatTimes, 10): 0) : 0;
               isEmployeeAssigned = isEmployeeAssigned? (isEmployeeAssigned === "true"? true: false) : false;
 
               // ignore not active work orders and ignore assigned order
@@ -519,19 +523,36 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                  }
               }
 
+              let orderStatus = JOB_NEW;
               if (!isRepeat && deliveryTimes > 0) {
-                 //status = JOB_DONE;
-                 statusArray.push(JOB_DONE);
+                 orderStatus = JOB_DONE;
+                 statusArray.push(orderStatus);
               } else if (isRepeat && repeatTimes === 0) {
-                 statusArray.push(JOB_NEW);
+                 //statusArray.push(JOB_NEW);
+                 orderStatus = JOB_NEW;
+                 statusArray.push(orderStatus);
               } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
-                 statusArray.push(JOB_DONE);
+                 //statusArray.push(JOB_DONE);
+                 orderStatus = JOB_DONE;
+                 statusArray.push(orderStatus);
               } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
-                 statusArray.push(JOB_PROGRESS);
+                 //statusArray.push(JOB_PROGRESS);
+                 orderStatus = JOB_PROGRESS;
+                 statusArray.push(orderStatus);
               }
               else {
-                statusArray.push(JOB_NEW);
+                //statusArray.push(JOB_NEW);
+                orderStatus = JOB_NEW;
+                statusArray.push(orderStatus);
               }
+
+              //else {
+              //  statusArray.push(JOB_NEW);
+              //  theStatus = JOB_NEW;
+              //}
+              //activeOrders ++;
+              //orders.push (workorders[orderKey]);
+              orders.push ({...workorders[workKey], orderStatus: orderStatus});
            }
 
            // step 4, if this client has active workorders, save to array
@@ -559,6 +580,8 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                 id:  dataKey,
                 status: status,
                 type: CLIENT_MARKER,
+                activeOrdersNumber: activeOrderAccount,
+                activeOrders: orders,
              }
              unClientMarkers.push(marker);
         }
