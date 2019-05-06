@@ -197,11 +197,39 @@ componentWillUnMount() {
              orderRef.update(updateOrder);
              //this.handleOpen(false);
 
-             const employeePath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
+             /*const employeePath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
                    + "/assigned/" + contact.tag + "/workorders/" + orderKey;
              //console.log("employee path = " + employeePath);
              const employeeRef = firebase.database().ref(employeePath);
-             employeeRef.set(null);
+             employeeRef.set(null);*/
+
+             const assignedClientPath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
+                   + "/assigned/" + contact.tag ;
+             const assignedClientRef = firebase.database().ref(assignedClientPath);
+
+             assignedClientRef.once('value')
+               .then((snapshot) => {
+                 let assignedClient = snapshot.val();
+                 let {workorders} = assignedClient;
+                 let orders = 0;
+
+                 for (var key in workorders) {
+                     orders++;
+                 }
+
+                 if (orders  === 1) {
+                      assignedClientRef.set(null);
+                 } else {
+                      assignedClientRef.child("workorders").child(orderKey).set(null);
+                 }
+             })
+              .catch(err => {
+                  console.log("reading assigned workorder = ");
+                  console.error(err);
+              });
+
+
+
          }
          else {
               //console.log("fields change, active id not changed");
