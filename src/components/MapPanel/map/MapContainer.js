@@ -15,7 +15,7 @@ import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
 import MapAssignModal from './MapAssign';
-import {Button, Icon, Dropdown, Header} from 'semantic-ui-react';
+import {Button, Icon, Dropdown, Header, Menu} from 'semantic-ui-react';
 //import svgMarker from './svgMarker';
 
 const JOB_NOT_ACTIVE = 0;
@@ -283,6 +283,43 @@ class MapContainer extends Component {
       return optionArray;
   }
 
+  displayOrders = (orders) => {
+    if (orders.length > 0) {
+        orders = orders.map(order => {
+            let status = "JOB_NOT_ACTIVE";
+            switch(order.orderStatus) {
+               case 0:
+                  status = "JOB_NOT_ACTIVE";
+                  break;
+               case 1:
+                  status = "JOB_NEW";
+                  break;
+               case 2:
+                  status = "JOB_ASSIGNED";
+                  break;
+               case 3:
+                  status = "JOB_PROGRESS";
+                  break;
+               case 4:
+                  status = "JOB_DONE";
+                  break;
+               default:
+                  status = "not_known";
+             }
+
+           return (
+               <Menu.Menu style={styles.orderMenuMenu}>
+               <Menu.Item style={{...styles.orderMenuItem, fontWeight:"bold", fontSize:"1.0em"}}>Id: {order.orderId}</Menu.Item>
+               <Menu.Item style={styles.orderMenuItem}>Date: {order.date}</Menu.Item>
+               <Menu.Item style={styles.orderMenuItem}>Work: {order.work}</Menu.Item>
+               <Menu.Item style={styles.orderMenuItem}>Status: {status}</Menu.Item>
+               </Menu.Menu>
+           )
+        });
+        return orders;
+    }
+  }
+
   handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
       const selectedValue = data.value
       console.log( data.value);
@@ -362,20 +399,17 @@ class MapContainer extends Component {
                  <div style={styles.calloutContainer}>
                      <div>
                          <p style={styles.calloutName}>{this.state.selectedPlace.name}</p>
-                         <span style={styles.calloutAddress}>
+                         <p style={styles.calloutAddress}>
                             {this.state.selectedPlace.clientStreet} , &nbsp;
-                            {this.state.selectedPlace.clientCity} </span>
+                            {this.state.selectedPlace.clientCity} </p>
                          <p style={styles.calloutOrder}>active workorders: &nbsp; {this.state.selectedPlace.activeOrdersNumber}</p>
                      </div>
-                     <div style={styles.dropdownContainer}>
-                           <Dropdown
-                              placeholder="active orders"
-                              fluid
-                              selection
-                              onChange={this.handleDropdownChange}
-                              options={this.dropdownOptions(this.state.selectedPlace.activeOrders)}
-                          />
-                     </div>
+
+                     {this.state.selectedPlace.activeOrdersNumber > 0 &&
+                        <Menu vertical={true} style={styles.orderMenu}>
+                              {this.displayOrders(this.state.selectedPlace.activeOrders)}
+                       </Menu>}
+
                      <div style={styles.calloutButtonContainer}>
                           <Button icon size="mini" color="green" onClick={this.onClose}>
                                     <Icon name='cancel' size ="large"/> Close
@@ -515,46 +549,34 @@ const styles = {
   calloutName: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: "1.2em",
     color:'black',
     marginBottom: 0,
-    marginTop: 0,
+    marginTop: "2px",
     paddingTop: 0,
     paddingBottom: 0,
   },
   calloutAddress: {
     fontWeight: 'normal',
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: "1.0em",
     color:'black',
     marginBottom: 0,
-    marginTop: 3,
+    marginTop: "3px",
     paddingTop: 0,
     paddingBottom: 0,
   },
   calloutOrder: {
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: "1.0em",
     color:'black',
     marginBottom: 0,
-    marginTop: 3,
+    marginTop: "5px",
     paddingTop: 0,
     paddingBottom: 0,
   },
-  calloutTextContainer: {
-      flex: 1,
-      flexGrow: 1,
-      width: 200,
-      height: 80,
-      borderWidth: 2,
-      borderColor: 'green',
-      borderStyle: 'dashed',
-      margin: 0,
-      padding: 0,
-      marginTop: 2,
-    },
-    dropdownContainer: {
+  dropdownContainer: {
       width: 200,
       height: 60,
       marginTop: 3,
@@ -575,12 +597,47 @@ const styles = {
         marginTop: 5,
       },
   calloutContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent:'center',
-      width: 200,
-      height: 230,
+      marginTop: "10px",
+      width: "240px",
+      height: "230px",
     },
+  orderMenu: {
+      width:"100%",
+      height: "100px",
+      position: "relative",
+      marginTop:"15px",
+      marginLeft:"0px",
+      marginRight:"0px",
+      marginBottom: "10px",
+      overflow: "scroll",
+      backgroundColor: "rgb(49, 143, 249,0.1)",
+      borderColor: "rgb(49, 143, 249,0.4)",
+      borderWidth: "2px",
+      borderStyle:"solid",
+    },
+  orderMenuMenu: {
+        width:"100%",
+        position: "relative",
+        marginLeft:"0px",
+        marginRight:"0px",
+        paddingTop: "5px",
+        paddingBottom:"5px",
+        backgroundColor: "rgba(250,250,255,0.1)",
+        borderColor: "rgb(49, 143, 249,0.6)",
+        borderWidth: "2px",
+        borderStyle:"solid",
+      },
+  orderMenuItem: {
+        width:"100%",
+        position: "relative",
+        marginLeft:"0px",
+        marginRight:"0px",
+        paddingTop: "1px",
+        paddingBottom:"1px",
+        color: "black",
+        fontWeight:"normal",
+        fontSize: "0.9em",
+   },
 };
 
 const mapStateToProps = state => ({
