@@ -386,27 +386,32 @@ const user_reducer = (state = initialUserState, action) => {
          const selectedEmployee = action.payload.selected
          console.log (selectedEmployee);
 
+         let marker4Employee = [];
          let selectedMarkers = [];
-         const selectedMarker = {
+         const employeeMarker = {
              pos:
              {
                 lat: selectedEmployee.lat,
                 lng: selectedEmployee.lng
              },
              name: selectedEmployee.name,
+             street: selectedEmployee.street,
+             city: selectedEmployee.city,
              id:  selectedEmployee.tag,
              type: EMPLOYEE_MARKER
          }
-         selectedMarkers.push(selectedMarker);
+         console.log(employeeMarker);
+         marker4Employee.push(employeeMarker);
 
          const assignedJobs = selectedEmployee.assigned;
          for (var key in assignedJobs) {
 
-             const {clientLat, clientLng, clientName, clientStreet, workorders} = assignedJobs[key];
+             const {clientLat, clientLng, clientName, clientTag, clientKey, clientStreet, clientCity, workorders} = assignedJobs[key];
 
              let statusArray = [];
              let activeOrder= 0;
              let status = 0;
+             let orders = [];
 
              for (var orderKey in workorders) {
                  //console.log(orderKey);
@@ -414,6 +419,7 @@ const user_reducer = (state = initialUserState, action) => {
                  let {isActive,isRepeat,repeatTimes, previousDelivery} = workorders[orderKey];
                  statusArray = [];
                  activeOrder= 0;
+                 //let orders = [];
 
                  isActive = (isActive && isActive === "true")? true:false;
                  isRepeat = (isRepeat && isRepeat === "true")? true:false;
@@ -421,20 +427,30 @@ const user_reducer = (state = initialUserState, action) => {
                  previousDelivery = previousDelivery? parseInt(previousDelivery, 10) : 0;
                  let deliveryTimes = previousDelivery;
 
+                 //let status = JOB_NEW;
                  if (!isRepeat && deliveryTimes > 0) {
-                    //status = JOB_DONE;
-                    statusArray.push(JOB_DONE);
+                    status = JOB_DONE;
+                    statusArray.push(status);
                  } else if (isRepeat && repeatTimes === 0) {
-                    statusArray.push(JOB_PROGRESS);
+                    //statusArray.push(JOB_PROGRESS);
+                    status = JOB_PROGRESS;
+                    statusArray.push(status);
                  } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
-                    statusArray.push(JOB_DONE);
+                    //statusArray.push(JOB_DONE);
+                    status = JOB_DONE;
+                    statusArray.push(status);
                  } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
-                    statusArray.push(JOB_PROGRESS);
+                    //statusArray.push(JOB_PROGRESS);
+                    status = JOB_PROGRESS;
+                    statusArray.push(status);
                  }
                  else {
                    statusArray.push(JOB_NEW);
+                   status = JOB_NEW;
+                   statusArray.push(status);
                  }
                  activeOrder ++;
+                 orders.push ({...workorders[orderKey], status: status});
              }
 
              if (activeOrder) {
@@ -463,12 +479,21 @@ const user_reducer = (state = initialUserState, action) => {
                  //employeeKey: assignedJobs[key].employeeKey,
                  //clientKey: assignedJobs[key].clientKey,
                  //clientTag: assignedClient.clientTag,
+
+
+                 city: clientCity,
+                 clientTag: clientTag,
+                 clientKey: clientKey,
+                 activeOrdersNumber: activeOrder,
+                 activeOrders: orders,
+                 type: CLIENT_MARKER,
              }
             selectedMarkers.push(assignedMarker);
        }
             return {
                     ...state,
                     markers: selectedMarkers,
+                    employeeMarkers: marker4Employee,
                     clientContactView: false,
                     clientView: false,
                     mapView: true,

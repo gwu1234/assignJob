@@ -62,9 +62,9 @@ class MapContainer extends Component {
   }
 
   onMarkerClick = (props, marker, e) =>{
-    console.log("onMarkerClick");
-    console.log(marker);
-    console.log (props);
+    //console.log("onMarkerClick");
+    //console.log(marker);
+    //console.log (props);
 
     this.setState({
       selectedPlace: props,
