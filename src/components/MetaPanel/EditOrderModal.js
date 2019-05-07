@@ -399,7 +399,7 @@ componentWillUnMount() {
           for (var key in employees) {
              employeeOptions.push({
                    key: key,
-                   text: <span style ={{fontStyle: "bold", fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}}> {employees[key].name} </span>,
+                   text: <p style ={styles.DropdownMenu}> {employees[key].name} </p>,
                    value: key,
               });
           }
@@ -407,12 +407,41 @@ componentWillUnMount() {
       else  {
           employeeOptions.push({
              key: '1234',
-             text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > {"delete assignment"} </span>,
+             text: <p style ={styles.DropdownMenu} > {"Remove Assignment"} </p>,
              value: "none",
           });
       }
       return employeeOptions;
   }
+
+  /*employeeOptions2 = () => {
+      const {employees, order} = this.props;
+      let employeeNames = [];
+
+      const isEmployeeAssigned = order.isEmployeeAssigned? (order.isEmployeeAssigned==="true"? true: false): false;
+
+      if (isEmployeeAssigned === false) {
+          for (var key in employees) {
+             employeeNames.push(employees[key].name);
+          }
+      }
+      else  {
+          employeeNames.push("Remove Assignment");
+      }
+
+      const nameList = employeeNames.map(name => (
+          <Dropdown.Item text={name} />
+       ));
+
+      console.log(nameList);
+      return (
+        <Dropdown text='File'>
+          <Dropdown.Menu>
+           {nameList}
+          </Dropdown.Menu>
+        </Dropdown>
+      );
+  } */
 
   handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
       const selectedValue = data.value
@@ -568,24 +597,25 @@ componentWillUnMount() {
               </Message>
 
                <Dropdown
-                  placeholder="employee name"
+                  placeholder="select employee"
                   fluid
                   selection
+                  style={styles.DropdownDisplay}
                   onChange={this.selectEmployee}
                   options={this.employeeOptions()}
                />
          </Form.Field>}
          {isActive && isEmployeeAssigned && <Form.Field>
               <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  this workorder is asigned to employee: {employeeName}, select delete employee to unassign
+                  this workorder is asigned to employee: {employeeName}, select Remove Assignment to unassign
               </Message>
 
                <Dropdown
-                  placeholder="employee name"
-                  fluid
                   selection
+                  style={styles.DropdownDisplay}
                   onChange={this.selectEmployee}
                   options={this.employeeOptions()}
+                  placeholder="Remove Employee Assignment"
                />
          </Form.Field>}
         </Form>
@@ -632,6 +662,29 @@ const mapStateToProps = state => {
    }
 };
 
+const styles = {
+  DropdownMenu: {
+    padding: "6px",
+    margin: "0px",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "rgb(66,152,244, 0.2)",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "1.1em",
+  },
+  DropdownDisplay: {
+    padding: "6px",
+    margin: "0px",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "1.1em",
+  },
+};
+
 export default connect(
   mapStateToProps,
   {}
@@ -646,3 +699,30 @@ export default connect(
     options={this.dropdownOptions()}
 />
 */
+
+/*employeeOptions = () => {
+    const {employees, order} = this.props;
+    let employeeOptions = [];
+
+    //console.log (order);
+    const isEmployeeAssigned = order.isEmployeeAssigned? (order.isEmployeeAssigned==="true"? true: false): false;
+    //console.log(employeeAssigned);
+
+    if (isEmployeeAssigned === false) {
+        for (var key in employees) {
+           employeeOptions.push({
+                 key: key,
+                 text: <p style ={styles.DropdownMenu}> {employees[key].name} </p>,
+                 value: key,
+            });
+        }
+    }
+    else  {
+        employeeOptions.push({
+           key: '1234',
+           text: <p style ={styles.DropdownMenu} > {"Remove Assignment"} </p>,
+           value: "none",
+        });
+    }
+    return employeeOptions;
+}*/
