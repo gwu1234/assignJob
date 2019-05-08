@@ -308,7 +308,7 @@ class MapContainer extends Component {
              }
 
            return (
-               <Menu.Menu style={styles.orderMenuMenu}>
+               <Menu.Menu style={styles.orderMenuMenu} key={order.orderId}>
                <Menu.Item style={{...styles.orderMenuItem, fontWeight:"bold", fontSize:"1.0em"}}>Id: {order.orderId}</Menu.Item>
                <Menu.Item style={styles.orderMenuItem}>Date: {order.date}</Menu.Item>
                <Menu.Item style={styles.orderMenuItem}>Work: {order.work}</Menu.Item>
@@ -329,6 +329,14 @@ class MapContainer extends Component {
       });
   }
 
+  clickOnMap = (latLng, pa) => {
+     console.log("MapContainer clickOnMap()");
+     console.log("Lat = " + latLng.lat());
+     console.log("Lng = " + latLng.lng());
+     console.log("X = " + pa.x);
+     console.log("Y = " + pa.y);
+  }
+
     render() {
       const {usertag, employees, markers, truckMarkers, employeeMarkers} = this.props;
       //const {markers} = this.state;
@@ -346,7 +354,7 @@ class MapContainer extends Component {
       //console.log (this.state.activeMarker.name);
 
       return (
-      <CurrentLocation google={this.props.google} centerAroundCurrentLocation>
+      <CurrentLocation google={this.props.google} centerAroundCurrentLocation clickOnMap = {(latLng, pa)=>this.clickOnMap(latLng, pa)} >
       {markers && markers.map((marker, index)=> {
 
            let  image = "";

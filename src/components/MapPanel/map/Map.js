@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 const mapStyles = {
   map: {
@@ -46,6 +47,26 @@ export class CurrentLocation extends React.Component {
     }
   }
 
+  handleEvent(event, eventName) {
+    let timeout;
+
+    let handlerName = eventName;
+    if (eventName ==="click") {
+         handlerName = "onClick";
+    }
+    //console.log(eventName);
+    //console.log(event.latLng.lat());
+    //console.log(event.latLng.lng());
+    //console.log(event.pa.x);
+    //console.log(event.pa.y);
+
+    if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+    timeout = setTimeout(() => this.props.clickOnMap(event.latLng, event.pa), 0);
+  }
+
   loadMap() {
     if (this.props && this.props.google) {
       // checks if google is available
@@ -69,6 +90,11 @@ export class CurrentLocation extends React.Component {
       );
       // maps.Map() is constructor that instantiates the map
       this.map = new maps.Map(node, mapConfig);
+
+      const eventNames = ['click', 'dblclick'];
+      eventNames.forEach(eventName => {
+        this.map.addListener(eventName, (event)=>{this.handleEvent(event, eventName)});
+      });
     }
   }
 
@@ -115,6 +141,10 @@ export class CurrentLocation extends React.Component {
 }
 export default CurrentLocation;
 
+CurrentLocation.propTypes = {
+  onMove: PropTypes.func
+}
+
 CurrentLocation.defaultProps = {
   zoom: 14,
   initialCenter: {
@@ -122,5 +152,5 @@ CurrentLocation.defaultProps = {
     lng: 36.8233
   },
   centerAroundCurrentLocation: false,
-  visible: true
+  visible: true,
 };
