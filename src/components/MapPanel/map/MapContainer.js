@@ -55,9 +55,19 @@ class MapContainer extends Component {
 
     this.state = {
        showingInfoWindow: false,
+       showingGwindow: false,
        activeMarker: {},
        selectedPlace: {},
-       //markers : this.props.markers,
+       selectedLatLng: {},
+       //selectedAddress_string: '',
+       //selectedAddress_components: {},
+       selectedStreet: '',
+       selectedCity: '',
+       selectedProvince: '',
+       selectedCountry: '',
+       selectedPostcode: '',
+       selectedLat: '',
+       selectedLng: '',
     }
   }
 
@@ -69,7 +79,11 @@ class MapContainer extends Component {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
-      showingInfoWindow: true
+      showingInfoWindow: true,
+      //selectedLatLng: marker.pos,
+      showingGwindow: false,
+      //selectedAddress_string: '',
+      //selectedAddress_components: {},
     });
   }
 
@@ -237,10 +251,22 @@ class MapContainer extends Component {
    } */
 
   onClose = () => {
+    console.log("onClose()");
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        //activeMarker: null,
+        showingGwindow: false,
+      });
+    }
+  };
+
+  onGclose = () => {
+    console.log("onGclose()");
+    if (this.state.showingGwindow) {
+      console.log("onGclose(): closing");
+      this.setState({
+        showingInfoWindow: false,
+        showingGwindow: false,
       });
     }
   };
@@ -330,12 +356,79 @@ class MapContainer extends Component {
   }
 
   clickOnMap = (latLng, pa) => {
-     console.log("MapContainer clickOnMap()");
-     console.log("Lat = " + latLng.lat());
-     console.log("Lng = " + latLng.lng());
-     console.log("X = " + pa.x);
-     console.log("Y = " + pa.y);
+     //console.log("MapContainer clickOnMap()");
+     //console.log("Lat = " + latLng.lat());
+     //console.log("Lng = " + latLng.lng());
+     //console.log("X = " + pa.x);
+     //console.log("Y = " + pa.y);
+     this.geocodeLatLng (latLng);
   }
+
+  geocodeLatLng = (latLng) => {
+        //const { google } = this.props;
+        //const map = this.map;
+        //const current = this.state.currentLocation;
+
+        const google = this.props.google;
+        const maps = google.maps;
+        var geocoder = new google.maps.Geocoder;
+        //var input = document.getElementById('latlng').value;
+        //var latlngStr = input.split(',', 2);
+        //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+        geocoder.geocode({'location': latLng}, (results, status) =>{
+          if (status === 'OK') {
+            if (results[0]) {
+              //console.log(results[0]);
+              console.log(results[0].formatted_address);
+              //console.log(latLng);
+              const street = results[0].address_components[0].long_name + " "
+                          + results[0].address_components[1].long_name;
+
+              const city = results[0].address_components[2].long_name ;
+              const province = results[0].address_components[4].long_name ;
+              const country = results[0].address_components[5].long_name ;
+              const postcode = results[0].address_components[6].long_name ;
+          /*
+            0 :  {long_name: "430", short_name: "430", types: Array(1)}
+           1: {long_name: "Rue Bruce", short_name: "Rue Bruce", types: Array(1)}
+           2: {long_name: "Kirkland", short_name: "Kirkland", types: Array(2)}
+           3: {long_name: "Communauté-Urbaine-de-Montréal", short_name: "Communauté-Urbaine-de-Montréal", types: Array(2)}
+           4: {long_name: "Québec", short_name: "QC", types: Array(2)}
+           5: {long_name: "Canada", short_name: "CA", types: Array(2)}
+           6: {long_name: "H9H 3W3", short_name: "H9H 3W3", types: Array(1)} */
+              //map.setZoom(11);
+              //var marker = new maps.Marker({
+              //  position: latLng,
+              //  map: map
+              //});
+              //infowindow.setContent(results[0].formatted_address);
+              //infowindow.setPosition(latLng);
+              //infowindow.open(map);
+              this.setState({
+                ...this.state,
+                selectedLatLng: latLng,
+                //showingInfoWindow: false,
+                showingGwindow: true,
+                //selectedAddress_string: results[0].formatted_address,
+                //selectedAddress_components: results[0].address_components,
+                selectedStreet: street,
+                selectedCity: city,
+                selectedProvince: province,
+                selectedCountry: country,
+                selectedPostcode: postcode,
+                selectedLat: latLng.lat(),
+                selectedLng: latLng.lng(),
+              });
+
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+      }
+
 
     render() {
       const {usertag, employees, markers, truckMarkers, employeeMarkers} = this.props;
@@ -505,6 +598,27 @@ class MapContainer extends Component {
 
                    </div>
             </InfoWindowEx>}
+
+
+            <InfoWindowEx
+                   position={this.state.selectedLatLng}
+                   visible={this.state.showingGwindow}
+                   onClose={this.onGclose} >
+                   <div>
+                       <div>
+                           <p style={styles.calloutName}>{this.state.selectedStreet}</p>
+                            <p style={styles.calloutAddress}>
+                           {this.state.selectedCity} , &nbsp; {this.state.selectedProvince}</p>
+                           <p style={styles.calloutAddress}>{this.state.selectedCountry}, &nbsp;
+                           {this.state.selectedPostcode} </p>
+                       </div>
+                       <div style={{marginTop: "2.0em"}}>
+                            <Button icon size="mini" color="green" onClick={this.onGclose}>
+                                <Icon name='cancel' size ="large"/> Close
+                            </Button>
+                       </div>
+                   </div>
+            </InfoWindowEx>
       </CurrentLocation>
      )
    }
