@@ -271,6 +271,9 @@ class MapContainer extends Component {
     }
   };
 
+  createLead = () => {
+    console.log("createLead()");
+  };
 
   displayActiveOrders = (orders) =>{
      if (orders.length > 0) {
@@ -604,17 +607,21 @@ class MapContainer extends Component {
                    position={this.state.selectedLatLng}
                    visible={this.state.showingGwindow}
                    onClose={this.onGclose} >
-                   <div>
-                       <div>
+                   <div >
+                       <div >
                            <p style={styles.calloutName}>{this.state.selectedStreet}</p>
                             <p style={styles.calloutAddress}>
                            {this.state.selectedCity} , &nbsp; {this.state.selectedProvince}</p>
                            <p style={styles.calloutAddress}>{this.state.selectedCountry}, &nbsp;
                            {this.state.selectedPostcode} </p>
                        </div>
-                       <div style={{marginTop: "2.0em"}}>
-                            <Button icon size="mini" color="green" onClick={this.onGclose}>
+                       <div style={{marginTop:"10px",marginBottom:"10px"}}>
+                            <Button  style={{width: "100px", height:"40px", marginLeft:"8px"}}icon size="mini" color="green" onClick={this.onGclose}>
                                 <Icon name='cancel' size ="large"/> Close
+                            </Button>
+
+                            <Button style={{width: "100px", height:"40px", marginLeft:"15px"}} icon size="mini" color="green" onClick={this.createLead}>
+                                <Icon name='address card outline' size ="large"/> Create Lead
                             </Button>
                        </div>
                    </div>
