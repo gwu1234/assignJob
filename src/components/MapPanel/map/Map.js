@@ -64,8 +64,45 @@ export class CurrentLocation extends React.Component {
         clearTimeout(timeout);
         timeout = null;
     }
-    timeout = setTimeout(() => this.props.clickOnMap(event.latLng, event.pa), 0);
+    //timeout = setTimeout(() => this.props.clickOnMap(event.latLng, event.pa), 0);
+    timeout = setTimeout(() => {
+       const { google } = this.props;
+       const maps = google.maps;
+       var geocoder = new google.maps.Geocoder;
+       var infowindow = new google.maps.InfoWindow;
+       this.geocodeLatLng(geocoder, infowindow, event.latLng);
+    });
   }
+
+  geocodeLatLng = (geocoder, infowindow, latLng) => {
+        //const { google } = this.props;
+        const map = this.map;
+        //const current = this.state.currentLocation;
+
+        const google = this.props.google;
+        const maps = google.maps;
+        //var input = document.getElementById('latlng').value;
+        //var latlngStr = input.split(',', 2);
+        //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+        geocoder.geocode({'location': latLng}, (results, status) =>{
+          if (status === 'OK') {
+            if (results[0]) {
+              console.log(results[0].formatted_address);
+              //map.setZoom(11);
+              var marker = new maps.Marker({
+                position: latLng,
+                map: map
+              });
+              infowindow.setContent(results[0].formatted_address);
+              infowindow.open(map, marker);
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+      }
 
   loadMap() {
     if (this.props && this.props.google) {
