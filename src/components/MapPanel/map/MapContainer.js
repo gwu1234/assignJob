@@ -273,6 +273,34 @@ class MapContainer extends Component {
 
   createLead = () => {
     console.log("createLead()");
+    const {usertag, markers} = this.props;
+    const {selectedStreet, selectedCity, selectedProvince, selectedCountry,
+      selectedPostcode, selectedLat, selectedLng} = this.state;
+
+    const date = new Date();
+      // timestamp in second
+    const timestamp = Math.round(date.getTime()/1000 + 0.5);
+    const localtime = date.toLocaleString();
+
+    const leadTag = "repos/" + usertag + "/leads";
+    const leadRef = firebase.database().ref(leadTag);
+    const leadKey = leadRef.push().getKey();
+
+    const newLead = {
+      "date": localtime,
+      "timestamp": timestamp ,
+      "leadTag": leadKey,
+      "street": selectedStreet,
+      "city":   selectedCity,
+      "province": selectedProvince,
+      "country": selectedCountry,
+      "postcode": selectedPostcode,
+      "lat": selectedLat,
+      "lng": selectedLng,
+    }
+    //console.log (newDelivery);
+    leadRef.child(leadKey).set(newLead);
+    this.onGclose();
   };
 
   displayActiveOrders = (orders) =>{
