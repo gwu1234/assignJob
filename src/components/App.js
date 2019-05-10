@@ -31,16 +31,12 @@ class App extends React.Component {
   render() {
 
 
-    const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView} = this.props;
-    //console.log("App companyInfoView = " + companyInfoView);
-    //console.log("App mapView = " + mapView);
-    //console.log("App admin = " + admin);
-    //console.log("App clientView  = " + clientView);
-
+    const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView, leadView} = this.props;
+    
     return (
       <Grid style={styles.container}>
         <TopPanel/>
-        {admin && !mapView && !companyInfoView && !clientView && !clientContactView &&
+        {admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
@@ -54,7 +50,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {admin && mapView && !companyInfoView && !clientView && !clientContactView &&
+        {admin && mapView && !companyInfoView && !clientView && !clientContactView && !leadView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
@@ -72,7 +68,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {admin && !mapView && companyInfoView && !clientView && !clientContactView &&
+        {admin && !mapView && companyInfoView && !clientView && !clientContactView && !leadView &&
           <Grid.Row style={styles.mainRow}>
             <Grid.Column style={{...styles.column, width:"12%"}}>
                  <Menu
@@ -119,7 +115,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {!admin && !mapView && companyInfoView && !clientView && !clientContactView &&
+        {!admin && !mapView && companyInfoView && !clientView && !clientContactView && !leadView &&
           <Grid.Row style={styles.mainRow}>
             <Grid.Column style=
                  {{width: "32.8%", height:"100%", marginRight:"3px", padding:"0px"}}>
@@ -159,7 +155,7 @@ class App extends React.Component {
             </Grid.Column>
         </Grid.Row>}
 
-        {!admin && mapView && !companyInfoView && !clientView && !clientContactView &&
+        {!admin && mapView && !companyInfoView && !clientView && !clientContactView && !leadView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style=
                  {{width: "100%", height:"92vh", margin:"0px", padding:"0px"}}>
@@ -167,7 +163,7 @@ class App extends React.Component {
             </Grid.Column>
           </Grid.Row>}
 
-        {!admin && !mapView && !companyInfoView && clientView && !clientContactView &&
+        {!admin && !mapView && !companyInfoView && clientView && !clientContactView && !leadView &&
           <Grid.Row style={styles.mainRow}>
                 <Grid.Column style={styles.leftColumn}>
                      <Menu
@@ -219,7 +215,7 @@ class App extends React.Component {
                 </Grid.Column>
             </Grid.Row>}
 
-       {admin && !mapView && !companyInfoView && clientView && !clientContactView &&
+       {admin && !mapView && !companyInfoView && clientView && !clientContactView && !leadView &&
          <Grid.Row style={styles.mainRow}>
             <Grid.Column style={{...styles.column, width:"11.2%"}}>
                 <Menu
@@ -281,7 +277,7 @@ class App extends React.Component {
              </Grid.Column>
         </Grid.Row>}
 
-        {!admin && !mapView && !companyInfoView && !clientView && clientContactView &&
+        {!admin && !mapView && !companyInfoView && !clientView && clientContactView && !leadView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px", backgroundImage: `url(${Background})`}}>
                 <Grid.Column style=
                      {{width: "49.6%", height:"100%", marginRight:"5px", padding:"0px"}}>
@@ -311,7 +307,7 @@ class App extends React.Component {
 
             </Grid.Row>}
 
-        {admin && !mapView && !companyInfoView && !clientView && clientContactView &&
+        {admin && !mapView && !companyInfoView && !clientView && clientContactView && !leadView &&
          <Grid.Row style={styles.mainRow}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                 <Menu
@@ -415,6 +411,7 @@ const mapStateToProps = state => ({
     companyInfoView: state.user.companyInfoView,
     clientView: state.user.clientView,
     clientContactView: state.user.clientContactView,
+    leadView: state.user.leadView,
   });
 
 export default connect(mapStateToProps)(App);

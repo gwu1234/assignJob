@@ -31,25 +31,14 @@ const initialUserState = {
   markers: [],
   truckMarkers: [],
   employeeMarkers:[],
-  //contracts: null,
-  //payments:null,
-  //deliverys: null,
-  //invoices: null,
   selectedEmployee: null,
-  //repeathours: 5,
   french: false,
-  //trucks: [],
   badAccess: false,
   companyInfoView: false,
   clientView: false,
   clientContactView: false,
-  //activeOrderId: null,
-  //activeOrderKey: null,
-  //activeContractId: null,
-  //activeContractKey: null,
-  //activeInvoiceId: null,
-  //activeInvoiceKey: null,
   reposData: null,
+  leadView: false,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -123,6 +112,7 @@ const user_reducer = (state = initialUserState, action) => {
         clientView: false,
         clientContactView: false,
         mapView: false,
+        leadView: false,
     };
     case actionTypes.SET_MAP_VIEW:
          const clients = state.clientList;
@@ -196,18 +186,6 @@ const user_reducer = (state = initialUserState, action) => {
                   //orders.push (workorders[orderKey]);
                   orders.push ({...workorders[orderKey], orderStatus: theStatus});
               }
-
-              /*if (activeOrders) {
-                 status = statusArray[0];
-              }
-              for (var i=0; i++; i < activeOrders) {
-                  status = status <= statusArray[i]? status: statusArray[i];
-              }
-              if (activeOrders ===2 ) {
-                 console.log(status);
-                 console.log(statusArray);
-                 console.log();
-              } */
            }
 
            if (statusArray.length > 0) {
@@ -221,13 +199,6 @@ const user_reducer = (state = initialUserState, action) => {
                //console.log(status);
                //console.log(statusArray[i]);
            }
-
-           //if (activeOrders ===2 ) {
-              //console.log(activeOrders);
-            //  console.log(status);
-            //  console.log(statusArray);
-            //  console.log(clients[clientKey]);
-           //}
 
            const marker = {
                pos:
@@ -292,6 +263,7 @@ const user_reducer = (state = initialUserState, action) => {
            clientContactView: false,
            clientView: false,
            companyInfoView: false,
+           leadView: false,
       };
     case actionTypes.SET_EMPLOYEE_VIEW:
         const employees = state.employeeList;
@@ -327,6 +299,7 @@ const user_reducer = (state = initialUserState, action) => {
          clientContactView: false,
          clientView: false,
          companyInfoView: false,
+         leadView: false,
     };
     case actionTypes.SET_TEXT_VIEW:
       //console.log ("reducer");
@@ -338,6 +311,16 @@ const user_reducer = (state = initialUserState, action) => {
          clientContactView: false,
          clientView: false,
          companyInfoView: false,
+         leadView: false,
+    };
+    case actionTypes.SET_LEAD_VIEW:
+      return {
+          ...state,
+          mapView: false,
+          clientContactView: false,
+          clientView: false,
+          companyInfoView: false,
+          leadView: true,
     };
     case actionTypes.SET_GEOENCODING:
             //console.log ("reducer SET_GEOENCODING = " );
@@ -355,6 +338,7 @@ const user_reducer = (state = initialUserState, action) => {
                     clientContactView: false,
                     mapView: false,
                     companyInfoView: false,
+                    leadView: false,
         };
 
    case actionTypes.SET_CLIENT_CONTACT_VIEW:
@@ -366,15 +350,9 @@ const user_reducer = (state = initialUserState, action) => {
                     clientView: false,
                     mapView: false,
                     companyInfoView: false,
+                    leadView: false,
         };
 
-    /*case actionTypes.SET_REPEAT_HOURS:
-     //console.log("at reducer = ::");
-     //console.log (action.payload.repeathours);
-            return {
-                   ...state,
-                   repeathours: action.payload.repeathours
-      };*/
     case actionTypes.SET_FRENCH:
             return {
                    ...state,
@@ -478,12 +456,6 @@ const user_reducer = (state = initialUserState, action) => {
                  type: CLIENT_MARKER,
                  isAssigned: true,
                  employeeName: selectedEmployee.name,
-                 //assignedKey: assignedJobs[key].assignedKey,
-                 //employeeKey: assignedJobs[key].employeeKey,
-                 //clientKey: assignedJobs[key].clientKey,
-                 //clientTag: assignedClient.clientTag,
-
-
                  city: clientCity,
                  clientTag: clientTag,
                  clientKey: clientKey,
@@ -501,6 +473,7 @@ const user_reducer = (state = initialUserState, action) => {
                     clientView: false,
                     mapView: true,
                     companyInfoView: false,
+                    leadView: false,
                     truckMarkers:[],
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
@@ -574,12 +547,6 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                 statusArray.push(orderStatus);
               }
 
-              //else {
-              //  statusArray.push(JOB_NEW);
-              //  theStatus = JOB_NEW;
-              //}
-              //activeOrders ++;
-              //orders.push (workorders[orderKey]);
               orders.push ({...workorders[workKey], orderStatus: orderStatus});
            }
 
@@ -615,22 +582,6 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
         }
     }
 
-    /*const allemployees = state.employeeList;
-    //let allemployeeMarkers = [];
-
-    for (var key in allemployees) {
-        const marker = {
-            pos:
-            {
-               lat: allemployees[key].lat,
-               lng: allemployees[key].lng
-            },
-            name: allemployees[key].name,
-            id:  key,
-            type: EMPLOYEE_MARKER
-        }
-       unClientMarkers.push(marker);
-    }*/
 
     return {
         ...state,
@@ -641,74 +592,13 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        clientView: false,
        mapView: true,
        companyInfoView: false,
+       leadView: false,
   };
 
-  /*case actionTypes.SET_ACTIVE_ORDER_ID:
-     return {
-            ...state,
-            activeOrderId: action.payload.activeId
-     };
-
-  case actionTypes.SET_ACTIVE_ORDER_KEY:
-        return {
-            ...state,
-            activeOrderKey: action.payload.activeKey
-    }; */
-
-  /*case actionTypes.SET_ACTIVE_CONTRACT_ID:
-       return {
-            ...state,
-            activeContractId: action.payload.activeId
-    };
-
-  case actionTypes.SET_ACTIVE_CONTRACT_KEY:
-       return {
-            ...state,
-            activeContractKey: action.payload.activeKey
-   };
-
-   case actionTypes.SET_ACTIVE_INVOICE_ID:
-        return {
-             ...state,
-             activeInvoiceId: action.payload.activeId
-     };
-
-   case actionTypes.SET_ACTIVE_INVOICE_KEY:
-        return {
-             ...state,
-             activeInvoiceKey: action.payload.activeKey
-    };*/
-
     default:
       return state;
   }
 };
-
-
-
-
-/*const initialChannelState = {
-  currentChannel: null,
-  currentUser: null
-};
-
-const channel_reducer = (state = initialChannelState, action) => {
-  switch (action.type) {
-    case actionTypes.SET_CURRENT_CHANNEL:
-      return {
-        ...state,
-        currentChannel: action.payload.currentChannel
-      }
-
-    case actionTypes.SET_CURRENT_USER:
-        return {
-        ...state,
-        currentUser: action.payload.currentUser
-      }
-    default:
-      return state;
-  }
-} */
 
 
 /*const rootReducer = combineReducers({

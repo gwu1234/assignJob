@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setMapView, setEmployeeView, setTextView,
          setSelectedEmployee, setUnassignedClient,
          setFrench, setCompanyInfoView, setClientView,
-         setClientContactView } from "../../actions";
+         setClientContactView, setLeadView } from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
@@ -51,6 +51,10 @@ class TopPanel extends React.Component {
         {
            key: "clientview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente travail order </span>
+        },
+        {
+           key: "leadview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setLeadView}> leads </span>
         }
       ]:
       [
@@ -61,6 +65,10 @@ class TopPanel extends React.Component {
         {
            key: "clientview",
            text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client work order </span>
+        },
+        {
+           key: "leadsview",
+           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setLeadView}> leads </span>
         },
       ];
       return userOptions;
@@ -74,10 +82,6 @@ class TopPanel extends React.Component {
          return [];
       }
 
-      //const repeattimer= {
-      //  key: "repeathour",
-      //  text: <RepeatModal french={french}/>
-      //}
       const datareader= {
         key: "datareader",
         text: <InputFileReader usertag={this.props.usertag} french={french}/>
@@ -195,70 +199,34 @@ class TopPanel extends React.Component {
    };
 
    setCompanyInfo = () => {
-      //this.setState ({
-      //    companyInfoView: true
-      //});
-      //this.props.setTextView();
       this.props.setCompanyInfoView(true);
    }
 
-   // display all clients
    setMapView  = () => {
-    //  this.setState ({
-    //      mapview: true,
-    //      companyInfoView: false,
-    //  });
       this.props.setMapView();
-      //this.props.setCompanyInfoView(false);
-      //console.log("setMapView")
    };
 
    setTextView  = () => {
-     //console.log("setTextView")
-    //   this.setState ({
-    //         mapview: false
-    //   });
        this.props.setTextView();
-       //this.props.setCompanyInfoView(false);
    };
 
    setClientView  = () => {
-     //console.log("setTextView")
-    //   this.setState ({
-    //         mapview: false
-    //   });
-       //this.props.setTextView();
-       //this.props.setCompanyInfoView(false);
        this.props.setClientView (true);
    };
 
-   // display all employees
    setEmployeeView  = () => {
-     //console.log("setEmployeeView")
-    //  this.setState ({
-    //      mapview: true,
-    //      companyInfoView: false,
-    //  });
       this.props.setEmployeeView();
-      //this.props.setCompanyInfoView(false);
    };
 
    setUnassignedView =() => {
-     //console.log("setUnassignedView")
-    //   this.setState ({
-      //    mapview: true,
-      //    companyInfoView: false,
-      // });
       this.props.setUnassignedClient();
-      //this.props.setCompanyInfoView(false);
+ };
+
+ setLeadView =() => {
+    this.props.setLeadView();
  };
 
  displayAssigned(employee) {
-   //this.setState ({
-    //   mapview: true,
-    //   companyInfoView: false,
-   //});
-   //console.log("displayAssigned")
    this.props.setSelectedEmployee(employee);
    //this.props.setCompanyInfoView(false);
  }
@@ -347,6 +315,6 @@ export default connect(
   mapStateToProps,
   {setMapView, setEmployeeView, setTextView, setSelectedEmployee,
    setUnassignedClient, setCompanyInfoView, setFrench,
-   setClientView, setClientContactView
+   setClientView, setClientContactView, setLeadView
  }
 )(TopPanel);
