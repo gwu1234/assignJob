@@ -277,6 +277,23 @@ class MapContainer extends Component {
     const {selectedStreet, selectedCity, selectedProvince, selectedCountry,
       selectedPostcode, selectedLat, selectedLng} = this.state;
 
+    // check the lead already exist or not
+    const {leads} = this.props;
+    //console.log(leads);
+    for (var key in leads) {
+         //console.log(leads[key].street)
+         if ( (leads[key].street   === selectedStreet &&
+               leads[key].city     === selectedCity  &&
+               leads[key].province === selectedProvince ) ||
+              (leads[key].street=== selectedStreet &&
+               leads[key].postcode === selectedPostcode ) ) {
+              const address = selectedStreet + " " + selectedCity ;
+              console.log("address existed already = " + address) ;
+              this.onGclose();
+              return;
+         }
+     }
+
     const date = new Date();
       // timestamp in second
     const timestamp = Math.round(date.getTime()/1000 + 0.5);
@@ -299,7 +316,7 @@ class MapContainer extends Component {
       "lng": selectedLng,
     }
     //console.log (newDelivery);
-    leadRef.child(leadKey).set(newLead);
+    leadRef.child(leadKey).child("contact").set(newLead);
     this.onGclose();
   };
 
@@ -396,21 +413,16 @@ class MapContainer extends Component {
   }
 
   geocodeLatLng = (latLng) => {
-        //const { google } = this.props;
-        //const map = this.map;
-        //const current = this.state.currentLocation;
 
         const google = this.props.google;
         const maps = google.maps;
         var geocoder = new google.maps.Geocoder;
-        //var input = document.getElementById('latlng').value;
-        //var latlngStr = input.split(',', 2);
-        //var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+
         geocoder.geocode({'location': latLng}, (results, status) =>{
           if (status === 'OK') {
             if (results[0]) {
               //console.log(results[0]);
-              console.log(results[0].formatted_address);
+              //console.log(results[0].formatted_address);
               //console.log(latLng);
               const street = results[0].address_components[0].long_name + " "
                           + results[0].address_components[1].long_name;
@@ -419,22 +431,7 @@ class MapContainer extends Component {
               const province = results[0].address_components[4].long_name ;
               const country = results[0].address_components[5].long_name ;
               const postcode = results[0].address_components[6].long_name ;
-          /*
-            0 :  {long_name: "430", short_name: "430", types: Array(1)}
-           1: {long_name: "Rue Bruce", short_name: "Rue Bruce", types: Array(1)}
-           2: {long_name: "Kirkland", short_name: "Kirkland", types: Array(2)}
-           3: {long_name: "Communauté-Urbaine-de-Montréal", short_name: "Communauté-Urbaine-de-Montréal", types: Array(2)}
-           4: {long_name: "Québec", short_name: "QC", types: Array(2)}
-           5: {long_name: "Canada", short_name: "CA", types: Array(2)}
-           6: {long_name: "H9H 3W3", short_name: "H9H 3W3", types: Array(1)} */
-              //map.setZoom(11);
-              //var marker = new maps.Marker({
-              //  position: latLng,
-              //  map: map
-              //});
-              //infowindow.setContent(results[0].formatted_address);
-              //infowindow.setPosition(latLng);
-              //infowindow.open(map);
+
               this.setState({
                 ...this.state,
                 selectedLatLng: latLng,
@@ -803,7 +800,7 @@ const mapStateToProps = state => ({
   employeeMarkers: state.user.employeeMarkers,
   usertag: state.user.usertag,
   employees: state.user.employeeList,
-  //timestamp: state.user.timestamp,
+  leads: state.user.leads,
 });
 
 const WrappedContainer = GoogleApiWrapper({

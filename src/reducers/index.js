@@ -24,7 +24,7 @@ const initialUserState = {
   //userContact: null,
   employeeList: null,
   clientList: null,
-  //clientContact: null,
+  leads: null,
   //workOrder: null,
   mapView: false,
   geoEncoding: GEOCODING_DONE,
@@ -81,6 +81,7 @@ const user_reducer = (state = initialUserState, action) => {
         const reposData = action.payload.reposData;
         let dataList = null;
         let clientList = {};
+        let leads = {};
 
         if (reposData) {
             dataList = reposData["clients"]["data"];
@@ -90,10 +91,12 @@ const user_reducer = (state = initialUserState, action) => {
                //console.log (contact) ;
                clientList = {...clientList, [key]: contact}
             }
+            leads = dataList = reposData["leads"];
         }
         return {
            ...state,
            clientList: clientList,
+           leads: leads,
            employeeList: action.payload.reposData["employees"],
            reposData: action.payload.reposData
     };
