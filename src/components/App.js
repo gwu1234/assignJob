@@ -25,6 +25,8 @@ import Deliverys from "./MapPanel/Deliverys";
 import Payments from "./MapPanel/Payments";
 import ClientContact from "./MetaPanel/ClientContact";
 import Invoices from "./MapPanel/Invoices";
+import Leads from "./Leads/Leads";
+import LeadContact from "./Leads/LeadContact";
 
 class App extends React.Component {
 
@@ -32,7 +34,7 @@ class App extends React.Component {
 
 
     const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView, leadView} = this.props;
-    
+
     return (
       <Grid style={styles.container}>
         <TopPanel/>
@@ -345,6 +347,102 @@ class App extends React.Component {
                         <ClientContact />
                   </Menu>
              </Grid.Column>
+        </Grid.Row>}
+
+
+        {!admin && !mapView && !companyInfoView && !clientView && !clientContactView && leadView &&
+          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px", backgroundImage: `url(${Background})`}}>
+                <Grid.Column style=
+                     {{width: "29.5%", height:"100%", marginRight:"5px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ padding: "0.1em", width:"100%", height:"92vh"}}
+                     >
+                       <Leads/>
+                     </Menu>
+                </Grid.Column>
+                <Grid.Column style=
+                     {{width: "29.5%", height:"100%", marginLeft:"5px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ padding: "0.1em", width:"100%"}}
+                     >
+                      <LeadContact />
+
+                     </Menu>
+                </Grid.Column>
+                <Grid.Column style=
+                     {{width: "99.5%", height:"100%", marginLeft:"5px", padding:"0px"}}>
+                     <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ padding: "0.1em", width:"100%"}}
+                     >
+                      <p>Lead Email</p>
+
+                     </Menu>
+                </Grid.Column>
+
+            </Grid.Row>}
+
+        {admin && !mapView && !companyInfoView && !clientView && !clientContactView && leadView &&
+         <Grid.Row style={styles.mainRow}>
+            <Grid.Column style={{margin:"0px", padding:"0px", width:"10%", height:"100%"}}>
+                <Menu
+                  size="large"
+                  inverted
+                  floated
+                  vertical
+                  style={{ padding: "0.1em", width:"100%", height:"100%"}}>
+                      <UserList currentUser={currentUser} />
+                  </Menu>
+            </Grid.Column>
+
+            <Grid.Column style=
+                  {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+                  <Menu
+                     size="large"
+                     inverted
+                     floated
+                     vertical
+                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                   >
+                       <Leads/>
+                   </Menu>
+            </Grid.Column>
+
+            <Grid.Column style=
+                         {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+                  <Menu
+                      size="large"
+                      inverted
+                      floated
+                      vertical
+                      style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                  >
+                        <p>Lead Contact</p>
+                  </Menu>
+             </Grid.Column>
+             <Grid.Column style=
+                          {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+                   <Menu
+                       size="large"
+                       inverted
+                       floated
+                       vertical
+                       style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                   >
+                         <p>Lead Email</p>
+                   </Menu>
+              </Grid.Column>
         </Grid.Row>}
 
       </Grid>

@@ -25,7 +25,6 @@ const initialUserState = {
   employeeList: null,
   clientList: null,
   leads: null,
-  //workOrder: null,
   mapView: false,
   geoEncoding: GEOCODING_DONE,
   markers: [],
@@ -39,6 +38,7 @@ const initialUserState = {
   clientContactView: false,
   reposData: null,
   leadView: false,
+  leadTag: null,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -102,7 +102,11 @@ const user_reducer = (state = initialUserState, action) => {
           ...state,
           clienttag: action.payload.clienttag
     };
-
+    case actionTypes.SET_LEAD_TAG:
+        return {
+          ...state,
+          leadTag: action.payload.leadTag
+    };
     case actionTypes.SET_COMPANY_INFOVIEW:
         //console.log("SET_COMPANY_INFOVIEW");
         //console.log(action.payload.view);

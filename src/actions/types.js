@@ -18,3 +18,4 @@ export const SET_CLIENT_VIEW = "SET_CLIENT_VIEW";
 export const SET_CLIENT_CONTACT_VIEW = "SET_CLIENT_CONTACT_VIEW";
 export const SET_REPOS_DATA = "SET_REPOS_DATA";
 export const SET_LEAD_VIEW = "SET_LEAD_VIEW";
+export const SET_LEAD_TAG = "SET_LEAD_TAG";

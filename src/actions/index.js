@@ -45,6 +45,15 @@ export const setClientTag = clientTag => {
   };
 };
 
+export const setLeadTag = leadTag => {
+  return {
+    type: actionTypes.SET_LEAD_TAG,
+    payload: {
+      leadTag: leadTag
+    }
+  };
+};
+
 export const setClientView = view => {
   return {
     type: actionTypes.SET_CLIENT_VIEW,
