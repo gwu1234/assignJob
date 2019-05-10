@@ -281,12 +281,12 @@ class MapContainer extends Component {
     const {leads} = this.props;
     //console.log(leads);
     for (var key in leads) {
-         //console.log(leads[key].street)
-         if ( (leads[key].street   === selectedStreet &&
-               leads[key].city     === selectedCity  &&
-               leads[key].province === selectedProvince ) ||
-              (leads[key].street=== selectedStreet &&
-               leads[key].postcode === selectedPostcode ) ) {
+         const {contact} = leads[key];
+         if ( (contact.street   === selectedStreet &&
+               contact.city     === selectedCity  &&
+               contact.province === selectedProvince ) ||
+              (contact.street=== selectedStreet &&
+               contact.postcode === selectedPostcode ) ) {
               const address = selectedStreet + " " + selectedCity ;
               console.log("address existed already = " + address) ;
               this.onGclose();
