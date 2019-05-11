@@ -1,6 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
+import { setLeadTag} from "../../actions";
 import { Menu, Icon} from "semantic-ui-react";
 import Lead from "./Lead";
 import AddLeadModal from "./AddLeadModal";
@@ -66,13 +67,13 @@ class Leads extends React.Component {
         }
    };
 
-   displayLeads = leads =>
-      leads.length > 0 &&
-      leads.map(lead => (
-          <Lead key={lead.Key} leadKey={lead.Key}
-          lead={lead.lead} setSelectedLeadKey={(key)=>this.setSelectedLeadKey(key)}
-          selectedLeadKey={this.state.selectedLeadKey}/>
-     ));
+   displayLeads = leads => (
+      (leads.length>0) && leads.map(lead => (
+              <Lead key={lead.Key} leadKey={lead.Key}
+              lead={lead.lead} setSelectedLeadKey={(key)=>this.setSelectedLeadKey(key)}
+              selectedLeadKey={this.state.selectedLeadKey}/>
+      ))
+  )
 
 
   render() {
@@ -153,5 +154,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps
+  mapStateToProps, {setLeadTag}
 )(Leads);

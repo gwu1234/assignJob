@@ -212,7 +212,7 @@ export default class AddLeadModal extends Component {
 
     return (
       <Modal
-        trigger={<Icon name='plus' size ="small" onClick={() => this.handleOpen(true)}/>}
+        trigger={<Icon name='plus' size ="small" onClick={() => this.handleOpen(true)} style={{marginLeft: "15px"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic

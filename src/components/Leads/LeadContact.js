@@ -3,8 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 //import { setCurrentUser, setUserTag } from "../../actions";
 import { Menu, Icon, Header } from "semantic-ui-react";
-
-//import EditClientContactModal from "./EditClientContactModal";
+import EditLeadContactModal from "./EditLeadContactModal";
 
 class LeadContact extends React.Component {
   state = {
@@ -101,6 +100,7 @@ class LeadContact extends React.Component {
       <Menu.Menu style={styles.container} >
             <Menu.Header style={styles.menuHeader}>
                 {titleString}
+                <EditLeadContactModal open={false} contact={contact} usertag={usertag}/>
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu}>
           {contact && contact.street && <Menu.Item style={styles.address}>
@@ -190,20 +190,20 @@ const mapStateToProps = state => {
    const reposData = state.user.reposData;
    const usertag = state.user.usertag;
    const leadTag = state.user.leadTag;
-   let leadContact = null;
+   //let leadContact = null;
+   let leadContact = { lastname: "", firstname: "", street: "", city: "", postcode: "",
+                       province:"", country: "", phones: [], cells: [], emails: []};
 
    if (leadTag) {
        //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
        if (reposData["leads"][leadTag]) {
             leadContact = reposData["leads"][leadTag]["contact"];
             leadContact = {...leadContact, leadTag: leadTag}
-       } else {
-          leadContact = {};
        }
    }
 
-   console.log(leadTag);
-   console.log(leadContact);
+   //console.log(leadTag);
+   //console.log(leadContact);
 
    return {
      contact: leadContact,

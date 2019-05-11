@@ -14,9 +14,9 @@ class Lead extends React.Component {
         return
     }
 
-    console.log(lead.leadTag);
-    console.log(leadKey);
-    console.log(selectedLeadKey);
+    //console.log(lead.leadTag);
+    //console.log(leadKey);
+    //console.log(selectedLeadKey);
     this.props.setLeadTag(lead.leadTag);
     this.props.setSelectedLeadKey(lead.leadTag);
   }

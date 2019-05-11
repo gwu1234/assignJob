@@ -1,32 +1,84 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+//import { connect } from "react-redux";
 import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
-const JOB_NEW = 0;
-//const JOB_REPEAT = 1;
-//const JOB_DONE = 2;
 
-export default class AddClientModal extends Component {
-  state = {
-    modalOpen: false,
-    lastname: '',
-    firstname: '',
-    street: '',
-    city: '',
-    postcode: '',
-    province: '',
-    country: '',
-    phone1: '',
-    phone2: '',
-    phone3: '',
-    cell1: '',
-    cell2: '',
-    cell3: '',
-    email1: '',
-    email2: '',
-    email3: '',
+class EditLeadContactModal extends Component {
+  constructor(props) {
+      super(props);
+      const {contact} = this.props;
+      this.state = {
+         modalOpen: false,
+         lastname: contact.lastname,
+         firstname: contact.firstname,
+         street: contact.street,
+         city: contact.city,
+         postcode: contact.postcode,
+         province:contact.province,
+         country: contact.country,
+         phone1: contact.phones?contact.phones[0]:'',
+         phone2: contact.phones?
+                 (contact.phones[1]?contact.phones[1]:''):
+                 '',
+         phone3: contact.phones?
+                 (contact.phones[2]?contact.phones[2]:''):
+                 '',
+         cell1: contact.cells?contact.cells[0]:'',
+         cell2: contact.cells?
+                (contact.cells[1]?contact.cells[1]:''):
+                 '',
+         cell3: contact.cells?
+                (contact.cells[2]?contact.cells[2]:''):
+                '',
+         email1: contact.emails?contact.emails[0]:'',
+         email2: contact.emails?
+                 (contact.emails[1]?contact.emails[1]:''):
+                 '',
+         email3: contact.emails?
+                 (contact.emails[2]?contact.emails[1]:''):
+                 '',
+     }
   }
+
+  componentWillReceiveProps(nextProps) {
+      const {contact} = nextProps;
+      if (contact) {
+
+        this.setState ( {
+
+             lastname: contact.lastname,
+             firstname: contact.firstname,
+             street: contact.street,
+             city: contact.city,
+             postcode: contact.postcode,
+             province:contact.province,
+             country: contact.country,
+             phone1: contact.phones?contact.phones[0]:'',
+             phone2: contact.phones?
+                     (contact.phones[1]?contact.phones[1]:''):
+                     '',
+             phone3: contact.phones?
+                     (contact.phones[2]?contact.phones[2]:''):
+                     '',
+             cell1: contact.cells?contact.cells[0]:'',
+             cell2: contact.cells?
+                    (contact.cells[1]?contact.cells[1]:''):
+                     '',
+             cell3: contact.cells?
+                    (contact.cells[2]?contact.cells[2]:''):
+                    '',
+             email1: contact.emails?contact.emails[0]:'',
+             email2: contact.emails?
+                     (contact.emails[1]?contact.emails[1]:''):
+                     '',
+             email3: contact.emails?
+                     (contact.emails[2]?contact.emails[1]:''):
+                     '',
+         });
+      }
+    }
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })
@@ -39,15 +91,17 @@ export default class AddClientModal extends Component {
           client.lat = r.lat;
           //console.log (location.key) ;
           //console.log (location.databaseRef);
-          //location.databaseRef.child(location.key).set(client);
-          location.databaseRef.set(client);
+          //console.log (location.address);
+          //console.log(client);
+          //location.databaseRef.set(client);
+          location.databaseRef.update(client);
       }
   }
 
   async getLocation(location) {
     try {
       let response = await Geocode.fromAddress(location.address);
-      //console.log("RESULT:", location.address, await response.results[0].geometry.location);
+      console.log("RESULT:", location.address, await response.results[0].geometry.location);
       return (
         {
           lat: await response.results[0].geometry.location.lat,
@@ -74,23 +128,10 @@ export default class AddClientModal extends Component {
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,phone3,cell1,cell2,cell3,
                  email1,email2,email3} = this.state;
-         const {usertag } = this.props;
+         const {usertag, contact } = this.props;
          const name = firstname + " " + lastname;
-         let tagString = name + "+" + street + "+"
-               + postcode + "+" +
-               Math.random().toString(36).substr(2, 4);
-         const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
-
-         /*const newClient = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "status" : JOB_NEW,
-           "name": String(name),
-           "postcode": String(postcode),
-           "tag": String(tag),
-         }*/
+         //let tagString = name + "+" + street + "+" + postcode ;
+         //const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
 
          let emails = [];
          let phones = [];
@@ -126,7 +167,7 @@ export default class AddClientModal extends Component {
             cells.push (cell3);
          }
 
-         const newContact = {
+         const newClientContact = {
            "city":  String(city),
            "lastname": String (lastname),
            "firstname": String(firstname),
@@ -138,13 +179,15 @@ export default class AddClientModal extends Component {
            "emails": emails,
            "phones": phones,
            "cells": cells,
-           "clientTag": String(tag),
-           "tag": String(tag),
+           "tag": String(contact.clientTag),
+           "clientTag": String(contact.clientTag),
+           "clientKey": String(contact.clientKey)
          }
-         //conso
-          //console.log(newClient);
-         const clientPath = "repos/" + usertag + "/clients/data/" + tag + "/contact";
-         //console.log(clientPath);
+
+         //console.log(newClient);
+         const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientTag +"/contact";
+         console.log(clientPath);
+         const clientKey = contact.clientKey;
          const clientRef = firebase.database().ref(clientPath);
          //const clientKey = clientRef.push().getKey();
          //console.log(clientKey);
@@ -152,74 +195,13 @@ export default class AddClientModal extends Component {
          const address = street + ", " + city + ", " + postcode;
          const location = {
             address: address,
-            key: tag,
+            key: clientKey,
             databaseRef: clientRef
          }
 
-         this.getLocations (newContact,location);
-         //clientRef.child(clientKey).set(newClient);
-
-         /*let emails = [];
-         let phones = [];
-         let cells = [];
-
-         if (email1) {
-            emails.push (email1);
-         }
-         if (email2) {
-            emails.push (email2);
-         }
-         if (email3) {
-            emails.push (email3);
-         }
-
-         if (phone1) {
-            phones.push (phone1);
-         }
-         if (phone2) {
-            phones.push (phone2);
-         }
-         if (phone3) {
-            phones.push (phone3);
-         }
-
-         if (cell1) {
-            cells.push (cell1);
-         }
-         if (cell2) {
-            cells.push (cell2);
-         }
-         if (cell3) {
-            cells.push (cell3);
-         }
-
-         const newContact = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "name": String(name),
-           "postcode": String(postcode),
-           "country": String(country),
-           "province":  String(province),
-           "emails": emails,
-           "phones": phones,
-           "cells": cells,
-           "clientKey": String(clientKey),
-           "tag": String(tag),
-         }
-         //console.log(newContact);
-         const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";
-         //console.log(clientPath);
-         const contactRef = firebase.database().ref(contactPath);
-         //const contactKey = contactRef.push().getKey();
-         //console.log(contactPath);
-         contactRef.set(newContact); */
-
+         this.getLocations (newClientContact,location);
          this.handleOpen(false);
     }
-    //console.log("submit clicked");
-    //this.handleOpen(false);
   };
 
   isFormValid() {
@@ -266,115 +248,159 @@ export default class AddClientModal extends Component {
   };
 
   render() {
-    const {userName} = this.props;
-    //console.log ("AddClientModal " + userName );
-    //console.log(userName);
-    //console.log ("AddClientModal " + usertag );
-    const titleString = userName + ":  " + "Add New Client"
-    //console.log (titleString);
-    //const { value } = this.state
+    const {contact} = this.props;
+    //console.log ("EditClientModal " );
+    //console.log(contact);
+    //const titleString = "Edit Client : " + contact.name;
+    let email1 = "";
+    let email2 = "";
+    let email3 ="";
+    let phone1 = "";
+    let phone2 = "";
+    let phone3 ="";
+    let cell1 = "";
+    let cell2 = "";
+    let cell3 = "";
+
+    //console.log ("EditEmployeeModal id = " + id);
+    //console.log (employee.cells[0]);
+    //console.log (employee.cells["0"]);
+
+    if (contact && contact.emails && contact.emails[0]) {
+        email1 = contact.emails[0];
+    }
+    if (contact && contact.emails && contact.emails[1]) {
+        email2 = contact.emails[1];
+    }
+    if (contact && contact.emails && contact.emails[2]) {
+        email3 = contact.emails[2];
+    }
+    if (contact && contact.phones && contact.phones[0]) {
+        phone1 = contact.phones[0];
+    }
+    if (contact && contact.phones && contact.phones[1]) {
+        phone2 = contact.phones[1];
+    }
+    if (contact && contact.phones && contact.phones[2]) {
+        phone3 = contact.phones[2];
+    }
+    if (contact && contact.cells && contact.cells[0]) {
+        cell1 = contact.cells[0];
+    }
+    if (contact && contact.cells && contact.cells[1]) {
+        cell2 = contact.cells[1];
+    }
+    if (contact && contact.cells && contact.cells[2]) {
+        cell3 = contact.cells[2];
+    }
+
+    let titleString = "Edit Lead Contact Info";
+    if (contact && contact.name) {
+          titleString = contact.name + ":  " + "Edit Lead Contact Info"
+    }
 
     return (
       <Modal
-        trigger={<Icon name='plus' size ="small" onClick={() => this.handleOpen(true)} style={{marginLeft: "15px"}}/>}
+        trigger={<Icon name='edit outline' size ="small" onClick={() =>this.handleOpen(true)} style={{marginLeft: "15px"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size='small'
         style={{background: "#ccc"}}
       >
-        <Header icon='add user' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='edit outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
                            label='First Name'
-                           placeholder='Alain'
+                           defaultValue = {contact.firstname}
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Last Name'
-                            placeholder='Dubois'
+                            defaultValue = {contact.lastname}
                             name="lastname"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
                            label='Street & No'
-                           placeholder='120 Hymus Road'
+                           defaultValue = {contact.street}
                            name="street"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='City'
-                            placeholder='Pointe Claire'
+                            defaultValue = {contact.city}
                             name="city"
                             onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='PostCode'
                             placeholder='H1A 1B1'
+                            defaultValue = {contact.postcode}
                             name="postcode"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
                            label='province'
-                           placeholder='Quebec'
+                           defaultValue = {contact.province}
                            name="province"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Country'
-                            placeholder='Canada'
+                            defaultValue = {contact.country}
                             name="country"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal'>
                <Form.Input size ="mini"
                            label='Phone1'
-                           placeholder='5141119999'
+                           defaultValue = {phone1}
                            name="phone1"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Phone2'
-                            placeholder='8003391178'
+                            defaultValue = {phone2}
                             name="phone2"
                             onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Phone3'
-                            placeholder='5148881111'
+                            defaultValue = {phone3}
                             name="phone3"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal'>
                <Form.Input size ="mini"
                            label='Cell 1'
-                           placeholder='5143330123'
+                           defaultValue = {cell1}
                            name="cell1"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Cell 2'
-                            placeholder='4381112222'
+                            defaultValue = {cell2}
                             name="cell2"
                             onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='Cell 3'
-                            placeholder='5140013344'
+                            defaultValue = {cell3}
                             name="cell3"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal'>
                <Form.Input size ="mini"
                            label='email 1'
-                           placeholder='alain@hotmail.com'
+                           defaultValue = {email1}
                            name="email1"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='email 2'
-                            placeholder='dubois@yahoo.com'
+                            defaultValue = {email2}
                             name="email2"
                             onChange={this.handleChange} />
                 <Form.Input size ="mini"
                             label='email 3'
-                            placeholder='alain@gmail.com'
+                            defaultValue = {email3}
                             name="email3"
                             onChange={this.handleChange} />
            </Form.Group>
@@ -397,3 +423,15 @@ export default class AddClientModal extends Component {
     )
   }
 }
+
+export default EditLeadContactModal;
+//const mapStateToProps = state => ({
+//     usertag: state.user.usertag,
+     //contact: state.user.clientContact
+//   }
+//);
+
+//export default connect(
+//  mapStateToProps,
+//  null
+//)(EditClientContactModal);
