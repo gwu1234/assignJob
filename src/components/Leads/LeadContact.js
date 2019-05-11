@@ -135,7 +135,7 @@ class LeadContact extends React.Component {
 
 const styles = {
   container: {
-    height: "40vh",
+    height: "40%",
     background: "#92c2e8",
   },
   menuHeader: {

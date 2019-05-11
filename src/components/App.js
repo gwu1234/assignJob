@@ -27,6 +27,7 @@ import ClientContact from "./MetaPanel/ClientContact";
 import Invoices from "./MapPanel/Invoices";
 import Leads from "./Leads/Leads";
 import LeadContact from "./Leads/LeadContact";
+import LeadLogs from "./Leads/LeadLogs";
 
 class App extends React.Component {
 
@@ -374,6 +375,7 @@ class App extends React.Component {
                        style={{ padding: "0.1em", width:"100%"}}
                      >
                       <LeadContact />
+                      <LeadLogs/>
 
                      </Menu>
                 </Grid.Column>
@@ -429,6 +431,7 @@ class App extends React.Component {
                       style={{ padding: "0.1em", width:"100%", height:"100%"}}
                   >
                         <LeadContact/>
+                        <LeadLogs/>
                   </Menu>
              </Grid.Column>
              <Grid.Column style=
