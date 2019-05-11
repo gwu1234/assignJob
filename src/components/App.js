@@ -428,7 +428,7 @@ class App extends React.Component {
                       vertical
                       style={{ padding: "0.1em", width:"100%", height:"100%"}}
                   >
-                        <p>Lead Contact</p>
+                        <LeadContact/>
                   </Menu>
              </Grid.Column>
              <Grid.Column style=

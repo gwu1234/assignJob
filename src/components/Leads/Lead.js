@@ -23,45 +23,84 @@ class Lead extends React.Component {
 
   render() {
     const {lead, usertag, leadKey, french, selectedLeadKey} = this.props;
+    const {emails, phones, cells} = lead;
 
     let name= '';
-    let address ='';
+    let street ='';
     let city ="";
 
     if (lead) {
         name = (lead.lastname && lead.firstname)? (lead.lastname+", "+lead.firstname): "";
-        address = lead.street;
+        street = lead.street;
         city = lead.city;
     }
 
-    console.log(lead);
-    console.log(address);
-    console.log(city);
+    //console.log(lead);
+    //console.log(address);
+    //console.log(city);
 
     let viewTitle = "view lead data";
     if (french) {
        viewTitle = "voir lead donnee";
     }
 
+    let email ="";
+    if (emails && emails.length > 0) {
+       console.log(emails) ;
+       email = emails[0];
+    }
+    let  phone ="";
+    if (phones && phones.length > 0) {
+       console.log(phones) ;
+       phone = phones[0];
+    }
+    let cell ="";
+    if (cells && cells.length > 0) {
+       console.log(cells) ;
+       cell = cells[0];
+    }
+
+    //console.log(phone);
+    //console.log(email);
+    //console.log(cell);
+
     return (
       <Menu.Menu style={styles.container}>
-         {name && <Menu.Item style = {selectedLeadKey===leadKey?
+         {lead && name && <Menu.Item style = {selectedLeadKey===leadKey?
                  styles.selectedName : styles.notselectedName}
               onClick={() => this.onButtonClick()}>
               {lead && name}
          </Menu.Item>}
-         <Menu.Item
+         {lead && street && <Menu.Item
               style = {selectedLeadKey===leadKey?
                       styles.selectedCity : styles.notselectedCity}
                       onClick={() => this.onButtonClick()}>
-              {lead && address}
-         </Menu.Item>
-         <Menu.Item
+              {lead && street}
+         </Menu.Item>}
+         {lead && city && <Menu.Item
               style = {selectedLeadKey===leadKey?
                       styles.selectedCity : styles.notselectedCity}
                       onClick={() => this.onButtonClick()}>
               {lead && city}
-         </Menu.Item>
+         </Menu.Item>}
+         {lead && !name && !street && email && <Menu.Item
+              style = {selectedLeadKey===leadKey?
+                      styles.selectedCity : styles.notselectedCity}
+                      onClick={() => this.onButtonClick()}>
+              {lead && email}
+        </Menu.Item>}
+        {lead && !name && !street && !email && phone && <Menu.Item
+             style = {selectedLeadKey===leadKey?
+                     styles.selectedCity : styles.notselectedCity}
+                     onClick={() => this.onButtonClick()}>
+             {lead && phone}
+        </Menu.Item>}
+        {lead && !name && !street && !email && !phone && cell && <Menu.Item
+             style = {selectedLeadKey===leadKey?
+                     styles.selectedCity : styles.notselectedCity}
+                     onClick={() => this.onButtonClick()}>
+             {lead && cell}
+        </Menu.Item>}
          </Menu.Menu>
      );
    }

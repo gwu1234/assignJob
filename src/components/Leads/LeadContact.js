@@ -103,30 +103,30 @@ class LeadContact extends React.Component {
                 {titleString}
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu}>
-          <Menu.Item style={styles.address}>
+          {contact && contact.street && <Menu.Item style={styles.address}>
                {contact && contact.street}
-          </Menu.Item>
-          <Menu.Item style={styles.address}>
+          </Menu.Item>}
+          {contact && contact.city && <Menu.Item style={styles.address}>
                {contact && contact.city}
-          </Menu.Item>
-          <Menu.Item style={styles.address}>
-               {contact && contact.province}
-          </Menu.Item>
-          <Menu.Item style={styles.address}>
-               {contact && contact.country}
-          </Menu.Item>
-          <Menu.Menu style={styles.emailMenu}>
+          </Menu.Item>}
+          {contact && contact.province && <Menu.Item style={styles.address}>
+               {contact && (contact.province + ", " + contact.country)}
+          </Menu.Item>}
+          {contact && contact.postcode && <Menu.Item style={styles.address}>
+               {contact && contact.postcode}
+          </Menu.Item>}
+          {contact && contact.emails && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
             {emailDisplay && contact && contact.emails && contact.emails.length>0 && this.displayEmails (contact.emails)}
-          </Menu.Menu>
-          <Menu.Menu style={styles.emailMenu}>
+          </Menu.Menu>}
+          {contact && contact.phones && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.phones && contact.phones.length>0 && this.displayPhoneHeader (phoneDisplay)}
             {phoneDisplay && contact && contact.phones && contact.phones.length>0 && this.displayPhones (contact.phones)}
-          </Menu.Menu>
-          <Menu.Menu style={styles.emailMenu}>
+          </Menu.Menu>}
+          {contact && contact.cells && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (cellDisplay)}
             {cellDisplay && contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
-          </Menu.Menu>
+          </Menu.Menu>}
           </Menu.Menu>
       </Menu.Menu>
     );
@@ -153,26 +153,20 @@ const styles = {
     height: "93%",
   },
   address: {
-    paddingTop: "15px",
-    paddingBottom: "5px",
-    fontSize: "1.0em",
-    fontWeight: "bold",
+    paddingTop: "6px",
+    paddingBottom: "6px",
+    fontSize: "0.9em",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
-    borderStyle:"solid",
-    borderWidth:"2px",
-    borderColor:"#b0caf4",
   },
   emailMenu: {
-    paddingTop: "20px",
-    paddingBottom: "10px",
-    fontSize: "1.0em",
-    fontWeight: "bold",
+    paddingTop: "6px",
+    paddingBottom: "6px",
+    fontSize: "0.9em",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
-    borderStyle:"solid",
-    borderWidth:"2px",
-    borderColor:"#b0caf4",
   },
   email: {
     paddingTop: "5px",
