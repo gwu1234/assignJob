@@ -83,18 +83,18 @@ class EditLeadContactModal extends Component {
 
   handleOpen = (open) => this.setState({ modalOpen: open })
 
-  async getLocations(client, location) {
+  async getLocations(lead, location) {
     Geocode.setApiKey("AIzaSyBieaKdJKdipZ6bsaiOUhqUCdCc9JU4OlE");
       const r = await this.getLocation(location)
       if (r != null) {
-          client.lng = r.lng;
-          client.lat = r.lat;
+          lead.lng = r.lng;
+          lead.lat = r.lat;
           //console.log (location.key) ;
           //console.log (location.databaseRef);
           //console.log (location.address);
           //console.log(client);
           //location.databaseRef.set(client);
-          location.databaseRef.update(client);
+          location.databaseRef.update(lead);
       }
   }
 
@@ -122,16 +122,14 @@ class EditLeadContactModal extends Component {
        //console.log(event);
        event.preventDefault();
     }
-    //event.preventDefault();
-    if (this.isFormValid(this.state)) {
+
+    if (this.isFormValid()) {
          //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
                  country,phone1,phone2,phone3,cell1,cell2,cell3,
                  email1,email2,email3} = this.state;
-         const {usertag, contact } = this.props;
-         const name = firstname + " " + lastname;
-         //let tagString = name + "+" + street + "+" + postcode ;
-         //const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
+         const {usertag, contact} = this.props;
+         const name = (firstname && lastname) ? (firstname + " " + lastname) : "";
 
          let emails = [];
          let phones = [];
@@ -167,78 +165,79 @@ class EditLeadContactModal extends Component {
             cells.push (cell3);
          }
 
-         const newClientContact = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "name": String(name),
-           "postcode": String(postcode),
-           "country": String(country),
-           "province":  String(province),
+         const date = new Date();
+           // timestamp in second
+         const timestamp = Math.round(date.getTime()/1000 + 0.5);
+         const localtime = date.toLocaleString();
+
+         const leadTag = "repos/" + usertag + "/leads";
+         const leadRef = firebase.database().ref(leadTag);
+         //const leadKey = leadRef.push().getKey();
+         let leadKey = contact.leadTag;
+         if (!leadKey) {
+            leadKey = leadRef.push().getKey();
+         }
+         const newLead = {
+           "city":  (city? String(city):""),
+           "lastname": (lastname? String(lastname):""),
+           "firstname": (firstname? String(firstname):""),
+           "street": (street? String(street):""),
+           "name": (name? String(name):""),
+           "postcode": (postcode? String(postcode):""),
+           "country": (country? String(country):""),
+           "province":  (province? String(province):""),
            "emails": emails,
            "phones": phones,
            "cells": cells,
-           "tag": String(contact.clientTag),
-           "clientTag": String(contact.clientTag),
-           "clientKey": String(contact.clientKey)
+           "leadTag": leadKey,
+           "timestamp": timestamp ,
+           "date": localtime ,
          }
 
-         //console.log(newClient);
-         const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientTag +"/contact";
-         console.log(clientPath);
-         const clientKey = contact.clientKey;
-         const clientRef = firebase.database().ref(clientPath);
-         //const clientKey = clientRef.push().getKey();
-         //console.log(clientKey);
+         if (  (street && city && postcode) ||
+               (street && city && province && country) ) {
+            const address = postcode?(street + ", " + city + ", " + postcode)
+                                    :(street + ", " + city + ", " + province + ", " + country);
+            const location = {
+                address: address,
+                key: leadKey,
+                databaseRef: leadRef.child(leadKey).child("contact"),
+            }
 
-         const address = street + ", " + city + ", " + postcode;
-         const location = {
-            address: address,
-            key: clientKey,
-            databaseRef: clientRef
-         }
-
-         this.getLocations (newClientContact,location);
-         this.handleOpen(false);
+            this.getLocations (newLead,location);
+            this.handleOpen(false);
+        }
+        else {
+            leadRef.child(leadKey).child("contact").set(newLead);
+            this.clearState ();
+            this.handleOpen(false);
+        }
     }
   };
 
   isFormValid() {
-    const {lastname, firstname, street, postcode, city}
+    const { street, postcode, city, phone1, phone2, phone3,
+            cell1, cell2, cell3, email1, email2, email3 }
            = this.state;
 
-           if (!lastname || !firstname ){
-              window.alert("lastname and firstname are required");
-              return false;
-           } else if (lastname.length < 2) {
-              window.alert("full lastname please");
-              return false;
-           } else if (firstname.length < 2) {
-              window.alert("full firstname please");
-              return false;
+           let  requred = false;
+           if (street && postcode ){
+              requred = true;
+           }
+           if (street && city){
+              requred = true;
+           }
+           if (cell1 || cell2 || cell3) {
+             requred = true;
+           }
+           if (email1 || email2 || email3) {
+             requred = true;
+           }
+           if (phone1 || phone2 || phone3) {
+             requred = true;
            }
 
-           if (!street || !postcode ){
-              window.alert("street name, number and post code are required");
-              return false;
-           } else if (street.length < 3) {
-             window.alert("full street name and number please");
-             return false;
-           } else if (postcode.length < 5) {
-             window.alert("full postcode please");
-             return false;
-           }
-
-           if (!city){
-              window.alert("city is required");
-              return false;
-           } else if (city.length < 3) {
-             window.alert("full city name please");
-             return false;
-           }
-
-    return true;
+    return requred ;
   }
 
   handleChange = event => {
@@ -246,6 +245,12 @@ class EditLeadContactModal extends Component {
     //console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  clearState  = () => {
+      this.setState ({ lastname: "", firstname: "", street: "", city: "", postcode: "",
+                      province:"", country: "", phones: [], cells: [], emails: []
+      });
+  }
 
   render() {
     const {contact} = this.props;
@@ -413,11 +418,11 @@ class EditLeadContactModal extends Component {
               Cancel
         </Button>
 
-          <Button color='green' size="small" inverted
+          {contact && contact.leadTag && <Button color='green' size="small" inverted
                 onClick={() =>this.handleSubmit()}
                 >
                 Submit
-          </Button>
+          </Button>}
         </Modal.Actions>
       </Modal>
     )
