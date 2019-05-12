@@ -39,17 +39,17 @@ class LeadLog extends React.Component {
 
 const styles = {
   container: {
-    paddingTop: "3px",
-    paddingBottom: "3px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
     position: "relative",
     borderStyle:"solid",
     borderWidth:"2px",
     borderColor:"#b0caf4",
   },
   item: {
-    paddingTop: "1px",
-    paddingBottom: "1px",
-    fontSize: "0.9em",
+    paddingTop: "3px",
+    paddingBottom: "3px",
+    fontSize: "1.0em",
     fontWeight: "normal",
     color: "black",
     opacity: 1.0,

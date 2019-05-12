@@ -352,41 +352,38 @@ class App extends React.Component {
 
 
         {!admin && !mapView && !companyInfoView && !clientView && !clientContactView && leadView &&
-          <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px", backgroundImage: `url(${Background})`}}>
-                <Grid.Column style=
-                     {{width: "29.5%", height:"100%", marginRight:"5px", padding:"0px"}}>
+          <Grid.Row style={styles.mainRow}>
+                <Grid.Column style={{...styles.leftColumn, width:"20%"}}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ padding: "0.1em", width:"100%", height:"92vh"}}
+                       style={styles.MenuContainer}
                      >
                        <Leads/>
                      </Menu>
                 </Grid.Column>
-                <Grid.Column style=
-                     {{width: "29.5%", height:"100%", marginLeft:"5px", padding:"0px"}}>
+                <Grid.Column style={{...styles.middleColumn, width:"22%"}}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ padding: "0.1em", width:"100%"}}
+                       style={styles.MenuContainer}
                      >
                       <LeadContact />
                       <LeadLogs/>
 
                      </Menu>
                 </Grid.Column>
-                <Grid.Column style=
-                     {{width: "99.5%", height:"100%", marginLeft:"5px", padding:"0px"}}>
+                <Grid.Column style={{...styles.rightColumn, width:"57%"}}>
                      <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ padding: "0.1em", width:"100%"}}
+                       style={styles.MenuContainer}
                      >
                       <p>Lead Email</p>
 

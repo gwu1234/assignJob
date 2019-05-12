@@ -94,7 +94,7 @@ export default class AddLogModal extends Component {
         <Header icon='add user' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
         <Modal.Content>
         <Form >
-           <Form.Group inline width='equal' >
+
                <Form.Input size ="mini"
                            label='Employee Name'
                            placeholder='Alain'
@@ -110,7 +110,7 @@ export default class AddLogModal extends Component {
                            placeholder='I send a email to Alain Pascale'
                            name="logMsg"
                            onChange={this.handleChange} />
-           </Form.Group>
+          
         </Form>
         </Modal.Content>
         <Modal.Actions>

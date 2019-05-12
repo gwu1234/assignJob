@@ -92,24 +92,26 @@ class LeadLogs extends React.Component {
 
 const styles = {
   container: {
-    height: "55%",
+    height: "64.5%",
     background: "#92c2e8",
-    marginBottom:"3px",
-    marginTop:"3px",
+    marginBottom:"2px",
+    marginTop:"4px",
   },
   menuHeader: {
-    paddingTop:"8px",
-    paddingBottom: "8px",
+    paddingTop:"10px",
+    paddingBottom: "10px",
     textAlign: "center",
     color: "black",
     fontSize:"1.2em",
     fontWeight:"bold",
-    height: "15%",
+    height: "10%",
   },
   menuMenu: {
+    paddingTop:"2px",
+    paddingBottom: "2px",
     position: "relative",
     overflow: "scroll",
-    height: "85%",
+    height: "90%",
   },
 };
 
