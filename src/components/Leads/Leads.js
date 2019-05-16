@@ -17,7 +17,7 @@ class Leads extends React.Component {
     }
 
    setSelectedLeadKey = (key) =>{
-     console.log("setSelectedLeadKey key =  " + key);
+     //console.log("setSelectedLeadKey key =  " + key);
      this.setState ({selectedLeadKey: key}) ;
    }
 

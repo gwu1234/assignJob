@@ -56,7 +56,7 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => {
+//const mapStateToProps = state => {
    /*const reposData = state.user.reposData;
    const usertag = state.user.usertag;
    const leadTag = state.user.leadTag;
@@ -72,11 +72,8 @@ const mapStateToProps = state => {
    return {
      deliverys: deliverys,
    }*/
-};
+//};
 
-export default connect(
-  mapStateToProps,
-  {}
-)(LeadLog);
+export default LeadLog;
 
 //export default WorkOrder;

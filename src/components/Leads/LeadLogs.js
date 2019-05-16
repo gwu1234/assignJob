@@ -124,7 +124,8 @@ const mapStateToProps = state => {
   if (leadTag) {
       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
       logs = reposData["leads"][leadTag]?
-      reposData["leads"][leadTag]["leadlogs"] : {};
+             (reposData["leads"][leadTag]["leadlogs"]?reposData["leads"][leadTag]["leadlogs"]:{})
+             : {};
       //console.log(clientContact);
   }
   return {
@@ -132,7 +133,7 @@ const mapStateToProps = state => {
      french: state.user.french,
      usertag:state.user.usertag,
      leadTag: leadTag,
-     userName: state.user.userName,
+     userName: state.user.currentUser.displayName,
    }
 };
 

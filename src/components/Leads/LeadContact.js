@@ -103,6 +103,9 @@ class LeadContact extends React.Component {
                 <EditLeadContactModal open={false} contact={contact} usertag={usertag}/>
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu}>
+          {contact && contact.name && <Menu.Item style={styles.address}>
+               {contact && contact.name}
+          </Menu.Item>}
           {contact && contact.street && <Menu.Item style={styles.address}>
                {contact && contact.street}
           </Menu.Item>}

@@ -28,6 +28,7 @@ import Invoices from "./MapPanel/Invoices";
 import Leads from "./Leads/Leads";
 import LeadContact from "./Leads/LeadContact";
 import LeadLogs from "./Leads/LeadLogs";
+import LeadQuote from "./Leads/LeadQuote";
 
 class App extends React.Component {
 
@@ -385,7 +386,7 @@ class App extends React.Component {
                        vertical
                        style={styles.MenuContainer}
                      >
-                      <p>Lead Email</p>
+                      <LeadQuote/>
 
                      </Menu>
                 </Grid.Column>

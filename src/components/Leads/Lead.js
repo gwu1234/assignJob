@@ -44,6 +44,8 @@ class Lead extends React.Component {
        viewTitle = "voir lead donnee";
     }
 
+    console.log("leadKey =  " + leadKey);
+
     let email ="";
     if (emails && emails.length > 0) {
        console.log(emails) ;
