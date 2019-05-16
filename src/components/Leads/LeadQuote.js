@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from "react-redux";
-import {html2canvas} from 'html2canvas';
-import {jsPDF} from 'jspdf';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import Background from '../terra.jpg';
 import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
 
