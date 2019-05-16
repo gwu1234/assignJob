@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import firebase from "../../firebase";
+import 'firebase/functions';
 import { connect } from "react-redux";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -91,7 +93,9 @@ class LeadQuote extends Component {
     });
   }
 
-  printDocument() {
+  printDocument = () =>{
+    let {price,  taxes, total, work} = this.state;
+    console.log(price);
     const input = document.getElementById('divToPrint');
     html2canvas(input)
       .then((canvas) => {
@@ -100,8 +104,27 @@ class LeadQuote extends Component {
         pdf.addImage(imgData, 'JPEG', 0, 0);
         // pdf.output('dataurlnewwindow');
         pdf.save("download.pdf");
-      })
-    ;
+      });
+
+      //let {price,  taxes, total, work} = this.state;
+      const quote = {
+          price: price,
+          taxes: taxes,
+          total: total,
+          work: work,
+      }
+
+      var addMessage = firebase.functions().httpsCallable('addMessage');
+      /*addMessage({text: "Guoping sending Msg"}).then(function(result) {
+          // Read result of the Cloud Function.
+          var sanitizedMessage = result.data.text;
+          console.log(sanitizedMessage);
+      });*/
+      addMessage({quote:quote}).then(function(result) {
+          // Read result of the Cloud Function.
+          var sanitizedMessage = result.data.text;
+          console.log(sanitizedMessage);
+      });
   }
 
   handleChange = event => {
