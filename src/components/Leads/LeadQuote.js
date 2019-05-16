@@ -27,58 +27,47 @@ class LeadQuote extends Component {
      }
   }
 
+  /*static getDerivedStateFromProps(props, state){
+     console.log(props.contact);
+     console.log(state);
+     return {};
+  }*/
+
+  componentDidUpdate(prevProps) {
+     console.log("componentDidUpdate()");
+     if (this.props.contact !== prevProps.contact) {
+          const {contact, currentUser} = this.props;
+          const {phones, cells, emails} = contact;
+
+          //console.log(contact);
+          const newState = {
+              companyName: currentUser.displayName,
+              clientName: (contact&&contact.name)?contact.name:"",
+              street: (contact&&contact.street)?contact.street:"",
+              city: (contact&&contact.city)?contact.city:"",
+              postcode: (contact&&contact.postcode)?contact.postcode:"",
+              province: (contact&&contact.province)?contact.province:"",
+              country:  (contact&&contact.country)?contact.country:"",
+              phone: (phones&&phones.length>0)?phones[0]:"",
+              cell: (cells&&cells.length>0)?cells[0]:"",
+              email: (emails&&emails.length>0)?emails[0]:"",
+              price: '',
+              taxes: '',
+              total:'',
+              work: "",
+          };
+          console.log(newState);
+          this.setState (newState);
+     }
+  }
+
   isFormValid() {
-    let { companyName, clientName, street, city, postcode,
-            province, country, phone, cell, email, price,
-            taxes, total, work} = this.state;
-    const {contact, currentUser} = this.props;
-
-    if (!companyName && currentUser) {
-        companyName = currentUser.displayName;
-    }
-
-    if (!clientName && contact) {
-        clientName = contact.name;
-    }
-
-    if (!street && contact.street) {
-        street = contact.street;
-    }
-
-    if (!city && contact.city) {
-        city = contact.city;
-    }
-
-    if (!postcode && contact.postcode) {
-        postcode = contact.postcode;
-    }
-
-    if (!province && contact.province) {
-        province = contact.province;
-    }
-
-    if (!country && contact.country) {
-        country = contact.country;
-    }
-
-    if (!phone && contact.phones && contact.phones.length>0) {
-        phone = contact.phones[0];
-    }
-
-    if (!cell && contact.cells && contact.cells.length>0) {
-        cell = contact.cells[0];
-    }
-
-    if (!email && contact.emails && contact.emails.length>0) {
-        email = contact.emails[0];
-    }
+    let {price,  taxes, total, work} = this.state;
 
     let  requred = true;
-    if ( !companyName || !clientName || !street || !city || !postcode ||
-         !province || !country || !phone || !cell || !email || !price ||
-         !taxes || !total || !work) {
+    if (!price || !taxes || !total || !work) {
         requred = false;
-        window.alert("please fill all the fields");
+        window.alert("fields price taxes, total work  are required");
     }
     return requred;
   }
@@ -120,7 +109,8 @@ class LeadQuote extends Component {
   };
 
   render() {
-    const {contact, currentUser} = this.props;
+    const { companyName, clientName, street, city, postcode, province,
+            country, phone, cell, email, price, taxes, total, work } = this.state ;
 
     return (
       <div style ={styles.container}>
@@ -131,8 +121,7 @@ class LeadQuote extends Component {
           <Form >
                  <Form.Input size ="small"
                       label='Company Name'
-                      placeholder='Company Name'
-                      defaultValue ={(currentUser&&currentUser.displayName)?currentUser.displayName:""}
+                      value ={companyName}
                       name="companyName"
                       onChange={this.handleChange}
                       />
@@ -143,19 +132,19 @@ class LeadQuote extends Component {
                  <Form.Group inline width="3" >
                  <Form.Input size ="small"
                              label='Name'
-                             defaultValue = {(contact&&contact.name)?contact.name:""}
+                             value = {clientName}
                              name="clientName"
                              onChange={this.handleChange}
                              />
                  <Form.Input size ="small"
                              label='Street'
-                             defaultValue = {(contact&&contact.street)?contact.street:""}
+                             value = {street}
                              name="street"
                              onChange={this.handleChange}
                              />
                   <Form.Input size ="small"
                               label='City'
-                              defaultValue = {(contact&&contact.city)?contact.city:""}
+                              value = {city}
                               name="city"
                               onChange={this.handleChange}
                               />
@@ -164,38 +153,37 @@ class LeadQuote extends Component {
              <Form.Group inline width="3" >
                  <Form.Input size ="small"
                              label='Post'
-                             placeholder='H1A 1B1'
-                             defaultValue = {(contact&&contact.postcode)?contact.postcode:""}
+                             value = {postcode}
                              name="postcode"
                              onChange={this.handleChange}
                              />
                  <Form.Input size ="small"
                              label='Province'
-                             defaultValue = {(contact&&contact.province)?contact.province:""}
+                             value = {province}
                              name="province"
                              onChange={this.handleChange} />
                   <Form.Input size ="small"
                               label='Country'
-                              defaultValue = {(contact&&contact.country)?contact.country:""}
+                              value = {country}
                               name="country"
                               onChange={this.handleChange} />
              </Form.Group>
              <Form.Group inline width="3">
                  <Form.Input size ="small"
                              label='Phone'
-                             defaultValue = {(contact&&contact.phones&&contact.phones.length>0)?contact.phones[0]:""}
+                             value = {phone}
                              name="phone"
                              onChange={this.handleChange} />
 
                  <Form.Input size ="small"
                              label='Cell'
-                             defaultValue = {(contact&&contact.cells&&contact.cells.length>0)?contact.cells[0]:""}
+                             value = {cell}
                              name="cell"
                              onChange={this.handleChange} />
 
                  <Form.Input size ="small"
                              label='Email'
-                             defaultValue = {(contact&&contact.emails&&contact.emails.length>0)?contact.emails[0]:""}
+                             value = {email}
                              name="email"
                              onChange={this.handleChange} />
              </Form.Group>
@@ -204,19 +192,19 @@ class LeadQuote extends Component {
              <Form.Group inline width="3">
                  <Form.Input size ="small"
                              label='Price'
-                             defaultValue = "price"
+                             value = {price}
                              name="price"
                              onChange={this.handleChange} />
 
                  <Form.Input size ="small"
                              label='Taxes'
-                             defaultValue = "taxes"
+                             value = {taxes}
                              name="taxes"
                              onChange={this.handleChange} />
 
                  <Form.Input size ="small"
                              label='Total'
-                             defaultValue = "total"
+                             value = {total}
                              name="total"
                              onChange={this.handleChange} />
              </Form.Group>
@@ -224,7 +212,7 @@ class LeadQuote extends Component {
              <div style ={{paddingTop: "12px"}}>
              <Form.Input size ="small"
                   label='Job Description'
-                  defaultValue = "enter job description"
+                  value = {work}
                   name="work"
                   onChange={this.handleChange}
                   />
