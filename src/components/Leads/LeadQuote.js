@@ -128,10 +128,22 @@ class LeadQuote extends Component {
   }
 
   sendDocument = () =>{
-     let {price,  taxes, total, work} = this.state;
+     let { companyName, clientName, street, city, postcode,
+           province, country, phone, cell, email, price,
+           taxes, total, work} = this.state;
 
       //let {price,  taxes, total, work} = this.state;
       const quote = {
+          companyName: companyName,
+          clientName: clientName,
+          street: street,
+          city: city,
+          postcode: postcode,
+          province: province,
+          country: country,
+          phone: phone,
+          cell:  cell,
+          email: email,
           price: price,
           taxes: taxes,
           total: total,
