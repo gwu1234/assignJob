@@ -107,7 +107,7 @@ class LeadQuote extends Component {
       });
 
       //let {price,  taxes, total, work} = this.state;
-      const quote = {
+      /*const quote = {
           price: price,
           taxes: taxes,
           total: total,
@@ -115,15 +115,34 @@ class LeadQuote extends Component {
       }
 
       var addMessage = firebase.functions().httpsCallable('addMessage');
-      /*addMessage({text: "Guoping sending Msg"}).then(function(result) {
+      addMessage({text: "Guoping sending Msg"}).then(function(result) {
           // Read result of the Cloud Function.
           var sanitizedMessage = result.data.text;
           console.log(sanitizedMessage);
-      });*/
+      });
       addMessage({quote:quote}).then(function(result) {
           // Read result of the Cloud Function.
           var sanitizedMessage = result.data.text;
           console.log(sanitizedMessage);
+      });*/
+  }
+
+  sendDocument = () =>{
+     let {price,  taxes, total, work} = this.state;
+
+      //let {price,  taxes, total, work} = this.state;
+      const quote = {
+          price: price,
+          taxes: taxes,
+          total: total,
+          work: work,
+      }
+
+      var sendQuote = firebase.functions().httpsCallable('sendQuote');
+      sendQuote({quote:quote}).then(function(result) {
+          // Read result of the Cloud Function.
+          var returnText = result.data.text;
+          console.log(returnText);
       });
   }
 
@@ -243,6 +262,7 @@ class LeadQuote extends Component {
           </Form>
            </div>
            <div style ={styles.menuFooter}>
+              <Button onClick={this.sendDocument}>Email Quote</Button>
               <Button onClick={this.printDocument}>Save as PDF</Button>
            </div>
          </div>);
