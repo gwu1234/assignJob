@@ -297,7 +297,7 @@ const user_reducer = (state = initialUserState, action) => {
 
                 type: EMPLOYEE_MARKER
             }
-            console.log(marker);
+            //console.log(marker);
            employeeMarkers.push(marker);
       }
 
@@ -375,7 +375,7 @@ const user_reducer = (state = initialUserState, action) => {
       };
    case actionTypes.SET_SELECTED_EMPLOYEE:
          const selectedEmployee = action.payload.selected
-         console.log (selectedEmployee);
+         //console.log (selectedEmployee);
 
          let marker4Employee = [];
          let selectedMarkers = [];
@@ -391,7 +391,7 @@ const user_reducer = (state = initialUserState, action) => {
              id:  selectedEmployee.tag,
              type: EMPLOYEE_MARKER
          }
-         console.log(employeeMarker);
+         //console.log(employeeMarker);
          marker4Employee.push(employeeMarker);
 
          const assignedJobs = selectedEmployee.assigned;

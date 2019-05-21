@@ -77,7 +77,7 @@ class WorkOrder extends React.Component {
        const photoPath = usertag + "/" + clientTag + "/" + orderKey + "/photo";
        //this.setState ({thumbPath: thumbPath, photoPath: photoPath});
        //const {photoPath} = this.state;
-       console.log(photoPath);
+       //console.log(photoPath);
        for (var photokey in photo) {
           //console.log("photokey = " + photokey);
           //console.log("photoTag =" + photo[photokey].photoTag);
@@ -102,7 +102,7 @@ class WorkOrder extends React.Component {
           //this.props.setThumbs(thumbs);
           //this.props.setClients(clients);
           //setThumbs
-          console.log(thumbs);
+          //console.log(thumbs);
           this.setState({...this.state, thumbs: thumbs});
           // This can be downloaded directly:
           /*var xhr = new XMLHttpRequest();
@@ -206,7 +206,7 @@ class WorkOrder extends React.Component {
           {thumbs.length > 0 && <Menu.Item style = {isActive? styles.activeItem:styles.item }>
                photos: {thumbs.length}
           </Menu.Item>}
-          {thumbs.length > 0 && <Menu style={styles.picMenu}k>
+          {thumbs.length > 0 && <Menu style={styles.picMenu}>
                {this.displayThumbs(thumbs)}
         </Menu>}
       </Menu.Menu>

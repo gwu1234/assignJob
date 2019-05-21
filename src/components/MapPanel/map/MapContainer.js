@@ -87,7 +87,7 @@ class MapContainer extends Component {
     });
   }
 
- workIsDone = (props, marker, e) =>{
+ /*workIsDone = (props, marker, e) =>{
    //console.log("at MapContainer workIsDone");
    //console.log(this.state.activeMarker.clientKey);
    //console.log(this.state.activeMarker.name);
@@ -131,7 +131,7 @@ class MapContainer extends Component {
         statusRef.set(2);
     }*/
     //lastservicetime
-    let lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/lastservicetime";
+    /*let lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/lastservicetime";
     let lastRef = firebase.database().ref(lastTag);
 
     if (lastRef == null) {
@@ -164,7 +164,7 @@ class MapContainer extends Component {
     } else {
         delRef.set(timestamp);
     }*/
-  }
+  //}*/
 
   /*workNotDone = (props, marker, e) =>{
     const {markers} = this.props;
@@ -460,6 +460,12 @@ class MapContainer extends Component {
 
     render() {
       const {usertag, employees, markers, truckMarkers, employeeMarkers} = this.props;
+      let {selectedLatLng} = this.state.selectedLatLng;
+
+      if (!selectedLatLng) {
+        // set a flake lat lng if null
+        selectedLatLng = {lat:0.1, lng:0.1};
+      }
       //const {markers} = this.state;
 
       /*const buttonStyle = {
@@ -499,6 +505,7 @@ class MapContainer extends Component {
                  <Marker
                       key={index}
                       id = {index}
+                      //position={{lat: parseFloat(marker.pos.lat), lng: parseFloat(marker.pos.lng)}}
                       position={marker.pos}
                       name = {marker.name}
                       onClick={this.onMarkerClick}
@@ -629,7 +636,7 @@ class MapContainer extends Component {
 
 
             <InfoWindowEx
-                   position={this.state.selectedLatLng}
+                   position={selectedLatLng}
                    visible={this.state.showingGwindow}
                    onClose={this.onGclose} >
                    <div >
