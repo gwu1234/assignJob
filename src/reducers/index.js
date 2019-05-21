@@ -139,7 +139,9 @@ const user_reducer = (state = initialUserState, action) => {
 
               isActive = (isActive && isActive === "true")? true:false;
               isRepeat = (isRepeat && isRepeat === "true")? true:false;
-              repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+              //repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
+              repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
+                                           parseInt(repeatTimes, 10): 0) : 0;
               //deliveryTimes = deliveryTimes? parseInt(deliveryTimes, 10) : 0;
 
               // need to calculate deliveryTimes
@@ -179,7 +181,7 @@ const user_reducer = (state = initialUserState, action) => {
                      statusArray.push(JOB_NEW);
                      theStatus = JOB_NEW;
                   }
-                  else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                  else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes <= deliveryTimes) {
                      statusArray.push(JOB_DONE);
                      theStatus = JOB_DONE;
                   } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
@@ -405,30 +407,48 @@ const user_reducer = (state = initialUserState, action) => {
              for (var orderKey in workorders) {
                  //console.log(orderKey);
                  //console.log(workorders[orderKey]);
-                 let {isActive,isRepeat,repeatTimes, previousDelivery} = workorders[orderKey];
-                 statusArray = [];
-                 activeOrder= 0;
+                 let {isActive,isRepeat,repeatTimes, previousDelivery, presentDelivery} = workorders[orderKey];
+                 //statusArray = [];
+                 //activeOrder= 0;
                  //let orders = [];
 
                  isActive = (isActive && isActive === "true")? true:false;
                  isRepeat = (isRepeat && isRepeat === "true")? true:false;
-                 repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
-                 previousDelivery = previousDelivery? parseInt(previousDelivery, 10) : 0;
-                 let deliveryTimes = previousDelivery;
-
-                 //let status = JOB_NEW;
+                 //console.log("isActive = " + isActive);
+                 //console.log("isRepeat = " + isRepeat);
+                 repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
+                                              parseInt(repeatTimes, 10): 0) : 0;
+                 //console.log("repeatTimes = " + repeatTimes);
+                 previousDelivery = previousDelivery? (previousDelivery!== "undefined" ?
+                                              parseInt(previousDelivery, 10): 0) : 0;
+                 //console.log("previousDelivery = " + previousDelivery);
+                 presentDelivery = presentDelivery? (presentDelivery !== "undefined" ?
+                                              parseInt(presentDelivery, 10): 0) : 0;
+                 //console.log("presentDelivery = " + presentDelivery);
+                 let deliveryTimes = previousDelivery + presentDelivery;
+                 //console.log("deliveryTimes = " + deliveryTimes);
+                 let status = JOB_NEW;
                  if (!isRepeat && deliveryTimes > 0) {
                     status = JOB_DONE;
                     statusArray.push(status);
-                 } else if (isRepeat && repeatTimes === 0) {
+                 } else if (isRepeat && repeatTimes === 0 && deliveryTimes === 0) {
                     //statusArray.push(JOB_PROGRESS);
-                    status = JOB_PROGRESS;
+                    status = JOB_NEW;
                     statusArray.push(status);
-                 } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                 } else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
+                    //statusArray.push(JOB_PROGRESS);
+                    status = JOB_DONE;
+                    statusArray.push(status);
+                 }
+                 else if (isRepeat && repeatTimes !== 0 && deliveryTimes === 0) {
+                    statusArray.push(JOB_NEW);
+                    statusArray.push(status);
+                 }
+                 else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes <= deliveryTimes) {
                     //statusArray.push(JOB_DONE);
                     status = JOB_DONE;
                     statusArray.push(status);
-                 } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
+                 } else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes > deliveryTimes) {
                     //statusArray.push(JOB_PROGRESS);
                     status = JOB_PROGRESS;
                     statusArray.push(status);
@@ -439,14 +459,19 @@ const user_reducer = (state = initialUserState, action) => {
                    statusArray.push(status);
                  }
                  activeOrder ++;
-                 orders.push ({...workorders[orderKey], status: status});
+                 orders.push ({...workorders[orderKey], orderStatus: status});
              }
 
-             if (activeOrder) {
+             if (statusArray.length > 0) {
                 status = statusArray[0];
+                //console.log("status Array length = " + statusArray.length);
              }
-             for (var i=0; i++; i < activeOrder) {
-                 status = status < statusArray[i]? status: statusArray[i];
+
+             var i= 0;
+             for (i = 0; i < statusArray.length; i++) {
+                 status = status <= statusArray[i]? status: statusArray[i];
+                 //console.log("status = " + status);
+                 //console.log("status = "  + statusArray[i]);
              }
 
              //let status = JOB_NEW;
@@ -471,6 +496,9 @@ const user_reducer = (state = initialUserState, action) => {
                  activeOrders: orders,
                  type: CLIENT_MARKER,
              }
+
+            //console.log("assignedMarker = " );
+            //console.log(assignedMarker) ;
             selectedMarkers.push(assignedMarker);
        }
             return {
@@ -506,7 +534,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
               let {isActive, isRepeat, repeatTimes, isEmployeeAssigned} = workorders[workKey];
               isActive = isActive? (isActive === "true"? true: false) : false;
               isRepeat = isRepeat? (isRepeat === "true"? true: false) : false;
-              repeatTimes = repeatTimes? (repeatTimes === "undefined" ?
+              repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
                                            parseInt(repeatTimes, 10): 0) : 0;
               isEmployeeAssigned = isEmployeeAssigned? (isEmployeeAssigned === "true"? true: false) : false;
 
@@ -544,7 +572,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                  //statusArray.push(JOB_DONE);
                  orderStatus = JOB_DONE;
                  statusArray.push(orderStatus);
-              } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
+              } else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes > deliveryTimes) {
                  //statusArray.push(JOB_PROGRESS);
                  orderStatus = JOB_PROGRESS;
                  statusArray.push(orderStatus);
