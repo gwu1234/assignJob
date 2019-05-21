@@ -175,7 +175,11 @@ const user_reducer = (state = initialUserState, action) => {
                   else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
                      statusArray.push(JOB_PROGRESS);
                      theStatus = JOB_PROGRESS;
-                  } else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
+                  } else if (isRepeat && repeatTimes !== 0 && deliveryTimes === 0) {
+                     statusArray.push(JOB_NEW);
+                     theStatus = JOB_NEW;
+                  }
+                  else if (isRepeat && repeatTimes !== 0 && repeatTimes <= deliveryTimes) {
                      statusArray.push(JOB_DONE);
                      theStatus = JOB_DONE;
                   } else if (isRepeat && repeatTimes !== 0 && repeatTimes > deliveryTimes) {
@@ -544,6 +548,10 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
                  //statusArray.push(JOB_PROGRESS);
                  orderStatus = JOB_PROGRESS;
                  statusArray.push(orderStatus);
+              }
+              else if (isRepeat && repeatTimes !== 0 && deliveryTimes === 0) {
+                 statusArray.push(JOB_NEW);
+                 orderStatus = JOB_NEW;
               }
               else {
                 //statusArray.push(JOB_NEW);
