@@ -105,26 +105,6 @@ class LeadQuote extends Component {
         // pdf.output('dataurlnewwindow');
         pdf.save("download.pdf");
       });
-
-      //let {price,  taxes, total, work} = this.state;
-      /*const quote = {
-          price: price,
-          taxes: taxes,
-          total: total,
-          work: work,
-      }
-
-      var addMessage = firebase.functions().httpsCallable('addMessage');
-      addMessage({text: "Guoping sending Msg"}).then(function(result) {
-          // Read result of the Cloud Function.
-          var sanitizedMessage = result.data.text;
-          console.log(sanitizedMessage);
-      });
-      addMessage({quote:quote}).then(function(result) {
-          // Read result of the Cloud Function.
-          var sanitizedMessage = result.data.text;
-          console.log(sanitizedMessage);
-      });*/
   }
 
   sendDocument = () =>{
@@ -149,13 +129,12 @@ class LeadQuote extends Component {
           total: total,
           work: work,
       }
-
-      var sendQuote = firebase.functions().httpsCallable('sendQuote');
+      /*var sendQuote = firebase.functions().httpsCallable('sendQuote');
       sendQuote({quote:quote}).then(function(result) {
           // Read result of the Cloud Function.
-          var returnText = result.data.text;
-          console.log(returnText);
-      });
+          var returnText = result.emailresult || "";
+          console.log(result);
+      });*/
   }
 
   handleChange = event => {
