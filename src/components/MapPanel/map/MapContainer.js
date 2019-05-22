@@ -68,6 +68,10 @@ class MapContainer extends Component {
        selectedPostcode: '',
        selectedLat: '',
        selectedLng: '',
+
+       mouseoverPlace: {},
+       mouseoverMarker: {},
+       showingMouseoverWindow: false,
     }
   }
 
@@ -82,10 +86,30 @@ class MapContainer extends Component {
       showingInfoWindow: true,
       //selectedLatLng: marker.pos,
       showingGwindow: false,
+      showingMouseoverWindow: false,
       //selectedAddress_string: '',
       //selectedAddress_components: {},
     });
   }
+
+  onMouseoverMarker= (props, marker, e) =>{
+    console.log("onMouseoverMarker");
+    console.log(marker);
+    console.log (props);
+
+    if (!this.state.showingMouseoverWindow) {
+    this.setState({
+      //selectedPlace: {},
+      //activeMarker: {},
+      //showingInfoWindow: false,
+      //showingGwindow: false,
+      mouseoverPlace: props,
+      mouseoverMarker: marker,
+      showingMouseoverWindow: true,
+    });
+    }
+  }
+
 
  /*workIsDone = (props, marker, e) =>{
    //console.log("at MapContainer workIsDone");
@@ -255,7 +279,8 @@ class MapContainer extends Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        showingGwindow: false,
+        //showingGwindow: false,
+        //showingMouseoverWindow: false,
       });
     }
   };
@@ -265,11 +290,34 @@ class MapContainer extends Component {
     if (this.state.showingGwindow) {
       console.log("onGclose(): closing");
       this.setState({
-        showingInfoWindow: false,
+        //showingInfoWindow: false,
         showingGwindow: false,
+        //showingMouseoverWindow: false,
       });
     }
   };
+
+  onMouseoutMarker =()=> {
+    if (this.state.showingMouseoverWindow) {
+      console.log("onMouseoutMarker: closing");
+      this.setState({
+        //showingInfoWindow: false,
+        //showingGwindow: false,
+        showingMouseoverWindow: false,
+      });
+    }
+  }
+
+  onMclose =()=> {
+    if (this.state.showingMouseoverWindow) {
+      console.log("onMclose: closing");
+      this.setState({
+        showingInfoWindow: false,
+        showingGwindow: false,
+        showingMouseoverWindow: false,
+      });
+    }
+  }
 
   createLead = () => {
     console.log("createLead()");
@@ -509,6 +557,8 @@ class MapContainer extends Component {
                       position={marker.pos}
                       name = {marker.name}
                       onClick={this.onMarkerClick}
+                      onMouseover={this.onMouseoverMarker}
+                      onMouseout = {this.onMouseoutMarker}
                       clientKey = {marker.clientKey}
                       clientTag = {marker.clientTag}
                       type = {marker.type}
@@ -528,7 +578,7 @@ class MapContainer extends Component {
                  </Marker> )
           })}
 
-          {this.state.selectedPlace.type === CLIENT_MARKER && <InfoWindowEx
+          {this.state.selectedPlace && this.state.selectedPlace.type === CLIENT_MARKER && <InfoWindowEx
                  marker={this.state.activeMarker}
                  visible={this.state.showingInfoWindow}
                  onClose={this.onClose} >
@@ -550,6 +600,21 @@ class MapContainer extends Component {
                           <Button icon size="mini" color="green" onClick={this.onClose}>
                                     <Icon name='cancel' size ="large"/> Close
                           </Button>
+                     </div>
+                 </div>
+          </InfoWindowEx> }
+
+          {this.state.mouseoverPlace && this.state.mouseoverPlace.type === CLIENT_MARKER && <InfoWindowEx
+                 marker={this.state.mouseoverMarker}
+                 visible={this.state.showingMouseoverWindow}
+                 onClose={this.onMclose} >
+                 <div style={styles.mouseoverContainer}>
+                     <div>
+                         <p style={styles.calloutName}>{this.state.mouseoverPlace.name}</p>
+                         <p style={styles.calloutAddress}>
+                            {this.state.mouseoverPlace.clientStreet} </p>
+                          <p style={styles.calloutAddress}>
+                            {this.state.mouseoverPlace.clientCity} </p>
                      </div>
                  </div>
           </InfoWindowEx> }
@@ -762,6 +827,11 @@ const styles = {
       width: "240px",
       height: "230px",
     },
+  mouseoverContainer: {
+      marginTop: "10px",
+      width: "150px",
+      height: "80px",
+  },
   orderMenu: {
       width:"100%",
       height: "100px",
