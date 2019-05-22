@@ -28,13 +28,13 @@ class TopPanel extends React.Component {
      [
        {
           key: "companyinfo",
-          text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setCompanyInfo}> compagnie info </span>
+          text: <span style ={styles.item} onClick={this.setCompanyInfo}> compagnie info </span>
        },
      ]:
      [
        {
           key: "textview",
-          text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setCompanyInfo}> company info </span>
+          text: <span style ={styles.item} onClick={this.setCompanyInfo}> company info </span>
        },
      ];
      return userOptions;
@@ -46,29 +46,29 @@ class TopPanel extends React.Component {
       [
         {
            key: "clientcontactview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientContactView}> cliente contact</span>
+           text: <span style ={styles.item} onClick={this.setClientContactView}> cliente contact</span>
         },
         {
            key: "clientview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> cliente travail order </span>
+           text: <span style ={styles.item} onClick={this.setClientView}> cliente travail order </span>
         },
         {
            key: "leadview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setLeadView}> leads </span>
+           text: <span style ={styles.item} onClick={this.setLeadView}> leads </span>
         }
       ]:
       [
         {
            key: "clientcontactview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientContactView}> client contact  </span>
+           text: <span style ={styles.item} onClick={this.setClientContactView}> client contact  </span>
         },
         {
            key: "clientview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setClientView}> client work order </span>
+           text: <span style ={styles.item} onClick={this.setClientView}> client work order </span>
         },
         {
            key: "leadsview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setLeadView}> leads </span>
+           text: <span style ={styles.item} onClick={this.setLeadView}> leads </span>
         },
       ];
       return userOptions;
@@ -149,29 +149,29 @@ class TopPanel extends React.Component {
       [
         {
            key: "mapview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> tous les clientes </span>
+           text: <span style ={styles.item} onClick={this.setMapView}> tous les clientes </span>
         },
         {
            key: "employeeview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> tous les employees </span>
+           text: <span style ={styles.item} onClick={this.setEmployeeView}> tous les employees </span>
         },
         {
            key: "unassignedview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> non assigne </span>
+           text: <span style ={styles.item} onClick={this.setUnassignedView}> non assigne </span>
         }
       ]:
       [
         {
            key: "mapview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setMapView}> all clients </span>
+           text: <span style ={styles.item} onClick={this.setMapView}> all clients </span>
         },
         {
            key: "employeeview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setEmployeeView}> all employees </span>
+           text: <span style ={styles.item} onClick={this.setEmployeeView}> all employees </span>
         },
         {
            key: "unassignedview",
-           text: <span style ={{fontStyle: "bold", margin:"0em"}} onClick={this.setUnassignedView}> not assigned </span>
+           text: <span style ={styles.item} onClick={this.setUnassignedView}> not assigned </span>
         }
       ];
 
@@ -275,7 +275,6 @@ class TopPanel extends React.Component {
              <Dropdown
                placeholder=""
                options={this.dropdownTextOptions()}
-               style = {{color: "white"}}
              />
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
@@ -303,6 +302,18 @@ class TopPanel extends React.Component {
     );
   }
 }
+
+const styles = {
+  item: {
+    paddingTop: "1px",
+    paddingBottom: "1px",
+    marginTop: "0px",
+    marginBottom: "0px",
+    color: "black",
+    fontSize: "1.0em",
+    fontWeight: "normal",
+  },
+};
 
 const mapStateToProps = state => ({
   employees: state.user.employeeList,

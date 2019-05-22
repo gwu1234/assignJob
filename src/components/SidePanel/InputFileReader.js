@@ -118,7 +118,7 @@ render() {
 
     return (
       <Modal
-        trigger={<span onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "left"}}>
+        trigger={<span onClick={() => this.handleOpen(true)} style = {styles.item}>
         {french? "importer cliente donnees":"import client data"}</span>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
@@ -160,5 +160,14 @@ render() {
          </Modal.Actions>
       </Modal>
   );
+ }
 }
+const styles = {
+  item: {
+    padding: "1px",
+    margin: "1px",
+    color: "black",
+    fontSize: "1.0em",
+    fontWeight: "normal",
+  },
 }
