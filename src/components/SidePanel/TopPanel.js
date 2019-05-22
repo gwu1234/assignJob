@@ -135,6 +135,42 @@ class TopPanel extends React.Component {
       return titleArray;
    }
 
+  dropdownMapOptions2 = () => {
+    const {french} = this.state;
+    return (
+      <Dropdown text={french? "Carte Vue":"MapView"}>
+         <Dropdown.Menu style ={styles.DropdownDisplay}>
+           <Dropdown.Item style ={styles.item} text={french?"tous les clientes":'all clients'} onClick={this.setMapView}/>
+           <Dropdown.Item style ={styles.item} text={french?"tous les employees":'all employees'} onClick={this.setEmployeeView}/>
+           <Dropdown.Item style ={styles.item} text={french?"non assigne":'not assigned'} onClick={this.setUnassignedView}/>
+
+          <Dropdown.Divider />
+          {this.assignedEmployees()}
+          </Dropdown.Menu>
+     </Dropdown>
+   )
+ }
+
+assignedEmployees = () => {
+    const {employees} = this.props;
+    const {french} = this.state;
+    let titleArray = [];
+
+    for (var key in employees) {
+        const newEmployee =
+           <Dropdown.Item >
+               <EmployeeJob
+                   displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
+                   employee={employees[key]}
+                   french={french} />
+           </Dropdown.Item>
+
+        titleArray.push(newEmployee);
+    }
+    return titleArray;
+ }
+
+
    dropdownMapOptions = () => {
       let username = "";
       const {french} = this.state;
@@ -278,12 +314,8 @@ class TopPanel extends React.Component {
              />
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
-               <span> {french? "Carte Vue": "MapView"} </span>
-                 <Dropdown
-                   placeholder=""
-                   options={this.dropdownMapOptions()}
-                   style = {{color: "white"}}
-                 />
+               {this.dropdownMapOptions2()}
+
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
              <span onClick={()=>this.toggleFrench()}> {this.state.french? "Anglais": "French"} </span>
@@ -305,13 +337,22 @@ class TopPanel extends React.Component {
 
 const styles = {
   item: {
-    paddingTop: "1px",
-    paddingBottom: "1px",
+    paddingTop: "0px",
+    paddingBottom: "0px",
     marginTop: "0px",
     marginBottom: "0px",
     color: "black",
     fontSize: "1.0em",
     fontWeight: "normal",
+  },
+  DropdownDisplay: {
+    paddingTop: "2px",
+    paddingBottom: "2px",
+    marginTop: "2px",
+    marginBottom: "2px",
+    position: "relative",
+    height: "350px",
+    overflow:  "scroll",
   },
 };
 
