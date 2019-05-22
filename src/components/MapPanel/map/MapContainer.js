@@ -629,6 +629,8 @@ class MapContainer extends Component {
                           position={marker.pos}
                           name = {marker.name}
                           onClick={this.onMarkerClick}
+                          onMouseover={this.onMouseoverMarker}
+                          onMouseout = {this.onMouseoutMarker}
                           street = {marker.street}
                           type = {marker.type}
                           city={marker.city}
@@ -658,6 +660,17 @@ class MapContainer extends Component {
                               <Button icon size="mini" color="green" onClick={this.onClose}>
                                   <Icon name='cancel' size ="large"/> Close
                               </Button>
+                         </div>
+                     </div>
+              </InfoWindowEx> }
+
+              {this.state.mouseoverPlace && this.state.mouseoverPlace.type === EMPLOYEE_MARKER && <InfoWindowEx
+                     marker={this.state.mouseoverMarker}
+                     visible={this.state.showingMouseoverWindow}
+                     onClose={this.onMclose} >
+                     <div style={styles.employeeContainer}>
+                         <div>
+                             <p style={styles.calloutName}>{this.state.mouseoverPlace.name}</p>
                          </div>
                      </div>
               </InfoWindowEx> }
@@ -831,6 +844,11 @@ const styles = {
       marginTop: "10px",
       width: "150px",
       height: "80px",
+  },
+  employeeContainer: {
+      marginTop: "10px",
+      width: "100px",
+      height: "40px",
   },
   orderMenu: {
       width:"100%",
