@@ -88,7 +88,7 @@ class Contracts extends React.Component {
           <Menu.Menu style={styles.menuMenu} >
               {contracts && this.displayContracts(contractArray)}
               <Menu.Item style={{margin:"3px"}}>
-                  <span style={{color:"black", fontWeight:"bold"}}> add new contract</span> <AddContractModal />
+                  <span style={{color:"black", fontWeight:"bold"}}> {french? "ajouter nouveau contrat": "add new contract"}</span> <AddContractModal />
               </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>

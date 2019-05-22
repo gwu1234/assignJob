@@ -90,7 +90,7 @@ class WorkOrders extends React.Component {
           <Menu.Menu style={styles.menuMenu} >
               {orders && this.displayOrders(orderArray)}
               <Menu.Item style={{margin:"2px"}}>
-                  <span style={{color:"black", fontWeight:"bold"}}> add new order</span> <AddOrderModal />
+                  <span style={{color:"black", fontWeight:"bold"}}> {french? "ajouter nouveau order": "add new order"}</span> <AddOrderModal />
               </Menu.Item>
           </Menu.Menu>
       </Menu.Menu>
