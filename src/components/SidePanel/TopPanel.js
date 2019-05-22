@@ -24,53 +24,34 @@ class TopPanel extends React.Component {
 
    dropdownCompanyOptions =() => {
      const {french} = this.state;
-     const userOptions = french?
+     const userOptions =
      [
        {
           key: "companyinfo",
-          text: <span style ={styles.item} onClick={this.setCompanyInfo}> compagnie info </span>
-       },
-     ]:
-     [
-       {
-          key: "textview",
-          text: <span style ={styles.item} onClick={this.setCompanyInfo}> company info </span>
+          text: <span style ={styles.item} onClick={this.setCompanyInfo}> {french? "compagnie info":"company info" }</span>
        },
      ];
      return userOptions;
    }
 
-   dropdownTextOptions = () => {
+   dropdownTextOptions2 = () => {
       const {french} = this.state;
-      const userOptions = french?
+      const userOptions =
       [
         {
            key: "clientcontactview",
-           text: <span style ={styles.item} onClick={this.setClientContactView}> cliente contact</span>
+           text: <span style ={styles.item} onClick={this.setClientContactView}> {french? "cliente contact":"client contact"}</span>
         },
         {
            key: "clientview",
-           text: <span style ={styles.item} onClick={this.setClientView}> cliente travail order </span>
+           text: <span style ={styles.item} onClick={this.setClientView}> {french? "cliente travail order":"client work order"}</span>
         },
         {
            key: "leadview",
-           text: <span style ={styles.item} onClick={this.setLeadView}> leads </span>
+           text: <span style ={styles.item} onClick={this.setLeadView}> {french? "leads":"leads"}</span>
         }
-      ]:
-      [
-        {
-           key: "clientcontactview",
-           text: <span style ={styles.item} onClick={this.setClientContactView}> client contact  </span>
-        },
-        {
-           key: "clientview",
-           text: <span style ={styles.item} onClick={this.setClientView}> client work order </span>
-        },
-        {
-           key: "leadsview",
-           text: <span style ={styles.item} onClick={this.setLeadView}> leads </span>
-        },
       ];
+
       return userOptions;
    }
 
@@ -170,63 +151,6 @@ assignedEmployees = () => {
     return titleArray;
  }
 
-
-   dropdownMapOptions = () => {
-      let username = "";
-      const {french} = this.state;
-      if (this.state.user) {
-         username = this.state.user.displayName;
-      }
-      if (!username) {
-         return [];
-      }
-
-      const titleArray = french?
-      [
-        {
-           key: "mapview",
-           text: <span style ={styles.item} onClick={this.setMapView}> tous les clientes </span>
-        },
-        {
-           key: "employeeview",
-           text: <span style ={styles.item} onClick={this.setEmployeeView}> tous les employees </span>
-        },
-        {
-           key: "unassignedview",
-           text: <span style ={styles.item} onClick={this.setUnassignedView}> non assigne </span>
-        }
-      ]:
-      [
-        {
-           key: "mapview",
-           text: <span style ={styles.item} onClick={this.setMapView}> all clients </span>
-        },
-        {
-           key: "employeeview",
-           text: <span style ={styles.item} onClick={this.setEmployeeView}> all employees </span>
-        },
-        {
-           key: "unassignedview",
-           text: <span style ={styles.item} onClick={this.setUnassignedView}> not assigned </span>
-        }
-      ];
-
-      const {employees} = this.props;
-      for (var key in employees) {
-         const newEmployee = {
-           key: key,
-           text: <EmployeeJob
-                 displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
-                 employee={employees[key]}
-                 french={french}
-                 />
-         }
-         titleArray.push(newEmployee);
-      };
-
-      return titleArray;
-   }
-
    handleSignout = () => {
      firebase
        .auth()
@@ -310,7 +234,7 @@ assignedEmployees = () => {
              <span> {french? "Texte Vue" : "TextView" }</span>
              <Dropdown
                placeholder=""
-               options={this.dropdownTextOptions()}
+               options={this.dropdownTextOptions2()}
              />
           </Grid.Column>
           <Grid.Column style={{textAlign: "center"}}>
