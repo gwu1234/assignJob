@@ -276,6 +276,7 @@ const user_reducer = (state = initialUserState, action) => {
            markers: clientMarkers,
            truckMarkers: truckMarker,
            employeeMarkers:[],
+           leadMarkers:[],
            mapView: true,
            clientContactView: false,
            clientView: false,
@@ -312,6 +313,7 @@ const user_reducer = (state = initialUserState, action) => {
           ...state,
          employeeMarkers: employeeMarkers,
          markers:[],
+         leadMarkers:[],
          mapView: true,
          clientContactView: false,
          clientView: false,
@@ -597,6 +599,7 @@ const user_reducer = (state = initialUserState, action) => {
                     companyInfoView: false,
                     leadView: false,
                     truckMarkers:[],
+                    leadMarkers:[],
       };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
       //const clients = state.clientList;
@@ -714,6 +717,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        markers: unClientMarkers,
        employeeMarkers:[],
        truckMarkers:[],
+       leadMarkers:[],
        clientContactView: false,
        clientView: false,
        mapView: true,
