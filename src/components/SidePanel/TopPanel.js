@@ -140,7 +140,7 @@ assignedEmployees = () => {
 
     for (var key in employees) {
         const newEmployee =
-           <Dropdown.Item >
+           <Dropdown.Item key={key}>
                <EmployeeJob
                    displayAssigned={(employeeKey)=>this.displayAssigned(employeeKey)}
                    employee={employees[key]}
