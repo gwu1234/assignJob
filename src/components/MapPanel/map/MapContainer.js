@@ -670,7 +670,7 @@ class MapContainer extends Component {
                      onClose={this.onMclose} >
                      <div style={styles.employeeContainer}>
                          <div>
-                             <p style={styles.calloutName}>{this.state.mouseoverPlace.name}</p>
+                             <p style={styles.calloutAddress}>{this.state.mouseoverPlace.name}</p>
                          </div>
                      </div>
               </InfoWindowEx> }
@@ -847,7 +847,7 @@ const styles = {
   },
   employeeContainer: {
       marginTop: "10px",
-      width: "100px",
+      width: "130px",
       height: "40px",
   },
   orderMenu: {
