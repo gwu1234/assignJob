@@ -11,10 +11,10 @@ const JOB_PROGRESS = 3;
 const JOB_DONE = 4;
 
 const LEAD_NEW = 1;  // red
-const LEAD_RESPONSIVE = 3; // blue
-const LEAD_POSITIVE = 4;  // green
-const LEAD_NOT_RESPONSIVE = 5; // orange
-const LEAD_DECLINE = 6; // yellow
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_POSITIVE = 3;  // green
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
@@ -326,7 +326,7 @@ const user_reducer = (state = initialUserState, action) => {
         let leadMarkers = [];
 
         for (var key in leadList) {
-            let status = LEAD_NEW;
+            //let status = LEAD_NEW;
             let {contact} = leadList[key];
 
             if (contact && contact.lat && contact.lng) {
@@ -338,6 +338,11 @@ const user_reducer = (state = initialUserState, action) => {
                 let street = contact.street;
                 if (!street || street === "undefined") {
                     street = null;
+                }
+
+                let status = contact.status;
+                if (!status || status === "undefined" || status === undefined) {
+                    let status = LEAD_NEW;;
                 }
 
                 let city = contact.city;
@@ -372,6 +377,7 @@ const user_reducer = (state = initialUserState, action) => {
                      lng: contact.lng
                    },
                    name: name,
+                   status: status,
                    street: street,
                    city: city,
                    postcode: postcode,

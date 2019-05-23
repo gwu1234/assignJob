@@ -9,6 +9,7 @@ import redDot from '../images/redDot.png';
 import blueDot from '../images/blueDot.png';
 import greenDot from '../images/greenDot.png';
 import yellowDot from '../images/yellowDot2.png';
+import orangeDot from '../images/orangeDot.png';
 import redStar from '../images/redStar.png';
 import snowplow from '../images/snowplow.png';
 import DoneModal from  './DoneModal';
@@ -25,10 +26,10 @@ const JOB_PROGRESS = 3;
 const JOB_DONE = 4;
 
 const LEAD_NEW = 1;  // red
-const LEAD_RESPONSIVE = 3; // blue
-const LEAD_POSITIVE = 4;  // green
-const LEAD_NOT_RESPONSIVE = 5; // orange
-const LEAD_DECLINE = 6; // yellow
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_POSITIVE = 3;  // green
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
@@ -676,7 +677,32 @@ class MapContainer extends Component {
               </InfoWindowEx> }
 
               {leadMarkers && leadMarkers.map((marker, index)=> {
-                  let image = redDot;
+                  //let image = redDot;
+                  //const LEAD_NEW = 1;  // red
+                  //const LEAD_RESPONSIVE = 3; // blue
+                  //const LEAD_POSITIVE = 4;  // green
+                  //const LEAD_NOT_RESPONSIVE = 5; // orange
+                  //const LEAD_DECLINE = 6; // yellow
+
+                  let  image = redDot;
+                  if (marker.status === LEAD_NEW){
+                      image = redDot;
+                  }
+                  else if (marker.status === LEAD_RESPONSIVE)  {
+                      image = blueDot;
+                  }
+                  else if (marker.status === LEAD_POSITIVE) {
+                      image = greenDot;
+                  }
+                  else if (marker.status === LEAD_NOT_RESPONSIVE) {
+                      image = orangeDot;
+                  }
+                  else if (marker.status === LEAD_DECLINE) {
+                      image = yellowDot;
+                  }
+                  else {
+                      image = redDot;
+                  }
 
                   return (
                          <Marker
@@ -905,7 +931,7 @@ const styles = {
   employeeContainer: {
       marginTop: "10px",
       width: "130px",
-      height: "40px",
+      height: "50px",
   },
   orderMenu: {
       width:"100%",
