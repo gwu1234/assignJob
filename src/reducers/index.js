@@ -10,9 +10,9 @@ const JOB_ASSIGNED = 2;
 const JOB_PROGRESS = 3;
 const JOB_DONE = 4;
 
-const LEAD_NEW = 1;  // red
+const LEAD_POSITIVE = 1;  // green
 const LEAD_RESPONSIVE = 2; // blue
-const LEAD_POSITIVE = 3;  // green
+const LEAD_NEW = 3;  // red
 const LEAD_NOT_RESPONSIVE = 4; // orange
 const LEAD_DECLINE = 5; // yellow
 
