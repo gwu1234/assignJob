@@ -10,10 +10,16 @@ const JOB_ASSIGNED = 2;
 const JOB_PROGRESS = 3;
 const JOB_DONE = 4;
 
+const LEAD_NEW = 1;  // red
+const LEAD_RESPONSIVE = 3; // blue
+const LEAD_POSITIVE = 4;  // green
+const LEAD_NOT_RESPONSIVE = 5; // orange
+const LEAD_DECLINE = 6; // yellow
 
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
+const LEAD_MARKER = 3;
 
 const initialUserState = {
   currentUser: null, // user object
@@ -30,6 +36,7 @@ const initialUserState = {
   markers: [],
   truckMarkers: [],
   employeeMarkers:[],
+  leadMarkers:[],
   selectedEmployee: null,
   french: false,
   badAccess: false,
@@ -311,6 +318,85 @@ const user_reducer = (state = initialUserState, action) => {
          companyInfoView: false,
          leadView: false,
     };
+
+    case actionTypes.SET_LEAD_MAPVIEW:
+        const leadList = state.leads;
+        let leadMarkers = [];
+
+        for (var key in leadList) {
+            let status = LEAD_NEW;
+            let {contact} = leadList[key];
+
+            if (contact && contact.lat && contact.lng) {
+                let name = contact.name;
+                if (!name || name === "undefined") {
+                   name = null;
+                }
+
+                let street = contact.street;
+                if (!street || street === "undefined") {
+                    street = null;
+                }
+
+                let city = contact.city;
+                if (!city || city === "undefined") {
+                    city = null;
+                }
+
+                let postcode = contact.postcode;
+                if (!postcode || postcode === "undefined") {
+                    postcode = null;
+                }
+
+                let phone = null;
+                if (contact.phones && contact.phones !== "undefined" && contact.phones.length > 0) {
+                    phone = contact.phones[0];
+                }
+
+                let cell = null;
+                if (contact.cells && contact.cells !== "undefined" && contact.cells.length > 0) {
+                    cell = contact.cells[0];
+                }
+
+                let email = null;
+                if (contact.emails && contact.emails !== "undefined" && contact.emails.length > 0) {
+                    email = contact.emails[0];
+                }
+
+                const marker = {
+                   pos:
+                   {
+                     lat: contact.lat,
+                     lng: contact.lng
+                   },
+                   name: name,
+                   street: street,
+                   city: city,
+                   postcode: postcode,
+                   phone: phone,
+                   cell: cell,
+                   email: email,
+                   type: LEAD_MARKER
+                }
+                //console.log(marker);
+                leadMarkers.push(marker);
+           }
+      }
+
+      //console.log(leadMarkers);
+
+      return {
+          ...state,
+         leadMarkers: leadMarkers,
+         employeeMarkers: [],
+         markers:[],
+         mapView: true,
+         clientContactView: false,
+         clientView: false,
+         companyInfoView: false,
+         leadView: false,
+    };
+
     case actionTypes.SET_TEXT_VIEW:
       //console.log ("reducer");
       //console.log ("SET_TEXT_VIEW");

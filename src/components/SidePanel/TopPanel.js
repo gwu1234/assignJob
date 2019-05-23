@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setMapView, setEmployeeView, setTextView,
          setSelectedEmployee, setUnassignedClient,
          setFrench, setCompanyInfoView, setClientView,
-         setClientContactView, setLeadView } from "../../actions";
+         setClientContactView, setLeadView, setLeadMapView } from "../../actions";
 import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
@@ -124,6 +124,7 @@ class TopPanel extends React.Component {
            <Dropdown.Item style ={styles.item} text={french?"tous les clientes":'all clients'} onClick={this.setMapView}/>
            <Dropdown.Item style ={styles.item} text={french?"tous les employees":'all employees'} onClick={this.setEmployeeView}/>
            <Dropdown.Item style ={styles.item} text={french?"non assigne":'not assigned'} onClick={this.setUnassignedView}/>
+           <Dropdown.Item style ={styles.item} text={french?"tous les leads":'all leads'} onClick={this.setLeadMapView}/>
 
           <Dropdown.Divider />
           {this.assignedEmployees()}
@@ -184,6 +185,10 @@ assignedEmployees = () => {
 
  setLeadView =() => {
     this.props.setLeadView();
+ };
+
+ setLeadMapView =() => {
+    this.props.setLeadMapView();
  };
 
  displayAssigned(employee) {
@@ -291,6 +296,6 @@ export default connect(
   mapStateToProps,
   {setMapView, setEmployeeView, setTextView, setSelectedEmployee,
    setUnassignedClient, setCompanyInfoView, setFrench,
-   setClientView, setClientContactView, setLeadView
+   setClientView, setClientContactView, setLeadView, setLeadMapView
  }
 )(TopPanel);

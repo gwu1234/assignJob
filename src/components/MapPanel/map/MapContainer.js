@@ -24,9 +24,16 @@ const JOB_ASSIGNED = 2;
 const JOB_PROGRESS = 3;
 const JOB_DONE = 4;
 
+const LEAD_NEW = 1;  // red
+const LEAD_RESPONSIVE = 3; // blue
+const LEAD_POSITIVE = 4;  // green
+const LEAD_NOT_RESPONSIVE = 5; // orange
+const LEAD_DECLINE = 6; // yellow
+
 const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
+const LEAD_MARKER = 3 ;
 
 /*const svgRedDot = {
    url: 'data:image/svg+xml;utf8,\
@@ -507,23 +514,16 @@ class MapContainer extends Component {
 
 
     render() {
-      const {usertag, employees, markers, truckMarkers, employeeMarkers} = this.props;
+      const {usertag, employees, markers, truckMarkers, employeeMarkers, leadMarkers} = this.props;
       let {selectedLatLng} = this.state.selectedLatLng;
 
       if (!selectedLatLng) {
         // set a flake lat lng if null
         selectedLatLng = {lat:0.1, lng:0.1};
       }
-      //const {markers} = this.state;
 
-      /*const buttonStyle = {
-         width: '5em',
-         height: '2em',
-         margin: '0.2em'
-      }*/
-
-      //console.log("at MapContainer : ");
-      //console.log (this.state.showingInfoWindow);
+      console.log("at MapContainer : ");
+      console.log (leadMarkers);
       //console.log (this.state.activeMarker);
       //console.log (this.state.selectedPlace);
       //console.log (this.state.activeMarker.name);
@@ -674,6 +674,63 @@ class MapContainer extends Component {
                          </div>
                      </div>
               </InfoWindowEx> }
+
+              {leadMarkers && leadMarkers.map((marker, index)=> {
+                  let image = redDot;
+
+                  return (
+                         <Marker
+                              key={index}
+                              id = {index}
+                              position={marker.pos}
+                              name = {marker.name}
+                              onClick={this.onMarkerClick}
+                              onMouseover={this.onMouseoverMarker}
+                              onMouseout = {this.onMouseoutMarker}
+                              street = {marker.street}
+                              type = {marker.type}
+                              city={marker.city}
+                              icon = {{
+                                  url: image,
+                                  scaledSize: { width: 15, height: 15 }
+                              }}
+                          >
+
+                         </Marker> )
+                  })}
+
+                  {this.state.selectedPlace && this.state.selectedPlace.type === LEAD_MARKER && <InfoWindowEx
+                         marker={this.state.activeMarker}
+                         visible={this.state.showingInfoWindow}
+                         onClose={this.onClose} >
+                         <div>
+                             <div>
+                                 <p style={styles.calloutName}>{this.state.selectedPlace.name}</p>
+                                  <span style={styles.calloutAddress}>
+                                 {this.state.selectedPlace.street} , &nbsp;
+                                 {this.state.selectedPlace.city} </span>
+                             </div>
+                             <div style={{marginTop: "2.0em"}}>
+                                  <Button icon size="mini" color="green" onClick={this.onClose}>
+                                      <Icon name='cancel' size ="large"/> Close
+                                  </Button>
+                             </div>
+                         </div>
+                  </InfoWindowEx> }
+
+                  {this.state.mouseoverPlace && this.state.mouseoverPlace.type === LEAD_MARKER && <InfoWindowEx
+                         marker={this.state.mouseoverMarker}
+                         visible={this.state.showingMouseoverWindow}
+                         onClose={this.onMclose} >
+                         <div style={styles.employeeContainer}>
+                             <div>
+                                 {this.state.mouseoverPlace.name && <p style={styles.calloutAddress}>{this.state.mouseoverPlace.name}</p>}
+                                 <p style={styles.calloutAddress}>{this.state.mouseoverPlace.street}</p>
+                                 <p style={styles.calloutAddress}>{this.state.mouseoverPlace.city}</p>
+                             </div>
+                         </div>
+                  </InfoWindowEx> }
+
 
           {truckMarkers && truckMarkers.map((marker, index)=> {
              let  image = snowplow;
@@ -893,6 +950,7 @@ const mapStateToProps = state => ({
   markers: state.user.markers,
   truckMarkers: state.user.truckMarkers,
   employeeMarkers: state.user.employeeMarkers,
+  leadMarkers: state.user.leadMarkers,
   usertag: state.user.usertag,
   employees: state.user.employeeList,
   leads: state.user.leads,

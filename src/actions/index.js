@@ -63,6 +63,12 @@ export const setClientView = view => {
   };
 };
 
+export const setLeadMapView = () => {
+  return {
+    type: actionTypes.SET_LEAD_MAPVIEW,
+  };
+};
+
 export const setClientContactView = view => {
   return {
     type: actionTypes.SET_CLIENT_CONTACT_VIEW,
