@@ -748,7 +748,7 @@ class MapContainer extends Component {
                          marker={this.state.mouseoverMarker}
                          visible={this.state.showingMouseoverWindow}
                          onClose={this.onMclose} >
-                         <div style={styles.employeeContainer}>
+                         <div style={styles.leadContainer}>
                              <div>
                                  {this.state.mouseoverPlace.name && <p style={styles.calloutAddress}>{this.state.mouseoverPlace.name}</p>}
                                  <p style={styles.calloutAddress}>{this.state.mouseoverPlace.street}</p>
@@ -932,6 +932,11 @@ const styles = {
       marginTop: "10px",
       width: "130px",
       height: "50px",
+  },
+  leadContainer: {
+      marginTop: "10px",
+      width: "130px",
+      height: "80px",
   },
   orderMenu: {
       width:"100%",

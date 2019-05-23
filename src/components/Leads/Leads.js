@@ -6,6 +6,12 @@ import { Menu, Icon} from "semantic-ui-react";
 import Lead from "./Lead";
 import AddLeadModal from "./AddLeadModal";
 
+const LEAD_POSITIVE = 1;  // green
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_NEW = 3;  // red
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
+
 class Leads extends React.Component {
    constructor(props) {
        super(props);
@@ -98,6 +104,13 @@ class Leads extends React.Component {
        leadArray.push(newLead);
     }
 
+    leadArray.sort((a, b) => {
+      if (a.lead && b.lead) {
+          const aStatus = a.lead.status ? a.lead.status: LEAD_NEW;
+          const bStatus = b.lead.status ? b.lead.status: LEAD_NEW;
+          return (aStatus - bStatus);
+      }
+    });
 
     let userName = "";
     if (currentUser) {

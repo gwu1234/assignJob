@@ -4,6 +4,12 @@ import { connect } from "react-redux";
 import { setLeadTag} from "../../actions";
 import { Menu, Icon} from "semantic-ui-react";
 
+const LEAD_POSITIVE = 1;  // green
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_NEW = 3;  // red
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
+
 class Lead extends React.Component {
 
   onButtonClick = () => {
@@ -28,11 +34,13 @@ class Lead extends React.Component {
     let name= '';
     let street ='';
     let city ="";
+    //let status = LEAD_NEW;
 
     if (lead) {
         name = (lead.lastname && lead.firstname)? (lead.lastname+", "+lead.firstname): "";
         street = lead.street;
         city = lead.city;
+        //status = lead.status? lead.status: LEAD_NEW;
     }
 
     //console.log(lead);

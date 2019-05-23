@@ -5,6 +5,13 @@ import { connect } from "react-redux";
 import { Menu, Icon, Header } from "semantic-ui-react";
 import EditLeadContactModal from "./EditLeadContactModal";
 
+
+const LEAD_POSITIVE = 1;  // green
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_NEW = 3;  // red
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
+
 class LeadContact extends React.Component {
   state = {
     emailDisplay: true,
@@ -96,6 +103,21 @@ class LeadContact extends React.Component {
         titleString = "Lead contact";
     }
 
+    let status = "";
+    if (contact.status && contact.status === LEAD_POSITIVE) {
+       status = "LEAD_POSITIVE";
+    } else if (contact.status && contact.status === LEAD_RESPONSIVE) {
+       status = "LEAD_RESPONSIVE";
+    } else if (contact.status && contact.status === LEAD_NEW) {
+       status = "LEAD_NEW";
+    } else if (contact.status && contact.status === LEAD_NOT_RESPONSIVE) {
+       status = "LEAD_NOT_RESPONSIVE";
+    } else if (contact.status && contact.status === LEAD_DECLINE) {
+       status = "LEAD_DECLINE";
+    } else {
+      status = "LEAD_NEW";
+    }
+
     return (
       <Menu.Menu style={styles.container} >
             <Menu.Header style={styles.menuHeader}>
@@ -117,6 +139,9 @@ class LeadContact extends React.Component {
           </Menu.Item>}
           {contact && contact.postcode && <Menu.Item style={styles.address}>
                {contact && contact.postcode}
+          </Menu.Item>}
+          {contact && status && <Menu.Item style={styles.address}>
+               {"lead status: " + status}
           </Menu.Item>}
           {contact && contact.emails && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
