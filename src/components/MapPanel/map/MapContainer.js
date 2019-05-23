@@ -522,8 +522,8 @@ class MapContainer extends Component {
         selectedLatLng = {lat:0.1, lng:0.1};
       }
 
-      console.log("at MapContainer : ");
-      console.log (leadMarkers);
+      //console.log("at MapContainer : ");
+      //console.log (leadMarkers);
       //console.log (this.state.activeMarker);
       //console.log (this.state.selectedPlace);
       //console.log (this.state.activeMarker.name);
