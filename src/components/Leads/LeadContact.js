@@ -118,6 +118,13 @@ class LeadContact extends React.Component {
       status = "LEAD_NEW";
     }
 
+    let isEmployeeAssigned = contact.isEmployeeAssigned ?
+              (contact.isEmployeeAssigned === "true"? true: false) :false;
+    let employeeName = "";
+    if (isEmployeeAssigned) {
+        employeeName = contact.employeeFirstname + " " + contact.employeeLastName;
+    }
+
     return (
       <Menu.Menu style={styles.container} >
             <Menu.Header style={styles.menuHeader}>
@@ -142,6 +149,9 @@ class LeadContact extends React.Component {
           </Menu.Item>}
           {contact && status && <Menu.Item style={styles.address}>
                {"lead status: " + status}
+          </Menu.Item>}
+          {contact && isEmployeeAssigned && <Menu.Item style={styles.address}>
+               {"assigned to : " + employeeName}
           </Menu.Item>}
           {contact && contact.emails && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
