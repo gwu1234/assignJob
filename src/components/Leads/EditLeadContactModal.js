@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 //import { connect } from "react-redux";
 import Geocode from "react-geocode";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
-
+import { Button, Header, Icon, Modal, Form, Message, Dropdown} from 'semantic-ui-react';
+const LEAD_POSITIVE = 1;  // green
+const LEAD_RESPONSIVE = 2; // blue
+const LEAD_NEW = 3;  // red
+const LEAD_NOT_RESPONSIVE = 4; // orange
+const LEAD_DECLINE = 5; // yellow
 
 class EditLeadContactModal extends Component {
   constructor(props) {
@@ -15,6 +19,7 @@ class EditLeadContactModal extends Component {
          firstname: contact.firstname,
          street: contact.street,
          city: contact.city,
+         status: contact.status,
          postcode: contact.postcode,
          province:contact.province,
          country: contact.country,
@@ -55,6 +60,7 @@ class EditLeadContactModal extends Component {
              postcode: contact.postcode,
              province:contact.province,
              country: contact.country,
+             status: contact.status,
              phone1: contact.phones?contact.phones[0]:'',
              phone2: contact.phones?
                      (contact.phones[1]?contact.phones[1]:''):
@@ -126,7 +132,7 @@ class EditLeadContactModal extends Component {
     if (this.isFormValid()) {
          //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
-                 country,phone1,phone2,phone3,cell1,cell2,cell3,
+                 country,status,phone1,phone2,phone3,cell1,cell2,cell3,
                  email1,email2,email3} = this.state;
          const {usertag, contact} = this.props;
          const name = (firstname && lastname) ? (firstname + " " + lastname) : "";
@@ -186,6 +192,7 @@ class EditLeadContactModal extends Component {
            "postcode": (postcode? String(postcode):""),
            "country": (country? String(country):""),
            "province":  (province? String(province):""),
+           "status": status,
            "emails": emails,
            "phones": phones,
            "cells": cells,
@@ -252,8 +259,50 @@ class EditLeadContactModal extends Component {
       });
   }
 
+  dropdownOptions = () => {
+      let optionArray = [
+        {
+            key: String (LEAD_POSITIVE),
+            text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > LEAD_POSITIVE </span>,
+            value: LEAD_POSITIVE,
+        },
+        {
+            key: String (LEAD_RESPONSIVE),
+            text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > LEAD_RESPONSIVE </span>,
+            value: LEAD_RESPONSIVE,
+        },
+        {
+            key: String (LEAD_NEW),
+            text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > LEAD_NEW </span>,
+            value: LEAD_NEW,
+        },
+        {
+            key: String (LEAD_NOT_RESPONSIVE),
+            text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > LEAD_NOT_RESPONSIVE </span>,
+            value: LEAD_NOT_RESPONSIVE,
+        },
+        {
+            key: String (LEAD_DECLINE),
+            text: <span style ={{fontStyle: "bold",fontSize:"1.0em", margin:"0em", paddingTop:"0em", paddingBottom:"0em"}} > LEAD_DECLINE </span>,
+            value: LEAD_DECLINE,
+        }
+      ];
+
+      return optionArray;
+  }
+
+  handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      const selectedValue = data.value
+      //console.log( data.value);
+      this.setState({
+         status: selectedValue,
+         //fieldChange: true,
+      });
+  }
+
+
   render() {
-    const {contact} = this.props;
+    const {contact, french} = this.props;
     //console.log ("EditClientModal " );
     //console.log(contact);
     //const titleString = "Edit Client : " + contact.name;
@@ -299,9 +348,32 @@ class EditLeadContactModal extends Component {
         cell3 = contact.cells[2];
     }
 
-    let titleString = "Edit Lead Contact Info";
+    let titleString = french? "modifier Lead Contact Info" : "Edit Lead Contact Info";
     if (contact && contact.name) {
-          titleString = contact.name + ":  " + "Edit Lead Contact Info"
+          titleString = contact.name + ":  " + titleString;
+    }
+
+    let statusString = "LEAD_NEW";
+    if (contact && contact.status) {
+       switch(contact.status) {
+          case LEAD_POSITIVE:
+            statusString = "LEAD_POSITIVE";
+            break;
+          case LEAD_RESPONSIVE:
+            statusString = "LEAD_RESPONSIVE";
+            break;
+          case LEAD_NEW:
+            statusString = "LEAD_NEW";
+            break;
+          case LEAD_NOT_RESPONSIVE:
+            statusString = "LEAD_NOT_RESPONSIVE";
+            break;
+          case LEAD_DECLINE:
+            statusString = "LEAD_DECLINE";
+            break;
+          default:
+            statusString = "LEAD_NEW";
+       }
     }
 
     return (
@@ -409,6 +481,20 @@ class EditLeadContactModal extends Component {
                             name="email3"
                             onChange={this.handleChange} />
            </Form.Group>
+           <Form.Field>
+                <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                    {french? ("Actuel Statu Est " + statusString  + ". Choisiez Nouveau Lead Statu"):
+                    ("Current Statu Is " + statusString  + ". Select New Lead Status") }
+                </Message>
+
+                 <Dropdown
+                    placeholder="Lead Status"
+                    fluid
+                    selection
+                    onChange={this.handleDropdownChange}
+                    options={this.dropdownOptions()}
+                 />
+           </Form.Field>
         </Form>
         </Modal.Content>
         <Modal.Actions>

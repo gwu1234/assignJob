@@ -122,7 +122,7 @@ class LeadContact extends React.Component {
       <Menu.Menu style={styles.container} >
             <Menu.Header style={styles.menuHeader}>
                 {titleString}
-                <EditLeadContactModal open={false} contact={contact} usertag={usertag}/>
+                <EditLeadContactModal open={false} contact={contact} usertag={usertag} french={french}/>
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu}>
           {contact && contact.name && <Menu.Item style={styles.address}>
