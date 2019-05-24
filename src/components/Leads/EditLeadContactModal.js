@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
 import Geocode from "react-geocode";
 import { Button, Header, Icon, Modal, Form, Message, Dropdown} from 'semantic-ui-react';
 const LEAD_POSITIVE = 1;  // green
@@ -44,6 +44,12 @@ class EditLeadContactModal extends Component {
          email3: contact.emails?
                  (contact.emails[2]?contact.emails[1]:''):
                  '',
+
+        fieldChange: false,
+        isEmployeeAssigned : false,
+        employeeAssigned : null,
+        isEmployeeUnassigned : false,
+        employeeUnassignedKey : null,
      }
   }
 
@@ -82,6 +88,11 @@ class EditLeadContactModal extends Component {
              email3: contact.emails?
                      (contact.emails[2]?contact.emails[1]:''):
                      '',
+             fieldChange: false,
+             isEmployeeAssigned : false,
+             employeeAssigned : null,
+             isEmployeeUnassigned : false,
+             employeeUnassignedKey : null,
          });
       }
     }
@@ -95,12 +106,22 @@ class EditLeadContactModal extends Component {
       if (r != null) {
           lead.lng = r.lng;
           lead.lat = r.lat;
-          //console.log (location.key) ;
-          //console.log (location.databaseRef);
-          //console.log (location.address);
-          //console.log(client);
-          //location.databaseRef.set(client);
-          location.databaseRef.update(lead);
+
+          if (location && location.leadContactRef) {
+              location.leadContactRef.update(lead);
+          }
+
+          if (location && location.employeeLeadRef) {
+              //location.employeeLeadRef.update(lead);
+              location.employeeLeadRef.update({
+                    ...lead,
+                    "employeeKey": null,
+                    "employeeTag": null,
+                    "employeeFirstname": null,
+                    "employeeLastName" : null,
+                    "isEmployeeAssigned" : null,
+              });
+          }
       }
   }
 
@@ -133,13 +154,20 @@ class EditLeadContactModal extends Component {
          //console.log("data is OK");
          const { lastname,firstname,street,city,postcode,province,
                  country,status,phone1,phone2,phone3,cell1,cell2,cell3,
-                 email1,email2,email3} = this.state;
+                 email1,email2,email3, fieldChange, isEmployeeAssigned,
+                 employeeAssigned, isEmployeeUnassigned, employeeUnassignedKey} = this.state;
          const {usertag, contact} = this.props;
          const name = (firstname && lastname) ? (firstname + " " + lastname) : "";
 
          let emails = [];
          let phones = [];
          let cells = [];
+
+         if ( !fieldChange ) {
+            this.clearState ();
+            this.handleOpen(false);
+            return;
+         }
 
          if (email1) {
             emails.push (email1);
@@ -176,50 +204,127 @@ class EditLeadContactModal extends Component {
          const timestamp = Math.round(date.getTime()/1000 + 0.5);
          const localtime = date.toLocaleString();
 
-         const leadTag = "repos/" + usertag + "/leads";
-         const leadRef = firebase.database().ref(leadTag);
-         //const leadKey = leadRef.push().getKey();
-         let leadKey = contact.leadTag;
-         if (!leadKey) {
-            leadKey = leadRef.push().getKey();
-         }
-         const newLead = {
-           "city":  (city? String(city):""),
-           "lastname": (lastname? String(lastname):""),
-           "firstname": (firstname? String(firstname):""),
-           "street": (street? String(street):""),
-           "name": (name? String(name):""),
-           "postcode": (postcode? String(postcode):""),
-           "country": (country? String(country):""),
-           "province":  (province? String(province):""),
-           "status": status,
-           "emails": emails,
-           "phones": phones,
-           "cells": cells,
-           "leadTag": leadKey,
-           "timestamp": timestamp ,
-           "date": localtime ,
-         }
-
-         if (  (street && city && postcode) ||
-               (street && city && province && country) ) {
-            const address = postcode?(street + ", " + city + ", " + postcode)
-                                    :(street + ", " + city + ", " + province + ", " + country);
-            const location = {
-                address: address,
-                key: leadKey,
-                databaseRef: leadRef.child(leadKey).child("contact"),
+         if (isEmployeeAssigned) {
+            const leadTag = "repos/" + usertag + "/leads";
+            const leadRef = firebase.database().ref(leadTag);
+            //const leadKey = leadRef.push().getKey();
+            let leadKey = contact.leadTag;
+            if (!leadKey) {
+               leadKey = leadRef.push().getKey();
             }
 
-            this.getLocations (newLead,location);
-            this.handleOpen(false);
-        }
-        else {
-            leadRef.child(leadKey).child("contact").set(newLead);
-            this.clearState ();
-            this.handleOpen(false);
-        }
-    }
+            const employeeTag = "repos/" + usertag + "/employees/" + employeeAssigned.tag + "/leads/" + leadKey;
+            const employeeRef = firebase.database().ref(employeeTag);
+
+            const newLead = {
+               "city":  (city? String(city):""),
+               "lastname": (lastname? String(lastname):""),
+               "firstname": (firstname? String(firstname):""),
+               "street": (street? String(street):""),
+               "name": (name? String(name):""),
+               "postcode": (postcode? String(postcode):""),
+               "country": (country? String(country):""),
+               "province":  (province? String(province):""),
+               "status": status,
+               "emails": emails,
+               "phones": phones,
+               "cells": cells,
+               "leadTag": leadKey,
+               "timestamp": timestamp,
+               "date": localtime ,
+               "employeeKey": employeeAssigned.tag,
+               "employeeTag": employeeAssigned.tag,
+               "employeeFirstname": employeeAssigned.firstname,
+               "employeeLastName" : employeeAssigned.lastname,
+               "isEmployeeAssigned" : "true",
+            }
+
+            if (  (street && city && postcode) ||
+               (street && city && province && country) ) {
+               const address = postcode?(street + ", " + city + ", " + postcode)
+                                    :(street + ", " + city + ", " + province + ", " + country);
+               const location = {
+                   address: address,
+                   key: leadKey,
+                   leadContactRef: leadRef.child(leadKey).child("contact"),
+                   employeeLeadRef: employeeRef,
+               }
+                this.getLocations (newLead,location);
+                this.clearState ();
+                this.handleOpen(false);
+            } else {
+               leadRef.child(leadKey).child("contact").set(newLead);
+               employeeRef.set({
+                     ...newLead,
+                     "employeeKey": null,
+                     "employeeTag": null,
+                     "employeeFirstname": null,
+                     "employeeLastName" : null,
+                     "isEmployeeAssigned" : null,
+               });
+               this.clearState ();
+               this.handleOpen(false);
+             }
+         }
+
+         else if (isEmployeeUnassigned) {
+           //const leadTag = "repos/" + usertag + "/leads";
+           //const leadRef = firebase.database().ref(leadTag);
+           //const leadKey = leadRef.push().getKey();
+           let leadKey = contact.leadTag;
+           if (!leadKey) {
+              this.clearState ();
+              this.handleOpen(false);
+              return;
+           }
+           const leadTag = "repos/" + usertag + "/leads/" + leadKey + "/contact";
+           const leadRef = firebase.database().ref(leadTag);
+           const employeeTag = "repos/" + usertag + "/employees/" + employeeUnassignedKey + "/leads/" + leadKey;
+           const employeeRef = firebase.database().ref(employeeTag);
+           employeeRef.set(null);
+
+           const newLead = {
+              "city":  (city? String(city):""),
+              "lastname": (lastname? String(lastname):""),
+              "firstname": (firstname? String(firstname):""),
+              "street": (street? String(street):""),
+              "name": (name? String(name):""),
+              "postcode": (postcode? String(postcode):""),
+              "country": (country? String(country):""),
+              "province":  (province? String(province):""),
+              "status": status,
+              "emails": emails,
+              "phones": phones,
+              "cells": cells,
+              "leadTag": leadKey,
+              "timestamp": timestamp,
+              "date": localtime ,
+              "employeeKey": null,
+              "employeeTag": null,
+              "employeeFirstname": null,
+              "employeeLastName" : null,
+              "isEmployeeAssigned" : "false",
+           }
+
+           if (  (street && city && postcode) ||
+              (street && city && province && country) ) {
+              const address = postcode?(street + ", " + city + ", " + postcode)
+                                   :(street + ", " + city + ", " + province + ", " + country);
+              const location = {
+                  address: address,
+                  key: leadKey,
+                  leadContactRef: leadRef,
+              }
+               this.getLocations (newLead,location);
+               this.clearState ();
+               this.handleOpen(false);
+           } else {
+              leadRef.set(newLead);
+              this.clearState ();
+              this.handleOpen(false);
+            }
+         }
+      }
   };
 
   isFormValid() {
@@ -250,12 +355,29 @@ class EditLeadContactModal extends Component {
   handleChange = event => {
     //console.log([event.target.name]);
     //console.log(event.target.value);
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+      fieldChange: true,
+    });
   };
 
   clearState  = () => {
-      this.setState ({ lastname: "", firstname: "", street: "", city: "", postcode: "",
-                      province:"", country: "", phones: [], cells: [], emails: []
+      this.setState ({
+          lastname: "",
+          firstname: "",
+          street: "",
+          city: "",
+          postcode: "",
+          province:"",
+          country: "",
+          phones: [],
+          cells: [],
+          emails: [],
+          fieldChange: false,
+          isEmployeeAssigned : false,
+          employeeAssigned : null,
+          isEmployeeUnassigned : false,
+          employeeUnassignedKey : null,
       });
   }
 
@@ -296,13 +418,71 @@ class EditLeadContactModal extends Component {
       //console.log( data.value);
       this.setState({
          status: selectedValue,
-         //fieldChange: true,
+         fieldChange: true,
       });
+  }
+
+  employeeOptions = () => {
+      const {employees, contact} = this.props;
+      let employeeOptions = [];
+
+      //console.log (order);
+      const isEmployeeAssigned = contact.isEmployeeAssigned? (contact.isEmployeeAssigned==="true"? true: false): false;
+      //console.log(employeeAssigned);
+
+      if (isEmployeeAssigned === false) {
+          for (var key in employees) {
+             employeeOptions.push({
+                   key: key,
+                   text: <p style ={styles.DropdownMenu}> {employees[key].name} </p>,
+                   value: key,
+              });
+          }
+      }
+      else  {
+          employeeOptions.push({
+             key: '1234',
+             text: <p style ={styles.DropdownMenu} > {"Remove Assignment"} </p>,
+             value: "none",
+          });
+      }
+      return employeeOptions;
+  }
+
+  selectEmployee = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+      const {employees, contact} = this.props;
+      const employeeKey = data.value;
+
+      //console.log(order);
+      if (employeeKey !== "none") {
+           //console.log("employee tag = " + employees[employeeKey].tag);
+           //console.log("employee name = " + employees[employeeKey].name);
+           //console.log("client tag = " + clienttag);
+           this.setState({
+             isEmployeeAssigned : true,
+             employeeAssigned : employees[employeeKey],
+             isEmployeeUnassigned: false,
+             fieldChange: true,
+           });
+      } else {
+          const employeeAssignedKey = contact ["employeeKey"];
+          console.log(employeeAssignedKey);
+
+          if (employeeAssignedKey) {
+               this.setState({
+                   isEmployeeAssigned : false,
+                   employeeUnassignedKey : employeeAssignedKey,
+                   isEmployeeUnassigned: true,
+                   fieldChange: true,
+               });
+          }
+      }
   }
 
 
   render() {
     const {contact, french} = this.props;
+    let {isEmployeeAssigned, employeeFirstname, employeeLastName} = contact;
     //console.log ("EditClientModal " );
     //console.log(contact);
     //const titleString = "Edit Client : " + contact.name;
@@ -319,6 +499,13 @@ class EditLeadContactModal extends Component {
     //console.log ("EditEmployeeModal id = " + id);
     //console.log (employee.cells[0]);
     //console.log (employee.cells["0"]);
+    let employeeName = employeeFirstname + " " + employeeLastName;
+    if ( !isEmployeeAssigned || isEmployeeAssigned === "undefined" || isEmployeeAssigned === "false")  {
+         isEmployeeAssigned = false;
+         employeeFirstname = "";
+         employeeLastName = "";
+         employeeName = "";
+    }
 
     if (contact && contact.emails && contact.emails[0]) {
         email1 = contact.emails[0];
@@ -495,6 +682,33 @@ class EditLeadContactModal extends Component {
                     options={this.dropdownOptions()}
                  />
            </Form.Field>
+           {!isEmployeeAssigned && <Form.Field>
+                <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                    Assign this Lead to an employee
+                </Message>
+
+                 <Dropdown
+                    placeholder="select employee"
+                    fluid
+                    selection
+                    style={styles.DropdownDisplay}
+                    onChange={this.selectEmployee}
+                    options={this.employeeOptions()}
+                 />
+           </Form.Field>}
+           {isEmployeeAssigned && <Form.Field>
+                <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
+                    this Lead is asigned to employee: {employeeName}, select Remove Assignment to unassign
+                </Message>
+
+                 <Dropdown
+                    selection
+                    style={styles.DropdownDisplay}
+                    onChange={this.selectEmployee}
+                    options={this.employeeOptions()}
+                    placeholder="Remove Employee Assignment"
+                 />
+           </Form.Field>}
         </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -515,14 +729,38 @@ class EditLeadContactModal extends Component {
   }
 }
 
-export default EditLeadContactModal;
-//const mapStateToProps = state => ({
-//     usertag: state.user.usertag,
-     //contact: state.user.clientContact
-//   }
-//);
+const styles = {
+  DropdownMenu: {
+    padding: "6px",
+    margin: "0px",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "rgb(66,152,244, 0.2)",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "1.1em",
+  },
+  DropdownDisplay: {
+    padding: "6px",
+    margin: "0px",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "1.1em",
+  },
+};
 
-//export default connect(
-//  mapStateToProps,
-//  null
-//)(EditClientContactModal);
+//export default EditLeadContactModal;
+const mapStateToProps = state => ({
+     usertag: state.user.usertag,
+     employees: state.user.employeeList,
+     clienttag: state.user.clienttag,
+   }
+);
+
+export default connect(
+  mapStateToProps,
+  null
+)(EditLeadContactModal);
