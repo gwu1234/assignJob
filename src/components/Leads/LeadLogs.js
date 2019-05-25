@@ -62,9 +62,9 @@ class LeadLogs extends React.Component {
     //console.log("orders  List = ");
     //console.log(orders);
     //display && clients && this.displayClients(clients)}
-    let titleString = "Lead Logs";
+    let titleString = "Activity Logs";
     if (french) {
-       titleString = "Lead Logs";
+       titleString = "Activité Logs";
     }
 
     const logArray =[];
