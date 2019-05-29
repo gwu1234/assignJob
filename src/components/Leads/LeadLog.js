@@ -27,9 +27,6 @@ class LeadLog extends React.Component {
               Employee Name: {employeeName}
           </Menu.Item>
           <Menu.Item  style = {styles.item}>
-              Lead Name: {leadName}
-          </Menu.Item>
-          <Menu.Item  style = {styles.item}>
               Log Msg: {logMsg}
           </Menu.Item>
       </Menu.Menu>
