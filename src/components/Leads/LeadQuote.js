@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Background from '../terra.jpg';
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Dimmer, Loader} from 'semantic-ui-react';
 
 class LeadQuote extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class LeadQuote extends Component {
       taxes: '',
       total:'',
       work: "",
+      pdfing: false,
      }
   }
 
@@ -95,15 +96,23 @@ class LeadQuote extends Component {
 
   printDocument = () =>{
     let {price,  taxes, total, work} = this.state;
-    console.log(price);
+    const {contact} = this.props;
+
+    this.setState({pdfing: true});
+    //console.log(price);
+    const filename = "lead" + String(contact.timestamp) + ".pdf"
     const input = document.getElementById('divToPrint');
     html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
+        //const pdf = new jsPDF();
+        const pdf = new jsPDF('p', 'pt', 'letter');
+        pdf.canvas.height = 72 * 11;
+        pdf.canvas.width = 72 * 8.5;
         pdf.addImage(imgData, 'JPEG', 0, 0);
         // pdf.output('dataurlnewwindow');
-        pdf.save("download.pdf");
+        pdf.save(filename);
+        this.setState({pdfing: false});
       });
   }
 
@@ -254,7 +263,8 @@ class LeadQuote extends Component {
            </div>
            <div style ={styles.menuFooter}>
               <Button onClick={this.sendDocument}>Email Quote</Button>
-              <Button onClick={this.printDocument}>Save as PDF</Button>
+              {this.state.pdfing && <Dimmer active> <Loader content='Creating PDF'/></Dimmer>}
+              {!this.state.pdfing && <Button onClick={this.printDocument}>Save as PDF</Button>}
            </div>
          </div>);
   }
