@@ -94,7 +94,7 @@ class LeadQuote extends Component {
     });
   }
 
-  printDocument = () =>{
+  /*printDocument = () =>{
     let {price,  taxes, total, work} = this.state;
     //const {contact} = this.props;
 
@@ -117,12 +117,87 @@ class LeadQuote extends Component {
         pdf.save(filename);
         this.setState({pdfing: false});
       });
+  }*/
+
+  printDocument = () =>{
+    this.setState({pdfing: true});
+
+    const { companyName, clientName, street, city, postcode, province,
+            country, phone, cell, email, price, taxes, total, work } = this.state;
+    const { companyInfo } = this.props;
+
+    const { emails, phones, cells } = companyInfo;
+    let companyEmail = null;
+    let companyPhone = null;
+    if (emails && emails.length > 0) {
+        companyEmail = emails[0];
+    }
+    if (phones && phones.length > 0) {
+        companyPhone = phones[0];
+    }
+
+    const date = new Date();
+      // timestamp in second
+    const timestamp = Math.round(date.getTime()/1000 + 0.5);
+    const filename = "quote-" + String(timestamp) + ".pdf"
+    const localtime = date.toLocaleString();
+
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(20, 20, 'This is a quotation from ' + companyName);
+    doc.setFontSize(13)
+    doc.text(20, 27, 'dated on ' + localtime)
+
+    doc.setFontSize(14);
+    doc.text(20, 37, 'Company Contact');
+    doc.setFontSize(12)
+    doc.text(20, 43, 'address: ' + companyInfo.street);
+    doc.text(20, 49, 'city: ' + companyInfo.city);
+    doc.text(20, 55, 'postcode: ' + companyInfo.postcode);
+    doc.text(20, 61, 'province: ' + companyInfo.province);
+    if (companyPhone) {
+      doc.text(20, 67, 'phone: ' + companyPhone);
+    }
+    if (companyEmail) {
+      doc.text(20, 73, 'email: ' + companyEmail);
+    }
+
+    doc.setFontSize(14);
+    doc.text(20, 83, 'Client Contact');
+    doc.setFontSize(12)
+    doc.text(20, 89, 'name: ' + clientName);
+    doc.text(20, 95, 'address: ' + street);
+    doc.text(20, 101, 'city: ' + city);
+    doc.text(20, 106, 'postcode: ' + postcode);
+    doc.text(20, 112, 'province: ' + province);
+    if (phone) {
+      doc.text(20, 118, 'phone: ' + phone);
+    }
+    if (email) {
+      doc.text(20, 124, 'email: ' + email);
+    }
+
+    doc.setFontSize(14);
+    doc.text(20, 134, 'Job and Quote');
+    doc.setFontSize(12)
+    doc.text(20, 140, 'price: ' + price);
+    doc.text(20, 146, 'taxes: ' + taxes);
+    doc.text(20, 152, 'total: ' + total);
+    doc.text(20, 158, 'job description:');
+    doc.text(20, 164,  work);
+    
+    doc.save(filename);
+    this.setState({pdfing: false});
+
+
   }
 
   sendDocument = () =>{
      let { companyName, clientName, street, city, postcode,
            province, country, phone, cell, email, price,
-           taxes, total, work} = this.state;
+           taxes, total, work} = this.state
+
+     let { compnayInfo } = this.props;
 
       //let {price,  taxes, total, work} = this.state;
       const quote = {
@@ -289,15 +364,15 @@ const mapStateToProps = state => {
        }
    }
 
-   //this.clearState();
-   //console.log(leadTag);
-   //console.log(leadContact);
+
+   const companyInfo = reposData["contact"];
 
    return {
      contact: leadContact,
      usertag: state.user.usertag,
      french: state.user.french,
-     currentUser: state.user.currentUser
+     currentUser: state.user.currentUser,
+     companyInfo: companyInfo,
    }
 };
 
