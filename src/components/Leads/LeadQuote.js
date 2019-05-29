@@ -140,9 +140,15 @@ class LeadQuote extends Component {
     const date = new Date();
       // timestamp in second
     const timestamp = Math.round(date.getTime()/1000 + 0.5);
-    const filename = "quote-" + String(timestamp) + ".pdf"
     const localtime = date.toLocaleString();
-
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds ();
+    const filename = companyName + "-" + year + month + day + "-" + hours + minutes + seconds;
+    //const filename = companyName + "-" + localtime + ".pdf"
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text(20, 20, 'This is a quotation from ' + companyName);
