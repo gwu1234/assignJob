@@ -120,6 +120,7 @@ class LeadQuote extends Component {
   }*/
 
   printDocument = () =>{
+
     this.setState({pdfing: true});
 
     const { companyName, clientName, street, city, postcode, province,
@@ -185,14 +186,12 @@ class LeadQuote extends Component {
     doc.text(20, 152, 'total: ' + total);
     doc.text(20, 158, 'job description:');
     doc.text(20, 164,  work);
-    
+
     doc.save(filename);
     this.setState({pdfing: false});
-
-
   }
 
-  sendDocument = () =>{
+  /*sendDocument = () =>{
      let { companyName, clientName, street, city, postcode,
            province, country, phone, cell, email, price,
            taxes, total, work} = this.state
@@ -216,13 +215,13 @@ class LeadQuote extends Component {
           total: total,
           work: work,
       }
-      /*var sendQuote = firebase.functions().httpsCallable('sendQuote');
+      var sendQuote = firebase.functions().httpsCallable('sendQuote');
       sendQuote({quote:quote}).then(function(result) {
           // Read result of the Cloud Function.
           var returnText = result.emailresult || "";
           console.log(result);
-      });*/
-  }
+      });
+  }*/
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -340,8 +339,6 @@ class LeadQuote extends Component {
           </Form>
            </div>
            <div style ={styles.menuFooter}>
-              <Button onClick={this.sendDocument}>Email Quote</Button>
-              {this.state.pdfing && <Dimmer active> <Loader content='Creating PDF'/></Dimmer>}
               {!this.state.pdfing && <Button onClick={this.printDocument}>Save as PDF</Button>}
            </div>
          </div>);
@@ -395,7 +392,7 @@ const styles = {
     color: "black",
     fontSize:"1.1em",
     fontWeight:"bold",
-    height: "5%",
+    height: "8%",
     background: "#92c2e8",
   },
   menuMenu: {
@@ -404,7 +401,7 @@ const styles = {
     paddingTop:"15px",
     position: "relative",
     overflow: "scroll",
-    height: "88%",
+    height: "81%",
     background: "#92c2e8",
   },
   menuFooter: {
@@ -414,7 +411,7 @@ const styles = {
     color: "black",
     fontSize:"1.1em",
     fontWeight:"normal",
-    height: "5%",
+    height: "10%",
     background: "#92c2e8",
   },
 };
