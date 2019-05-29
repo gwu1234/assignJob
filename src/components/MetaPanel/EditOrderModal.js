@@ -484,7 +484,7 @@ componentWillUnMount() {
   }
 
   render() {
-    const {order, contact, activeOrderId, activeOrderKey, orderKey} = this.props;
+    const {order, contact, activeOrderId, activeOrderKey, orderKey, french} = this.props;
     const {orderId, activeOrderChanged} = this.state;
     let {repeatTimes, isActive, isRepeat} = this.state;
     let {isEmployeeAssigned, employeeFirstname, employeeLastName} = order;
@@ -516,8 +516,19 @@ componentWillUnMount() {
                  (isRepeat && isRepeat=== true ) ) ?
                  true: false;
 
-    const titleString = contact.name + " :  " + "Edit Order";
-    //console.log (titleString);
+    const titleString = french? (contact.name + " :  " + "Modifier Ordre"):
+                                (contact.name + " :  " + "Edit Order");
+
+    const workString = french? "Travail": "Work";
+    const orderString = french? "Ordre ID": "Order ID";
+    const assignString = french? "attribuer cet ordre à un employé":
+                                 "Assign this order to an employee";
+    const repeatString = french? "répéte fois (0 = infini)": "repeat times (0 = infinity)";
+    const assignNotice = french? "cet ordre attribue à employé ":
+                                  "this order is assigned to employee ";
+    const removeNotice = french? "sélectionner Remove Assignment pour retirer attribution":
+                                 "select Remove Assignment to unassign";
+
 
     return (
       <Modal
@@ -545,14 +556,14 @@ componentWillUnMount() {
         <Form >
            <Form.Group inline width='equal' >
                 <Form.Input size ="mini"
-                            label='Work'
+                            label={workString}
                             defaultValue = {order.work}
                             name="work"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='Order ID'
+                           label={orderString}
                            defaultValue = {order.orderId}
                            name="orderId"
                            onChange={this.handleChange} />
@@ -579,7 +590,7 @@ componentWillUnMount() {
          </Form.Field>
          <Form.Field>
               <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  Repeat Times (0 = infinite)
+                  {repeatString}
               </Message>
 
                <Dropdown
@@ -593,7 +604,7 @@ componentWillUnMount() {
          </Form.Field>
          {isActive && !isEmployeeAssigned && <Form.Field>
               <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  Assign this workorder to an employee
+                  {assignString}
               </Message>
 
                <Dropdown
@@ -607,7 +618,7 @@ componentWillUnMount() {
          </Form.Field>}
          {isActive && isEmployeeAssigned && <Form.Field>
               <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  this workorder is asigned to employee: {employeeName}, select Remove Assignment to unassign
+                  {assignNotice}: {employeeName}, {removeNotice}
               </Message>
 
                <Dropdown
@@ -659,6 +670,7 @@ const mapStateToProps = state => {
      employees: state.user.employeeList,
      clienttag: state.user.clienttag,
      deliverys: deliverys,
+     french: state.user.french,
    }
 };
 
