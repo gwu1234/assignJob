@@ -76,6 +76,12 @@ class LeadLogs extends React.Component {
        logArray.push(newLog);
     }
 
+    logArray.sort((a, b) => {
+      if (a.log && b.log) {
+          return (b.log.timestamp - a.log.timestamp);
+      }
+    });
+
     return (
       <Menu.Menu style={styles.container}>
             <Menu.Header style={styles.menuHeader}>
