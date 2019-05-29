@@ -96,11 +96,14 @@ class LeadQuote extends Component {
 
   printDocument = () =>{
     let {price,  taxes, total, work} = this.state;
-    const {contact} = this.props;
+    //const {contact} = this.props;
 
     this.setState({pdfing: true});
     //console.log(price);
-    const filename = "lead" + String(contact.timestamp) + ".pdf"
+    const date = new Date();
+      // timestamp in second
+    const timestamp = Math.round(date.getTime()/1000 + 0.5);
+    const filename = "quote-" + String(timestamp) + ".pdf"
     const input = document.getElementById('divToPrint');
     html2canvas(input)
       .then((canvas) => {
