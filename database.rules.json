@@ -3,17 +3,17 @@
     "users": {
         ".read": "auth.email === '1234@admin.io'",
         ".write": "auth.email === '1234@admin.io' ",
-       "jc+infojccom": {
-            ".read": "auth.email === 'info@jc.com'" ,
-            ".write": "auth.email === 'info@jc.com'",
+       "$usertag": {
+            ".read": "auth.token.name + '+' + auth.token.email.replace('@','').replace('.','')===$usertag",
+            ".write": "auth.token.name + '+' + auth.token.email.replace('@','').replace('.','')===$usertag",
         },
      },
     "repos": {
          ".read": "auth.email === '1234@admin.io'",
         ".write": "auth.email === '1234@admin.io' ",
-        "jc+infojccom": {
-            ".read": "auth.email === 'info@jc.com'  || auth.email === '1234@admin.io'",
-            ".write": "auth.email === 'info@jc.com' || auth.email === '1234@admin.io' ",
+        "$usertag": {
+            ".read":  "auth.token.name + '+' + auth.token.email.replace('@','').replace('.','')===$usertag || auth.email === '1234@admin.io'",
+            ".write": "auth.token.name + '+' + auth.token.email.replace('@','').replace('.','')===$usertag || auth.email === '1234@admin.io'",
         },
     }
   }
