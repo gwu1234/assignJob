@@ -69,8 +69,8 @@ class EditEmployeeModal extends Component {
           event.preventDefault();
       }
 
-      const {usertag, id } = this.props;
-      const employeePath = "repos/" + usertag + "/employees/" + id;
+      const {usertag, employee} = this.props;
+      const employeePath = "repos/" + usertag + "/employees/" + employee.tag;
       console.log (employeePath);
       const employeeRef = firebase.database().ref(employeePath);
       employeeRef.set(null);
