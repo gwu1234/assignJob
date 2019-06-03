@@ -101,7 +101,7 @@ class WorkOrders extends React.Component {
 const styles = {
   container: {
     height: "49.6%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     marginBottom:"3px",
   },
   menuHeader: {

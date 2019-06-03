@@ -171,7 +171,7 @@ const styles = {
     height:"70px",
   },
   active: {
-    backgroundColor: "rgba(0,0,255,0.5)",
+    backgroundColor: "rgba(0,255,0,0.1)",
   },
   item: {
     paddingTop: "1px",
@@ -186,7 +186,7 @@ const styles = {
     paddingBottom: "2px",
     fontSize: "0.9em",
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     opacity: 1.0,
   },
 };

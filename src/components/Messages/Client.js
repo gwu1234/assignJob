@@ -248,14 +248,14 @@ const styles = {
     position: "relative",
     borderStyle:"solid",
     borderWidth:"2px",
-    borderColor:"#b0caf4",
+    borderColor:"#e8eef7",
   },
   selectedName: {
     opacity: 1.0,
-    color: "white",
+    color: "black",
     fontSize: "1.0em",
     fontWeight: "bold",
-    backgroundColor:"rgba(0,0,255,0.5)",
+    backgroundColor:"rgba(0,255,0,0.1)",
     paddingTop:"2px",
     paddingBottom:"2px",
     paddingLeft: "15px"
@@ -271,10 +271,10 @@ const styles = {
   },
   selectedCity: {
     opacity: 1.0,
-    color: "white",
+    color: "black",
     fontSize: "0.8em",
     fontWeight: "normal",
-    backgroundColor:"rgba(0,0,255,0.5)",
+    backgroundColor:"rgba(0,250,0,0.1)",
     paddingTop: "1px",
     paddingLeft: "15px"
   },

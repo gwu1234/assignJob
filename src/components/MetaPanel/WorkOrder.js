@@ -225,7 +225,7 @@ const styles = {
     height:"95px",
   },
   active: {
-    backgroundColor: "rgba(0,0,255,0.5)",
+    backgroundColor: "rgba(0,255,0,0.1)",
   },
   thumb: {
     height:"180px",
@@ -243,7 +243,7 @@ const styles = {
     paddingBottom: "1px",
     fontSize: "0.8em",
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     opacity: 1.0,
   },
   picMenu: {
@@ -253,7 +253,7 @@ const styles = {
     marginLeft:"15px",
     marginRight:"20px",
     overflow: "scroll",
-    backgroundColor: "rgba(0,0,255,0.1)",
+    backgroundColor: "rgba(0,255,0,0.1)",
   },
 };
 

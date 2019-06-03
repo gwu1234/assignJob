@@ -100,7 +100,7 @@ class Invoices extends React.Component {
 const styles = {
   container: {
     height: "49.6%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     marginTop:"3px",
   },
   menuHeader: {

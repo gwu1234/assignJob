@@ -216,45 +216,45 @@ assignedEmployees = () => {
     //console.log(currentUser);
 
     return (
-      <Grid.Row columns='equal' style={{width:"100%",height:"8vh",color:"white",backgroundColor:"blue"}}>
-          <Grid.Column style={{color:"white", textAlign: "center", paddingTop:"1px", fontSize:"1.2em"}}>
+      <Grid.Row columns='equal' style={styles.container}>
+          <Grid.Column style={styles.columns}>
               <Icon name="truck" size="large" color="orange"
                    style={{position:"relative", float:"left"}}/>
                    <span> AssignJobs </span>
                      <Dropdown
                        placeholder=""
                        options={this.dropdownOptions()}
-                       style = {{color: "white"}}
+                       style = {{color: "black"}}
                      />
           </Grid.Column >
-          <Grid.Column style={{textAlign: "center"}}>
+          <Grid.Column style={styles.columns}>
              <span> {french? "Compagnie":"Company"} </span>
              <Dropdown
                placeholder=""
                options={this.dropdownCompanyOptions()}
-               style = {{color: "white"}}
+               style = {{color: "black"}}
              />
           </Grid.Column >
-          <Grid.Column style={{textAlign: "center"}}>
+          <Grid.Column style={styles.columns}>
              <span> {french? "Texte Vue" : "TextView" }</span>
              <Dropdown
                placeholder=""
                options={this.dropdownTextOptions2()}
              />
           </Grid.Column>
-          <Grid.Column style={{textAlign: "center"}}>
+          <Grid.Column style={styles.columns}>
                {this.dropdownMapOptions2()}
 
           </Grid.Column>
-          <Grid.Column style={{textAlign: "center"}}>
+          <Grid.Column style={styles.columns}>
              <span onClick={()=>this.toggleFrench()}> {this.state.french? "Anglais": "French"} </span>
           </Grid.Column>
-          <Grid.Column style={{textAlign: "center"}}>
+          <Grid.Column style={styles.columns}>
              <span> {french? "Cadre": "Setting"}</span>
              <Dropdown
                placeholder=""
                options={this.dropdownSettingOptions()}
-               style = {{color: "white"}}
+               style = {{color: "black"}}
              />
           </Grid.Column>
       </Grid.Row>
@@ -265,6 +265,20 @@ assignedEmployees = () => {
 }
 
 const styles = {
+  container: {
+    width:"100%",
+    height:"8vh",
+    color:"black",
+    fontWeight:"bold",
+    fontSize:"1.1em",
+    backgroundColor:"#e1e7f2"
+  },
+  columns: {
+    textAlign: "center",
+    paddingTop: "8px",
+    color:"black",
+    fontSize:"1.1em"
+  },
   item: {
     paddingTop: "0px",
     paddingBottom: "0px",
