@@ -60,6 +60,9 @@ const icon = {
 class MapContainer extends Component {
   constructor(props) {
     super(props);
+    //const { children } = this.props
+    //console.log(children);
+    //console.log(this.props.initialCenter);
 
     this.state = {
        showingInfoWindow: false,
@@ -80,7 +83,23 @@ class MapContainer extends Component {
        mouseoverPlace: {},
        mouseoverMarker: {},
        showingMouseoverWindow: false,
+
+       currentLocation: {},
     }
+  }
+
+  componentDidMount() {
+    if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const coords = pos.coords;
+          this.setState({
+            currentLocation: {
+              lat: coords.latitude,
+              lng: coords.longitude
+            }
+          });
+        });
+      }
   }
 
   onMarkerClick = (props, marker, e) =>{
@@ -92,7 +111,7 @@ class MapContainer extends Component {
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
-      //selectedLatLng: marker.pos,
+      selectedLatLng: marker.pos,
       showingGwindow: false,
       showingMouseoverWindow: false,
       //selectedAddress_string: '',
@@ -101,9 +120,9 @@ class MapContainer extends Component {
   }
 
   onMouseoverMarker= (props, marker, e) =>{
-    console.log("onMouseoverMarker");
-    console.log(marker);
-    console.log (props);
+    //console.log("onMouseoverMarker");
+    //console.log(marker);
+    //console.log (props);
 
     if (!this.state.showingMouseoverWindow) {
     this.setState({
@@ -399,7 +418,7 @@ class MapContainer extends Component {
       let optionArray = [];
 
       for (var i = 0; i <orders.length; i++ ){
-        console.log(orders[i]);
+        //console.log(orders[i]);
         const displayString = "order id: " + orders[i].orderId
                               + ", order work: " + orders[i].work
                               + ", order status: " + statusList[orders[i].orderStatus];
@@ -452,7 +471,7 @@ class MapContainer extends Component {
 
   handleDropdownChange = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
       const selectedValue = data.value
-      console.log( data.value);
+      //console.log( data.value);
       this.setState({
          orderId: selectedValue,
          orderChange: true,
@@ -463,8 +482,9 @@ class MapContainer extends Component {
      //console.log("MapContainer clickOnMap()");
      //console.log("Lat = " + latLng.lat());
      //console.log("Lng = " + latLng.lng());
-     //console.log("X = " + pa.x);
-     //console.log("Y = " + pa.y);
+     //console.log("latLng = " );
+     //console.log(latLng);
+
      this.geocodeLatLng (latLng);
   }
 
@@ -479,7 +499,10 @@ class MapContainer extends Component {
             if (results[0]) {
               //console.log(results[0]);
               //console.log(results[0].formatted_address);
+              //console.log("geocodeLatLng()");
               //console.log(latLng);
+              //console.log("Lat = " + latLng.lat());
+              //console.log("Lng = " + latLng.lng());
               const street = results[0].address_components[0].long_name + " "
                           + results[0].address_components[1].long_name;
 
@@ -516,11 +539,16 @@ class MapContainer extends Component {
 
     render() {
       const {usertag, employees, markers, truckMarkers, employeeMarkers, leadMarkers} = this.props;
-      let {selectedLatLng} = this.state.selectedLatLng;
+      let {selectedLat, selectedLng, currentLocation} = this.state;
 
-      if (!selectedLatLng) {
-        // set a flake lat lng if null
-        selectedLatLng = {lat:0.1, lng:0.1};
+      //console.log(currentLocation);
+      let selectedLatLng = null;
+      if (selectedLat && selectedLng ) {
+           selectedLatLng = {lat: selectedLat, lng: selectedLng} ;
+      }
+
+      if (!selectedLatLng && currentLocation && currentLocation.lat && currentLocation.lng) {
+           selectedLatLng = {lat: currentLocation.lat, lng: currentLocation.lng};
       }
 
       //console.log("at MapContainer : ");

@@ -52,21 +52,21 @@ class Lead extends React.Component {
        viewTitle = "voir lead donnee";
     }
 
-    console.log("leadKey =  " + leadKey);
+    //console.log("leadKey =  " + leadKey);
 
     let email ="";
     if (emails && emails.length > 0) {
-       console.log(emails) ;
+       //console.log(emails) ;
        email = emails[0];
     }
     let  phone ="";
     if (phones && phones.length > 0) {
-       console.log(phones) ;
+       //console.log(phones) ;
        phone = phones[0];
     }
     let cell ="";
     if (cells && cells.length > 0) {
-       console.log(cells) ;
+       //console.log(cells) ;
        cell = cells[0];
     }
 
