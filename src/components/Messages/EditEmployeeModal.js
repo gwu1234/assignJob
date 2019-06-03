@@ -353,6 +353,10 @@ class EditEmployeeModal extends Component {
     if (french) {
        titleString = "modifier employe : " + employee.name;
     }
+    const firstname = french? "Prénom" : "Firstname" ;
+    const lastname = french? "Nom de Famille" : "Lastname" ;
+    const street = french? "Rue & No." : "Street & No."
+    const city = french? "Ville" : "City"
 
     let email1 = "";
     let email2 = "";
@@ -440,26 +444,26 @@ class EditEmployeeModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="small"
-                           label='First Name'
+                           label={firstname}
                            placeholder = {employee.firstname}
                            defaultValue = {employee.firstname}
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Last Name'
+                            label={lastname}
                             placeholder= {employee.lastname}
                             defaultValue = {employee.lastname}
                             name="lastname"
                             onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Street & No'
+                            label={street}
                             defaultValue = {employee.street}
                             name="street"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                 <Form.Input size ="small"
-                            label='City'
+                            label={city}
                             defaultValue = {employee.city}
                             name="city"
                             onChange={this.handleChange} />
