@@ -264,7 +264,7 @@ const styles = {
     opacity: 1.0,
     color: "black",
     fontSize: "1.0em",
-    fontWeight: "bold",
+    fontWeight: "normal",
     paddingTop:"2px",
     paddingBottom:"2px",
     paddingLeft: "15px"
@@ -273,7 +273,7 @@ const styles = {
     opacity: 1.0,
     color: "black",
     fontSize: "0.8em",
-    fontWeight: "normal",
+    fontWeight: "bold",
     backgroundColor:"rgba(0,250,0,0.1)",
     paddingTop: "1px",
     paddingLeft: "15px"

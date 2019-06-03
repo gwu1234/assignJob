@@ -127,10 +127,10 @@ const styles = {
   },
   selectedName: {
     opacity: 1.0,
-    color: "white",
+    color: "black",
     fontSize: "1.0em",
     fontWeight: "bold",
-    backgroundColor:"rgba(0,0,255,0.5)",
+    backgroundColor:"rgba(0,255,0,0.1)",
     paddingTop:"2px",
     paddingBottom:"2px",
     paddingLeft: "15px"
@@ -139,17 +139,17 @@ const styles = {
     opacity: 1.0,
     color: "black",
     fontSize: "1.0em",
-    fontWeight: "bold",
+    fontWeight: "normal",
     paddingTop:"2px",
     paddingBottom:"2px",
     paddingLeft: "15px"
   },
   selectedCity: {
     opacity: 1.0,
-    color: "white",
+    color: "black",
     fontSize: "0.8em",
-    fontWeight: "normal",
-    backgroundColor:"rgba(0,0,255,0.5)",
+    fontWeight: "bold",
+    backgroundColor:"rgba(0,255,0,0.1)",
     paddingTop: "1px",
     paddingLeft: "15px"
   },

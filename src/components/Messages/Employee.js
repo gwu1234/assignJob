@@ -125,7 +125,7 @@ toggleDisplay = (display) => {
 const styles = {
   container: {
     height: "100%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     borderStyle:"solid",
     borderWidth:"2px",
     borderColor:"#b0caf4",

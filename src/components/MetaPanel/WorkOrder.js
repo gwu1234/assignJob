@@ -234,7 +234,7 @@ const styles = {
     paddingTop: "1px",
     paddingBottom: "1px",
     fontSize: "0.8em",
-    fontWeight: "bold",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
   },

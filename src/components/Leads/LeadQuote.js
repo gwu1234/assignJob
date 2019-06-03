@@ -399,7 +399,7 @@ const styles = {
     fontSize:"1.1em",
     fontWeight:"bold",
     height: "8%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
   },
   menuMenu: {
     marginTop: "6px",
@@ -408,7 +408,7 @@ const styles = {
     position: "relative",
     overflow: "scroll",
     height: "81%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
   },
   menuFooter: {
     paddingTop:"5px",
@@ -418,6 +418,6 @@ const styles = {
     fontSize:"1.1em",
     fontWeight:"normal",
     height: "10%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
   },
 };

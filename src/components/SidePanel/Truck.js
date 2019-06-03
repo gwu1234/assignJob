@@ -38,7 +38,7 @@ class Truck extends React.Component {
 const styles = {
   container: {
     height: "100%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     marginTop: "0px",
     marginBottom: "0px",
     paddingTop:"5px",

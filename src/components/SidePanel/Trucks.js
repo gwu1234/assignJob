@@ -88,7 +88,7 @@ const mapStateToProps = state => {
 const styles = {
   container: {
     height: "100%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
   },
   menuHeader: {
     paddingTop:"8px",

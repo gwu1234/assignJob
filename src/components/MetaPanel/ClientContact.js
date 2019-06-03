@@ -182,7 +182,7 @@ class ClientContact extends React.Component {
 const styles = {
   container: {
     height: "100%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
   },
   menuHeader: {
     paddingTop:"8px",
@@ -202,7 +202,7 @@ const styles = {
     paddingTop: "15px",
     paddingBottom: "5px",
     fontSize: "1.0em",
-    fontWeight: "bold",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
     borderStyle:"solid",

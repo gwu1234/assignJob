@@ -99,7 +99,7 @@ class LeadLogs extends React.Component {
 const styles = {
   container: {
     height: "64.5%",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     marginBottom:"2px",
     marginTop:"4px",
   },
