@@ -171,14 +171,14 @@ export default class EditContactModal extends Component {
   };
 
   render() {
-    const {contact, french} = this.props;
-    let titleString = "Edit Company Info : ";
-    if (french) {
-        titleString = "modifier compagne info : "
-    }
+    const {contact, french, name} = this.props;
 
-    if (contact.name) {
-      titleString = titleString + contact.name;
+    let titleString = french? "modifier compagne info : " : "Edit Company Info : ";
+    const street = french? "Rue & No." : "Street & No.";
+    const city = french? "Ville" : "City";
+
+    if (name) {
+      titleString = titleString + name;
     }
 
     let email1 = "";
@@ -237,7 +237,7 @@ export default class EditContactModal extends Component {
 
     return (
       <Modal
-        trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)} style={{position: 'relative', float: 'left'}} />}
+        trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)} style={{position: 'relative', float: 'right'}} />}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -249,14 +249,14 @@ export default class EditContactModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="small"
-                           label='Street & No'
+                           label={street}
                            defaultValue = {contact.street}
                            name="street"
                            onChange={this.handleChange} />
           </Form.Group>
            <Form.Group inline width='equal' >
                 <Form.Input size ="small"
-                            label='City'
+                            label={city}
                             defaultValue = {contact.city}
                             name="city"
                             onChange={this.handleChange} />

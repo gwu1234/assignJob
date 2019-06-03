@@ -130,8 +130,8 @@ class Contact extends React.Component {
 
 
   render() {
-    const {contact, usertag, french} = this.props;
-    //const {emailDisplay, phoneDisplay, cellDisplay, editDisplay} = this.state;
+    const {contact, usertag, french, currentUser} = this.props;
+    const {displayName} = currentUser;
 
     //console.log (contact);
     let address = '';
@@ -143,12 +143,8 @@ class Contact extends React.Component {
         //console.log(contact.cells);
     }
 
-    let titleString = "Company Info";
-    let modalTitle = "Edit Company Info";
-    if (french) {
-       titleString = "compagne info";
-       modalTitle = "modifier compagne info";
-    }
+    let titleString = french? displayName + " compagne info " : displayName + " Company Info ";
+    let modalTitle = french? "modifier compagne info" : "Edit Company Info";
 
     return (
       <Menu.Menu style={styles.container} >
@@ -170,9 +166,9 @@ class Contact extends React.Component {
             {contact && contact.cells && contact.cells.length>0 && this.displayCellHeader (true)}
             {contact && contact.cells && contact.cells.length>0 && this.displayCells (contact.cells)}
           <Menu.Menu style = {styles.emailMenu}>
-            {contact && <Menu.Item style = {{fontSize: "0.8em", fondStyle: "bold", color:"black"}}>
+            {contact && <Menu.Item style = {{fontSize: "1.0em", fontWeight: "bold", color:"black", paddingLeft: "2em"}}>
                        <span> {modalTitle} </span>
-                       <EditContactModal contact = {contact} usertag = {usertag} french={french}/>
+                       <EditContactModal contact = {contact} usertag = {usertag} french={french} name = {currentUser.displayName}/>
                        </Menu.Item> }
            </Menu.Menu>
           </Menu.Menu>
@@ -215,7 +211,7 @@ const styles = {
     paddingTop: "20px",
     paddingBottom: "10px",
     fontSize: "1.0em",
-    fontWeight: "bold",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
     borderStyle:"solid",
@@ -225,7 +221,7 @@ const styles = {
   email: {
     paddingTop: "5px",
     paddingBottom: "2px",
-    fontSize: "1.0em",
+    fontSize: "0.9em",
     fontWeight: "normal",
     color: "black",
     opacity: 1.0,
@@ -233,8 +229,8 @@ const styles = {
   editItem: {
     paddingTop: "20px",
     paddingBottom: "2px",
-    fontSize: "1.0em",
-    fontWeight: "bold",
+    fontSize: "0.9em",
+    fontWeight: "normal",
     color: "black",
     opacity: 1.0,
     borderStyle:"solid",
@@ -253,6 +249,7 @@ const mapStateToProps = state => {
      contact: contact,
      usertag: state.user.usertag,
      french: state.user.french,
+     currentUser: state.user.currentUser,
    }
 };
 
