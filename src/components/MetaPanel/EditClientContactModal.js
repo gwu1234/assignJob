@@ -324,7 +324,7 @@ class EditClientContactModal extends Component {
   };
 
   render() {
-    const {contact} = this.props;
+    const {contact, french} = this.props;
     //console.log ("EditClientModal " );
     //console.log(contact);
     //const titleString = "Edit Client : " + contact.name;
@@ -369,9 +369,12 @@ class EditClientContactModal extends Component {
     if (contact.cells && contact.cells[2]) {
         cell3 = contact.cells[2];
     }
-    const titleString = contact.name + ":  " + "Edit Client Contact Info"
-    //console.log (titleString);
-    //const { value } = this.state
+    const titleString=french? (contact.name+":  " + "Modifier Client Contact Info"):
+                              (contact.name+":  " + "Edit Client Contact Info");
+    const firstName = french?  "Prénom" : "First Name";
+    const lastName = french?  "nom de famille" : "Last Name";
+    const streetName = french?  "Rue & No." : "Street & No.";
+    const city = french?  "Ville" : "City";
 
     return (
       <Modal
@@ -387,24 +390,24 @@ class EditClientContactModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='First Name'
+                           label={firstName}
                            defaultValue = {contact.firstname}
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Last Name'
+                            label={lastName}
                             defaultValue = {contact.lastname}
                             name="lastname"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='Street & No'
+                           label={streetName}
                            defaultValue = {contact.street}
                            name="street"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='City'
+                            label={city}
                             defaultValue = {contact.city}
                             name="city"
                             onChange={this.handleChange} />

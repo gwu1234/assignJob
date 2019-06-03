@@ -142,10 +142,8 @@ class ClientContact extends React.Component {
         address = contact.street + ", " +contact.city + ", " + contact.postcode;
     }
 
-    let titleString = "Client Contact";
-    if (french) {
-        titleString = "client contact";
-    }
+    const titleString = french ? "client contact": "Client Contact" ;
+    const editorString = french ? "modifier client contact": "Edit Client Contact";
 
     return (
       <Menu.Menu style={styles.container} >
@@ -170,7 +168,7 @@ class ClientContact extends React.Component {
           </Menu.Menu>
           <Menu.Menu style={styles.emailMenu}>
             {contact && editDisplay && <Menu.Item style={styles.editItem}>
-                 <EditClientContactModal open={false} contact={contact} usertag={usertag}/> <span style ={{position: "relative", left: "16px" }}> edit client contact </span>
+                 <EditClientContactModal open={false} contact={contact} usertag={usertag} french={french}/> <span style ={{position: "relative", left: "16px" }}> {editorString}</span>
             </Menu.Item>}
           </Menu.Menu>
           </Menu.Menu>
