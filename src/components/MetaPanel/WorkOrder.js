@@ -150,16 +150,32 @@ class WorkOrder extends React.Component {
        return (thumbs.map(thumb => {
           const photoName = thumb.photoTag + ".jpg";
           const photoPath = usertag + "/" + clientTag + "/" + orderKey + "/photo/" + thumb.photoTag + "/" + photoName;
+          const thumbPath = usertag + "/" + clientTag + "/" + orderKey + "/thumb/" + thumb.photoTag + "/" + photoName;
           //console.log("photoPath = ");
           //console.log(photoPath);
-          return (<PhotoViewModal url={thumb.url}  key={thumb.photoTag} photoPath = {photoPath} photoName = {photoName} />);
+          //console.log("photoName = ");
+          //console.log(photoName);
+          //console.log("thumbPath = ");
+          //console.log(thumb.url);
+          return (<PhotoViewModal
+                    url={thumb.url}
+                    key={thumb.photoTag}
+                    photoPath = {photoPath}
+                    photoName = {photoName}
+                    thumbPath = {thumbPath}
+                    french = {this.props.french}
+                    usertag = {usertag}
+                    clienttag = {clientTag}
+                    ordertag = {orderKey}
+                    phototag = {thumb.photoTag}
+                  />);
      }));
    };
 }
 
 
   render() {
-    const {order, orderKey} = this.props;
+    const {order, orderKey, french} = this.props;
     const {thumbs, status, isRepeat, repeatTimes, deliveryTimes} = this.state;
     //console.log("Clients List = ");
     //console.log ("orderId in order = " + order["orderId"]);
