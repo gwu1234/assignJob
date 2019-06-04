@@ -33,8 +33,27 @@ export default class DeleteTruckModal extends Component {
   };
 
   render() {
+    const {truckName, french, assignedEmployee} = this.props;
+    let employeeName = null;
 
-    const titleString = "Deleting Truck Record for " + this.props.truckName + " ?";
+    if (assignedEmployee) {
+       employeeName = assignedEmployee.name;
+    }
+
+    const titleString = french? "Effacer Camion Record pour " + truckName + " ?":
+                        "Deleting Truck Record for " + truckName + " ?";
+    const deleteString = french? "Vous etes sure de efface ce camion record ?":
+                        "Are you sure you want to delete this record ?";
+
+    const assignedString = french? ("camion attribué à " + employeeName + ", effacer l'attribution d'abord"):
+                           ("truck assigned to " + employeeName + ", remove assignment first");
+
+    let assigned = false;
+
+    if (assignedEmployee) {
+        assigned = true;
+    }
+
 
     return (
       <Modal
@@ -46,9 +65,12 @@ export default class DeleteTruckModal extends Component {
         style={{background: "#ccc"}}
       >
         <Header icon='user delete' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"red"}}/>
-        <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
-              Are you sure you want to delete this record ?
-        </Modal.Content>
+        {!assigned && <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
+              {deleteString}
+        </Modal.Content>}
+        {assigned && <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
+              {assignedString}
+        </Modal.Content>}
         <Modal.Actions>
         <Button color="red" size="small" inverted
               onClick={()=>this.handleClose()}
@@ -56,11 +78,11 @@ export default class DeleteTruckModal extends Component {
               Cancel
         </Button>
 
-          <Button color='green' size="small" inverted
+        {!assigned && <Button color='green' size="small" inverted
                 onClick={() =>this.handleConfirmation()}
                 >
                 Submit
-          </Button>
+          </Button>}
         </Modal.Actions>
       </Modal>
     )

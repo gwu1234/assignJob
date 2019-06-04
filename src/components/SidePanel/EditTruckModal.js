@@ -320,6 +320,8 @@ class EditTruckModal extends Component {
 
         <DeleteTruckModal
             truckName ={truckName}
+            french = {french}
+            assignedEmployee = {assignedEmployee}
             handleClose={()=>this.handleClose()}
             deleteTruck ={()=>this.deleteTruck()}
         />
