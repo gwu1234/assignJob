@@ -33,11 +33,22 @@ export default class DeleteEmployeeModal extends Component {
   };
 
   render() {
+    const {truckAssigned, french} = this.props;
+    const titleString = french? ("Effacer employé Record de  " + this.props.name + "?") :
+                                ("Deleting Employee Record of  " + this.props.name + "?");
 
-    const titleString = "Deleting Employee Record for " + this.props.name + "?";
-    //console.log (titleString);
-    //const { value } = this.state
-    //console.log (titleString);
+    let contentString = "Are you sure you want to delete this record ? ";
+    if (truckAssigned) {
+        contentString = "a truck is assigned. remove the assignment first ";
+    }
+
+    if (french) {
+         contentString = "You Etes Sure de Effacer cette employé Record? ";
+         if (truckAssigned) {
+            contentString = "un camion est attribué.  effacer l'attribution d'abord";
+         }
+    }
+
     return (
       <Modal
         trigger={<Icon name='user delete' size ="big" onClick={() => this.handleOpen(true)} style ={{float:"left", color: "red"}}/>}
@@ -48,21 +59,21 @@ export default class DeleteEmployeeModal extends Component {
         style={{background: "#ccc"}}
       >
         <Header icon='user delete' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"red"}}/>
-        <Modal.Content style= {{color:"red", fontStyle:"bold", fontSize:"1.1em"}}>
-              Are you sure you want to delete this record ?
+        <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
+             {contentString}
         </Modal.Content>
         <Modal.Actions>
-        <Button color="red" size="small" inverted
+        <Button color="green" size="small" inverted
               onClick={()=>this.handleClose()}
               >
               Cancel
         </Button>
 
-          <Button color='green' size="small" inverted
+        {!truckAssigned && <Button color='red' size="small" inverted
                 onClick={() =>this.handleConfirmation()}
                 >
                 Submit
-          </Button>
+          </Button>}
         </Modal.Actions>
       </Modal>
     )

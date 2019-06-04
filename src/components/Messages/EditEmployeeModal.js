@@ -174,7 +174,14 @@ class EditEmployeeModal extends Component {
              }
 
              this.getLocations (newEmployee,location);
-             //employeeRef.update(newEmployee);
+
+             const userPath = "users/" + usertag + "/accesses/" + employeeKey;
+             const userRef = firebase.database().ref(userPath);
+             const newAccess = {
+                 "employeeKey": String (employee.tag? employee.tag: employeeKey),
+                 "access":access,
+             }
+             userRef.update(newAccess);
          }
 
          /*if (newAssigned) {
@@ -538,6 +545,8 @@ class EditEmployeeModal extends Component {
 
         <DeleteEmployeeModal
             name={employee.name}
+            truckAssigned = {employee.truckAssigned}
+            french = {french}
             handleClose={()=>this.handleClose()}
             deleteEmployee={()=>this.deleteEmployee()}
         />
