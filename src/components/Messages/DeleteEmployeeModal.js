@@ -38,8 +38,8 @@ export default class DeleteEmployeeModal extends Component {
                                 ("Deleting Employee Record of  " + this.props.name + "?");
 
     let contentString = "Are you sure you want to delete this record ? ";
-    let clientString = french? "clientes sont attribué. effacer l'attribution d'abord":
-                              "clients assigned, remove the assignment first";
+    let clientString = french? "clientes (ou leads) sont attribué. effacer l'attribution d'abord":
+                              "clients (or leads) assigned, remove the assignment first";
     if (truckAssigned) {
         contentString = "a truck is assigned. remove the assignment first ";
     }

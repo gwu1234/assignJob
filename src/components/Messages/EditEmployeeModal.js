@@ -427,7 +427,7 @@ class EditEmployeeModal extends Component {
     }
 
     let clientAssigned = false;
-    if (assignedArray.length >0) {
+    if (assignedArray.length >0 || employee.leads) {
          clientAssigned = true;
     }
 
