@@ -209,11 +209,19 @@ class EditTruckModal extends Component {
 
 
   render() {
-    const {truck, employees} = this.props;
+    const {truck, employees, french} = this.props;
     //const {year, color} = this.state;
 
-    const titleString = "Edit Truck: " + truck.model;
+    const titleString = french? "Modifier Camion: " + truck.model: "Edit Truck: " + truck.model;
     const truckName = truck.model + " " + truck.year;
+    const model = french? "Modèle": "Model";
+    const truckString = french? "Camion Id": "Truck Id";
+    const year = french? "Année": "Year";
+    const color = french? "Couleur": "Color";
+    const deleteString = french? "Cliquez sur MINUS icône pour effacer camion de " :
+                         "click MINUS icon to remove this truck from ";
+    const assignString = french? "Cliquez sur PLUS icône pour attrubuer ce camion à un employé":
+                         "click PLUS icon to assign this truck to an employee";
 
     const availableEmployees =[];
     for (var key in employees) {
@@ -250,13 +258,13 @@ class EditTruckModal extends Component {
         <Form >
            <Form.Group inline width='equal'>
                <Form.Input size ="small"
-                           label='Model'
+                           label={model}
                            placeholder = {truck.model}
                            defaultValue = {truck.model}
                            name="model"
                            onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Truck Id'
+                            label={truckString}
                             placeholder= {truck.truckId}
                             defaultValue = {truck.truckId}
                             name="truckId"
@@ -264,13 +272,13 @@ class EditTruckModal extends Component {
           </Form.Group>
           <Form.Group inline width='equal'>
                 <Form.Input size ="small"
-                      label='Year'
+                      label={year}
                       placeholder= {truck.year}
                       defaultValue = {truck.year}
                       name="year"
                       onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Color'
+                            label={color}
                             defaultValue = {truck.color}
                             name="color"
                             onChange={this.handleChange} />
@@ -283,7 +291,7 @@ class EditTruckModal extends Component {
         <Grid.Column >
            {truck && !truck.assigned && <Menu.Item style={{ paddingTop: "1em", paddingBottom:"1em"}}>
              <span style={{ color: "green", fontStyle:"bold", fontSize: "1.1em"}}>
-                   click PLUS icon to assign this truck to an employee
+                   {assignString}
              </span>
            </Menu.Item>}
            <Menu.Menu style={{border: "1px dotted white"}}>
@@ -291,7 +299,7 @@ class EditTruckModal extends Component {
            </Menu.Menu>
            {truck && truck.assigned && assignedEmployee && <Menu.Item style={{ paddingTop: "1em", paddingBottom:"1em"}}>
              <span style={{ color: "blue", fontStyle:"bold", fontSize: "1.1em"}}>
-                   click MINUS icon to remove this truck from {assignedEmployee.name}
+                   {deleteString} {assignedEmployee.name}
              </span>
            </Menu.Item>}
            <Menu.Menu style={{border: "1px dotted white"}}>
@@ -338,7 +346,8 @@ class EditTruckModal extends Component {
 }
 
 const mapStateToProps = state => ({
-     employees: state.user.employeeList
+     employees: state.user.employeeList,
+     french: state.user.french,
    }
 );
 

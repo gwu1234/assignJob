@@ -46,7 +46,7 @@ export default class DeleteTruckModal extends Component {
         style={{background: "#ccc"}}
       >
         <Header icon='user delete' content={titleString} style = {{fontSize: "1.2em", fondStyle: "bold", color:"red"}}/>
-        <Modal.Content style= {{color:"red", fontStyle:"bold", fontSize:"1.1em"}}>
+        <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
               Are you sure you want to delete this record ?
         </Modal.Content>
         <Modal.Actions>
