@@ -401,47 +401,44 @@ class App extends React.Component {
                   inverted
                   floated
                   vertical
-                  style={{ padding: "0.1em", width:"100%", height:"100%"}}>
+                  style={styles.MenuContainer}>
                       <UserList currentUser={currentUser} />
                   </Menu>
             </Grid.Column>
 
-            <Grid.Column style=
-                  {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.leftColumn, width:"19%"}}>
                   <Menu
                      size="large"
                      inverted
                      floated
                      vertical
-                     style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                     style={styles.MenuContainer}
                    >
                        <Leads/>
                    </Menu>
             </Grid.Column>
 
-            <Grid.Column style=
-                         {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+            <Grid.Column style={{...styles.middleColumn, width:"20%"}}>
                   <Menu
                       size="large"
                       inverted
                       floated
                       vertical
-                      style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                      style={styles.MenuContainer}
                   >
                         <LeadContact/>
                         <LeadLogs/>
                   </Menu>
              </Grid.Column>
-             <Grid.Column style=
-                          {{width: "29.5%", height:"100%", margin:"0px", padding:"0px"}}>
+             <Grid.Column style={{...styles.rightColumn, width:"50%"}}>
                    <Menu
                        size="large"
                        inverted
                        floated
                        vertical
-                       style={{ padding: "0.1em", width:"100%", height:"100%"}}
+                       style={styles.MenuContainer}
                    >
-                         <p>Lead Email</p>
+                         <LeadQuote/>
                    </Menu>
               </Grid.Column>
         </Grid.Row>}
@@ -455,7 +452,7 @@ const styles = {
   container: {
     height: "100vh",
     width: "100vw",
-    background: "#92c2e8",
+    background: "#f2f4f7",
     padding: "0.0em",
     backgroundImage: `url(${Background})`,
   },
