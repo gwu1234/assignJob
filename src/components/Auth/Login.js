@@ -115,7 +115,7 @@ class Login extends React.Component {
                   //const firstname = clientsData["jamiebulger+25rueviney+h9j2t2"]["contact"]["firstname"];
                   //console.log(firstname);
                   //const total = clientsData["jamiebulger+25rueviney+h9j2t2"]["contracts"]["0"]["total"];
-                  console.log("setReposData ");
+                  //console.log("setReposData ");
                   this.props.setReposData(reposData);
                 }
           });

@@ -48,7 +48,7 @@ componentWillUnMount() {
       const { photoName, photoPath, thumbPath, usertag, clienttag,
               ordertag,  phototag } = this.props;
 
-      console.log("DeletePhoto")
+      //console.log("DeletePhoto")
       const event = this.nativeEvent;
       if (event) {
           event.preventDefault();
