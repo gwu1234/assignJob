@@ -167,12 +167,20 @@ class UserList extends React.Component {
         key={user.tag}
         onClick={() => this.changeUser(user)}
         name = {user.name}
-        style={{
+        style={user.tag===this.state.activeUser ? {
             opacity: "1.0",
             fontSize: "0.9em",
             color: "black",
             fontWeight: "bold",
-        }}
+            backgroundColor: "rgba(0,250,0,0.1)",
+        } :
+        {
+            opacity: "1.0",
+            fontSize: "0.9em",
+            color: "black",
+            fontWeight: "bold",
+        }
+      }
         active={user.tag === this.state.activeUser}
       >
         {user.name}
