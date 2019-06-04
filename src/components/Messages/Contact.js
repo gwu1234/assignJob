@@ -131,7 +131,7 @@ class Contact extends React.Component {
 
   render() {
     const {contact, usertag, french, currentUser} = this.props;
-    const {displayName} = currentUser;
+    let {displayName} = currentUser;
 
     //console.log (contact);
     let address = '';
@@ -141,6 +141,10 @@ class Contact extends React.Component {
         //console.log(contact.phones);
         //console.log(contact.cells.length);
         //console.log(contact.cells);
+    }
+
+    if (!displayName || displayName === "undefined") {
+        displayName  = "";displayName
     }
 
     let titleString = french? displayName + " compagne info " : displayName + " Company Info ";

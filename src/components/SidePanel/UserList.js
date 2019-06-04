@@ -178,10 +178,9 @@ class UserList extends React.Component {
             opacity: "1.0",
             fontSize: "0.9em",
             color: "black",
-            fontWeight: "bold",
+            fontWeight: "normal",
         }
       }
-        active={user.tag === this.state.activeUser}
       >
         {user.name}
       </Menu.Item>
