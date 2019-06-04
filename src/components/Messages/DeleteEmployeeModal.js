@@ -33,11 +33,13 @@ export default class DeleteEmployeeModal extends Component {
   };
 
   render() {
-    const {truckAssigned, french} = this.props;
+    const {truckAssigned, clientAssigned, french} = this.props;
     const titleString = french? ("Effacer employé Record de  " + this.props.name + "?") :
                                 ("Deleting Employee Record of  " + this.props.name + "?");
 
     let contentString = "Are you sure you want to delete this record ? ";
+    let clientString = french? "clientes sont attribué. effacer l'attribution d'abord":
+                              "clients assigned, remove the assignment first";
     if (truckAssigned) {
         contentString = "a truck is assigned. remove the assignment first ";
     }
@@ -62,6 +64,9 @@ export default class DeleteEmployeeModal extends Component {
         <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em"}}>
              {contentString}
         </Modal.Content>
+        {clientAssigned && <Modal.Content style= {{color:"black", fontStyle:"bold", fontSize:"1.1em", paddingTop:"0em"}}>
+             {clientString}
+        </Modal.Content>}
         <Modal.Actions>
         <Button color="green" size="small" inverted
               onClick={()=>this.handleClose()}
@@ -69,7 +74,7 @@ export default class DeleteEmployeeModal extends Component {
               Cancel
         </Button>
 
-        {!truckAssigned && <Button color='red' size="small" inverted
+        {!truckAssigned && !clientAssigned && <Button color='red' size="small" inverted
                 onClick={() =>this.handleConfirmation()}
                 >
                 Submit

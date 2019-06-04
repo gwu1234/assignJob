@@ -426,13 +426,10 @@ class EditEmployeeModal extends Component {
        assignedArray.push(assignedClient);
     }
 
-    /*const newAssignedNotice = assigned.length
-                 + " New Clients Just Assigned to " + employee.name
-                 + " , Click Submit to Commit ";
-
-    const unassignedNotice = "Removing " + unassigned.length
-                  + " Clients from " + employee.name + " Job List"
-                  + " , Click Submit to Commit ";*/
+    let clientAssigned = false;
+    if (assignedArray.length >0) {
+         clientAssigned = true;
+    }
 
     return (
       <Modal
@@ -546,6 +543,7 @@ class EditEmployeeModal extends Component {
         <DeleteEmployeeModal
             name={employee.name}
             truckAssigned = {employee.truckAssigned}
+            clientAssigned = {clientAssigned}
             french = {french}
             handleClose={()=>this.handleClose()}
             deleteEmployee={()=>this.deleteEmployee()}
