@@ -21,6 +21,9 @@ const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
 const LEAD_MARKER = 3;
 
+const CURRENT = 0;
+const PAST = 1;
+
 const initialUserState = {
   currentUser: null, // user object
   isLoading: true,
@@ -251,6 +254,12 @@ const user_reducer = (state = initialUserState, action) => {
               //console.log("datestring = ");
               //console.log(dateString);
 
+              const currentTimestamp = Date.now();
+              const fiveMinute = 5 * 60 * 1000; // millisecond
+              const timeStatus = ((currentTimestamp - timestamp) > fiveMinute) ?
+                                 PAST : CURRENT;
+
+
               const marker = {
                   pos:
                   {
@@ -262,6 +271,7 @@ const user_reducer = (state = initialUserState, action) => {
                   truckYear: truckList[key].year,
                   employeeName: truckList[key].employeeName,
                   dateString: dateString,
+                  timeStatus: timeStatus,
                   id:  key,
                   type: TRUCK_MARKER,
               }

@@ -12,6 +12,7 @@ import yellowDot from '../images/yellowDot2.png';
 import orangeDot from '../images/orangeDot.png';
 import redStar from '../images/redStar.png';
 import snowplow from '../images/snowplow.png';
+import blackbulldozer from '../images/blackbulldozer.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
@@ -35,6 +36,9 @@ const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
 const LEAD_MARKER = 3 ;
+
+const CURRENT = 0;
+const PAST = 1;
 
 /*const svgRedDot = {
    url: 'data:image/svg+xml;utf8,\
@@ -787,7 +791,15 @@ class MapContainer extends Component {
 
 
           {truckMarkers && truckMarkers.map((marker, index)=> {
+             //const CURRENT = 0;
+             //const PAST = 1;
              let  image = snowplow;
+             //let imageWidth = 25;
+             //let imageHeight = 25;
+             if (marker.timeStatus === PAST) {
+                 image = blackbulldozer;
+             }
+
              return (
                    <Marker
                         key={index}
@@ -802,7 +814,7 @@ class MapContainer extends Component {
                         type = {marker.type}
                         icon = {{
                             url: image,
-                            scaledSize: { width: 25, height: 25 }
+                            scaledSize: { width: 30, height: 30 }
                         }}
                     >
                    </Marker> )
