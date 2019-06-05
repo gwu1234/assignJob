@@ -20,6 +20,8 @@ const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
 const LEAD_MARKER = 3;
+const HUMAN_MARKER = 4;
+
 
 const CURRENT = 0;
 const PAST = 1;
@@ -39,6 +41,7 @@ const initialUserState = {
   markers: [],
   truckMarkers: [],
   employeeMarkers:[],
+  humanMarkers:[],
   leadMarkers:[],
   selectedEmployee: null,
   french: false,
@@ -258,7 +261,7 @@ const user_reducer = (state = initialUserState, action) => {
               const fiveMinute = 5 * 60 * 1000; // millisecond
               const timeStatus = ((currentTimestamp - timestamp) > fiveMinute) ?
                                  PAST : CURRENT;
-
+              //const timeStatus = CURRENT;
 
               const marker = {
                   pos:
@@ -279,7 +282,38 @@ const user_reducer = (state = initialUserState, action) => {
            }
          }
 
-         //clientMarkers = clientMarkers.concat(truckMarker);
+         const employeeList = state.employeeList;
+         let humanMarker = [];
+
+         for (var key in employeeList) {
+            if (!employeeList[key].truckAssigned || employeeList[key].truckAssigned ==="false") {
+               const {currentLocation} = employeeList[key];
+
+               if (currentLocation) {
+                   const timestamp = currentLocation.timestamp;
+                   dateString = (new Date(timestamp)).toLocaleString();
+                   const currentTimestamp = Date.now();
+                   const fiveMinute = 5 * 60 * 1000; // millisecond
+                   const timeStatus = ((currentTimestamp - timestamp) > fiveMinute) ?
+                                  PAST : CURRENT;
+                   //const timeStatus = CURRENT;
+
+                   const marker = {
+                      pos:
+                      {
+                         lat: currentLocation.lat,
+                         lng: currentLocation.lng
+                      },
+                      employeeName: employeeList[key].name,
+                      dateString: dateString,
+                      timeStatus: timeStatus,
+                      id:  key,
+                      type: HUMAN_MARKER,
+                  }
+                  humanMarker.push(marker);
+              }
+            }
+          }
 
         return {
             ...state,
@@ -287,6 +321,7 @@ const user_reducer = (state = initialUserState, action) => {
            truckMarkers: truckMarker,
            employeeMarkers:[],
            leadMarkers:[],
+           humanMarkers: humanMarker,
            mapView: true,
            clientContactView: false,
            clientView: false,

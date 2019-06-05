@@ -13,6 +13,8 @@ import orangeDot from '../images/orangeDot.png';
 import redStar from '../images/redStar.png';
 import snowplow from '../images/snowplow.png';
 import blackbulldozer from '../images/blackbulldozer.png';
+import human from '../images/human.png';
+import blackhuman from '../images/blackhuman.png';
 import DoneModal from  './DoneModal';
 import RepeatModal from  './RepeatModal';
 import MapUnassignModal from './MapUnassign';
@@ -36,6 +38,7 @@ const EMPLOYEE_MARKER = 0;
 const CLIENT_MARKER = 1;
 const TRUCK_MARKER = 2 ;
 const LEAD_MARKER = 3 ;
+const HUMAN_MARKER = 4;
 
 const CURRENT = 0;
 const PAST = 1;
@@ -500,7 +503,13 @@ class MapContainer extends Component {
 
         geocoder.geocode({'location': latLng}, (results, status) =>{
           if (status === 'OK') {
-            if (results[0]) {
+            if (results[0] && results[0].address_components &&
+                results[0].address_components[0] &&
+                results[0].address_components[1] &&
+                results[0].address_components[2] &&
+                results[0].address_components[4] &&
+                results[0].address_components[5] &&
+                results[0].address_components[6] ) {
               //console.log(results[0]);
               //console.log(results[0].formatted_address);
               //console.log("geocodeLatLng()");
@@ -542,7 +551,7 @@ class MapContainer extends Component {
 
 
     render() {
-      const {usertag, employees, markers, truckMarkers, employeeMarkers, leadMarkers} = this.props;
+      const {usertag, employees, markers, truckMarkers, humanMarkers, employeeMarkers, leadMarkers} = this.props;
       let {selectedLat, selectedLng, currentLocation} = this.state;
 
       //console.log(currentLocation);
@@ -794,10 +803,12 @@ class MapContainer extends Component {
              //const CURRENT = 0;
              //const PAST = 1;
              let  image = snowplow;
-             //let imageWidth = 25;
-             //let imageHeight = 25;
+             let imageWidth = 25;
+             let imageHeight = 25;
              if (marker.timeStatus === PAST) {
                  image = blackbulldozer;
+                 imageWidth = 30;
+                 imageHeight = 30;
              }
 
              return (
@@ -814,7 +825,7 @@ class MapContainer extends Component {
                         type = {marker.type}
                         icon = {{
                             url: image,
-                            scaledSize: { width: 30, height: 30 }
+                            scaledSize: { width: imageWidth, height: imageHeight }
                         }}
                     >
                    </Marker> )
@@ -834,6 +845,48 @@ class MapContainer extends Component {
 
                    </div>
             </InfoWindowEx>}
+
+
+            {humanMarkers && humanMarkers.map((marker, index)=> {
+               //const CURRENT = 0;
+               //const PAST = 1;
+               let  image = human;
+               let imageWidth = 25;
+               let imageHeight = 25;
+               if (marker.timeStatus === PAST) {
+                   image = blackhuman;
+                   imageWidth = 25;
+                   imageHeight = 25;
+               }
+
+               return (
+                     <Marker
+                          key={index}
+                          id = {index}
+                          position={marker.pos}
+                          employeeName = {marker.employeeName}
+                          dateString = {marker.dateString}
+                          onClick={this.onMarkerClick}
+                          type = {marker.type}
+                          icon = {{
+                              url: image,
+                              scaledSize: { width: imageWidth, height: imageHeight }
+                          }}
+                      >
+                     </Marker> )
+              })}
+
+              {this.state.selectedPlace.type === HUMAN_MARKER &&
+                <InfoWindowEx
+                     marker={this.state.activeMarker}
+                     visible={this.state.showingInfoWindow}
+                     onClose={this.onClose} >
+                     <div>
+                             <h3>{"employee : " + this.state.selectedPlace.employeeName}</h3>
+                             <h4>{"last updated  : " + this.state.selectedPlace.dateString}</h4>
+
+                     </div>
+              </InfoWindowEx>}
 
 
             <InfoWindowEx
@@ -1022,6 +1075,7 @@ const mapStateToProps = state => ({
   truckMarkers: state.user.truckMarkers,
   employeeMarkers: state.user.employeeMarkers,
   leadMarkers: state.user.leadMarkers,
+  humanMarkers: state.user.humanMarkers,
   usertag: state.user.usertag,
   employees: state.user.employeeList,
   leads: state.user.leads,
