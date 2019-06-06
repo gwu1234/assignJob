@@ -9,6 +9,7 @@ import { Grid, Menu, Icon, Dropdown } from "semantic-ui-react";
 import EmployeeJob from "./EmployeeJob";
 import RepeatModal from "./RepeatModal";
 import InputFileReader from "./InputFileReader";
+import UserGuide from "./UserGuide";
 
 class TopPanel extends React.Component {
    constructor(props) {
@@ -66,9 +67,15 @@ class TopPanel extends React.Component {
       const datareader= {
         key: "datareader",
         text: <InputFileReader usertag={this.props.usertag} french={french}/>
-      }
-      //optionArray.push(repeattimer);
+      };
       optionArray.push(datareader);
+
+      const userguide= {
+        key: "userguide",
+        text: <UserGuide usertag={this.props.usertag} french={french}/>
+      };
+      optionArray.push(userguide);
+
       return optionArray;
    }
 
