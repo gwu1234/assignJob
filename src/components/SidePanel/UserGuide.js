@@ -576,7 +576,7 @@ render() {
               onClick={() => this.handleCancel()}
               style ={{color: "black"}}
               >
-              Cancel
+              close
         </Button>
          </Modal.Actions>
       </Modal>
