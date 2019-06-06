@@ -159,19 +159,11 @@ content: <p>      Steps:
 </p>},
 {title:<h4>
  Case 20: Work Order Characters </h4>,
-content: <p> 	Status:
-		JOB_NEW
-		JOB_PROGRESS
-		JOB_DONE
-
-            Repeat Orders or not:
-	            isRepeatable: true or false
-		repeatTimes:
-                        repeat times if it is a repeat order
-		meaningless if it is not a repeat order
-
-            Delivery Times:
-                        Deliveries made for this work order
+content: <p> 1) Status: JOB_NEW, JOB_PROGRESS, JOB_DONE;
+             2) Repeat Orders or not, isRepeatable: true or false;
+		         3) repeatTimes, repeat times if it is a repeat order,
+                meaningless if it is not a repeat order;
+             4) Delivery Times: Deliveries made for this work order
 </p>},
 {title:<h4>
 Case 21: View Client’s Work Order List </h4>,
@@ -245,6 +237,260 @@ content: <p> Steps:
           6) a popup window will show up to display a large image
           7) click on red button on the left side of the bottom
           8) a read warming dialog will popup, click submit
+</p>},
+{title:<h4>
+Case 28: edit contract </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of contract window
+          6) a popup window will show up to edit
+</p>},
+{title:<h4>
+Case 29: link contract to a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of contract window
+          6) a popup window will show up to edit
+          7) select an work order to link
+</p>},
+{title:<h4>
+Case 30: remove link of contract from a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of contract window
+          6) a popup window will show up to edit
+          7) select “no order” to remove the link of contract with work order
+</p>},
+{title:<h4>
+Case 31: edit invoice </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of invoice window
+          6) a popup window will show up to edit
+</p>},
+{title:<h4>
+Case 32: link invoice to a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of invoice window
+          6) a popup window will show up to edit
+          7) select an work order to link
+</p>},
+{title:<h4>
+Case 33: remove link of invoice  from a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of invoice  window
+          6) a popup window will show up to edit
+          7) select “no order” to remove the link of invoice with work order
+</p>},
+{title:<h4>
+Case 34: edit payment </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of payment window
+          6) a popup window will show up to edit
+</p>},
+{title:<h4>
+Case 35: link payment to a work order </h4>,
+content: <p>Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of payment window
+          6) a popup window will show up to edit
+          7) select an work order to link
+</p>},
+{title:<h4>
+Case 36: remove link of payment from a work order </h4>,
+content: <p>Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of payment window
+          6) a popup window will show up to edit
+          7) select “no order” to remove the link of payment with work order
+</p>},
+{title:<h4>
+Case 37: edit delivery </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of delivery window
+          6) a popup window will show up to edit
+</p>},
+{title:<h4>
+Case 38: link delivery to a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of delivery window
+          6) a popup window will show up to edit
+          7) select an work order to link
+</p>},
+{title:<h4>
+Case 39: remove link of delivery  from a work order </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select Client Work Order
+          3) Left Column is list of clients
+          4) click on a client name
+          5) click the edit button in the top right of delivery window
+          6) a popup window will show up to edit
+          7) select “no order” to remove the link of invoice with work order
+</p>},
+{title:<h4>
+Case 40: view lead list </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select leads
+          3) Left Column is list of leads
+          4) lead of  LEAD_POSITIVE  on top
+          5) lead of  LEAD_DECLINE on bottom
+</p>},
+{title:<h4>
+Case 41: lead status </h4>,
+content: <p>          1) LEAD_POSITIVE,
+          2) LEAD_RESPONSIVE,
+          3) LEAD_NEW,
+          4) LEAD_NOT_RESPONSIVE,
+          5) LEAD_DECLINE
+</p>},
+{title:<h4>
+Case 42: edit lead </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select leads
+          3) Left Column is list of leads
+          4) click on a lead
+          5) click on a button on top right of Lead Contact Window
+          6) a popup window show up
+          7) edit lead contact, status, and assignment
+</p>},
+{title:<h4>
+Case 43: lead activity log </h4>,
+content: <p> Steps:
+          1) TextView
+          2) select leads
+          3) Left Column is list of leads
+          4) click on a lead
+          5) Lead Activity window is a list of activity logs
+          6) the top is the latest, the bottom is the oldest
+</p>},
+{title:<h4>
+Case 44: create a pdf quote for a lead </h4>,
+content: <p>Steps:
+          1) TextView
+          2) select leads
+          3) Left Column is list of leads
+          4) click on a lead
+          5) fill the fields in the left column
+          6) click Save as PDF
+          7) a pdf file saved at directory Download
+          8) filename is companyName- followed by year, month, day and time
+</p>},
+{title:<h4>
+Case 45: display work orders  on map </h4>,
+content: <p>Steps:
+          1) MapView
+          2) select All Clients
+          3) symbols:
+                JOB_NEW:   Red Dot ,
+                JOB_PROGRESS: Blue Dot ,
+                JOB_DONE: Green Dot ,
+                JOB_NOT_ACTIVE: Yellow Dot ,
+</p>},
+{title:<h4>
+Case 46: view details of  work orders on map </h4>,
+content: <p> Steps:
+          1) mouse over a dot  for brief information such as name and address
+          2) click on a dot for more details
+</p>},
+{title:<h4>
+Case 47: display all  employees on map </h4>,
+content: <p> Steps:
+          1) MapView
+          2) select All Employees
+          3) a marker represent address of an employee
+          4) mouse over a marker will bring up a popup window displaying employee name
+</p>},
+{title:<h4>
+Case 48: display work orders  not assigned to any employee </h4>,
+content: <p>Steps:
+          1) MapView
+          2) select Not Assigned
+          3) symbols:
+                JOB_NEW:   Red Dot ,
+                JOB_PROGRESS: Blue Dot ,
+                JOB_DONE: Green Dot ,
+                JOB_NOT_ACTIVE: Yellow Dot ;
+         4) mouse over a dot  for brief information such as name and address
+         5) click on a dot for more details
+</p>},
+{title:<h4>
+Case 49: display work orders  assigned to any employee </h4>,
+content: <p> Steps:
+          1) MapView
+          2) select Job: Employee Name
+          3) symbols:
+                JOB_NEW:   Red Dot ,
+                JOB_PROGRESS: Blue Dot ,
+                JOB_DONE: Green Dot ,
+                JOB_NOT_ACTIVE: Yellow Dot ,
+         4) mouse over a dot  for brief information such as name and address
+         5) click on a dot for more details
+</p>},
+{title:<h4>
+Case 50: display leads on map </h4>,
+content: <p>Steps:
+          1) MapView
+          2) select All Leads
+          3) symbols:
+                 LEAD_POSITIVE: Green Dot ,
+                 LEAD_RESPONSIVE : Blue Dot ,
+                 LEAD_NEW:  Red Dot ,
+                 LEAD_NOT_RESPONSIVE: Orange Dot ,
+                 LEAD_DECLINE: Yellow Dot ,
+         4) mouse over a dot  for brief information
+         5) click on a dot for more details
+</p>},
+{title:<h4>
+Case 51:  generating leads on map </h4>,
+content: <p>     Steps:
+          1) MapView
+          2) select any of All Client, All Leads, Employees etc
+          3) enlarge map until you can see a house very clear
+          4) click on a house, you will see a PopUp Window with address
+          5) click on the Button (Create Lead) to create a lead,
+          6) click on the Button (Close) to cancel the operation
+          7) you should see the new Lead at TextView/Leads, or MapView/Lead
 </p>}
 ];
 
