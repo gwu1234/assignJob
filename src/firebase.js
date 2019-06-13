@@ -3,29 +3,15 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/storage";
 
-// slack clone
-    /*
-    var config = {
-    apiKey: "AIzaSyAmfYXa40yo05ww4LYZubzha3UUBrw1M5E",
-    authDomain: "react-slack-clone-a6e42.firebaseapp.com",
-    databaseURL: "https://react-slack-clone-a6e42.firebaseio.com",
-    projectId: "react-slack-clone-a6e42",
-    storageBucket: "react-slack-clone-a6e42.appspot.com",
-    messagingSenderId: "688291659780"
-  };
-  firebase.initializeApp(config);
-
-  */
-
-  // slack
 
   var config = {
-    apiKey: "AIzaSyCBxBrARUtxlMlCdWUDsMEIuqeWapU5mWE",
-    authDomain: "jobassign3.firebaseapp.com",
-    databaseURL: "https://jobassign3.firebaseio.com",
-    projectId: "jobassign3",
-    storageBucket: "jobassign3.appspot.com",
-    messagingSenderId: "1088029675584"
+    apiKey: "AIzaSyDuKonQxaHIwr3Luxfl0HEmAIYA0vKwDHg",
+    authDomain: "jobassign4.firebaseapp.com",
+    databaseURL: "https://jobassign4.firebaseio.com",
+    projectId: "jobassign4",
+    storageBucket: "jobassign4.appspot.com",
+    messagingSenderId: "63214700687",
+    appId: "1:63214700687:web:63f29bd2ab3e96d3"
   };
   firebase.initializeApp(config);
 

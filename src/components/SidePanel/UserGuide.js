@@ -564,8 +564,8 @@ render() {
         <Header content={french? "User Guide": "User Guide"} style = {{fontSize: "1.1em", fontWeight: "bold", color:"black"}}/>
 
         <Modal.Content style = {styles.menu}>
-           {usercases.map(usercase => (
-              <Menu.Item style = {{...styles.item, marginTop:"1.0em"}}>
+           {usercases.map((usercase, i) => (
+              <Menu.Item key = {i} style = {{...styles.item, marginTop:"1.0em"}}>
                  {usercase.title}
                  {usercase.content}
               </Menu.Item>
