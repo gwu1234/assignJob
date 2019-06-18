@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 //import { setActiveOrderId, setActiveOrderKey} from "../../actions";
-import { Button, Header, Icon, Modal, Form, Radio, Grid, Dropdown, Select, Message} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Form, Radio, Grid, Dropdown, Select, Message, Menu} from 'semantic-ui-react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import EmployeeOrder from "./EmployeeOrder";
+import EmployeeNoOrder from "./EmployeeNoOrder";
 
 class EditOrderModal extends Component {
   constructor(props) {
@@ -45,6 +47,9 @@ componentWillUnMount() {
 }
 
   handleOpen = (open) => this.setState({ modalOpen: open })
+  handleClose =() => {
+    this.setState({ modalOpen: false });
+  }
 
   findPreviousDelivery = (orderKey) => {
      const {deliverys} = this.props;
@@ -389,14 +394,14 @@ componentWillUnMount() {
 
   employeeOptions = () => {
       const {employees, order} = this.props;
+      let assignedEmployees = [];
+      for (var key in order.assignedEmployee) {
+           assignedEmployees.push(key);
+      }
+
       let employeeOptions = [];
-
-      //console.log (order);
-      const isEmployeeAssigned = order.isEmployeeAssigned? (order.isEmployeeAssigned==="true"? true: false): false;
-      //console.log(employeeAssigned);
-
-      if (isEmployeeAssigned === false) {
-          for (var key in employees) {
+      for (var key in employees) {
+          if (!assignedEmployees.includes(key)) {
              employeeOptions.push({
                    key: key,
                    text: <p style ={styles.DropdownMenu}> {employees[key].name} </p>,
@@ -404,15 +409,73 @@ componentWillUnMount() {
               });
           }
       }
-      else  {
-          employeeOptions.push({
-             key: '1234',
-             text: <p style ={styles.DropdownMenu} > {"Remove Assignment"} </p>,
-             value: "none",
-          });
-      }
+
       return employeeOptions;
   }
+
+  displayEmployees = (employees) =>
+     employees.length > 0 &&
+     employees.map(employee => (
+         <EmployeeOrder
+             key={employee.tag}
+             employee={employee}
+             order={this.props.order}
+             addAssigned={(assigned)=>this.addAssigned(assigned)}
+             handleClose={()=>this.handleClose()}
+         />
+    ));
+
+  addAssigned = assigned => {
+      const assignedPath = "repos/" + assigned.usertag + "/clients/data/"
+                           + assigned.clientKey + "/workorders/" + assigned.orderKey
+                           + "/assignedEmployees/" + assigned.employeeKey;
+      console.log(assigned);
+      console.log(assignedPath);
+      const assignedRef = firebase.database().ref(assignedPath);
+      assignedRef.update(assigned);
+    }
+
+  assignedEmployeeOptions = () => {
+      const {employees, order} = this.props;
+      let assignedEmployeeOptions = [];
+
+      const assignedEmployees = order.assignedEmployees;
+      //console.log(assignedEmployees);
+      //console.log(order);
+
+      for (var key in assignedEmployees) {
+             //console.log(assignedEmployees[key]);
+             assignedEmployeeOptions.push({
+                   key: key,
+                   text: <p style ={styles.DropdownMenu}> {assignedEmployees[key].employeeName} </p>,
+                   value: key,
+              });
+      }
+      return assignedEmployeeOptions;
+  }
+
+  displayAssignedEmployees = (employees) =>
+     employees.length > 0 &&
+     employees.map(employee => (
+         <EmployeeNoOrder
+             key={employee.tag}
+             assignedEmployee={employee}
+             order={this.props.order}
+             removeAssigned={(assigned)=>this.removeAssigned(assigned)}
+             handleClose={()=>this.handleClose()}
+         />
+    ));
+
+  removeAssigned = (assigned) => {
+    const {orderKey, clientKey,employeeKey, usertag} = assigned;
+    const assignedPath = "repos/" + usertag + "/clients/data/" + clientKey
+                         + "/workorders/" + orderKey + "/assignedEmployees/" + employeeKey;
+    console.log(assignedPath);                     
+    const assignedRef = firebase.database().ref(assignedPath);
+    assignedRef.set(null);
+  }
+
+
 
   /*employeeOptions2 = () => {
       const {employees, order} = this.props;
@@ -484,12 +547,13 @@ componentWillUnMount() {
   }
 
   render() {
-    const {order, contact, activeOrderId, activeOrderKey, orderKey, french} = this.props;
+    const {order, employees, contact, activeOrderId, activeOrderKey, orderKey, french} = this.props;
     const {orderId, activeOrderChanged} = this.state;
     let {repeatTimes, isActive, isRepeat} = this.state;
     let {isEmployeeAssigned, employeeFirstname, employeeLastName} = order;
     const employeeName = employeeFirstname + ", " + employeeLastName;
     isEmployeeAssigned = isEmployeeAssigned?(isEmployeeAssigned==="true"? true:false): false;
+
 
 
     //let {repeatTimes, isRepeat} = this.state;
@@ -529,6 +593,21 @@ componentWillUnMount() {
     const removeNotice = french? "sélectionner Remove Assignment pour retirer attribution":
                                  "select Remove Assignment to unassign";
 
+    let assignedEmployees = [];
+    let assignedKeys = [];
+    for (var key in order.assignedEmployees) {
+          assignedEmployees.push(order.assignedEmployees[key]);
+          assignedKeys.push(key);
+    }
+
+    let employeeOptions = [];
+    for (var key in employees) {
+          if (!assignedKeys.includes(key)) {
+               employeeOptions.push(employees[key]);
+          }
+    }
+
+    //console.log(employeeOptions);
 
     return (
       <Modal
@@ -536,7 +615,7 @@ componentWillUnMount() {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size='small'
+        size='large'
         style={{background: "#ccc"}}
       >
         <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fontStyle: "bold", color:"black"}}/>
@@ -550,6 +629,15 @@ componentWillUnMount() {
              month={new Date(order.date)}
              selectedDays={[new Date(this.state.date)]}
         />
+
+        <Form.Field style = {{paddingBottom:"0.0em", marginTop:"0.9em", marginBottom:"0.0em"}}>
+             <Message style = {{color: "black", background: "#ccc", fontSize:"1.1em", padding:"0.2em", margin:"0em"}}>
+                 Remove This Work Order from Employees :
+             </Message>
+        </Form.Field>
+        <Menu vertical style={styles.DropdownMenu}>
+             {this.displayAssignedEmployees(assignedEmployees)}
+        </Menu>
 
         </Grid.Column>
         <Grid.Column style={{height: "100%", width:"50%"}}>
@@ -602,33 +690,14 @@ componentWillUnMount() {
                />
 
          </Form.Field>
-         {isActive && !isEmployeeAssigned && <Form.Field>
-              <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  {assignString}
+         <Form.Field style = {{paddingBottom:"0.0em", marginTop:"0.9em", marginBottom:"0.0em"}}>
+              <Message style = {{color: "black", background: "#ccc", fontSize:"1.1em", padding:"0.2em", margin:"0em"}}>
+                  Assign This Work Order to New Employees :
               </Message>
-
-               <Dropdown
-                  placeholder="select employee"
-                  fluid
-                  selection
-                  style={styles.DropdownDisplay}
-                  onChange={this.selectEmployee}
-                  options={this.employeeOptions()}
-               />
-         </Form.Field>}
-         {isActive && isEmployeeAssigned && <Form.Field>
-              <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                  {assignNotice}: {employeeName}, {removeNotice}
-              </Message>
-
-               <Dropdown
-                  selection
-                  style={styles.DropdownDisplay}
-                  onChange={this.selectEmployee}
-                  options={this.employeeOptions()}
-                  placeholder="Remove Employee Assignment"
-               />
-         </Form.Field>}
+         </Form.Field>
+         <Menu vertical style={styles.DropdownMenu}>
+              {this.displayEmployees(employeeOptions)}
+         </Menu>
         </Form>
 </Grid.Column>
 </Grid>
@@ -676,14 +745,16 @@ const mapStateToProps = state => {
 
 const styles = {
   DropdownMenu: {
-    padding: "6px",
+    padding: "3px",
     margin: "0px",
     width: "100%",
+    height: "120px",
     position: "relative",
-    backgroundColor: "rgb(66,152,244, 0.2)",
+    backgroundColor: "white",
     color: "black",
-    fontWeight: "bold",
-    fontSize: "1.1em",
+    fontWeight: "normal",
+    fontSize: "1.0em",
+    overflow: "scroll"
   },
   DropdownDisplay: {
     padding: "6px",
