@@ -92,7 +92,7 @@ componentWillUnMount() {
               //this.handleOpen(false);
               //return;
          }
-         else if (isEmployeeAssigned) {
+         /*else if (isEmployeeAssigned) {
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
@@ -155,7 +155,7 @@ componentWillUnMount() {
                          "previousTimeStamp" : String(previousTimeStamp),
                      }
                 }*/
-             }
+          /*   }
             console.log(newAssigned);
 
             employeeRef.update(newAssigned);
@@ -173,8 +173,8 @@ componentWillUnMount() {
               "previousDelivery" : String(previousDelivery),
               "previousTimeStamp" : String(previousTimeStamp),
             })
-         }
-         else if (isEmployeeUnassigned) {
+         }*/
+         /*else if (isEmployeeUnassigned) {
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
@@ -208,7 +208,7 @@ componentWillUnMount() {
              const employeeRef = firebase.database().ref(employeePath);
              employeeRef.set(null);*/
 
-             const assignedClientPath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
+             /*const assignedClientPath = "repos/" + usertag + "/employees/" + employeeUnassignedKey
                    + "/assigned/" + contact.tag ;
              const assignedClientRef = firebase.database().ref(assignedClientPath);
 
@@ -235,7 +235,7 @@ componentWillUnMount() {
 
 
 
-         }
+         }*/
          else {
               //console.log("fields change, active id not changed");
               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
@@ -392,7 +392,7 @@ componentWillUnMount() {
       return optionArray;
   }
 
-  employeeOptions = () => {
+  /*employeeOptions = () => {
       const {employees, order} = this.props;
       let assignedEmployees = [];
       for (var key in order.assignedEmployee) {
@@ -411,7 +411,7 @@ componentWillUnMount() {
       }
 
       return employeeOptions;
-  }
+  }*/
 
   displayEmployees = (employees) =>
      employees.length > 0 &&
@@ -429,13 +429,20 @@ componentWillUnMount() {
       const assignedPath = "repos/" + assigned.usertag + "/clients/data/"
                            + assigned.clientKey + "/workorders/" + assigned.orderKey
                            + "/assignedEmployees/" + assigned.employeeKey;
-      console.log(assigned);
-      console.log(assignedPath);
+      //console.log(assigned);
+      //console.log(assignedPath);
       const assignedRef = firebase.database().ref(assignedPath);
       assignedRef.update(assigned);
+
+      const employeePath = "repos/" + assigned.usertag + "/employees/"
+                           + assigned.employeeKey + "/assignedOrders/" + assigned.orderKey;
+      //console.log(assigned);
+      console.log(employeePath);
+      const employeeRef = firebase.database().ref(employeePath);
+      employeeRef.update(assigned);
     }
 
-  assignedEmployeeOptions = () => {
+  /*assignedEmployeeOptions = () => {
       const {employees, order} = this.props;
       let assignedEmployeeOptions = [];
 
@@ -452,7 +459,7 @@ componentWillUnMount() {
               });
       }
       return assignedEmployeeOptions;
-  }
+  }*/
 
   displayAssignedEmployees = (employees) =>
      employees.length > 0 &&
@@ -470,9 +477,16 @@ componentWillUnMount() {
     const {orderKey, clientKey,employeeKey, usertag} = assigned;
     const assignedPath = "repos/" + usertag + "/clients/data/" + clientKey
                          + "/workorders/" + orderKey + "/assignedEmployees/" + employeeKey;
-    console.log(assignedPath);                     
+    //console.log(assignedPath);
     const assignedRef = firebase.database().ref(assignedPath);
     assignedRef.set(null);
+
+    const employeePath = "repos/" + assigned.usertag + "/employees/"
+                         + assigned.employeeKey + "/assignedOrders/" + assigned.orderKey;
+    //console.log(assigned);
+    console.log(employeePath);
+    const employeeRef = firebase.database().ref(employeePath);
+    employeeRef.set(null);
   }
 
 
@@ -516,7 +530,7 @@ componentWillUnMount() {
   }
 
 
-  selectEmployee = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
+/*  selectEmployee = (event: React.SyntheticEvent<HTMLDivElement>, data: any) => {
       const {employees, clienttag, order} = this.props;
       const employeeKey = data.value;
 
@@ -544,7 +558,7 @@ componentWillUnMount() {
                });
           }
       }
-  }
+  }*/
 
   render() {
     const {order, employees, contact, activeOrderId, activeOrderKey, orderKey, french} = this.props;
@@ -552,7 +566,7 @@ componentWillUnMount() {
     let {repeatTimes, isActive, isRepeat} = this.state;
     let {isEmployeeAssigned, employeeFirstname, employeeLastName} = order;
     const employeeName = employeeFirstname + ", " + employeeLastName;
-    isEmployeeAssigned = isEmployeeAssigned?(isEmployeeAssigned==="true"? true:false): false;
+    //isEmployeeAssigned = isEmployeeAssigned?(isEmployeeAssigned==="true"? true:false): false;
 
 
 
