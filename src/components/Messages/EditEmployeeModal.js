@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "../../firebase";
+import 'firebase/functions';
 import Geocode from "react-geocode";
 import { connect } from "react-redux";
 import { Grid, Button, Header, Icon, Modal, Form, Menu, Message} from 'semantic-ui-react';
@@ -120,6 +121,14 @@ class EditEmployeeModal extends Component {
                  email1,email2, assigned, unassigned,
                  newAssigned, newUnassigned, contactChanged} = this.state;
          const {usertag, employeeKey, employee } = this.props;
+
+         //console.log(employee.assignedOrders);
+         var selectOrders = firebase.functions().httpsCallable('selectOrders');
+         selectOrders({orders:employee.assignedOrders}).then(function(result) {
+             console.log(result.data);
+             //console.log(result.data.assigned);
+         });
+
          const name = firstname + " " + lastname;
 
          if (contactChanged) {

@@ -1,8 +1,7 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
  exports.helloWorld = functions.https.onRequest((request, response) => {
   console.log(request);
   response.send("Hello from Firebase!");
@@ -10,25 +9,13 @@ const functions = require('firebase-functions');
 
  exports.addMessage = functions.https.onCall((data, context) => {
     const text = data.quote.text;
-    const price = data.quote.price;
-    const taxes = data.quote.taxes;
-    const total = data.quote.total;
-    const work = data.quote.work;
     const clientEmail = data.quote.email;
     // Authentication / user information is automatically added to the request.
     const uid = context.auth.uid;
     const name = context.auth.token.name || null;
     const picture = context.auth.token.picture || null;
     const email = context.auth.token.email || null;
-    console.log(name);
-    console.log(price);
-    console.log(taxes);
-    console.log(total);
-    console.log(work);
-    //console.log(data.quote);
-
     var nodemailer = require('nodemailer');
-
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -36,9 +23,6 @@ const functions = require('firebase-functions');
           pass: '=Bruce430!',
         }
     });
-
-
-
     var mailOptions = {
         from: email,
         to: clientEmail,
@@ -199,3 +183,92 @@ exports.sendQuote = functions.https.onCall((data, context) => {
     html: '<h1>Quote</h1><p>work: {{work}}</p><p>price: {{price}}</p><p>total: {{total}}</p>'
   });*/
   });
+
+
+  exports.selectOrders = functions.https.onCall((data, context) => {
+     const uid = context.auth.uid;
+     const name = context.auth.token.name || null;
+     const picture = context.auth.token.picture || null;
+     const email = context.auth.token.email || null;
+     const token = context.auth.token || null;
+     //console.log(name);
+     //console.log(email);
+
+     const orders = data.orders;
+     //console.log(orders);
+
+     //let clientKeyList = [];
+     let employeeKeyList = [];
+     let clientKeyList = [];
+     let usertag = "1"; //fake usertag
+
+     for (var key in orders) {
+        //console.log("order key = " + key);
+        //console.log ("order object = :")
+        //console.log("key = " + orders[key].orderKey);
+        //console.log("orderId = " + orders[key].orderId);
+        //console.log("clientKey = " + orders[key].clientKey);
+        //console.log("employeeName = " + orders[key].employeeName);
+        //console.log("employeeKey = " + orders[key].employeeKey);
+        //console.log("usertag = " + orders[key].usertag);
+        usertag = orders[key].usertag;
+        employeeKeyList.push (orders[key].employeeKey);
+        clientKeyList.push (orders[key].clientKey);
+     }
+
+     const clientPath = "repos/" + usertag + "/clients/data";
+     let clientAssigned  = {};
+     //return firebase.database().ref('users/'+useruid+'/')
+     //.once('value')
+     //.then(function(bref) {
+     return admin.database().ref(clientPath).once('value').then ((snapshot) => {
+     //if(snapshot.exists()){
+        const clientList = snapshot.val();
+        for (var clientkey in clientList) {
+           if (clientKeyList.includes(clientkey)) {
+               //let clientAssigned  = {};
+               clientAssigned[clientkey] = {};
+               let contact = clientList[clientkey].contact;
+               clientAssigned[clientkey]["city"] = contact["city"];
+               clientAssigned[clientkey]["clientKey"] = contact["clientTag"] || contact["tag"];
+               clientAssigned[clientkey]["country"] = contact["country"];
+               clientAssigned[clientkey]["cells"] = contact["cells"];
+               clientAssigned[clientkey]["emails"] = contact["emails"];
+               clientAssigned[clientkey]["firstname"] = contact["firstname"];
+               clientAssigned[clientkey]["lastname"] = contact["lastname"];
+               clientAssigned[clientkey]["lat"] = contact["lat"];
+               clientAssigned[clientkey]["lng"] = contact["lng"];
+               clientAssigned[clientkey]["name"] = contact["name"];
+               clientAssigned[clientkey]["phones"] = contact["phones"];
+               clientAssigned[clientkey]["postcode"] = contact["postcode"];
+               clientAssigned[clientkey]["street"] = contact["street"];
+               let workorders = clientList[clientkey].workorders;
+               let orderAssigned  = {};
+               for (var orderkey in workorders) {
+                   let assignedEmployees = workorders[orderkey].assignedEmployees;
+                   for (var employeekey in assignedEmployees) {
+                       if (employeeKeyList.includes(employeekey)) {
+                           const { clientKey, employeeKey, employeeName, orderId,
+                                orderKey, usertag } = assignedEmployees[employeekey];
+                           orderAssigned[orderKey] = {
+                                  clientKey: clientKey,
+                                  employeeKey: employeeKey,
+                                  employeeName: employeeName,
+                                  orderId: orderId,
+                                  orderKey: orderKey,
+                                  usertag: usertag,
+                           }
+                       }
+                   }
+               }
+
+              clientAssigned[clientkey]["workorders"] = orderAssigned;
+              //console.log(clientAssigned);
+            }
+         }
+         //console.log(clientAssigned);
+         return { assigned: clientAssigned };
+     });
+     //console.log(clientAssigned);
+     //return { result: {"assigned":clientAssigned}};
+    });
