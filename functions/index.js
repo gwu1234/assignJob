@@ -250,6 +250,9 @@ exports.sendQuote = functions.https.onCall((data, context) => {
                        if (employeeKeyList.includes(employeekey)) {
                            const { clientKey, employeeKey, employeeName, orderId,
                                 orderKey, usertag } = assignedEmployees[employeekey];
+
+                           const {deliveryTimes,isActive,isRepeat,repeatTimes,work} = workorders[orderkey];
+
                            orderAssigned[orderKey] = {
                                   clientKey: clientKey,
                                   employeeKey: employeeKey,
@@ -257,6 +260,11 @@ exports.sendQuote = functions.https.onCall((data, context) => {
                                   orderId: orderId,
                                   orderKey: orderKey,
                                   usertag: usertag,
+                                  deliveryTimes: deliveryTimes,
+                                  isActive: isActive,
+                                  isRepeat: isRepeat,
+                                  repeatTimes: repeatTimes,
+                                  work: work
                            }
                        }
                    }
