@@ -185,6 +185,19 @@ exports.sendQuote = functions.https.onCall((data, context) => {
   });
 
 
+/*
+input: employee.assignedOrders.orderKey.
+const assigned = {
+    orderKey: order.orderKey,
+    orderId: order.orderId,
+    clientKey: order.clientTag,
+    employeeName: employee.name,
+    employeeKey: employee.tag,
+    usertag: usertag
+};
+output: employee.assigned.clientKey.workorders.orderKey
+feature: select all assigned workorders for an employee
+*/
   exports.selectOrders = functions.https.onCall((data, context) => {
      const uid = context.auth.uid;
      const name = context.auth.token.name || null;
