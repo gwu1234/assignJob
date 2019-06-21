@@ -123,11 +123,11 @@ class EditEmployeeModal extends Component {
          const {usertag, employeeKey, employee } = this.props;
 
          //console.log(employee.assignedOrders);
-         var selectOrders = firebase.functions().httpsCallable('selectOrders');
-         selectOrders({orders:employee.assignedOrders}).then(function(result) {
-             console.log(result.data);
+         //var selectOrders = firebase.functions().httpsCallable('selectOrders');
+         //selectOrders({orders:employee.assignedOrders}).then(function(result) {
+        //     console.log(result.data);
              //console.log(result.data.assigned);
-         });
+         //});
 
          const name = firstname + " " + lastname;
 

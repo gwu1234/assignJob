@@ -186,7 +186,7 @@ exports.sendQuote = functions.https.onCall((data, context) => {
 
 
 /*
-input: employee.assignedOrders.orderKey.
+input: multiple assignments from employee.assignedOrders.orderKey.
 const assigned = {
     orderKey: order.orderKey,
     orderId: order.orderId,
@@ -290,6 +290,22 @@ feature: select all assigned workorders for an employee
          //console.log(clientAssigned);
          return { assigned: clientAssigned };
      });
-     //console.log(clientAssigned);
-     //return { result: {"assigned":clientAssigned}};
+    });
+
+
+    /*
+    input: 1 assignments from employee.assignedOrders.orderKey.
+    const assigned = {
+        orderKey: order.orderKey,
+        orderId: order.orderId,
+        clientKey: order.clientTag,
+        employeeName: employee.name,
+        employeeKey: employee.tag,
+        usertag: usertag
+    };
+    output: employees (0 or more)
+    feature: select all employees working on this workorder of this client
+    */
+    exports.selectCoworkers = functions.https.onCall((data, context) => {     
+         const orders = data.orders;
     });
