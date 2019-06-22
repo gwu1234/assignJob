@@ -334,3 +334,50 @@ feature: select all assigned workorders for an employee
              return { coworkers: coworkers};
          });
     });
+
+    /*
+    input: 1 assignments from employee.assignedOrders.orderKey.
+    const assigned = {
+        orderKey: order.orderKey,
+        orderId: order.orderId,
+        clientKey: order.clientTag,
+        employeeName: employee.name,
+        employeeKey: employee.tag,
+        usertag: usertag
+    };
+    output: deliverys of this selectedOrderKey (0 or more)
+    feature: select all deliverys of this workorder
+    */
+    exports.selectDeliverys = functions.https.onCall((data, context) => {
+         const order = data.order;
+         console.log(order);
+         let  usertag = order.usertag;
+         //let  employeeKey = order.employeeKey;
+         let  selectedClientKey = order.clientKey;
+         let  selectedOrderKey = order.orderKey;
+
+         const deliveryPath = "repos/" + usertag + "/clients/data/" + selectedClientKey + "/deliverys";
+         let deliverys = {};
+
+         return admin.database().ref(deliveryPath).once('value').then ((snapshot) => {
+             const deliveryList = snapshot.val();
+
+             for (var deliverykey in deliveryList) {
+                  //deliverys[deliverykey] = {};
+                  let delivery = deliveryList[deliverykey];
+                  if (delivery.linkedOrderKey === selectedOrderKey) {
+                          deliverys[deliverykey] = {};
+                          deliverys[deliverykey]["employeeKey"] =  delivery.employeeKey;
+                          deliverys[deliverykey]["employeeName"] = delivery.employee;
+                          deliverys[deliverykey]["deliveryKey"] = deliverykey;
+                          deliverys[deliverykey]["date"] =  delivery.date;
+                          deliverys[deliverykey]["deliveryId"] = delivery.deliveryId;
+                          deliverys[deliverykey]["work"] = delivery.work;
+                          deliverys[deliverykey]["linkedOrderId"] = delivery.linkedOrderId;
+                          deliverys[deliverykey]["linkedOrderKey"] = delivery.linkedOrderKey;
+                  }
+             }
+             console.log(deliverys);
+             return { deliverys: deliverys};
+         });
+    });

@@ -130,7 +130,7 @@ class EditEmployeeModal extends Component {
          //});
 
          //console.log(employee.assignedOrders);
-         let orders = [] ;
+         /*let orders = [] ;
          for (var orderkey in employee.assignedOrders) {
               orders.push (employee.assignedOrders[orderkey])
          }
@@ -141,6 +141,19 @@ class EditEmployeeModal extends Component {
          selectCoworkers({order:order}).then(function(result) {
              //console.log(result.data);
              console.log(result.data.coworkers);
+         });*/
+
+         let orders = [] ;
+         for (var orderkey in employee.assignedOrders) {
+              orders.push (employee.assignedOrders[orderkey])
+         }
+
+         let order = orders[0];
+         console.log(order);
+         var selectDeliverys = firebase.functions().httpsCallable('selectDeliverys');
+         selectDeliverys({order:order}).then(function(result) {
+             //console.log(result.data);
+             console.log(result.data.deliverys);
          });
 
          const name = firstname + " " + lastname;
