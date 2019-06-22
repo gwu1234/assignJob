@@ -122,12 +122,12 @@ class EditEmployeeModal extends Component {
                  newAssigned, newUnassigned, contactChanged} = this.state;
          const {usertag, employeeKey, employee } = this.props;
 
-         //console.log(employee.assignedOrders);
-         //var selectOrders = firebase.functions().httpsCallable('selectOrders');
-         //selectOrders({orders:employee.assignedOrders}).then(function(result) {
-        //     console.log(result.data);
-             //console.log(result.data.assigned);
-         //});
+         console.log(employee.assignedOrders);
+         var selectOrders = firebase.functions().httpsCallable('selectOrders');
+         selectOrders({orders:employee.assignedOrders}).then(function(result) {
+             //console.log(result.data);
+             console.log(result.data.assigned);
+         });
 
          //console.log(employee.assignedOrders);
          /*let orders = [] ;
@@ -143,7 +143,7 @@ class EditEmployeeModal extends Component {
              console.log(result.data.coworkers);
          });*/
 
-         let orders = [] ;
+         /*let orders = [] ;
          for (var orderkey in employee.assignedOrders) {
               orders.push (employee.assignedOrders[orderkey])
          }
@@ -154,7 +154,7 @@ class EditEmployeeModal extends Component {
          selectDeliverys({order:order}).then(function(result) {
              //console.log(result.data);
              console.log(result.data.deliverys);
-         });
+         });*/
 
          const name = firstname + " " + lastname;
 

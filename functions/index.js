@@ -72,6 +72,7 @@ feature: select all assigned workorders for an employee
                clientAssigned[clientkey]["postcode"] = contact["postcode"];
                clientAssigned[clientkey]["street"] = contact["street"];
                let workorders = clientList[clientkey].workorders;
+               let deliverys = clientList[clientkey].deliverys;
                let orderAssigned  = {};
                for (var orderkey in workorders) {
                    let assignedEmployees = workorders[orderkey].assignedEmployees;
@@ -83,7 +84,7 @@ feature: select all assigned workorders for an employee
 
                            const {deliveryTimes,isActive,isRepeat,repeatTimes,work} = workorders[orderkey];
 
-                           orderAssigned[orderKey] = {
+                           orderAssigned[orderkey] = {
                                   clientKey: clientKey,
                                   employeeKey: employeeKey,
                                   employeeName: employeeName,
@@ -96,7 +97,18 @@ feature: select all assigned workorders for an employee
                                   repeatTimes: repeatTimes,
                                   work: work
                            };
-                           orderAssigned[orderKey]["assignedEmployees"] = assignedEmployees;
+                           orderAssigned[orderkey]["coworkers"] = {
+                                ...assignedEmployees,
+                                employeekey: null,
+                           };
+
+                           let delivery4order = {};
+                           for (var deliverykey in deliverys) {
+                               if (deliverys[deliverykey].linkedOrderKey === orderkey) {
+                                    delivery4order[deliverykey] = deliverys[deliverykey];
+                               }
+                           }
+                           orderAssigned[orderkey]["deliverys"] = delivery4order;
                        }
                    }
                }
