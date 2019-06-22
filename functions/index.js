@@ -7,7 +7,7 @@ admin.initializeApp(functions.config().firebase);
   response.send("Hello from Firebase!");
  });
 
- exports.addMessage = functions.https.onCall((data, context) => {
+ /*exports.addMessage = functions.https.onCall((data, context) => {
     const text = data.quote.text;
     const clientEmail = data.quote.email;
     // Authentication / user information is automatically added to the request.
@@ -42,9 +42,9 @@ admin.initializeApp(functions.config().firebase);
 
 
      return { text: "Guoping cleaned msg"};
-});
+});*/
 
-exports.sendQuote = functions.https.onCall((data, context) => {
+/*exports.sendQuote = functions.https.onCall((data, context) => {
    const uid = context.auth.uid;
    const name = context.auth.token.name || null;
    const picture = context.auth.token.picture || null;
@@ -89,7 +89,7 @@ exports.sendQuote = functions.https.onCall((data, context) => {
        }
    });*/
 
-   var transporter = nodemailer.createTransport({
+  /* var transporter = nodemailer.createTransport({
          service: 'Gmail',
          auth: {
              XOAuth2: {
@@ -182,7 +182,7 @@ exports.sendQuote = functions.https.onCall((data, context) => {
     subject: "Quote", // Subject line
     html: '<h1>Quote</h1><p>work: {{work}}</p><p>price: {{price}}</p><p>total: {{total}}</p>'
   });*/
-  });
+/*}); */
 
 
 /*
@@ -231,9 +231,7 @@ feature: select all assigned workorders for an employee
 
      const clientPath = "repos/" + usertag + "/clients/data";
      let clientAssigned  = {};
-     //return firebase.database().ref('users/'+useruid+'/')
-     //.once('value')
-     //.then(function(bref) {
+
      return admin.database().ref(clientPath).once('value').then ((snapshot) => {
      //if(snapshot.exists()){
         const clientList = snapshot.val();
@@ -290,7 +288,7 @@ feature: select all assigned workorders for an employee
          //console.log(clientAssigned);
          return { assigned: clientAssigned };
      });
-    });
+   });
 
 
     /*
@@ -306,6 +304,33 @@ feature: select all assigned workorders for an employee
     output: employees (0 or more)
     feature: select all employees working on this workorder of this client
     */
-    exports.selectCoworkers = functions.https.onCall((data, context) => {     
-         const orders = data.orders;
+    exports.selectCoworkers = functions.https.onCall((data, context) => {
+         const order = data.order;
+         console.log(order);
+         let  usertag = order.usertag;
+         let  employeeKey = order.employeeKey;
+         let  selectedClientKey = order.clientKey;
+         let  selectedOrderKey = order.orderKey;
+
+         const employeePath = "repos/" + usertag + "/employees";
+         let coworkers = {};
+
+         return admin.database().ref(employeePath).once('value').then ((snapshot) => {
+             const employeeList = snapshot.val();
+
+             for (var employeekey in employeeList) {
+                  //coworkers[employeekey] = {};
+                  let orders = employeeList[employeekey].assignedOrders;
+                  for (var orderkey in orders) {
+                       if (orderkey === selectedOrderKey && orders[orderkey].clientKey === selectedClientKey) {
+                          coworkers[employeekey] = {};
+                          coworkers[employeekey]["employeeKey"] =  employeekey;
+                          coworkers[employeekey]["name"] = employeeList[employeekey].name;
+                          coworkers[employeekey]["orderKey"] = selectedOrderKey;
+                       }
+                  }
+             }
+             console.log(coworkers);
+             return { coworkers: coworkers};
+         });
     });

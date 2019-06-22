@@ -129,6 +129,20 @@ class EditEmployeeModal extends Component {
              //console.log(result.data.assigned);
          //});
 
+         //console.log(employee.assignedOrders);
+         let orders = [] ;
+         for (var orderkey in employee.assignedOrders) {
+              orders.push (employee.assignedOrders[orderkey])
+         }
+
+         let order = orders[1];
+         console.log(order);
+         var selectCoworkers = firebase.functions().httpsCallable('selectCoworkers');
+         selectCoworkers({order:order}).then(function(result) {
+             //console.log(result.data);
+             console.log(result.data.coworkers);
+         });
+
          const name = firstname + " " + lastname;
 
          if (contactChanged) {
