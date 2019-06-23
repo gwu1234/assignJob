@@ -214,6 +214,63 @@ feature: select all assigned workorders for an employee
          });
     });
 
+    /*
+    input: multiple assignments from employee.assignedOrders.orderKey.
+    deliverys: {
+        assignedEmployees: {
+             employeeKey: assigned
+        },
+        delivery: {
+
+      }
+    }
+    const assigned = {
+        orderKey: order.orderKey,
+        orderId: order.orderId,
+        clientKey: order.clientTag,
+        employeeName: employee.name,
+        employeeKey: employee.tag,
+        usertag: usertag
+    };
+    output: none
+    features: copy delivery to
+         data.clients.clientTag.deliverys
+         and
+         employees.employeeTag.assignedOrders.clientTag.ordertag.deliverys
+    */
+    exports.makeDeliverys = functions.https.onCall((data, context) => {
+         const delivery = data.deliverys.delivery;
+         const assignedEmployees = data.deliverys.assignedEmployees
+
+         let selectedClientKey = null;
+         let selectedEmployeeKey = null;
+         let selectedOrderKey = null;
+         let selectedUserTag = null;
+         let selectedDeliveryKey = null;;
+
+         for (var employeekey in assignedEmployees) {
+              const { orderKey, clientKey, employeeKey, usertag } = assignedEmployees[employeekey];
+              selectedClientKey = clientKey;
+              selectedEmployeeKey = employeeKey;
+              selectedOrderKey = orderKey;
+              selectedUserTag = usertag;
+
+              let employeePath =  "repos/" + usertag + "/employees/"
+                                  + employeekey + "/assignedOrders/" + clientKey + "/"
+                                  + orderKey + "/deliverys";
+              const employeeRef = admin.database().ref(employeePath);
+              const deliveryKey = employeeRef.getKey();
+              selectedDeliveryKey = delievryKey;
+
+              employeeRef.child(deliveryKey).push({...delivery, deliveryKey: deliveryKey});
+         }
+
+         const deliveryPath = "repos/" + selectedUserTag + "/clients/data/"
+                             + selectedClientKey + "/deliverys/" + selectedDeliveryKey;
+         deliveryRef = admin.database().ref(deliveryPath);
+         deliveryRef.push({...delivery, deliveryKey: selectedDeliveryKey});
+    });
+
 
     /*exports.helloWorld = functions.https.onRequest((request, response) => {
      console.log(request);
