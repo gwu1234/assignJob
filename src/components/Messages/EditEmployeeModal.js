@@ -122,12 +122,12 @@ class EditEmployeeModal extends Component {
                  newAssigned, newUnassigned, contactChanged} = this.state;
          const {usertag, employeeKey, employee } = this.props;
 
-         console.log(employee.assignedOrders);
+         /*console.log(employee.assignedOrders);
          var selectOrders = firebase.functions().httpsCallable('selectOrders');
          selectOrders({orders:employee.assignedOrders}).then(function(result) {
              //console.log(result.data);
              console.log(result.data.assigned);
-         });
+         });*/
 
          //console.log(employee.assignedOrders);
          /*let orders = [] ;
