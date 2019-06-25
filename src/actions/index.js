@@ -88,6 +88,15 @@ export const setCompanyInfoView = view => {
   };
 };
 
+export const setAssignedEmployeeView = view => {
+  return {
+    type: actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW,
+    payload: {
+      view: view
+    }
+  };
+};
+
 export const setCurrentUser = user => {
   return {
     type: actionTypes.SET_CURRENT_USER,

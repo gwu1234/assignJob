@@ -47,6 +47,7 @@ const initialUserState = {
   french: false,
   badAccess: false,
   companyInfoView: false,
+  assignedEmployeeView: false,
   clientView: false,
   clientContactView: false,
   reposData: null,
@@ -131,6 +132,17 @@ const user_reducer = (state = initialUserState, action) => {
         mapView: false,
         leadView: false,
     };
+
+case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
+    return {
+    ...state,
+    companyInfoView: false,
+    clientView: false,
+    clientContactView: false,
+    mapView: false,
+    leadView: false,
+    assignedEmployeeView: action.payload.view,
+};
     case actionTypes.SET_MAP_VIEW:
          const clients = state.clientList;
          const clientData = state.reposData["clients"]["data"];

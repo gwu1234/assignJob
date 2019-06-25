@@ -29,13 +29,14 @@ import Leads from "./Leads/Leads";
 import LeadContact from "./Leads/LeadContact";
 import LeadLogs from "./Leads/LeadLogs";
 import LeadQuote from "./Leads/LeadQuote";
+import AssignedContainer from "./AssignedEmployees/AssignedContainer";
 
 class App extends React.Component {
 
   render() {
 
 
-    const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView, leadView} = this.props;
+    const {currentUser, mapView, admin, companyInfoView, clientView, clientContactView, leadView, assignedEmployeeView} = this.props;
 
     return (
       <Grid style={styles.container}>
@@ -442,6 +443,10 @@ class App extends React.Component {
                    </Menu>
               </Grid.Column>
         </Grid.Row>}
+        {!admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView && assignedEmployeeView &&
+         <Grid.Row style={styles.mainRow}>
+               <AssignedContainer />
+        </Grid.Row>}
 
       </Grid>
     );
@@ -508,6 +513,7 @@ const mapStateToProps = state => ({
     clientView: state.user.clientView,
     clientContactView: state.user.clientContactView,
     leadView: state.user.leadView,
+    assignedEmployeeView: state.user.assignedEmployeeView,
   });
 
 export default connect(mapStateToProps)(App);
