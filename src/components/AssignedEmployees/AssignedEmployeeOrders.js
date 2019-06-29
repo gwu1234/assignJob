@@ -32,9 +32,10 @@ class AssignedEmployeeOrders extends React.Component {
 
            let assignedDeliverys = {};
            const deliverys = clientList[clientKey]["deliverys"];
+           //console.log(deliverys);
            for (var deliverykey in deliverys) {
-               if ( deliverys[deliverykey].linkedOrkerKey === orderKey &&
-                    deliverys[deliverykey].linkedOrkerId  === orderId ) {
+               if ( deliverys[deliverykey].linkedOrderKey === orderKey &&
+                    deliverys[deliverykey].linkedOrderId  === orderId ) {
                     //assignedDeliverys[deliverykey] = {};
                     assignedDeliverys[deliverykey] = deliverys[deliverykey];
                     //console.log(deliverys[deliverykey]);

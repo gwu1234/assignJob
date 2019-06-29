@@ -36,11 +36,13 @@ const styles = {
     paddingTop: "3px",
     paddingBottom: "3px",
     width: "100%",
+    height: "200px",
     borderStyle:"dotted",
     borderBottomWidth: "1px",
     borderTopWidth: "1px",
     borderRightWidth: "0px",
     borderColor:"#C3C5C2",
+    overflow: "scroll",
   },
   name: {
     opacity: 1.0,

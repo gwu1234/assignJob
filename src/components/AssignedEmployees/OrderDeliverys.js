@@ -16,13 +16,13 @@ class OrderDeliverys extends React.Component {
         jobs.push (
           <Menu.Menu key={deliverykey} style={styles.container}>
               <Menu.Item style={styles.item}>
-                   {deliverys[deliverykey].date}
+                   Date : {deliverys[deliverykey].date}
               </Menu.Item>
               <Menu.Item style={styles.item}>
-                   {deliverys[deliverykey].workNotDone}
+                   Work : {deliverys[deliverykey].work}
               </Menu.Item>
               <Menu.Item style={styles.item}>
-                   {deliverys[deliverykey].employee}
+                   Employee : {deliverys[deliverykey].employee}
               </Menu.Item>
          </Menu.Menu>);
      }
@@ -47,8 +47,8 @@ class OrderDeliverys extends React.Component {
 
 const styles = {
   container: {
-    paddingTop: "3px",
-    paddingBottom: "3px",
+    paddingTop: "1px",
+    paddingBottom: "4px",
     width: "100%",
   },
   name: {
@@ -65,8 +65,8 @@ const styles = {
     color: "black",
     fontSize: "1.0em",
     fontWeight: "normal",
-    paddingTop:"3px",
-    paddingBottom:"3px",
+    paddingTop:"1px",
+    paddingBottom:"1px",
     paddingLeft: "15px",
   },
 };
