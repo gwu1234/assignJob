@@ -3,7 +3,7 @@ import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon, Grid} from "semantic-ui-react";
 import OrderOrder from "./OrderOrder";
-//import AssignedEmployeeOrder from "./AssignedEmployeeOrder";
+import OrderCoworkers from "./OrderCoworkers";
 
 class AssignedEmployeeOrder extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class AssignedEmployeeOrder extends React.Component {
               </Grid.Column>
               <Grid.Column style={{width:"33%"}}>
 
-                      <OrderOrder order={order.order} orderKey ={order.order.orderKey}/>
+                      <OrderCoworkers coworkers ={order.coworkers}/>
 
               </Grid.Column>
               <Grid.Column style={{width:"33%"}}>

@@ -1,8 +1,8 @@
 import React from "react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Menu, Icon, Grid} from "semantic-ui-react";
-import AssignedEmployeeHeader from "./AssignedEmployeeHeader";
+import { Menu, Icon, Grid, Message} from "semantic-ui-react";
+//import AssignedEmployeeHeader from "./AssignedEmployeeHeader";
 //import AssignedEmployeeOrder from "./AssignedEmployeeOrder";
 
 class OrderOrder extends React.Component {
@@ -12,24 +12,33 @@ class OrderOrder extends React.Component {
 
   render() {
     const { orderKey, order, usertag, french } = this.props;
-        //console.log(order);
+        let {orderId, date, work, isRepeat, repeatTimes} = order;
+
+        if ( isRepeat === undefined || isRepeat === null ||
+             isRepeat === "undefined" || isRepeat === false) {
+                isRepeat = false;
+        }
+
     return (
        <Menu.Menu style={styles.container}>
-           <Menu.Item style={styles.name}>
-              Order id : {order.orderId}
+           <Message style ={styles.name}>
+              <p> Order Detail</p>
+           </Message>
+           <Menu.Item style={styles.item}>
+              Order id : {orderId}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Order Key : {order.orderkey}
+              Order Date : {date}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Order Date : {order.date}
+              Order Work : {work}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Order Work : {order.work}
+              Is Repeat : {String (isRepeat)}
            </Menu.Item>
-           <Menu.Item style={styles.item}>
-              Is Repeat : {order.isRepeat}
-           </Menu.Item>
+          { isRepeat && <Menu.Item style={styles.item}>
+              Is Repeat : {repeatTimes}
+           </Menu.Item> }
        </Menu.Menu>
      );
    }

@@ -27,7 +27,7 @@ class AssignedEmployeeOrders extends React.Component {
            assignedData[orderkey]["order"] = order;
            //console.log(assignedData);
            const coworkers = clientList[clientKey]["workorders"][orderKey]["assignedEmployees"];
-           assignedData[orderkey]["coworker"] = coworkers;
+           assignedData[orderkey]["coworkers"] = coworkers;
            //console.log(assignedData);
 
            let assignedDeliverys = {};
