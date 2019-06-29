@@ -24,7 +24,7 @@ class OrderCoworkers extends React.Component {
 
   render() {
     const { coworkers, usertag, french } = this.props;
-    console.log(coworkers);
+    //console.log(coworkers);
 
     return (
       <Menu.Menu>

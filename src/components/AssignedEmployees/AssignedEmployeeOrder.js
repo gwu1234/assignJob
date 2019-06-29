@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Menu, Icon, Grid} from "semantic-ui-react";
 import OrderOrder from "./OrderOrder";
 import OrderCoworkers from "./OrderCoworkers";
+import OrderDeliverys from "./OrderDeliverys";
 
 class AssignedEmployeeOrder extends React.Component {
   constructor(props) {
@@ -17,17 +18,13 @@ class AssignedEmployeeOrder extends React.Component {
       <Grid columns={3} style = {styles.container}>
          <Grid.Row >
              <Grid.Column style={{width:"33%"}}>
-
                      <OrderOrder order={order.order} orderKey ={order.order.orderKey}/>
-
               </Grid.Column>
               <Grid.Column style={{width:"33%"}}>
-
                       <OrderCoworkers coworkers ={order.coworkers}/>
-
               </Grid.Column>
               <Grid.Column style={{width:"33%"}}>
-                      <OrderOrder order={order.order} orderKey ={order.order.orderKey}/>
+                      <OrderDeliverys deliverys ={order.deliverys}/>
               </Grid.Column>
          </Grid.Row> </Grid>
      );
