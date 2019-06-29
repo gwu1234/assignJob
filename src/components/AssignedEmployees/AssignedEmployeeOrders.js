@@ -21,8 +21,16 @@ class AssignedEmployeeOrders extends React.Component {
       let assignedData = {};
       for (var orderkey in assignedOrders) {
            const {clientKey, orderId, orderKey} = assignedOrders [orderkey];
-           const order = {...clientList[clientKey]["workorders"][orderKey], "assignedEmployees": null};
-           //console.log(order);
+           const contact = clientList[clientKey]["contact"];
+           const {name, street, city } = contact;
+           const address = street + " , " + city;
+
+           const order = { ...clientList[clientKey]["workorders"][orderKey],
+                           "assignedEmployees": null,
+                           "clientName": name,
+                           "clientAddress": address,
+                         };
+
            assignedData[orderkey] = {};
            assignedData[orderkey]["order"] = order;
            //console.log(assignedData);

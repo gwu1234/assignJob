@@ -12,7 +12,7 @@ class OrderOrder extends React.Component {
 
   render() {
     const { orderKey, order, usertag, french } = this.props;
-        let {orderId, date, work, isRepeat, repeatTimes} = order;
+        let {orderId, date, work, isRepeat, repeatTimes, clientName, clientAddress} = order;
 
         if ( isRepeat === undefined || isRepeat === null ||
              isRepeat === "undefined" || isRepeat === false) {
@@ -26,6 +26,12 @@ class OrderOrder extends React.Component {
            </Message>
            <Menu.Item style={styles.item}>
               Order id : {orderId}
+           </Menu.Item>
+           <Menu.Item style={styles.item}>
+              Client Name : {clientName}
+           </Menu.Item>
+           <Menu.Item style={styles.item}>
+              Client Address : {clientAddress}
            </Menu.Item>
            <Menu.Item style={styles.item}>
               Order Date : {date}
