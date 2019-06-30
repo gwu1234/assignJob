@@ -140,7 +140,8 @@ const styles = {
     paddingTop: "1px",
     paddingBottom: "1px",
     width: "100%",
-    height: "100%"
+    height: "100%",
+
   },
   name: {
     opacity: 1.0,
