@@ -43,7 +43,7 @@ class OrderOrder extends React.Component {
               Is Repeat : {String (isRepeat)}
            </Menu.Item>
           { isRepeat && <Menu.Item style={styles.item}>
-              Is Repeat : {repeatTimes}
+              Repeat Times : {repeatTimes}
            </Menu.Item> }
        </Menu.Menu>
      );

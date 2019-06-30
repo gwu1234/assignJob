@@ -42,7 +42,8 @@ const styles = {
     borderTopWidth: "1px",
     borderRightWidth: "0px",
     borderColor:"#C3C5C2",
-    overflow: "scroll",
+    overflowY: "scroll",
+    overflowX: "hidden",
   },
   name: {
     opacity: 1.0,

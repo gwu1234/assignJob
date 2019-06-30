@@ -39,7 +39,7 @@ const styles = {
     paddingBottom: "7px",
     background: "#f2f4f7",
     borderStyle:"solid",
-    borderBottomWidth: "9px",
+    borderBottomWidth: "10px",
     borderTopWidth: "2px",
     borderRightWidth: "0px",
     borderColor:"#C3C5C2",
