@@ -22,7 +22,7 @@ class OrderOrder extends React.Component {
     return (
        <Menu.Menu style={styles.container}>
            <Message style ={styles.name}>
-              <p> Order Detail</p>
+              <p> Order Brief</p>
            </Message>
            <Menu.Item style={styles.item}>
               Order id : {orderId}
