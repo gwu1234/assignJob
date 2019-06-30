@@ -252,7 +252,7 @@ assignedEmployees = () => {
              />
           </Grid.Column >
           <Grid.Column style={styles.columns}>
-             <span> {french? "Texte Vue" : "TextView" }</span>
+             <span> {french? "Clients" : "Clients" }</span>
              <Dropdown
                placeholder=""
                options={this.dropdownTextOptions2()}
