@@ -10,11 +10,60 @@ class AssignedEmployeeOrders extends React.Component {
     super(props);
 
     this.state = {
-       EmployeeAssignedData: {},
+       EmployeeAssignedData: null,
     }
   }
 
-  componentDidMount() {
+   getEmployeeAssignedData () {
+      const {AssignedEmployee, usertag, employeeKey, french, clientList} = this.props;
+      const {assignedOrders} = AssignedEmployee;
+      //console.log(assignedOrders);
+
+      let assignedData = {};
+      for (var orderkey in assignedOrders) {
+           const {clientKey, orderId, orderKey} = assignedOrders[orderkey];
+
+           const contact = clientList[clientKey]["contact"];
+           const {name, street, city } = contact;
+           const address = street + " , " + city;
+
+           const order = { ...clientList[clientKey]["workorders"][orderKey],
+                           "assignedEmployees": null,
+                           "clientName": name,
+                           "clientAddress": address,
+                         };
+          //const order = clientList[clientKey]["workorders"][orderKey];
+
+           assignedData[orderkey] = {};
+           assignedData[orderkey]["order"] = order;
+           //console.log(assignedData);
+           const coworkers = clientList[clientKey]["workorders"][orderKey]["assignedEmployees"];
+           assignedData[orderkey]["coworkers"] = coworkers;
+           //console.log(assignedData);
+
+           let assignedDeliverys = {};
+           const deliverys = clientList[clientKey]["deliverys"];
+           //console.log(deliverys);
+           for (var deliverykey in deliverys) {
+               if ( deliverys[deliverykey].linkedOrderKey === orderKey &&
+                    deliverys[deliverykey].linkedOrderId  === orderId ) {
+                    //assignedDeliverys[deliverykey] = {};
+                    assignedDeliverys[deliverykey] = deliverys[deliverykey];
+                    //console.log(deliverys[deliverykey]);
+               }
+           }
+           assignedData[orderkey]["deliverys"] = assignedDeliverys;
+           //console.log(assignedData);
+
+           //this.setState ({
+           //return  assignedData;
+           //});
+      }
+      return  assignedData;
+  }
+
+
+  /*componentDidUpdate() {
       const {AssignedEmployee, usertag, employeeKey, french, clientList} = this.props;
       const {assignedOrders} = AssignedEmployee;
 
@@ -56,10 +105,10 @@ class AssignedEmployeeOrders extends React.Component {
               EmployeeAssignedData: assignedData
            });
       }
-  }
+  }*/
 
-  displayAssignedEmployeeOrders = () => {
-     const {EmployeeAssignedData} = this.state;
+  displayAssignedEmployeeOrders = (EmployeeAssignedData) => {
+     //const {EmployeeAssignedData} = this.state;
      let assignedOrders = [];
      for (var orderkey in EmployeeAssignedData) {
         assignedOrders.push (
@@ -75,10 +124,12 @@ class AssignedEmployeeOrders extends React.Component {
 
   render() {
     const {AssignedEmployee, usertag, employeeKey, french} = this.props;
+    const EmployeeAssignedData = this.getEmployeeAssignedData();
+    console.log(EmployeeAssignedData);
 
     return (
        <Menu.Menu style={styles.container}>
-          {this.displayAssignedEmployeeOrders()}
+          {this.displayAssignedEmployeeOrders(EmployeeAssignedData)}
        </Menu.Menu>
      );
    }

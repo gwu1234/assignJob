@@ -30,6 +30,7 @@ import LeadContact from "./Leads/LeadContact";
 import LeadLogs from "./Leads/LeadLogs";
 import LeadQuote from "./Leads/LeadQuote";
 import AssignedContainer from "./AssignedEmployees/AssignedContainer";
+import AssignedEmployees from "./AssignedEmployees/AssignedEmployees";
 
 class App extends React.Component {
 
@@ -41,7 +42,7 @@ class App extends React.Component {
     return (
       <Grid style={styles.container}>
         <TopPanel/>
-        {admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView &&
+        {admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView && !assignedEmployeeView &&
           <Grid.Row style={{width: "100%", height:"92%", margin:"0px", padding:"0px"}}>
             <Grid.Column style={{margin:"0px", padding:"0px", width:"11%", height:"100%"}}>
                  <Menu
@@ -443,11 +444,36 @@ class App extends React.Component {
                    </Menu>
               </Grid.Column>
         </Grid.Row>}
+
         {!admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView && assignedEmployeeView &&
          <Grid.Row style={styles.mainRow}>
-               <AssignedContainer />
+               <AssignedEmployees />
         </Grid.Row>}
 
+        {admin && !mapView && !companyInfoView && !clientView && !clientContactView && !leadView && assignedEmployeeView &&
+         <Grid.Row style={styles.mainRow}>
+             <Grid.Column style={{margin:"0px", padding:"0px", width:"10%", height:"100%"}}>
+                  <Menu
+                     size="large"
+                     inverted
+                     floated
+                     vertical
+                     style={styles.MenuContainer}>
+                          <UserList currentUser={currentUser} />
+                  </Menu>
+              </Grid.Column>
+
+              <Grid.Column style={{...styles.rightColumn, width:"89.8%"}}>
+                  <Menu
+                      size="large"
+                      inverted
+                      floated
+                      vertical
+                      style={styles.MenuContainer}>
+                             <AssignedEmployees />
+                      </Menu>
+               </Grid.Column>
+        </Grid.Row>}
       </Grid>
     );
   }

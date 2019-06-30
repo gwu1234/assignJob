@@ -17,13 +17,13 @@ class AssignedEmployeeOrder extends React.Component {
     return (
       <Grid columns={3} style = {styles.container}>
          <Grid.Row >
-             <Grid.Column style={{width:"33%"}}>
+             <Grid.Column style={{width:"37%"}}>
                      <OrderOrder order={order.order} orderKey ={order.order.orderKey}/>
               </Grid.Column>
-              <Grid.Column style={{width:"33%"}}>
+              <Grid.Column style={{width:"25.8%"}}>
                       <OrderCoworkers coworkers ={order.coworkers}/>
               </Grid.Column>
-              <Grid.Column style={{width:"33%"}}>
+              <Grid.Column style={{width:"37%"}}>
                       <OrderDeliverys deliverys ={order.deliverys}/>
               </Grid.Column>
          </Grid.Row> </Grid>

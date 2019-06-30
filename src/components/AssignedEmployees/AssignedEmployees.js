@@ -55,7 +55,6 @@ class AssignedEmployees extends React.Component {
 
 const styles = {
   container: {
-    height: "100%",
     width: "100%",
   },
 };
@@ -68,6 +67,7 @@ const mapStateToProps = state => {
   if (reposData) {
       employeeList = reposData["employees"];
       clientList = reposData["clients"]["data"];
+      //console.log(employeeList);
   }
 
   return {
