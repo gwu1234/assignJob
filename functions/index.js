@@ -74,6 +74,7 @@ feature: select all assigned workorders for an employee
                let workorders = clientList[clientkey].workorders;
                let deliverys = clientList[clientkey].deliverys;
                let orderAssigned  = {};
+               let activeOrders = 0 ;
                for (var orderkey in workorders) {
                    let assignedEmployees = workorders[orderkey].assignedEmployees;
                    for (var employeekey in assignedEmployees) {
@@ -82,7 +83,8 @@ feature: select all assigned workorders for an employee
                            const { clientKey, employeeKey, employeeName, orderId,
                                 orderKey, usertag } = assignedEmployees[employeekey];
 
-                           const {deliveryTimes,isActive,isRepeat,repeatTimes,work} = workorders[orderkey];
+                           const {deliveryTimes,isActive,isRepeat,repeatTimes,work, photo} = workorders[orderkey];
+                           activeOrders ++;
 
                            orderAssigned[orderkey] = {
                                   clientKey: clientKey,
@@ -95,7 +97,8 @@ feature: select all assigned workorders for an employee
                                   isActive: isActive,
                                   isRepeat: isRepeat,
                                   repeatTimes: repeatTimes,
-                                  work: work
+                                  work: work,
+                                  photo: photo
                            };
                            orderAssigned[orderkey]["coworkers"] = {
                                 ...assignedEmployees,
@@ -114,7 +117,7 @@ feature: select all assigned workorders for an employee
                }
 
               clientAssigned[clientkey]["workorders"] = orderAssigned;
-              //console.log(clientAssigned);
+              clientAssigned[clientkey]["activeOrders"] = activeOrders;
             }
          }
          //console.log(clientAssigned);
