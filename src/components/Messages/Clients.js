@@ -164,7 +164,7 @@ class Clients extends React.Component {
 
     // sort list by the lastname
     clientArray.sort((a, b) => {
-      if (a.client && b.client) {
+      if (a && b && a.client && b.client && a.client.lastname && b.client.lastname) {
           return a.client.lastname.localeCompare(b.client.lastname);
       }
     });
