@@ -102,7 +102,7 @@ feature: select all assigned workorders for an employee
                            };
                            orderAssigned[orderkey]["coworkers"] = {
                                 ...assignedEmployees,
-                                employeekey: null,
+                                [employeekey]: null,
                            };
 
                            let delivery4order = {};
