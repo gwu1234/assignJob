@@ -545,125 +545,214 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
          //console.log(employeeMarker);
          marker4Employee.push(employeeMarker);
 
-         const assignedJobs = selectedEmployee.assigned;
-         for (var key in assignedJobs) {
+         //const assignedJobs = selectedEmployee.assigned;
+         const assignedOrders = selectedEmployee.assignedOrders;
+         let employeeKeyList = [];
+         let clientKeyList = [];
+         let usertag = "1";
+         let clientAssigned  = {};
 
-             const {clientLat, clientLng, clientName, clientTag, clientKey, clientStreet, clientCity, workorders} = assignedJobs[key];
+         for (var assignedkey in assignedOrders) {
+            usertag = assignedOrders[assignedkey].usertag;
+            employeeKeyList.push (assignedOrders[assignedkey].employeeKey);
+            clientKeyList.push (assignedOrders[assignedkey].clientKey);
+         }
 
-             let statusArray = [];
-             let activeOrder= 0;
-             let status = 0;
-             let orders = [];
+         clientList = state.reposData["clients"]["data"];
+         for (var clientkey in clientList) {
+            if (clientKeyList.includes(clientkey)) {
+                //let clientAssigned  = {};
+                clientAssigned[clientkey] = {};
+                let contact = clientList[clientkey].contact;
+                clientAssigned[clientkey]["city"] = contact["city"];
+                clientAssigned[clientkey]["clientKey"] = contact["clientTag"] || contact["tag"];
+                clientAssigned[clientkey]["country"] = contact["country"];
+                clientAssigned[clientkey]["cells"] = contact["cells"];
+                clientAssigned[clientkey]["emails"] = contact["emails"];
+                clientAssigned[clientkey]["firstname"] = contact["firstname"];
+                clientAssigned[clientkey]["lastname"] = contact["lastname"];
+                clientAssigned[clientkey]["lat"] = contact["lat"];
+                clientAssigned[clientkey]["lng"] = contact["lng"];
+                clientAssigned[clientkey]["name"] = contact["name"];
+                clientAssigned[clientkey]["phones"] = contact["phones"];
+                clientAssigned[clientkey]["postcode"] = contact["postcode"];
+                clientAssigned[clientkey]["street"] = contact["street"];
+                let workorders = clientList[clientkey].workorders;
+                let deliverys = clientList[clientkey].deliverys;
+                let orderAssigned  = {};
+                let activeOrders = 0 ;
+                for (var orderkey in workorders) {
+                    let assignedEmployees = workorders[orderkey].assignedEmployees;
+                    for (var employeekey in assignedEmployees) {
+                        let coworkers = {};
+                        if (employeeKeyList.includes(employeekey)) {
+                            const { clientKey, employeeKey, employeeName, orderId,
+                                 orderKey, usertag } = assignedEmployees[employeekey];
 
-             for (var orderKey in workorders) {
-                 //console.log(orderKey);
-                 //console.log(workorders[orderKey]);
-                 let {isActive,isRepeat,repeatTimes, previousDelivery, presentDelivery} = workorders[orderKey];
-                 //statusArray = [];
-                 //activeOrder= 0;
-                 //let orders = [];
+                            const {deliveryTimes,isActive,isRepeat,repeatTimes,work, photo} = workorders[orderkey];
+                            activeOrders ++;
 
-                 isActive = (isActive && isActive === "true")? true:false;
-                 isRepeat = (isRepeat && isRepeat === "true")? true:false;
-                 //console.log("isActive = " + isActive);
-                 //console.log("isRepeat = " + isRepeat);
-                 repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
+                            orderAssigned[orderkey] = {
+                                   clientKey: clientKey,
+                                   employeeKey: employeeKey,
+                                   employeeName: employeeName,
+                                   orderId: orderId,
+                                   orderKey: orderKey,
+                                   usertag: usertag,
+                                   deliveryTimes: deliveryTimes,
+                                   isActive: isActive,
+                                   isRepeat: isRepeat,
+                                   repeatTimes: repeatTimes,
+                                   work: work,
+                                   photo: photo
+                            };
+                            orderAssigned[orderkey]["coworkers"] = {
+                                 ...assignedEmployees,
+                                 [employeekey]: null,
+                            };
+
+                            let delivery4order = {};
+                            for (var deliverykey in deliverys) {
+                                if (deliverys[deliverykey].linkedOrderKey === orderkey) {
+                                     delivery4order[deliverykey] = deliverys[deliverykey];
+                                }
+                            }
+                            orderAssigned[orderkey]["deliverys"] = delivery4order;
+                        }
+                    }
+                }
+
+               clientAssigned[clientkey]["workorders"] = orderAssigned;
+               clientAssigned[clientkey]["activeOrders"] = activeOrders;
+             }
+          }
+
+          //console.log(clientAssigned)
+
+         for (var akey in clientAssigned) {
+
+                  const {lat, lng, name, clientTag, clientKey, street, city, workorders} = clientAssigned[akey];
+
+                  let statusArray = [];
+                  let activeOrder= 0;
+                  let status = 0;
+                  let orders = [];
+
+                  for (var orderKey in workorders) {
+                        //console.log(orderKey);
+                        //console.log(workorders[orderKey]);
+                      let {isActive,isRepeat,repeatTimes, previousDelivery, presentDelivery, deliverys} = workorders[orderKey];
+                         //statusArray = [];
+                         //activeOrder= 0;
+                         //let orders = [];
+
+                      isActive = (isActive && isActive === "true")? true:false;
+                      isRepeat = (isRepeat && isRepeat === "true")? true:false;
+                      //console.log("isActive = " + isActive);
+                      //console.log("isRepeat = " + isRepeat);
+                      repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
                                               parseInt(repeatTimes, 10): 0) : 0;
-                 //console.log("repeatTimes = " + repeatTimes);
-                 previousDelivery = previousDelivery? (previousDelivery!== "undefined" ?
-                                              parseInt(previousDelivery, 10): 0) : 0;
-                 //console.log("previousDelivery = " + previousDelivery);
-                 presentDelivery = presentDelivery? (presentDelivery !== "undefined" ?
-                                              parseInt(presentDelivery, 10): 0) : 0;
-                 //console.log("presentDelivery = " + presentDelivery);
-                 let deliveryTimes = previousDelivery + presentDelivery;
-                 //console.log("deliveryTimes = " + deliveryTimes);
-                 let status = JOB_NEW;
-                 if (!isRepeat && deliveryTimes > 0) {
-                    status = JOB_DONE;
-                    statusArray.push(status);
-                 } else if (isRepeat && repeatTimes === 0 && deliveryTimes === 0) {
-                    //statusArray.push(JOB_PROGRESS);
-                    status = JOB_NEW;
-                    statusArray.push(status);
-                 } else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
-                    //statusArray.push(JOB_PROGRESS);
-                    status = JOB_DONE;
-                    statusArray.push(status);
-                 }
-                 else if (isRepeat && repeatTimes !== 0 && deliveryTimes === 0) {
-                    statusArray.push(JOB_NEW);
-                    statusArray.push(status);
-                 }
-                 else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes <= deliveryTimes) {
-                    //statusArray.push(JOB_DONE);
-                    status = JOB_DONE;
-                    statusArray.push(status);
-                 } else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes > deliveryTimes) {
-                    //statusArray.push(JOB_PROGRESS);
-                    status = JOB_PROGRESS;
-                    statusArray.push(status);
-                 }
-                 else {
-                   statusArray.push(JOB_NEW);
-                   status = JOB_NEW;
-                   statusArray.push(status);
-                 }
-                 activeOrder ++;
-                 orders.push ({...workorders[orderKey], orderStatus: status});
+                      //console.log("repeatTimes = " + repeatTimes);
+                      //previousDelivery = previousDelivery? (previousDelivery!== "undefined" ?
+                      //                        parseInt(previousDelivery, 10): 0) : 0;
+                      //console.log("previousDelivery = " + previousDelivery);
+                      //presentDelivery = presentDelivery? (presentDelivery !== "undefined" ?
+                      //                        parseInt(presentDelivery, 10): 0) : 0;
+                      //console.log("presentDelivery = " + presentDelivery);
+                      let deliveryTimes = 0;
+                      //console.log("deliveryTimes = " + deliveryTimes);
+
+                      for (var deliverykey in deliverys) {
+                           deliveryTimes ++;
+                      }
+
+                      let status = JOB_NEW;
+                      if (!isRepeat && deliveryTimes > 0) {
+                           status = JOB_DONE;
+                           statusArray.push(status);
+                      } else if (isRepeat && repeatTimes === 0 && deliveryTimes === 0) {
+                          //statusArray.push(JOB_PROGRESS);
+                          status = JOB_NEW;
+                          statusArray.push(status);
+                      } else if (isRepeat && repeatTimes === 0 && deliveryTimes > 0) {
+                          //statusArray.push(JOB_PROGRESS);
+                          status = JOB_DONE;
+                          statusArray.push(status);
+                      }
+                       else if (isRepeat && repeatTimes !== 0 && deliveryTimes === 0) {
+                          statusArray.push(JOB_NEW);
+                          statusArray.push(status);
+                      }
+                      else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes <= deliveryTimes) {
+                         //statusArray.push(JOB_DONE);
+                         status = JOB_DONE;
+                         statusArray.push(status);
+                      } else if (isRepeat && repeatTimes !== 0 && deliveryTimes !== 0 && repeatTimes > deliveryTimes) {
+                         //statusArray.push(JOB_PROGRESS);
+                         status = JOB_PROGRESS;
+                         statusArray.push(status);
+                      }
+                      else {
+                          statusArray.push(JOB_NEW);
+                          status = JOB_NEW;
+                          statusArray.push(status);
+                      }
+                          activeOrder ++;
+                          orders.push ({...workorders[orderKey], orderStatus: status});
+                      }
+
+            if (statusArray.length > 0) {
+                         status = statusArray[0];
+                        //console.log("status Array length = " + statusArray.length);
+            }
+
+            var i= 0;
+            for (i = 0; i < statusArray.length; i++) {
+                         status = status <= statusArray[i]? status: statusArray[i];
+                        //console.log("status = " + status);
+                         //console.log("status = "  + statusArray[i]);
+            }
+
+                    //let status = JOB_NEW;
+
+            const assignedMarker = {
+                   pos:
+                   {
+                     lat: lat,
+                     lng: lng
+                   },
+                   name: name,
+                   id:  key,
+                   status: status,
+                   street: street,
+                   type: CLIENT_MARKER,
+                   isAssigned: true,
+                   employeeName: selectedEmployee.name,
+                   city: city,
+                   clientTag: clientTag,
+                   clientKey: clientKey,
+                   activeOrdersNumber: activeOrder,
+                   activeOrders: orders,
+                   type: CLIENT_MARKER,
              }
 
-             if (statusArray.length > 0) {
-                status = statusArray[0];
-                //console.log("status Array length = " + statusArray.length);
-             }
+                   //console.log("assignedMarker = " );
+                   //console.log(assignedMarker) ;
+             selectedMarkers.push(assignedMarker);
+     }
+     return {
+             ...state,
+             markers: selectedMarkers,
+             employeeMarkers: marker4Employee,
+             clientContactView: false,
+             clientView: false,
+             mapView: true,
+             companyInfoView: false,
+             leadView: false,
+             truckMarkers:[],
+             leadMarkers:[],
+    };
 
-             var i= 0;
-             for (i = 0; i < statusArray.length; i++) {
-                 status = status <= statusArray[i]? status: statusArray[i];
-                 //console.log("status = " + status);
-                 //console.log("status = "  + statusArray[i]);
-             }
-
-             //let status = JOB_NEW;
-
-             const assignedMarker = {
-                 pos:
-                 {
-                    lat: clientLat,
-                    lng: clientLng
-                 },
-                 name: clientName,
-                 id:  key,
-                 status: status,
-                 street: clientStreet,
-                 type: CLIENT_MARKER,
-                 isAssigned: true,
-                 employeeName: selectedEmployee.name,
-                 city: clientCity,
-                 clientTag: clientTag,
-                 clientKey: clientKey,
-                 activeOrdersNumber: activeOrder,
-                 activeOrders: orders,
-                 type: CLIENT_MARKER,
-             }
-
-            //console.log("assignedMarker = " );
-            //console.log(assignedMarker) ;
-            selectedMarkers.push(assignedMarker);
-       }
-            return {
-                    ...state,
-                    markers: selectedMarkers,
-                    employeeMarkers: marker4Employee,
-                    clientContactView: false,
-                    clientView: false,
-                    mapView: true,
-                    companyInfoView: false,
-                    leadView: false,
-                    truckMarkers:[],
-                    leadMarkers:[],
-      };
 case actionTypes.SET_UNASSIGNED_CLIENTS:
       //const clients = state.clientList;
       const allClientData = state.reposData["clients"]["data"];
@@ -683,15 +772,17 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
            let orders = [];
            // step 1: find active workorders for this clients
            for (var workKey in workorders) {
-              let {isActive, isRepeat, repeatTimes, isEmployeeAssigned} = workorders[workKey];
+              let {isActive, isRepeat, repeatTimes, assignedEmployees} = workorders[workKey];
               isActive = isActive? (isActive === "true"? true: false) : false;
               isRepeat = isRepeat? (isRepeat === "true"? true: false) : false;
               repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
                                            parseInt(repeatTimes, 10): 0) : 0;
-              isEmployeeAssigned = isEmployeeAssigned? (isEmployeeAssigned === "true"? true: false) : false;
-
+              //isEmployeeAssigned = isEmployeeAssigned? (isEmployeeAssigned === "true"? true: false) : false;
+              const employeeAssigned = ( assignedEmployees === null ||
+                                         assignedEmployees === undefined ||
+                                         assignedEmployees === "undefined")? false: true ;
               // ignore not active work orders and ignore assigned order
-              if (!isActive || isEmployeeAssigned) {
+              if (!isActive || employeeAssigned) {
                   continue;
               }
 
