@@ -39,7 +39,7 @@ class Client extends React.Component {
         return
     }
 
-    this.props.setClientTag(client.tag);
+    this.props.setClientTag(client.clientKey);
 
     //console.log(client.tag);
     //console.log(this.props.usertag)
@@ -148,6 +148,7 @@ class Client extends React.Component {
     //this.props.setActiveOrderKey(client.activeOrderKey);
     //this.props.setActiveOrderId(client.activeOrderId);
     this.props.setSelectedClientKey(clientKey);
+    //console.log(clientKey);
   }
 
   /*displayEmails = emails =>

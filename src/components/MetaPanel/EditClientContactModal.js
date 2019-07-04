@@ -200,7 +200,7 @@ class EditClientContactModal extends Component {
          }*/
 
          //console.log(newClient);
-         const clientPath = "repos/" + usertag + "/clients/data/" + contact.tag +"/contact";
+         const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientKey +"/contact";
          //console.log(clientPath);
          const clientKey = contact.tag;
          const clientRef = firebase.database().ref(clientPath);

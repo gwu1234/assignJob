@@ -131,7 +131,7 @@ const mapStateToProps = state => {
   const usertag = state.user.usertag;
   const clienttag = state.user.clienttag;
   let workOrders = null;
-  //console.log(clienttag);
+  console.log(clienttag);
   if (clienttag) {
       //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
       workOrders = reposData["clients"]["data"][clienttag]?

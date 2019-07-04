@@ -34,7 +34,7 @@ class Clients extends React.Component {
    };*/
 
    componentDidMount() {
-     const {clients, geoEncoding} = this.props;
+     /*const {clients, geoEncoding} = this.props;
 
      if (geoEncoding === GEOCODING_RENEWED) {
         this.updateClients(clients);
@@ -42,11 +42,11 @@ class Clients extends React.Component {
         this.setState ({
           currentGeoEncoding: GEOCODING_PUSHED
         })
-     }
+     }*/
    }
 
    setSelectedClientKey = (key) =>{
-     //console.log("selcted key = " + key);
+     console.log("selcted key = " + key);
      this.setState ({selectedClientKey: key}) ;
    }
 
@@ -110,14 +110,14 @@ class Clients extends React.Component {
           selectedClientKey={this.state.selectedClientKey}/>
      ));
 
-  updateClients = clients => {
+  /*updateClients = clients => {
       const {usertag} = this.props;
       const clientsTag = "repos/" + usertag +"/clients/tags";
       //console.log("clientsTag = " + clientsTag);
       const clientsRef = firebase.database().ref(clientsTag)
       //console.log("clientTag = " + clientsTag);
       clientsRef.set(clients);;
-  }
+  }*/
 
   render() {
     const {clients, currentUser, usertag, geoEncoding, french} = this.props;

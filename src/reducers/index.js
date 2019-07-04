@@ -90,7 +90,7 @@ const user_reducer = (state = initialUserState, action) => {
             dataList = reposData["clients"]["data"];
             for (var key in dataList) {
                let contact = dataList[key]["contact"];
-               contact = {...contact, tag: key, clientTag: key};
+               contact = {...contact, clientKey: key, clientTag: key};
                //console.log (contact) ;
                clientList = {...clientList, [key]: contact}
             }

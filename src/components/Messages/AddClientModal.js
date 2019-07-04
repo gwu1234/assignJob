@@ -139,7 +139,7 @@ export default class AddClientModal extends Component {
            "phones": phones,
            "cells": cells,
            "clientTag": String(tag),
-           "tag": String(tag),
+           "clientKey": String(tag),
          }
          //conso
           //console.log(newClient);
