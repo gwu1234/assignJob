@@ -32,7 +32,7 @@ class AddOrderModal extends Component {
          const {usertag, contact} = this.props;
 
          //"repos/"+usertag+"/clients/data/"+ contact.clientTag
-         let orderString = "repos/"+usertag+"/clients/data/"+contact.clientTag+"/workorders";
+         let orderString = "repos/"+usertag+"/clients/data/"+contact.clientKey+"/workorders";
          const ordertag = orderString.replace(/[.,#$\[\]@ ]/g,'');
          const orderRef = firebase.database().ref(ordertag);
          const orderkey = orderRef.push().getKey();

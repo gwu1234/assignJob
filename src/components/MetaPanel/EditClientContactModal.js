@@ -183,8 +183,8 @@ class EditClientContactModal extends Component {
            "phones": phones,
            "cells": cells,
            "tag": String(contact.tag),
-           "clientTag": String(contact.tag),
-           "clientKey": String(contact.tag)
+           "clientTag": String(contact.clientKey),
+           "clientKey": String(contact.clientKey)
          }
 
          /*const newClient = {

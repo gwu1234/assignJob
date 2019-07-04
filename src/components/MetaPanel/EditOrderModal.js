@@ -238,7 +238,7 @@ componentWillUnMount() {
          }*/
          else {
               //console.log("fields change, active id not changed");
-              let orderPath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/workorders/" +orderKey;
+              let orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/workorders/" +orderKey;
               const orderRef = firebase.database().ref(orderPath);
               //console.log(orderPath);
 
@@ -248,8 +248,7 @@ componentWillUnMount() {
                  "orderKey": String(orderKey),
                  "orderId" : String(orderId),
                  "clientKey": String(contact.clientKey),
-                 "tag": String(contact.tag),
-                 "clientTag": String(contact.tag),
+                 "clientTag": String(contact.clientKey),
                  "isActive": String(isActive),
                  "isRepeat": String(isRepeat),
                  "repeatTimes": String(repeatTimes),
