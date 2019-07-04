@@ -136,9 +136,10 @@ class ClientContact extends React.Component {
     const {contact, usertag, french} = this.props;
     const {emailDisplay, phoneDisplay, cellDisplay, editDisplay} = this.state;
 
-    //console.log (contact);
+    //console.log (contact.cells);
     let address = '';
     if (contact) {
+        console.log(contact.cells);
         address = contact.street + ", " +contact.city + ", " + contact.postcode;
     }
 
@@ -246,7 +247,7 @@ const mapStateToProps = state => {
        //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
        if (reposData["clients"]["data"][clienttag]) {
             clientContact = reposData["clients"]["data"][clienttag]["contact"];
-            clientContact = {...clientContact, clientTag: clienttag}
+            clientContact = {...clientContact, clientTag: clienttag, clientKey: clienttag}
        } else {
           clientContact = {};
        }

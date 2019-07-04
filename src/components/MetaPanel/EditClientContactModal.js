@@ -182,9 +182,9 @@ class EditClientContactModal extends Component {
            "emails": emails,
            "phones": phones,
            "cells": cells,
-           "tag": String(contact.clientTag),
-           "clientTag": String(contact.clientTag),
-           "clientKey": String(contact.clientKey)
+           "tag": String(contact.tag),
+           "clientTag": String(contact.tag),
+           "clientKey": String(contact.tag)
          }
 
          /*const newClient = {
@@ -200,9 +200,9 @@ class EditClientContactModal extends Component {
          }*/
 
          //console.log(newClient);
-         const clientPath = "repos/" + usertag + "/clients/data/" + contact.clientTag +"/contact";
-         console.log(clientPath);
-         const clientKey = contact.clientKey;
+         const clientPath = "repos/" + usertag + "/clients/data/" + contact.tag +"/contact";
+         //console.log(clientPath);
+         const clientKey = contact.tag;
          const clientRef = firebase.database().ref(clientPath);
          //const clientKey = clientRef.push().getKey();
          //console.log(clientKey);
