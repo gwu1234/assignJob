@@ -32,7 +32,7 @@ class AddInvoiceModal extends Component {
          const {usertag, contact} = this.props;
 
          //"repos/"+usertag+"/clients/data/"+ contact.clientTag
-         let invoiceString = "repos/"+usertag+"/clients/data/"+contact.clientTag+"/invoices";
+         let invoiceString = "repos/"+usertag+"/clients/data/"+contact.clientKey+"/invoices";
          const invoicetag = invoiceString.replace(/[.,#$\[\]@ ]/g,'');
          const invoiceRef = firebase.database().ref(invoicetag);
          const invoicekey = invoiceRef.push().getKey();
@@ -51,7 +51,6 @@ class AddInvoiceModal extends Component {
            "invoiceId": String(invoiceId),
            "invoiceKey": String(invoicekey),
            "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag),
          }
          //console.log(newOrder);
          invoiceRef.child(invoicekey).set(newInvoice);
@@ -217,12 +216,25 @@ class AddInvoiceModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
+
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let clientContact = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]?
+             reposData["clients"]["data"][clienttag]["contact"]:{};
+      //console.log(clientContact);
+  }
+  return {
+     contact: clientContact,
      usertag: state.user.usertag,
      french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

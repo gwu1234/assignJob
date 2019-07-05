@@ -60,7 +60,7 @@ class EditInvoiceModal extends Component {
     if (this.isFormValid()) {
 
          if (!selectOrderChange && fieldChange) {
-              let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.tag +"/invoices/" +invoiceKey;
+              let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/invoices/" +invoiceKey;
               const invoiceRef = firebase.database().ref(invoicePath);
               //console.log(contractPath);
 
@@ -73,7 +73,6 @@ class EditInvoiceModal extends Component {
                   "invoiceId": String(invoiceId),
                   "invoiceKey": String(invoiceKey),
                   "clientKey": String(contact.clientKey),
-                  "clientTag": String(contact.tag)
               }
               //console.log(newContract);
               invoiceRef.update(newInvoice);
@@ -85,7 +84,7 @@ class EditInvoiceModal extends Component {
          }
 
         else if (selectOrderChange) {
-            let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/invoices/" +invoiceKey;
+            let invoicePath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/invoices/" +invoiceKey;
             const invoiceRef = firebase.database().ref(invoicePath);
               //console.log(contractPath);
 
@@ -98,7 +97,6 @@ class EditInvoiceModal extends Component {
                 "invoiceId": String(invoiceId),
                 "invoiceKey": String(invoiceKey),
                 "clientKey": String(contact.clientKey),
-                "clientTag": String(contact.tag),
                 "linkedOrderId": selectedOrderId,
                 "linkedOrderKey":selectedOrderKey,
             }
