@@ -39,7 +39,7 @@ class AddContractModal extends Component {
          //console.log (contact.name);
          //console.log (contact.clientKey);
 
-         let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/";
+         let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/contracts/";
          const contractRef = firebase.database().ref(contractPath);
          //console.log(contractPath);
          const contractKey = contractRef.push().getKey();
@@ -53,7 +53,7 @@ class AddContractModal extends Component {
            "contractId": String(contractId),
            "contractKey": String(contractKey),
            "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag)
+           "clientTag": String(contact.clientKey)
          }
          //console.log(newContract);
          contractRef.child(contractKey).set(newContract);
@@ -193,11 +193,25 @@ class AddContractModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
+
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let clientContact = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]?
+             reposData["clients"]["data"][clienttag]["contact"]:{};
+      //console.log(clientContact);
+  }
+  return {
+     contact: clientContact,
      usertag: state.user.usertag,
+     french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

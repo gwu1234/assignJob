@@ -63,7 +63,7 @@ class EditContractModal extends Component {
          //console.log (contact.clientKey);
 
          if (!selectOrderChange && fieldChange) {
-              let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/" +contractKey;
+              let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/contracts/" +contractKey;
               const contractRef = firebase.database().ref(contractPath);
               //console.log(contractPath);
 
@@ -76,7 +76,7 @@ class EditContractModal extends Component {
                   "contractId": String(contractId),
                   "contractKey": String(contractKey),
                   "clientKey": String(contact.clientKey),
-                  "clientTag": String(contact.clientTag),
+                  "clientTag": String(contact.clientKey),
                   //"linkedOrderId": selectedOrderId,
                   //"linkedOrderKey":selectedOrderKey,
               }
@@ -97,7 +97,7 @@ class EditContractModal extends Component {
           }
 
           else if (selectOrderChange) {
-               let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/contracts/" +contractKey;
+               let contractPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/contracts/" +contractKey;
                const contractRef = firebase.database().ref(contractPath);
                //console.log(contractPath);
 
@@ -110,14 +110,14 @@ class EditContractModal extends Component {
                    "contractId": String(contractId),
                    "contractKey": String(contractKey),
                    "clientKey": String(contact.clientKey),
-                   "clientTag": String(contact.clientTag),
+                   "clientTag": String(contact.clientKey),
                    "linkedOrderId": selectedOrderId,
                    "linkedOrderKey":selectedOrderKey,
                }
                //console.log(newContract);
                contractRef.update(newContract);
 
-               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/workorders";
+               let orderPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/workorders";
                const orderRef = firebase.database().ref(orderPath);
 
                // a non-null work order selected
