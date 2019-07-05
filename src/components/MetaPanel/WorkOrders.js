@@ -50,7 +50,7 @@ class WorkOrders extends React.Component {
       orders.map(order => (
           <WorkOrder
              orderKey={order.orderKey}
-             key={order.orderKey}
+             key={order.clientKey + order.orderKey}
              order={order.order}
              usertag={this.props.usertag}
              french = {this.props.french}
