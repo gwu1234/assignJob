@@ -32,7 +32,7 @@ class AddPaymentModal extends Component {
          const {date,amount, method, paymentId} = this.state;
          const {contact, usertag} = this.props;
 
-         let paymentPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/payments/";
+         let paymentPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/payments/";
          const paymentRef = firebase.database().ref(paymentPath);
          //console.log(contractPath);
           const paymentKey = paymentRef.push().getKey();
@@ -44,7 +44,6 @@ class AddPaymentModal extends Component {
            "paymentKey": String(paymentKey),
            "paymentId": String(paymentId),
            "clientKey": String(contact.clientKey),
-           "clientTag": String(contact.clientTag)
          }
          //console.log(newPayment);
          paymentRef.child(paymentKey).set(newPayment);
@@ -108,7 +107,7 @@ class AddPaymentModal extends Component {
 
     return (
       <Modal
-        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right", color:"white"}}/>}
+        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right", color:"black"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -180,11 +179,25 @@ class AddPaymentModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
+
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let clientContact = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]?
+             reposData["clients"]["data"][clienttag]["contact"]:{};
+      //console.log(clientContact);
+  }
+  return {
+     contact: clientContact,
      usertag: state.user.usertag,
+     french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

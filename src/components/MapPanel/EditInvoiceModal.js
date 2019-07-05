@@ -264,11 +264,11 @@ componentDidMount() {
   }
 
   handleClose(event: SyntheticEvent, data: object) {
-     console.log("editInvoiceModal handleClose");
+     /*console.log("editInvoiceModal handleClose");
      console.log(event);
      console.log(data);
      console.log(object);
-     console.log(SyntheticEvent);
+     console.log(SyntheticEvent);*/
   }
 
 

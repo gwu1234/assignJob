@@ -227,7 +227,7 @@ class AddOrderModal extends Component {
     return (
       <Modal
         trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)}
-                 style = {{position: "relative", float: "right", color:"white"}}/>}
+                 style = {{position: "relative", float: "right", color:"black"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
