@@ -48,7 +48,7 @@ class Deliverys extends React.Component {
    displayDeliverys = deliverys =>
       deliverys.length > 0 &&
       deliverys.map(delivery => (
-          <Delivery deliveryKey={delivery.deliveryKey} key={delivery.deliveryKey} delivery={delivery.delivery} />
+          <Delivery deliveryKey={delivery.deliveryKey} key={delivery.clientKey + delivery.deliveryKey} delivery={delivery.delivery} />
      ));
 
 

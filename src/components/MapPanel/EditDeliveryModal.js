@@ -50,7 +50,7 @@ class EditOrderModal extends Component {
          if (!selectOrderChange && fieldChange) {
 
 
-             let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
+             let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/deliverys/" +deliveryKey;
              const deliveryRef = firebase.database().ref(deliveryPath);
              //console.log(deliveryPath);
 
@@ -61,7 +61,7 @@ class EditOrderModal extends Component {
                 "deliveryId": String (deliveryId),
                 "deliveryKey": String(deliveryKey),
                 "clientKey": String(contact.clientKey),
-                "clientTag": String(contact.clientTag)
+
              }
             //console.log(newDelivery);
             deliveryRef.update(newDelivery);
@@ -96,7 +96,7 @@ class EditOrderModal extends Component {
                orderRef.update(nullDelivery);
          }*/
 
-           let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/" +deliveryKey;
+           let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/deliverys/" +deliveryKey;
            const deliveryRef = firebase.database().ref(deliveryPath);
 
            const newDelivery = {
@@ -106,7 +106,6 @@ class EditOrderModal extends Component {
                "deliveryId": String (deliveryId),
                "deliveryKey": String(deliveryKey),
                "clientKey": String(contact.clientKey),
-               "clientTag": String(contact.clientTag),
                "linkedOrderId": selectedOrderId,
                "linkedOrderKey": selectedOrderKey,
            }

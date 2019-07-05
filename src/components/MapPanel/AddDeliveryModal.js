@@ -28,7 +28,7 @@ class AddDeliveryModal extends Component {
          const {date,work, employee, deliveryId} = this.state;
          const {contact, usertag} = this.props;
 
-         let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientTag +"/deliverys/";
+         let deliveryPath = "repos/"+usertag+"/clients/data/"+ contact.clientKey +"/deliverys/";
          const deliveryRef = firebase.database().ref(deliveryPath);
          //console.log(contractPath);
          const deliveryKey = deliveryRef.push().getKey();
@@ -40,9 +40,8 @@ class AddDeliveryModal extends Component {
              "deliveryId": String(deliveryId),
              "deliveryKey": String(deliveryKey),
              "clientKey": String(contact.clientKey),
-             "clientTag": String(contact.clientTag)
          }
-         console.log(newDelivery);
+         //console.log(newDelivery);
          deliveryRef.child(deliveryKey).set(newDelivery);
          this.handleOpen(false);
     }
@@ -98,7 +97,7 @@ class AddDeliveryModal extends Component {
 
     return (
       <Modal
-        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right", color:"white"}}/>}
+        trigger={<Icon name='plus' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right", color:"black"}}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -120,7 +119,7 @@ class AddDeliveryModal extends Component {
          <Grid.Column style={{height: "100%", width:"50%"}}>
         <Form >
            <Form.Group inline width='equal' >
-            
+
                 <Form.Input size ="mini"
                             label='Work'
                             placeholder='snow removal'
@@ -170,11 +169,25 @@ class AddDeliveryModal extends Component {
     )
   }
 }
-const mapStateToProps = state => ({
-     contact: state.user.clientContact,
+
+const mapStateToProps = state => {
+  const reposData = state.user.reposData;
+  const usertag = state.user.usertag;
+  const clienttag = state.user.clienttag;
+  let clientContact = null;
+  //console.log(clienttag);
+  if (clienttag) {
+      //const clientContact = reposData["clients"]["data"][clienttag]["contact"];
+      clientContact = reposData["clients"]["data"][clienttag]?
+             reposData["clients"]["data"][clienttag]["contact"]:{};
+      //console.log(clientContact);
+  }
+  return {
+     contact: clientContact,
      usertag: state.user.usertag,
+     french: state.user.french,
    }
-);
+};
 
 export default connect(
   mapStateToProps,

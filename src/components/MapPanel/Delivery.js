@@ -61,7 +61,7 @@ class Delivery extends React.Component {
     return (
       <Menu.Menu style = {isActive? {...styles.container, ...styles.active}: styles.container }>
           {date && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
-              <span> {date} </span> <EditDeliveryModal delivery={delivery} deliveryKey={deliveryKey} />
+              <span> {date} </span> <EditDeliveryModal key={delivery.clientKey+ deliveryKey} delivery={delivery} deliveryKey={deliveryKey} />
           </Menu.Item>}
           {work && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {work}
