@@ -64,7 +64,7 @@ class Payment extends React.Component {
       <Menu.Menu style = {isActive===true? {...styles.container, ...styles.active}:
                           styles.container}>
           {date && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
-              <span> {date} </span> <EditPaymentModal payment={payment} paymentKey={paymentKey} />
+              <span> {date} </span> <EditPaymentModal key={payment.clientKey+paymentKey} payment={payment} paymentKey={paymentKey} />
           </Menu.Item>}
           {amount && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {amount}

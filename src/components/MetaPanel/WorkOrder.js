@@ -202,7 +202,7 @@ class WorkOrder extends React.Component {
             thumbs.length> 0? {...styles.container, ...styles.thumb}: {...styles.container}
       }>
           {orderDate && <Menu.Item style = {isActive? styles.activeItem:styles.item}>
-              <span> Date: {orderDate} </span> <EditOrderModal order={order} orderKey={orderKey} />
+              <span> Date: {orderDate} </span> <EditOrderModal key={orderKey} order={order} orderKey={orderKey} />
           </Menu.Item>}
           {orderWork && <Menu.Item  style = {isActive? styles.activeItem:styles.item}>
               Work: {orderWork}

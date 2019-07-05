@@ -125,7 +125,7 @@ class AssignedEmployeeOrders extends React.Component {
   render() {
     const {AssignedEmployee, usertag, employeeKey, french} = this.props;
     const EmployeeAssignedData = this.getEmployeeAssignedData();
-    console.log(EmployeeAssignedData);
+    //console.log(EmployeeAssignedData);
 
     return (
        <Menu.Menu style={styles.container}>

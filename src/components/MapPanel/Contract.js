@@ -147,7 +147,7 @@ class Contract extends React.Component {
       <Menu.Menu style = {isActive===true? {...styles.container, ...styles.active}:
                           styles.container}>
           {contractDate && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
-              <span> {contractDate} </span> <EditContractModal contract={contract} contractKey={contractKey} />
+              <span> {contractDate} </span> <EditContractModal key={contract.clientKey+contractKey} contract={contract} contractKey={contractKey} />
           </Menu.Item>}
           {contractWork && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {contractWork}

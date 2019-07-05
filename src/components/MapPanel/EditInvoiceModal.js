@@ -31,6 +31,23 @@ class EditInvoiceModal extends Component {
      }
 }
 
+componentDidMount() {
+     this.state = {
+        date: this.props.invoice.date,
+        work: this.props.invoice.work,
+        amount: this.props.invoice.amount,
+        tax: this.props.invoice.tax,
+        total: this.props.invoice.total,
+        invoiceId: this.props.invoice.invoiceId,
+        linkedOrderId: this.props.invoice.linkedOrderId,
+        linkedOrderKey: this.props.invoice.linkedOrderKey,
+        selectedOrderId: null,
+        selectedOrderKey: null,
+        selectOrderChange: false,
+        fieldChange: false,
+    }
+}
+
 
 
   handleOpen = (open) => this.setState({ modalOpen: open })
@@ -246,6 +263,14 @@ class EditInvoiceModal extends Component {
     })
   }
 
+  handleClose(event: SyntheticEvent, data: object) {
+     console.log("editInvoiceModal handleClose");
+     console.log(event);
+     console.log(data);
+     console.log(object);
+     console.log(SyntheticEvent);
+  }
+
 
   render() {
     const {invoice, contact, french} = this.props;
@@ -271,15 +296,15 @@ class EditInvoiceModal extends Component {
       <Modal
         trigger={<Icon name='edit outline' size ="large" onClick={() => this.handleOpen(true)} style = {{position: "relative", float: "right"}}/>}
         open={this.state.modalOpen}
-        onClose={this.handleClose}
+        onClose={()=>this.handleClose}
         basic
         size='small'
         style={{background: "#ccc"}}
       >
-        <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondStyle: "bold", color:"black"}}/>
+        <Header icon='clipboard outline' content={titleString} style = {{fontSize: "1.0em", fondWeight: "bold", color:"black"}}/>
         <Modal.Content>
         <Grid style={{height: "100%", width:"100%"}}>
-        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontStyle: "bold", color:"black"}}>
+        <Grid.Column style={{height: "100%", width:"50%", fontSize: "1.0em", fontWeight: "bold", color:"black"}}>
 
         <DayPicker
              onDayClick={(day, modifiers)=>this.handleDayClick(day, modifiers)}
@@ -293,35 +318,35 @@ class EditInvoiceModal extends Component {
            <Form.Group inline width='equal' >
                 <Form.Input size ="mini"
                             label='Work'
-                             defaultValue = {invoice.work}
+                             defaultValue = {this.state.work}
                             name="work"
                             onChange={this.handleChange} />
           </Form.Group>
           <Form.Group inline width='equal' >
                 <Form.Input size ="mini"
                             label='Amount'
-                            defaultValue = {invoice.amount}
+                            defaultValue = {this.state.amount}
                             name="amount"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                  <Form.Input size ="mini"
                              label='Tax'
-                             defaultValue = {invoice.tax}
+                             defaultValue = {this.state.tax}
                              name="tax"
                              onChange={this.handleChange} />
             </Form.Group>
             <Form.Group inline width='equal' >
                   <Form.Input size ="mini"
                               label='Total'
-                              defaultValue = {invoice.total}
+                              defaultValue = {this.state.total}
                               name="total"
                               onChange={this.handleChange} />
              </Form.Group>
            <Form.Group inline width='equal' >
                 <Form.Input size ="mini"
                             label='Invoice Id'
-                            defaultValue = {invoice.invoiceId}
+                            defaultValue = {this.state.invoiceId}
                             name="invoiceId"
                             onChange={this.handleChange} />
           </Form.Group>

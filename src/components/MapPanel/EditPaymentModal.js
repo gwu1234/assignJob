@@ -14,8 +14,8 @@ class EditPaymentModal extends Component {
          amount: this.props.payment.amount,
          method: this.props.payment.method,
          paymentId: this.props.payment.paymentId,
-         linkedOrderId: this.props.payment.linkedInvoiceId,
-         linkedOrderKey: this.props.payment.linkedInvoiceKey,
+         linkedOrderId: this.props.payment.linkedOrderId,
+         linkedOrderKey: this.props.payment.linkedOrderKey,
          //linkedInvoiceSubkey: this.props.payment.linkedInvoiceSubkey,
          selectedOrderId: null,
          selectedOrderKey: null,
@@ -64,7 +64,6 @@ class EditPaymentModal extends Component {
                  "paymentKey": String(paymentKey),
                  "paymentId": String(paymentId),
                  "clientKey": String(contact.clientKey),
-                 "clientTag": String(contact.clientTag)
              }
              //console.log(newPayment);
              paymentRef.update(newPayment);
@@ -108,7 +107,6 @@ class EditPaymentModal extends Component {
                 "paymentKey": String(paymentKey),
                 "paymentId": String(paymentId),
                 "clientKey": String(contact.clientKey),
-                "clientTag": String(contact.clientTag),
                 "linkedOrderId": selectedOrderId,
                 "linkedOrderKey":selectedOrderKey,
             }

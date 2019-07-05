@@ -79,7 +79,7 @@ class Invoice extends React.Component {
       <Menu.Menu style = {isActive===true? {...styles.container, ...styles.active}:
                           styles.container}>
           {invoiceDate && <Menu.Item style = {isActive===true? styles.activeItem:styles.item}>
-              <span> {invoiceDate} </span> <EditInvoiceModal invoice={invoice} invoiceKey={invoiceKey} />
+              <span> {invoiceDate} </span> <EditInvoiceModal key={invoice.clientKey+invoiceKey} invoice={invoice} invoiceKey={invoiceKey} />
           </Menu.Item>}
           {invoiceWork && <Menu.Item style = {isActive===true? styles.activeItem:styles.item} >
               {invoiceWork}

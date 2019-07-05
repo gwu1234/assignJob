@@ -464,7 +464,7 @@ componentWillUnMount() {
      employees.length > 0 &&
      employees.map(employee => (
          <EmployeeNoOrder
-             key={employee.tag}
+             key={employee.employeeKey}
              assignedEmployee={employee}
              order={this.props.order}
              removeAssigned={(assigned)=>this.removeAssigned(assigned)}
