@@ -376,6 +376,8 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
          clientView: false,
          companyInfoView: false,
          leadView: false,
+         humanMarkers: [],
+         truckMarkers: [],
     };
 
     case actionTypes.SET_LEAD_MAPVIEW:
@@ -740,6 +742,79 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
                    //console.log(assignedMarker) ;
              selectedMarkers.push(assignedMarker);
      }
+
+     const truckList2 = state.reposData["trucks"];
+     dateString = null;
+
+     const truckMarker2 = [];
+     for (var tKey in truckList2) {
+        if ( truckList2[tKey].assigned &&
+             truckList2[tKey].assigned === true &&
+             truckList2[tKey].employeeKey === selectedEmployee.tag ) {
+           const timestamp = truckList2[tKey].timestamp;
+           dateString = (new Date(timestamp)).toLocaleString();
+           //console.log("datestring = ");
+           //console.log(dateString);
+
+           const currentTimestamp = Date.now();
+           const fiveMinute = 5 * 60 * 1000; // millisecond
+           const timeStatus = ((currentTimestamp - timestamp) > fiveMinute) ?
+                              PAST : CURRENT;
+           //const timeStatus = CURRENT;
+
+           const marker = {
+               pos:
+               {
+                  lat: truckList2[tKey].latitude,
+                  lng: truckList2[tKey].longitude
+               },
+               truckModel: truckList2[tKey].model,
+               truckColor: truckList2[tKey].color,
+               truckYear: truckList2[tKey].year,
+               employeeName: truckList2[tKey].employeeName,
+               dateString: dateString,
+               timeStatus: timeStatus,
+               id:  key,
+               type: TRUCK_MARKER,
+           }
+          truckMarker2.push(marker);
+        }
+      }
+      const employeeList2 = state.employeeList;
+      let humanMarker2 = [];
+
+      for (var key2 in employeeList2) {
+         if ( ( !employeeList2[key2].truckAssigned ||
+                 employeeList2[key2].truckAssigned ==="false" ) &&
+              employeeList2[key2].tag === selectedEmployee.tag ) {
+            const {currentLocation} = employeeList2[key2];
+
+            if (currentLocation) {
+                const timestamp = currentLocation.timestamp;
+                dateString = (new Date(timestamp)).toLocaleString();
+                const currentTimestamp = Date.now();
+                const fiveMinute = 5 * 60 * 1000; // millisecond
+                const timeStatus = ((currentTimestamp - timestamp) > fiveMinute) ?
+                               PAST : CURRENT;
+                //const timeStatus = CURRENT;
+
+                const marker = {
+                   pos:
+                   {
+                      lat: currentLocation.lat,
+                      lng: currentLocation.lng
+                   },
+                   employeeName: employeeList2[key2].name,
+                   dateString: dateString,
+                   timeStatus: timeStatus,
+                   id:  key2,
+                   type: HUMAN_MARKER,
+               }
+               humanMarker2.push(marker);
+           }
+         }
+       }
+
      return {
              ...state,
              markers: selectedMarkers,
@@ -749,8 +824,9 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
              mapView: true,
              companyInfoView: false,
              leadView: false,
-             truckMarkers:[],
+             truckMarkers:truckMarker2,
              leadMarkers:[],
+             humanMarkers: humanMarker2,
     };
 
 case actionTypes.SET_UNASSIGNED_CLIENTS:
@@ -877,6 +953,7 @@ case actionTypes.SET_UNASSIGNED_CLIENTS:
        mapView: true,
        companyInfoView: false,
        leadView: false,
+       humanMarkers: [],
   };
 
     default:
