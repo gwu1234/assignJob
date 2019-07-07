@@ -76,8 +76,10 @@ class Leads extends React.Component {
    displayLeads = leads => (
       (leads.length>0) && leads.map(lead => (
               <Lead key={lead.Key} leadKey={lead.Key}
-              lead={lead.lead} setSelectedLeadKey={(key)=>this.setSelectedLeadKey(key)}
-              selectedLeadKey={this.state.selectedLeadKey}/>
+                  lead={lead.lead} setSelectedLeadKey={(key)=>this.setSelectedLeadKey(key)}
+                  selectedLeadKey={this.state.selectedLeadKey}
+                  french = {this.props.french}
+              />
       ))
   )
 
@@ -124,7 +126,7 @@ class Leads extends React.Component {
       <Menu.Menu style={styles.container}>
             <Menu.Header style={styles.menuHeader}>
                 {titleString}
-                <AddLeadModal open={false} userName={userName} usertag = {usertag}/>
+                <AddLeadModal open={false} userName={userName} usertag = {usertag} french ={french}/>
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu} >
               {display && leadArray.length>0 && this.displayLeads(leadArray)}

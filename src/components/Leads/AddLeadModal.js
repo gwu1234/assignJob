@@ -50,7 +50,7 @@ export default class AddLeadModal extends Component {
       );
     }
     catch(err) {
-      console.log("Error fetching geocode lat and lng:", err);
+      //console.log("Error fetching geocode lat and lng:", err);
     }
     return null;
   }
@@ -207,8 +207,9 @@ export default class AddLeadModal extends Component {
    }
 
   render() {
-    const {userName} = this.props;
-    const titleString = userName + ":  " + "Add New Lead"
+    const {userName, french} = this.props;
+    const titleString = french? (userName + ":  " + "Ajouter Nouveau Lead") :
+                                (userName + ":  " + "Add New Lead") ;
 
     return (
       <Modal
@@ -224,24 +225,24 @@ export default class AddLeadModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='First Name'
+                           label={french? 'Prénom': 'First Name'}
                            placeholder='Alain'
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Last Name'
+                            label={french? 'Nom': 'Last Name'}
                             placeholder='Dubois'
                             name="lastname"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='Street & No'
+                           label={french? 'Rue & No': 'Street & No'}
                            placeholder='120 Hymus Road'
                            name="street"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='City'
+                            label={french? 'Ville': 'city'}
                             placeholder='Pointe Claire'
                             name="city"
                             onChange={this.handleChange} />
@@ -258,7 +259,7 @@ export default class AddLeadModal extends Component {
                            name="province"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Country'
+                            label={french? 'Pays': 'Country'}
                             placeholder='Canada'
                             name="country"
                             onChange={this.handleChange} />

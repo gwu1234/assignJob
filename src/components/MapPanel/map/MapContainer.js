@@ -144,170 +144,6 @@ class MapContainer extends Component {
     }
   }
 
-
- /*workIsDone = (props, marker, e) =>{
-   //console.log("at MapContainer workIsDone");
-   //console.log(this.state.activeMarker.clientKey);
-   //console.log(this.state.activeMarker.name);
-   //console.log(marker);
-
-   const {usertag, markers} = this.props;
-   const {activeMarker} = this.state;
-   //const {markers, activeMarker} = this.state;
-   const date = new Date();
-   // timestamp in second
-   const timestamp = Math.round(date.getTime()/1000 + 0.5);
-   const localtime = date.toLocaleString();
-
-    var  equalPos = markers.findIndex((element, index) =>
-     (
-        index === this.state.activeMarker.id
-     ));
-
-    //console.log(this.state.activeMarker.name);
-    //console.log(this.state.activeMarker.clientKey);
-    if (equalPos >= 0) {
-        markers[equalPos].status = JOB_DONE;
-    }
-
-    //console.log("equalPos = ");
-    //console.log(equalPos);
-
-    this.setState({
-       //activeMarker: null,
-       //markers: markers,
-       showingInfoWindow: false
-    });
-
-    /*let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
-    let statusRef = firebase.database().ref(statusTag);
-
-    if (statusRef == null) {
-        statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id;
-        statusRef = firebase.database().ref(statusTag).child("status").set(2);
-    } else {
-        statusRef.set(2);
-    }*/
-    //lastservicetime
-    /*let lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/lastservicetime";
-    let lastRef = firebase.database().ref(lastTag);
-
-    if (lastRef == null) {
-        lastTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey;
-        lastRef = firebase.database().ref(lastTag).child("lastservicetime").set(timestamp);
-    } else {
-        lastRef.set(timestamp);
-    }
-    const delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
-    //console.log(delTag);
-    const delRef = firebase.database().ref(delTag);
-    const delKey = delRef.push().getKey();
-    //console.log(delKey);
-
-    const newDelivery = {
-      "date": localtime,
-      "work": "DONE-" + timestamp,
-      "employee": "admin",
-      "clientKey": activeMarker.clientKey,
-      "clientTag": activeMarker.clientTag,
-      "deliveryKey": delKey,
-    }
-    //console.log (newDelivery);
-    delRef.child(delKey).set(newDelivery);
-
-
-    /*if (delRef == null) {
-        delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
-        delRef = firebase.database().ref(delTag).child("lastservicetime").set(timestamp);
-    } else {
-        delRef.set(timestamp);
-    }*/
-  //}*/
-
-  /*workNotDone = (props, marker, e) =>{
-    const {markers} = this.props;
-    var  equalPos = markers.findIndex((element, index) =>
-      (
-        index === this.state.activeMarker.id
-      ));
-
-    if (equalPos >= 0) {
-      markers[equalPos].status =0;
-    }
-
-    this.setState({
-       //activeMarker: null,
-       markers: markers,
-       showingInfoWindow: false
-    });
-  }*/
-
-   /*workToRepeat = (props, marker, e) =>{
-     //const {markers} = this.props;
-     const {usertag, markers} = this.props;
-     const {activeMarker} = this.state;
-     const date = new Date();
-     // timestamp in second
-     const timestamp = Math.round(date.getTime()/1000 + 0.5);
-     const localtime = date.toLocaleString();
-     //console.log("at MapContainer workToRepeat");
-     //console.log(this.state.activeMarker.clientKey);
-     //console.log(this.state.activeMarker.name);
-     //console.log(activeMarker.id);
-     //console.log(this.props.usertag);
-     var  equalPos = markers.findIndex((element, index) =>
-       (
-         index === this.state.activeMarker.id
-       ));
-
-     if (equalPos >= 0) {
-       markers[equalPos].status = JOB_PROGRESS;
-     }
-
-     this.setState({
-        //activeMarker: null,
-        //markers: markers,
-        showingInfoWindow: false
-     });
-
-     let statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id + "/status";
-     let statusRef = firebase.database().ref(statusTag);
-
-     if (statusRef == null) {
-         statusTag = "repos/" + usertag + "/clients/tags/" + activeMarker.id;
-         statusRef = firebase.database().ref(statusTag).child("status").set(1);
-     } else {
-         statusRef.set(1);
-     }
-     let repeatTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey + "/repeattime";
-     let repeatRef = firebase.database().ref(repeatTag);
-
-     if (repeatRef == null) {
-         repeatTag = "repos/" + usertag + "/clients/tags/" + activeMarker.clientKey;
-         repeatRef = firebase.database().ref(repeatTag).child("repeattime").set(1);
-     } else {
-         repeatRef.set(timestamp);
-     }
-
-     const delTag = "repos/" + usertag + "/clients/data/" + activeMarker.clientTag + "/deliverys";
-     //console.log(delTag);
-     const delRef = firebase.database().ref(delTag);
-     const delKey = delRef.push().getKey();
-     console.log(delKey);
-
-     const newDelivery = {
-       "date": localtime,
-       "work": "REPEAT-" + timestamp,
-       "employee": "admin",
-       "clientKey": activeMarker.clientKey,
-       "clientTag": activeMarker.clientTag,
-       "deliveryKey": delKey,
-     }
-     //console.log (newDelivery);
-     delRef.child(delKey).set(newDelivery);
-
-   } */
-
   onClose = () => {
     console.log("onClose()");
     if (this.state.showingInfoWindow) {
@@ -344,7 +180,7 @@ class MapContainer extends Component {
 
   onMclose =()=> {
     if (this.state.showingMouseoverWindow) {
-      console.log("onMclose: closing");
+      //console.log("onMclose: closing");
       this.setState({
         showingInfoWindow: false,
         showingGwindow: false,
@@ -354,7 +190,7 @@ class MapContainer extends Component {
   }
 
   createLead = () => {
-    console.log("createLead()");
+    //console.log("createLead()");
     const {usertag, markers} = this.props;
     const {selectedStreet, selectedCity, selectedProvince, selectedCountry,
       selectedPostcode, selectedLat, selectedLng} = this.state;
@@ -370,7 +206,7 @@ class MapContainer extends Component {
               (contact.street=== selectedStreet &&
                contact.postcode === selectedPostcode ) ) {
               const address = selectedStreet + " " + selectedCity ;
-              console.log("address existed already = " + address) ;
+              //console.log("address existed already = " + address) ;
               this.onGclose();
               return;
          }
@@ -541,10 +377,10 @@ class MapContainer extends Component {
               });
 
             } else {
-              window.alert('No results found');
+              //window.alert('No results found');
             }
           } else {
-            window.alert('Geocoder failed due to: ' + status);
+            //window.alert('Geocoder failed due to: ' + status);
           }
         });
       }
