@@ -12,19 +12,19 @@ class AssignedEmployeeOrder extends React.Component {
   }
 
   render() {
-    const { order } = this.props;
+    const { order, french } = this.props;
         //console.log(order);
     return (
       <Grid columns={3} style = {styles.container}>
          <Grid.Row >
              <Grid.Column style={{width:"37%"}}>
-                     <OrderOrder order={order.order} orderKey ={order.order.orderKey}/>
+                     <OrderOrder order={order.order} orderKey ={order.order.orderKey} french={french}/>
               </Grid.Column>
               <Grid.Column style={{width:"25.8%"}}>
-                      <OrderCoworkers coworkers ={order.coworkers}/>
+                      <OrderCoworkers coworkers ={order.coworkers} french ={french}/>
               </Grid.Column>
               <Grid.Column style={{width:"37%"}}>
-                      <OrderDeliverys deliverys ={order.deliverys}/>
+                      <OrderDeliverys deliverys ={order.deliverys} french={french}/>
               </Grid.Column>
          </Grid.Row> </Grid>
      );

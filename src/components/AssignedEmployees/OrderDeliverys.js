@@ -11,6 +11,7 @@ class OrderDeliverys extends React.Component {
   }
 
   displayDeliverys = (deliverys) => {
+     const {french} = this.props;
      let jobs = [];
      for (var deliverykey in deliverys) {
         jobs.push (
@@ -19,10 +20,10 @@ class OrderDeliverys extends React.Component {
                    Date : {deliverys[deliverykey].date}
               </Menu.Item>
               <Menu.Item style={styles.item}>
-                   Work : {deliverys[deliverykey].work}
+                 {french? "Travail": "Work"} : {deliverys[deliverykey].work}
               </Menu.Item>
               <Menu.Item style={styles.item}>
-                   Employee : {deliverys[deliverykey].employee}
+                {french? "Employé": "Employee"}  : {deliverys[deliverykey].employee}
               </Menu.Item>
          </Menu.Menu>);
      }
@@ -37,7 +38,7 @@ class OrderDeliverys extends React.Component {
     return (
       <Menu.Menu>
           <Message style ={styles.name}>
-               <p> Deliverys </p>
+               <p> {french? "livraisons" : "Deliveries"} </p>
           </Message>
           {this.displayDeliverys(deliverys)}
       </Menu.Menu>

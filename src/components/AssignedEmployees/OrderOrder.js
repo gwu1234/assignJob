@@ -22,28 +22,28 @@ class OrderOrder extends React.Component {
     return (
        <Menu.Menu style={styles.container}>
            <Message style ={styles.name}>
-              <p> Order Brief</p>
+              <p> {french ? "Ordre Bref" : "Order Brief"}</p>
            </Message>
            <Menu.Item style={styles.item}>
-              Order id : {orderId}
+               {french? "Ordre id" : "Order id"} : {orderId}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Client Name : {clientName}
+              {french? "Client Nom" : "Client Name"} : {clientName}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Client Address : {clientAddress}
+              {french? "Client Address" : "Client Adresse"} : {clientAddress}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Order Date : {date}
+              {french? "Ordre Date" : "Order Date"} : {date}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Order Work : {work}
+              {french? "Ordre Travail" : "Order Work"} : {work}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              Is Repeat : {String (isRepeat)}
+              {french? "Se Répéter" : "Is Repeat"} : {String (isRepeat)}
            </Menu.Item>
           { isRepeat && <Menu.Item style={styles.item}>
-              Repeat Times : {repeatTimes}
+              {french? "Répéte fois" : "Repeat Times"} : {repeatTimes}
            </Menu.Item> }
        </Menu.Menu>
      );

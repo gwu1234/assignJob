@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
-import { connect } from "react-redux";
-import { Menu, Icon, Grid, Message} from "semantic-ui-react";
+//import firebase from "../../firebase";
+//import { connect } from "react-redux";
+import { Menu, Message} from "semantic-ui-react";
 //import AssignedEmployeeHeader from "./AssignedEmployeeHeader";
 //import AssignedEmployeeOrder from "./AssignedEmployeeOrder";
 
@@ -23,13 +23,13 @@ class OrderCoworkers extends React.Component {
 
 
   render() {
-    const { coworkers, usertag, french } = this.props;
+    const { coworkers, french } = this.props;
     //console.log(coworkers);
 
     return (
       <Menu.Menu>
           <Message style ={styles.name}>
-               <p> Coworkers</p>
+               <p> {french? "Collègues" : "Coworkers"}</p>
           </Message>
           {this.displayCoworkers(coworkers)}
       </Menu.Menu>
