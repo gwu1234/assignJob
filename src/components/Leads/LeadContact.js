@@ -104,25 +104,25 @@ class LeadContact extends React.Component {
     }
 
     let status = "";
-    if (contact.status && contact.status === LEAD_POSITIVE) {
+    if (contact && contact.status && contact.status === LEAD_POSITIVE) {
        status = "LEAD_POSITIVE";
-    } else if (contact.status && contact.status === LEAD_RESPONSIVE) {
+    } else if (contact && contact.status && contact.status === LEAD_RESPONSIVE) {
        status = "LEAD_RESPONSIVE";
-    } else if (contact.status && contact.status === LEAD_NEW) {
+    } else if (contact && contact.status && contact.status === LEAD_NEW) {
        status = "LEAD_NEW";
-    } else if (contact.status && contact.status === LEAD_NOT_RESPONSIVE) {
+    } else if (contact && contact.status && contact.status === LEAD_NOT_RESPONSIVE) {
        status = "LEAD_NOT_RESPONSIVE";
-    } else if (contact.status && contact.status === LEAD_DECLINE) {
+    } else if (contact && contact.status && contact.status === LEAD_DECLINE) {
        status = "LEAD_DECLINE";
     } else {
       status = "LEAD_NEW";
     }
 
     let isEmployeeAssigned = contact.isEmployeeAssigned ?
-              (contact.isEmployeeAssigned === "true"? true: false) :false;
+              (contact && contact.isEmployeeAssigned === "true"? true: false) :false;
     let employeeName = "";
     if (isEmployeeAssigned) {
-        employeeName = contact.employeeFirstname + " " + contact.employeeLastName;
+        employeeName = contact ? (contact.employeeFirstname + " " + contact.employeeLastName): "";
     }
 
     return (
@@ -148,10 +148,10 @@ class LeadContact extends React.Component {
                {contact && contact.postcode}
           </Menu.Item>}
           {contact && status && <Menu.Item style={styles.address}>
-               {"lead status: " + status}
+               {french? ("lead statut: " + status): ("lead status: " + status)}
           </Menu.Item>}
           {contact && isEmployeeAssigned && <Menu.Item style={styles.address}>
-               {"assigned to : " + employeeName}
+               {french? ("attribué à : " + employeeName): ("assigned to : " + employeeName)}
           </Menu.Item>}
           {contact && contact.emails && <Menu.Menu style={styles.emailMenu}>
             {contact && contact.emails && contact.emails.length>0 && this.displayEmailHeader (emailDisplay)}
