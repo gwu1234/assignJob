@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
-import { connect } from "react-redux";
-import { Menu, Icon, Grid} from "semantic-ui-react";
+//import firebase from "../../firebase";
+//import { connect } from "react-redux";
+import { Grid} from "semantic-ui-react";
 import OrderOrder from "./OrderOrder";
 import OrderCoworkers from "./OrderCoworkers";
 import OrderDeliverys from "./OrderDeliverys";
@@ -12,7 +12,7 @@ class AssignedEmployeeOrder extends React.Component {
   }
 
   render() {
-    const { order, usertag, french } = this.props;
+    const { order } = this.props;
         //console.log(order);
     return (
       <Grid columns={3} style = {styles.container}>

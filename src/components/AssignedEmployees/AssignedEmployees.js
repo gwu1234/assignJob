@@ -1,5 +1,5 @@
 import React from "react";
-import firebase from "../../firebase";
+//import firebase from "../../firebase";
 import { connect } from "react-redux";
 import { Menu, Icon} from "semantic-ui-react";
 import AssignedEmployee from "./AssignedEmployee";
@@ -25,7 +25,7 @@ class AssignedEmployees extends React.Component {
 
 
   render() {
-    const {assignedEmployees, usertag, french} = this.props;
+    const { assignedEmployees } = this.props;
 
     //converting nested objects to object array
     const assignedArray =[];

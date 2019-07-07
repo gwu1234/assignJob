@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
-import { connect } from "react-redux";
-import { Menu, Icon, Grid} from "semantic-ui-react";
+//import firebase from "../../firebase";
+//import { connect } from "react-redux";
+import { Menu } from "semantic-ui-react";
 import AssignedEmployeeHeader from "./AssignedEmployeeHeader";
 import AssignedEmployeeOrder from "./AssignedEmployeeOrder";
 
@@ -53,59 +53,10 @@ class AssignedEmployeeOrders extends React.Component {
                }
            }
            assignedData[orderkey]["deliverys"] = assignedDeliverys;
-           //console.log(assignedData);
 
-           //this.setState ({
-           //return  assignedData;
-           //});
       }
       return  assignedData;
   }
-
-
-  /*componentDidUpdate() {
-      const {AssignedEmployee, usertag, employeeKey, french, clientList} = this.props;
-      const {assignedOrders} = AssignedEmployee;
-
-      let assignedData = {};
-      for (var orderkey in assignedOrders) {
-           const {clientKey, orderId, orderKey} = assignedOrders [orderkey];
-           const contact = clientList[clientKey]["contact"];
-           const {name, street, city } = contact;
-           const address = street + " , " + city;
-
-           const order = { ...clientList[clientKey]["workorders"][orderKey],
-                           "assignedEmployees": null,
-                           "clientName": name,
-                           "clientAddress": address,
-                         };
-
-           assignedData[orderkey] = {};
-           assignedData[orderkey]["order"] = order;
-           //console.log(assignedData);
-           const coworkers = clientList[clientKey]["workorders"][orderKey]["assignedEmployees"];
-           assignedData[orderkey]["coworkers"] = coworkers;
-           //console.log(assignedData);
-
-           let assignedDeliverys = {};
-           const deliverys = clientList[clientKey]["deliverys"];
-           //console.log(deliverys);
-           for (var deliverykey in deliverys) {
-               if ( deliverys[deliverykey].linkedOrderKey === orderKey &&
-                    deliverys[deliverykey].linkedOrderId  === orderId ) {
-                    //assignedDeliverys[deliverykey] = {};
-                    assignedDeliverys[deliverykey] = deliverys[deliverykey];
-                    //console.log(deliverys[deliverykey]);
-               }
-           }
-           assignedData[orderkey]["deliverys"] = assignedDeliverys;
-           //console.log(assignedData);
-
-           this.setState ({
-              EmployeeAssignedData: assignedData
-           });
-      }
-  }*/
 
   displayAssignedEmployeeOrders = (EmployeeAssignedData) => {
      //const {EmployeeAssignedData} = this.state;
@@ -123,7 +74,7 @@ class AssignedEmployeeOrders extends React.Component {
   };
 
   render() {
-    const {AssignedEmployee, usertag, employeeKey, french} = this.props;
+    //const {AssignedEmployee, usertag, employeeKey, french} = this.props;
     const EmployeeAssignedData = this.getEmployeeAssignedData();
     //console.log(EmployeeAssignedData);
 
