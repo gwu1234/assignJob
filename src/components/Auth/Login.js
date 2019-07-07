@@ -167,7 +167,7 @@ class Login extends React.Component {
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="violet" textAlign="center">
             <Icon name="truck" color="violet" />
-            Login to AssignJobs
+                   Duty2Go
           </Header>
           <Form onSubmit={this.handleSubmit} size="large">
             <Segment stacked>

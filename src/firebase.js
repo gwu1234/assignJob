@@ -5,15 +5,13 @@ import "firebase/storage";
 
 
   var config = {
-    apiKey: "AIzaSyDuKonQxaHIwr3Luxfl0HEmAIYA0vKwDHg",
-    authDomain: "jobassign4.firebaseapp.com",
-    databaseURL: "https://jobassign4.firebaseio.com",
-    projectId: "jobassign4",
-    storageBucket: "jobassign4.appspot.com",
-    messagingSenderId: "63214700687",
-    appId: "1:63214700687:web:63f29bd2ab3e96d3"
+      apiKey: "AIzaSyC6mtYTtwmmpyD9TvDsGEUfLnuCuoI97uk",
+      authDomain: "duty2go.firebaseapp.com",
+      databaseURL: "https://duty2go.firebaseio.com",
+      projectId: "duty2go",
+      storageBucket: "",
+      messagingSenderId: "926351987271",
+      appId: "1:926351987271:web:37d33429c5fa5495"
   };
   firebase.initializeApp(config);
-
-
 export default firebase;

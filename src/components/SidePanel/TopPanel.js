@@ -236,7 +236,7 @@ assignedEmployees = () => {
           <Grid.Column style={styles.columns}>
               <Icon name="truck" size="large" color="orange"
                    style={{position:"relative", float:"left"}}/>
-                   <span> AssignJobs </span>
+                   <span> Duty2Go </span>
                      <Dropdown
                        placeholder=""
                        options={this.dropdownOptions()}
