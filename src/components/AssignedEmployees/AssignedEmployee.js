@@ -1,7 +1,7 @@
 import React from "react";
-import firebase from "../../firebase";
-import { connect } from "react-redux";
-import { Menu, Icon, Grid} from "semantic-ui-react";
+//import firebase from "../../firebase";
+//import { connect } from "react-redux";
+import { Grid } from "semantic-ui-react";
 import AssignedEmployeeHeader from "./AssignedEmployeeHeader";
 import AssignedEmployeeOrders from "./AssignedEmployeeOrders";
 

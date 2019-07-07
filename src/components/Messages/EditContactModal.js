@@ -273,7 +273,7 @@ export default class EditContactModal extends Component {
                            name="province"
                            onChange={this.handleChange} />
                 <Form.Input size ="small"
-                            label='Country'
+                            label={french? "Pays":"Country"}
                             defaultValue = {contact.country}
                             name="country"
                             onChange={this.handleChange} />

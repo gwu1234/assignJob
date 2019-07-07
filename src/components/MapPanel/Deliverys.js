@@ -58,7 +58,7 @@ class Deliverys extends React.Component {
     const {display} = this.state;
 
     //console.log(deliverys);
-    let titleString = "Delivery";
+    let titleString = "Deliveries";
     let modalString = "add new delivery";
     if (french) {
        modalString = "ajouter nouveau livraison";

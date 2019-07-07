@@ -1,17 +1,13 @@
 import React from "react";
-//import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { Grid, Menu } from "semantic-ui-react";
-//import Contact from "./Contact";
+import { Grid } from "semantic-ui-react";
 import AssignedEmployees from "./AssignedEmployees";
-//import Trucks from "../SidePanel/Trucks";
-//import Clients from "./Clients";
 import Background from '../terra.jpg';
 
 class AssignedContainer extends React.Component {
 
   render() {
-    const { admin} = this.props;
+    //const { admin} = this.props;
 
     return (
       <Grid.Row style={styles.container}>
@@ -29,14 +25,13 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({
-     admin: state.user.admin,
-     //usertag: state.user.usertag
-   }
-);
+//const mapStateToProps = state => ({
+     //admin: state.user.admin,
+//   }
+//);
 
-
-export default connect(
-  mapStateToProps,
-  {}
-)(AssignedContainer);
+export default AssignedContainer;
+//export default connect(
+//  mapStateToProps,
+//  {}
+//)(AssignedContainer);
