@@ -86,7 +86,7 @@ class LeadLogs extends React.Component {
       <Menu.Menu style={styles.container}>
             <Menu.Header style={styles.menuHeader}>
              {titleString}
-            <AddLogModal open={false} userName={userName} usertag = {usertag} leadTag={leadTag}/>
+            <AddLogModal open={false} userName={userName} usertag = {usertag} leadTag={leadTag} french = {french}/>
             </Menu.Header>
             <Menu.Menu style={styles.menuMenu} >
               {logs && this.displayLogs(logArray)}

@@ -79,8 +79,9 @@ export default class AddLogModal extends Component {
    }
 
   render() {
-    const {userName} = this.props;
-    const titleString = userName ? (userName + ":  " + "Add New Log") : "Add New Log";
+    const {userName, french} = this.props;
+    let titleString = french ? "Ajouter Nouveau Log" : "Add New Log";
+    titleString = userName + " : " + titleString;
 
     return (
       <Modal
@@ -96,12 +97,12 @@ export default class AddLogModal extends Component {
         <Form >
 
                <Form.Input size ="mini"
-                           label='Employee Name'
+                           label={french? 'Employé Nom':'Employee Name'}
                            placeholder='Alain'
                            name="employeeName"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Lead Contact Name'
+                            label={french? 'Lead Contact Nom':'Lead Contact Name'}
                             placeholder='James Dubois'
                             name="leadName"
                             onChange={this.handleChange} />
@@ -110,7 +111,7 @@ export default class AddLogModal extends Component {
                            placeholder='I send a email to Alain Pascale'
                            name="logMsg"
                            onChange={this.handleChange} />
-          
+
         </Form>
         </Modal.Content>
         <Modal.Actions>
