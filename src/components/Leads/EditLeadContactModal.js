@@ -577,24 +577,24 @@ class EditLeadContactModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='First Name'
+                           label={french? 'Prénom': 'First Name'}
                            defaultValue = {contact.firstname}
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Last Name'
+                            label={french? 'Nom': 'Last Name'}
                             defaultValue = {contact.lastname}
                             name="lastname"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='Street & No'
+                           label={french? 'Rue & No': 'Street & No'}
                            defaultValue = {contact.street}
                            name="street"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='City'
+                            label={french? 'Ville': 'City'}
                             defaultValue = {contact.city}
                             name="city"
                             onChange={this.handleChange} />
@@ -612,7 +612,7 @@ class EditLeadContactModal extends Component {
                            name="province"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Country'
+                            label={french? 'Pays': 'Country'}
                             defaultValue = {contact.country}
                             name="country"
                             onChange={this.handleChange} />
@@ -670,8 +670,8 @@ class EditLeadContactModal extends Component {
            </Form.Group>
            <Form.Field>
                 <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                    {french? ("Actuel Statu Est " + statusString  + ". Choisiez Nouveau Lead Statu"):
-                    ("Current Statu Is " + statusString  + ". Select New Lead Status") }
+                    {french? ("Actuel Statu Est " + statusString  + " .  Choisiez Nouveau Lead Statu"):
+                    ("Current Statu Is " + statusString  + " .  Select New Lead Status") }
                 </Message>
 
                  <Dropdown
@@ -684,7 +684,7 @@ class EditLeadContactModal extends Component {
            </Form.Field>
            {!isEmployeeAssigned && <Form.Field>
                 <Message style = {{color: "black", background: "#ccc", fontSize:"1.0em", padding:"0.2em", marginTop:"0.4em", marginBottom:"0.2em"}}>
-                    Assign this Lead to an employee
+                    {french ? "Attribuer ce Lead à un Employé": "Assign this Lead to an employee"}
                 </Message>
 
                  <Dropdown
