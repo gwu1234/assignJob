@@ -14,7 +14,7 @@ class LeadLog extends React.Component {
    };
 
   render() {
-    const {log, leadTag} = this.props;
+    const {log, leadTag, french} = this.props;
     const {date, timestamp, employeeName, leadName, logTag, logMsg} = log;
     const isActive = true;
 
@@ -24,7 +24,7 @@ class LeadLog extends React.Component {
               Date: {date}
           </Menu.Item>
           <Menu.Item  style = {styles.item}>
-              Employee Name: {employeeName}
+              {french? "Employé Nom" : "Employee Name"} : {employeeName}
           </Menu.Item>
           <Menu.Item  style = {styles.item}>
               Log Msg: {logMsg}

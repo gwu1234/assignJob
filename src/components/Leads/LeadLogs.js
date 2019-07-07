@@ -48,9 +48,12 @@ class LeadLogs extends React.Component {
    displayLogs = logs =>
       logs.length > 0 &&
       logs.map(log => (
-          <LeadLog logKey={log.logKey} key={log.logKey}
-                   log={log.log} usertag={this.props.usertag}
+          <LeadLog logKey={log.logKey}
+                   key={log.logKey}
+                   log={log.log}
+                   usertag={this.props.usertag}
                    leadTag = {this.props.leadTag}
+                   french = {this.props.french}
                    />
      ));
 
