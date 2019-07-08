@@ -207,7 +207,7 @@ class Clients extends React.Component {
       <Menu.Menu style={styles.container}>
             <Menu.Header style={styles.menuHeader}>
                 {titleString}
-                <AddClientModal open={false} userName={userName} usertag = {usertag}/>
+                <AddClientModal open={false} userName={userName} usertag = {usertag} french ={french}/>
             </Menu.Header>
           <Menu.Menu style={styles.menuMenu} >
               {display && clientArray.length>0 && this.displayClients(clientArray)}

@@ -81,17 +81,6 @@ export default class AddClientModal extends Component {
                Math.random().toString(36).substr(2, 4);
          const tag = (tagString.replace(/[.,#$\[\]@ ]/g,'')).toLowerCase();
 
-         /*const newClient = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "status" : JOB_NEW,
-           "name": String(name),
-           "postcode": String(postcode),
-           "tag": String(tag),
-         }*/
-
          let emails = [];
          let phones = [];
          let cells = [];
@@ -157,65 +146,6 @@ export default class AddClientModal extends Component {
          }
 
          this.getLocations (newContact,location);
-         //clientRef.child(clientKey).set(newClient);
-
-         /*let emails = [];
-         let phones = [];
-         let cells = [];
-
-         if (email1) {
-            emails.push (email1);
-         }
-         if (email2) {
-            emails.push (email2);
-         }
-         if (email3) {
-            emails.push (email3);
-         }
-
-         if (phone1) {
-            phones.push (phone1);
-         }
-         if (phone2) {
-            phones.push (phone2);
-         }
-         if (phone3) {
-            phones.push (phone3);
-         }
-
-         if (cell1) {
-            cells.push (cell1);
-         }
-         if (cell2) {
-            cells.push (cell2);
-         }
-         if (cell3) {
-            cells.push (cell3);
-         }
-
-         const newContact = {
-           "city":  String(city),
-           "lastname": String (lastname),
-           "firstname": String(firstname),
-           "street": String(street),
-           "name": String(name),
-           "postcode": String(postcode),
-           "country": String(country),
-           "province":  String(province),
-           "emails": emails,
-           "phones": phones,
-           "cells": cells,
-           "clientKey": String(clientKey),
-           "tag": String(tag),
-         }
-         //console.log(newContact);
-         const contactPath = "repos/" + usertag + "/clients/data/" + tag +"/contact";
-         //console.log(clientPath);
-         const contactRef = firebase.database().ref(contactPath);
-         //const contactKey = contactRef.push().getKey();
-         //console.log(contactPath);
-         contactRef.set(newContact); */
-
          this.handleOpen(false);
     }
     //console.log("submit clicked");
@@ -266,7 +196,7 @@ export default class AddClientModal extends Component {
   };
 
   render() {
-    const {userName} = this.props;
+    const {userName, french} = this.props;
     //console.log ("AddClientModal " + userName );
     //console.log(userName);
     //console.log ("AddClientModal " + usertag );
@@ -288,24 +218,24 @@ export default class AddClientModal extends Component {
         <Form >
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='First Name'
+                           label={french ? 'Prénom': 'First Name'}
                            placeholder='Alain'
                            name="firstname"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Last Name'
+                            label={french ? 'Nom': 'Last Name'}
                             placeholder='Dubois'
                             name="lastname"
                             onChange={this.handleChange} />
            </Form.Group>
            <Form.Group inline width='equal' >
                <Form.Input size ="mini"
-                           label='Street & No'
+                           label={french ? 'Rue & No': 'Street & No'}
                            placeholder='120 Hymus Road'
                            name="street"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='City'
+                            label={french ? 'Ville': 'City'}
                             placeholder='Pointe Claire'
                             name="city"
                             onChange={this.handleChange} />
@@ -322,7 +252,7 @@ export default class AddClientModal extends Component {
                            name="province"
                            onChange={this.handleChange} />
                 <Form.Input size ="mini"
-                            label='Country'
+                            label={french ? 'Pays': 'Country'}
                             placeholder='Canada'
                             name="country"
                             onChange={this.handleChange} />
