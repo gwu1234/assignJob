@@ -716,100 +716,100 @@ content: <p>  étapes:
         (5) faire défiler verticalement la fenêtre des ordres de travail
 </p>},
 {title:<h4>
-Cas 22: View photos associated with work orders </h4>,
+Cas 22: Afficher les photos associées aux bons de travail</h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) horizontally scroll thumbnails of photos;
-          (6) click one of of thumbnail, a large image will show up
+           (1) clients;
+           (2) sélectionnez Ordre de travail client;
+           (3) La colonne de gauche est la liste des clients;
+           (4) cliquez sur un nom de client;
+           (5) faire défiler horizontalement les vignettes des photos;
+           (6) cliquez sur l’une des miniatures pour afficher une grande image.
 </p>},
 {title:<h4>
-Cas 23: edit work orders </h4>,
+Cas 23: éditer les ordres de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the button in the top right in the work order window;
-          (6) a popup window will show up to edit
+           (1) clients;
+           (2) sélectionnez Ordre de travail client;
+           (3) La colonne de gauche est la liste des clients;
+           (4) cliquez sur un nom de client;
+           (5) cliquez sur le bouton en haut à droite dans la fenêtre du bon de travail;
+           (6) une fenêtre popup apparaîtra pour éditer
 </p>},
 {title:<h4>
-Cas 24: assign work order to employee </h4>,
+Cas 24: attribuer un ordre de travail à un employé </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right;
-          (6) a popup window will show up to edit;
-          (7) select an employee name to assign
+          (1) clients;
+          (2) sélectionnez Ordre de travail client;
+          (3) La colonne de gauche est la liste des clients;
+          (4) cliquez sur un nom de client;
+          (5) cliquez sur le bouton d'édition en haut à droite;
+          (6) une fenêtre contextuelle apparaîtra pour éditer;
+          (7) sélectionnez un nom d'employé à affecter
 </p>},
 {title:<h4>
-Cas 25: remove assignment of a work order from employee </h4>,
+Cas 25: retirer l'affectation d'un ordre de travail d'un employé </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of work order window;
-          (6) a popup window will show up to edit;
-          (7) select REMOVE ASSIGNMENT
+         (1) clients;
+         (2) sélectionnez Ordre de travail client;
+         (3) La colonne de gauche est la liste des clients;
+         (4) cliquez sur un nom de client;
+         (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre du bon de travail;
+         (6) une fenêtre contextuelle apparaîtra pour éditer;
+         (7) sélectionnez REMOVE ASSIGNMENT
 </p>},
 {title:<h4>
-Cas 26: view photo attached to a work order </h4>,
+Cas 26: voir la photo jointe à un bon de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click on a thumbnail in work order window;
-          (6) a popup window will show up to display a large image
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquer sur une vignette dans la fenêtre du bon de travail;
+        (6) une fenêtre contextuelle apparaîtra pour afficher une grande image
 </p>},
 {title:<h4>
-Cas 27: delete a photo from a work order </h4>,
+Cas 27: supprimer une photo d'un bon de travail</h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click on a thumbnail in work order window;
-          (6) a popup window will show up to display a large image;
-          (7) click on red button on the left side of the bottom;
-          (8) a read warming dialog will popup, click submit
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquer sur une vignette dans la fenêtre du bon de travail;
+        (6) une fenêtre contextuelle apparaîtra pour afficher une grande image;
+        (7) cliquez sur le bouton rouge à gauche du bas;
+        (8) une boîte de dialogue de réchauffement de lecture apparaîtra, cliquez sur Soumettre.
 </p>},
 {title:<h4>
-Cas 28: edit contract </h4>,
+Cas 28: modifier le contrat </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of contract window;
-          (6) a popup window will show up to edit
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre du contrat;
+        (6) une fenêtre popup apparaîtra pour éditer
 </p>},
 {title:<h4>
-Cas 29: link contract to a work order </h4>,
+Cas 29: lien contrat à un ordre de travail</h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of contract window;
-          (6) a popup window will show up to edit;
-          (7) select an work order to link
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre du contrat;
+        (6) une fenêtre contextuelle apparaîtra pour éditer;
+        (7) sélectionnez un ordre de travail à lier
 </p>},
 {title:<h4>
-Cas 30: remove link of contract from a work order </h4>,
+Cas 30: supprimer le lien du contrat d'un ordre de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of contract window;
-          (6) a popup window will show up to edit;
-          (7) select “no order” to remove the link of contract with work order
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre du contrat;
+        (6) une fenêtre contextuelle apparaîtra pour éditer;
+        (7) sélectionnez «pas de commande» pour supprimer le lien du contrat avec le bon de travail
 </p>},
 {title:<h4>
 Cas 31: edit invoice </h4>,
