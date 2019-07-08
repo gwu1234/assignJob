@@ -31,7 +31,7 @@ class OrderOrder extends React.Component {
               {french? "Client Nom" : "Client Name"} : {clientName}
            </Menu.Item>
            <Menu.Item style={styles.item}>
-              {french? "Client Address" : "Client Adresse"} : {clientAddress}
+              {french? "Client Adresse" : "Client Address"} : {clientAddress}
            </Menu.Item>
            <Menu.Item style={styles.item}>
               {french? "Ordre Date" : "Order Date"} : {date}
