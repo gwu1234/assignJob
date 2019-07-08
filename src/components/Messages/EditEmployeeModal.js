@@ -566,7 +566,7 @@ class EditEmployeeModal extends Component {
            </Form.Group>
         </Form>
         {employee.truckAssigned && <Message style={{marginTop: "0em", paddingTop:"0.2em", marginBottom:"0.5em", paddingBottom:"0.2em"}}>
-            <Message.Header>truck assigned: {" " + employee.truckModel + " , " + employee.truckYear} </Message.Header>
+            <Message.Header>{french? "camion attribué : " : "truck assigned : "} {" " + employee.truckModel + " , " + employee.truckYear} </Message.Header>
         </Message>}
         </Modal.Content>
 
