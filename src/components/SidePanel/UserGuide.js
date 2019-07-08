@@ -614,103 +614,106 @@ content: <p>    étapes:
            </p>
 },
 {
-title: <h4>Cas 11:  Assign a truck to un employee </h4>,
+title: <h4>Cas 11:  Attribuer un camion à un employé</h4>,
 content: <p>      étapes:
-          (1) click Company, then Company Info;
-          (2) the right column display truck List;
-          (3) click the button to the right of truck name;
-          (4) the edit popup window will show up;
-          (5) click + sign to the right of employee name to assign </p>
+           (1) cliquez sur Société, puis sur Informations sur la société;
+           (2) la liste des camions d'affichage de la colonne de droite;
+           (3) cliquez sur le bouton à droite du nom du camion;
+           (4) la fenêtre contextuelle d'édition apparaîtra;
+           (5) cliquez sur le signe + à droite du nom de l'employé pour l'attribuer
+           </p>
 },
 {
-title: <h4> Cas 12:  Remove assignment of  a truck from an  employee </h4>,
+title: <h4> Cas 12:  Supprimer l'affectation d'un camion d'un employé</h4>,
 content: <p>      étapes:
-          (1) click Company, then Company Info;
-          (2) the right column display truck List;
-          (3) click the button to the right of truck name;
-          (4) the edit popup window will show up;
-          (5) click - sign to the right of employee name to remove assignment </p>
+           (1) cliquez sur Société, puis sur Informations sur la société;
+           (2) la liste des camions d'affichage de la colonne de droite;
+           (3) cliquez sur le bouton à droite du nom du camion;
+           (4) la fenêtre contextuelle d'édition apparaîtra;
+           (5) cliquez sur le signe - à droite du nom de l'employé pour supprimer l'affectation
+           </p>
 },
 {title:<h4>
-Cas 13:  delete a truck record </h4>,
+Cas 13:  supprimer une fiche de camion </h4>,
 content: <p>      étapes:
-          (1) click Company, then Company Info;
-          (2) the right column display truck List;
-          (3) click the button to the right of truck name;
-          (4) the edit popup window will show up;
-          (5) click red X sign on the left side of bottom to delete record;
-          (6) follow the prompts of confirmation dialog window
+           (1) cliquez sur Société, puis sur Informations sur la société;
+           (2) la liste des camions d'affichage de la colonne de droite;
+           (3) cliquez sur le bouton à droite du nom du camion;
+           (4) la fenêtre contextuelle d'édition apparaîtra;
+           (5) cliquez sur le signe X rouge sur le côté gauche du bas pour supprimer l'enregistrement;
+           (6) suivez les instructions de la boîte de dialogue de confirmation
+          </p>
+},
+{title:<h4>
+Cas 14: trouver où est un camion </h4>,
+content: <p>      étapes:
+           (1) cliquez sur MapView, puis sur Tous les clients;
+           (2) l'icône du camion indique l'emplacement des camions;
+           (3) les camions en couleurs sont actifs: leur position GPS mise à jour dans les 5 dernières minutes;
+           (4) les camions noirs ne sont pas actifs: leur position GPS n’a pas été mise à jour au cours des 5 dernières minutes
 </p>},
 {title:<h4>
-Cas 14: find where a truck is </h4>,
+Cas 15: trouver qui conduit un camion </h4>,
 content: <p>      étapes:
-          (1) click MapView, then All Clients;
-          (2) truck icon mark the truck locations;
-          (3) trucks in colours are active: their GPS location updated within last 5 minutes;
-          (4) black trucks are “not active”: their GPS location not updated for the last 5 minutes
+           (1) cliquez sur MapView, puis sur Tous les clients;
+           (2) l'icône du camion indique l'emplacement des camions;
+           (3) cliquez sur une icône de camion;
+           (4) une fenêtre contextuelle apparaîtra, affichant des détails tels que le nom de l'employé, etc.
 </p>},
 {title:<h4>
-Cas 15: find who is driving a truck </h4>,
-content: <p>      étapes:
-          (1) click MapView, then All Clients;
-          (2) truck icon mark the truck locations;
-          (3) click on a truck icon;
-          (4) a popup window will show up, displaying details such as employee name etc
-</p>},
-{title:<h4>
-Cas 16: find the last time a truck updates its GPS location </h4>,
+Cas 16: trouver la dernière fois qu'un camion met à jour sa position GPS </h4>,
 content: <p>       étapes:
-          (1) click MapView, then All Clients;
-          (2) truck icon mark the truck locations;
-          (3) click on a truck icon;
-          (4) a popup window will show up, displaying a time string when GPS was last updated
+           (1) cliquez sur MapView, puis sur Tous les clients;
+           (2) l'icône du camion indique l'emplacement des camions;
+           (3) cliquez sur une icône de camion;
+           (4) une fenêtre contextuelle apparaîtra, affichant une chaîne de temps lors de la dernière mise à jour du GPS
 </p>},
 {title:<h4>
-Cas 17:  Display Client Contact Info </h4>,
+Cas 17:  Afficher les informations de contact du client </h4>,
 content: <p>      étapes:
-          (1) Clients;
-          (2) select Client Contact;
-          (3) select a client on the Left Column;
-          (4) the right Column should display client contact information
+          (1) clients;
+          (2) sélectionnez Client Contact;
+          (3) sélectionnez un client dans la colonne de gauche;
+          (4) la colonne de droite doit afficher les informations de contact du client
 </p>},
 {title:<h4>
-Cas 18:  Edit Client Contact Info </h4>,
+Cas 18:  Modifier les informations de contact du client </h4>,
 content: <p>      étapes:
-          (1) Clients;
-          (2) select Client Contact;
-          (3) select a client on the Left Column;
-          (4) the right Column should display client contact information;
-          (5) click a  button to the right of Edit Client Contact at the bottom of the right column;
-          (6) a Popup window shows up;
-          (7) edit the fields;
-          (8) Click Submit to update, Cancel to cancel the changes;
+          (1) clients;
+          (2) sélectionnez Client Contact;
+          (3) sélectionnez un client dans la colonne de gauche;
+          (4) la colonne de droite doit afficher les informations de contact du client;
+          (5) cliquez sur un bouton à droite de Modifier le contact client au bas de la colonne de droite;
+          (6) une fenêtre contextuelle apparaît;
+          (7) éditer les champs;
+          (8) Cliquez sur Submit pour mettre à jour, sur Cancel pour annuler les modifications.
 </p>},
 {title:<h4>
-Cas 19:  Display Client history </h4>,
+Cas 19:  Afficher l'historique du client </h4>,
 content: <p>      étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (4) all work orders, contracts, invoices, payments and deliveries show up;
-          (5) highlighted backgrounds indicate active worker orders and associated contracts, etc.
+         (1) clients;
+         (2) sélectionnez Ordre de travail client;
+         (3) La colonne de gauche est la liste des clients;
+         (4) cliquez sur un nom de client;
+         (5) tous les ordres de travail, contrats, factures, paiements et livraisons sont affichés;
+         (6) les arrière-plans en surbrillance indiquent les ordres de travail actifs et les contrats associés, etc.
 </p>},
 {title:<h4>
- Cas 20: Work Order Characters </h4>,
-content: <p> (1) Status: JOB_NEW, JOB_PROGRESS, JOB_DONE;
-             (2) Repeat Orders or not, isRepeatable: true or false;
-		         (3) repeatTimes, repeat times if it is a repeat order,
-                meaningless if it is not a repeat order;
-             (4) Delivery Times: Deliveries made for this work order
+ Cas 20: Caractères d'ordre de travail </h4>,
+content: <p>
+         (1) Statut: JOB_NEW, JOB_PROGRESS, JOB_DONE;
+         (2) Répéter les commandes ou non, isRepeatable: true ou false;
+         (3) repeatTimes, répétez fois s'il s'agit d'un ordre répété, sans signification si ce n'est pas un ordre de répétition;
+         (4) Délais de livraison: Livraisons effectuées pour cette commande de travail
 </p>},
 {title:<h4>
-Cas 21: View Client’s Work Order List </h4>,
+Cas 21: Afficher la liste des commandes de travail du client </h4>,
 content: <p>  étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) vertically scroll in the window of Work Orders
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) faire défiler verticalement la fenêtre des ordres de travail
 </p>},
 {title:<h4>
 Cas 22: View photos associated with work orders </h4>,
