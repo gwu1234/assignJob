@@ -236,16 +236,20 @@ class LeadQuote extends Component {
   render() {
     const { companyName, clientName, street, city, postcode, province,
             country, phone, cell, email, price, taxes, total, work } = this.state ;
+    const {french} = this.props;
 
     return (
       <div style ={styles.container}>
           <div style ={styles.menuHeader}>
-             <p> Fill the following form to prepare a quote </p>
+             <p>
+                 {french ? "Remplir ce forme pour prépair citation":
+                     "Fill the following form to prepare a quote"}
+             </p>
           </div>
           <div id="divToPrint" style ={styles.menuMenu}>
           <Form >
                  <Form.Input size ="small"
-                      label='Company Name'
+                      label={french? 'Compagnie Nom' : 'Company Name'}
                       value ={companyName}
                       name="companyName"
                       onChange={this.handleChange}
@@ -256,19 +260,19 @@ class LeadQuote extends Component {
                  <div style ={{paddingTop: "8px"}}>
                  <Form.Group inline width="3" >
                  <Form.Input size ="small"
-                             label='Name'
+                             label={french? 'Nom' : 'Name'}
                              value = {clientName}
                              name="clientName"
                              onChange={this.handleChange}
                              />
                  <Form.Input size ="small"
-                             label='Street'
+                             label={french? 'Rue' : 'Street'}
                              value = {street}
                              name="street"
                              onChange={this.handleChange}
                              />
                   <Form.Input size ="small"
-                              label='City'
+                              label={french? 'Ville' : 'City'}
                               value = {city}
                               name="city"
                               onChange={this.handleChange}
@@ -288,7 +292,7 @@ class LeadQuote extends Component {
                              name="province"
                              onChange={this.handleChange} />
                   <Form.Input size ="small"
-                              label='Country'
+                              label={french? 'Pays' : 'Country'}
                               value = {country}
                               name="country"
                               onChange={this.handleChange} />
@@ -316,7 +320,7 @@ class LeadQuote extends Component {
               <div style ={{paddingTop: "12px"}}>
              <Form.Group inline width="3">
                  <Form.Input size ="small"
-                             label='Price'
+                             label={french? 'Prix' : 'Price'}
                              value = {price}
                              name="price"
                              onChange={this.handleChange} />
@@ -336,7 +340,7 @@ class LeadQuote extends Component {
              </div>
              <div style ={{paddingTop: "12px"}}>
              <Form.Input size ="small"
-                  label='Job Description'
+                  label={french? 'Travail Description' : 'Job Description'}
                   value = {work}
                   name="work"
                   onChange={this.handleChange}
@@ -345,7 +349,7 @@ class LeadQuote extends Component {
           </Form>
            </div>
            <div style ={styles.menuFooter}>
-              {!this.state.pdfing && <Button onClick={this.printDocument}>Save as PDF</Button>}
+              {!this.state.pdfing && <Button onClick={this.printDocument}>{french? "Enregistrer comme PDF" : "Save as PDF"} </Button>}
            </div>
          </div>);
   }
