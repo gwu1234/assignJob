@@ -1023,23 +1023,23 @@ content: <p> étapes:
           (5) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
-Cas 51:  generating leads on map </h4>,
+Cas 51:  générer des leads sur la carte </h4>,
 content: <p>    étapes:
           (1) MapView;
-          (2) select any of All Client, All Leads, Employees etc;
-          (3) enlarge map until you can see a house very clear;
-          (4) click on a house, you will see a PopUp Window with address;
-          (5) click on the Button (Create Lead) to create a lead;
-          (6) click on the Button (Close) to cancel the operation;
-          (7) you should see the new Lead at TextView/Leads, or MapView/Lead
+          (2) sélectionnez l’un de tous les clients, tous les leads, les employés, etc.
+          (3) agrandir la carte jusqu'à ce que vous puissiez voir une maison très claire;
+          (4) cliquez sur une maison, vous verrez une fenêtre PopUp avec l'adresse;
+          (5) cliquez sur le bouton (Créer une Lead) pour créer une Lead;
+          (6) cliquez sur le bouton (Fermer) pour annuler l'opération;
+          (7) vous devriez voir le nouveau lead dans Client/Leads, ou MapView/Lead
 </p>},
 {title:<h4>
-Cas 52:  workorders assigned to an employee </h4>,
+Cas 52:  ordres de travail assignés à un employé</h4>,
 content: <p>     étapes:
-          (1) Company;
-          (2) select employee work order;
-          (3) all employees are listed and scrollable;
-          (4) section for each employee is a nested scrollable list of work orders assigned to this employee;
+         (1) société;
+         (2) sélectionner l'ordre de travail d'un employé;
+         (3) tous les employés sont répertoriés et peuvent défiler;
+         (4) section pour chaque employé est une liste imbriquée de commandes de travail attribuées à cet employé;
 </p>},
 {title:<h4>
 Cas 53:  brief of assigned work order </h4>,
