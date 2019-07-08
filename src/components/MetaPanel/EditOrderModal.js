@@ -421,6 +421,7 @@ componentWillUnMount() {
              order={this.props.order}
              addAssigned={(assigned)=>this.addAssigned(assigned)}
              handleClose={()=>this.handleClose()}
+             french = {this.props.french}
          />
     ));
 
@@ -469,6 +470,7 @@ componentWillUnMount() {
              order={this.props.order}
              removeAssigned={(assigned)=>this.removeAssigned(assigned)}
              handleClose={()=>this.handleClose()}
+             french = {this.props.french}
          />
     ));
 

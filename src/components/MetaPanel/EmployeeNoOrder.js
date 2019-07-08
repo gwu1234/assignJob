@@ -39,7 +39,7 @@ class EmployeeNoOrder extends React.Component {
     }
 
  render() {
-    const {assignedEmployee} = this.props;
+    const {assignedEmployee, french} = this.props;
 
     let name= '';
     //let address ='';
@@ -48,7 +48,8 @@ class EmployeeNoOrder extends React.Component {
     if (assignedEmployee) {
         name = assignedEmployee.employeeName;
         //address = client.street+ ", " + client.city + ", " + client.postcode;
-        confirmMsg = "Do You Want remove " + assignedEmployee.orderId + " from " + name + " ?";
+        confirmMsg = french ? ("Woudrais retirer " + assignedEmployee.orderId + " de " + name + " ?") :
+                              ("Do You Want remove " + assignedEmployee.orderId + " from " + name + " ?");
     }
 
     return (

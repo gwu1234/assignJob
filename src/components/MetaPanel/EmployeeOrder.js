@@ -39,7 +39,7 @@ class EmployeeOrder extends React.Component {
     }
 
  render() {
-    const {order, orderKey, employee} = this.props;
+    const {order, orderKey, employee, french} = this.props;
 
     let name= '';
     //let address ='';
@@ -48,7 +48,8 @@ class EmployeeOrder extends React.Component {
     if (employee) {
         name = employee.lastname + ", " + employee.firstname ;
         //address = client.street+ ", " + client.city + ", " + client.postcode;
-        confirmMsg = "Do You Want Assign " + order.orderId + " to " + name + " ?";
+        confirmMsg = french? ("Voudrais Attribuer " + order.orderId + " à " + name + " ?"):
+                          ("Do You Want Assign " + order.orderId + " to " + name + " ?");
     }
 
     return (
