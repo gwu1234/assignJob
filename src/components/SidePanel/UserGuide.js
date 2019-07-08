@@ -975,52 +975,52 @@ content: <p> étapes:
         (2) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
-Cas 47: display all  employees on map </h4>,
+Cas 47: afficher tous les employés sur la carte </h4>,
 content: <p> étapes:
           (1) MapView;
-          (2) select All Employees;
-          (3) a marker represent address of an employee;
-          (4) mouse over a marker will bring up a popup window displaying employee name
+          (2) sélectionnez Tous les employés;
+          (3) un marqueur représente l'adresse d'un employé;
+          (4) la souris sur un marqueur fera apparaître une fenêtre contextuelle affichant le nom de l'employé
 </p>},
 {title:<h4>
-Cas 48: display work orders  not assigned to any employee </h4>,
+Cas 48: afficher les ordres de travail qui ne sont assignés à aucun employé</h4>,
 content: <p> étapes:
           (1) MapView;
-          (2) select Not Assigned;
+          (2) sélectionnez Not Assigned;
           (3) symbols:
                 JOB_NEW:   Red Dot ,
                 JOB_PROGRESS: Blue Dot ,
                 JOB_DONE: Green Dot ,
                 JOB_NOT_ACTIVE: Yellow Dot ;
-         (4) mouse over a dot  for brief information such as name and address;
-         (5) click on a dot for more details
+          (4) survolez un point avec la souris pour obtenir des informations brèves telles que le nom et l'adresse;
+          (5) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
-Cas 49: display work orders  assigned to any employee </h4>,
+Cas 49: afficher les ordres de travail attribués à un employé </h4>,
 content: <p> étapes:
           (1) MapView;
-          (2) select Job: Employee Name;
+          (2) sélectionnez Job: Employé Nome;
           (3) symbols:
                 JOB_NEW:   Red Dot ,
                 JOB_PROGRESS: Blue Dot ,
                 JOB_DONE: Green Dot ,
                 JOB_NOT_ACTIVE: Yellow Dot ,
-         (4) mouse over a dot  for brief information such as name and address;
-         (5) click on a dot for more details
+          (4) survolez un point avec la souris pour obtenir des informations brèves telles que le nom et l'adresse;
+          (5) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
-Cas 50: display leads on map </h4>,
+Cas 50: afficher leads sur la carte </h4>,
 content: <p> étapes:
           (1) MapView;
-          (2) select All Leads;
+          (2) sélectionnez All Leads;
           (3) symbols:
                  LEAD_POSITIVE: Green Dot ,
                  LEAD_RESPONSIVE : Blue Dot ,
                  LEAD_NEW:  Red Dot ,
                  LEAD_NOT_RESPONSIVE: Orange Dot ,
                  LEAD_DECLINE: Yellow Dot ,
-         (4) mouse over a dot  for brief information;
-         (5) click on a dot for more details
+          (4) survolez un point avec la souris pour une information brève;
+          (5) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
 Cas 51:  generating leads on map </h4>,
