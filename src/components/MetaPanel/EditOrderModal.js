@@ -645,7 +645,7 @@ componentWillUnMount() {
 
         <Form.Field style = {{paddingBottom:"0.0em", marginTop:"0.9em", marginBottom:"0.0em"}}>
              <Message style = {{color: "black", background: "#ccc", fontSize:"1.1em", padding:"0.2em", margin:"0em"}}>
-                 Remove This Work Order from Employees :
+                 {french? "Retirer l'Employés du Travail Ordre : " : "Remove This Work Order from Employees :"};
              </Message>
         </Form.Field>
         <Menu vertical style={styles.DropdownMenu}>
@@ -672,7 +672,7 @@ componentWillUnMount() {
            <Form.Field>
                <Radio
                    toggle
-                   label='make this order active'
+                   label={french?'fair ce trvail ordre active':'make this order active'}
                    name='activeRadio'
                    value={this.state.orderId}
                    checked={isActive}
@@ -682,7 +682,7 @@ componentWillUnMount() {
           <Form.Field>
               <Radio
                   toggle
-                  label='make this order repetitive'
+                  label={french?'fair ce trvail ordre répétitif':'make this order repetitive'}
                   name='repeatRadio'
                   value={this.state.orderId}
                   checked={isRepeat}
@@ -705,7 +705,7 @@ componentWillUnMount() {
          </Form.Field>
          <Form.Field style = {{paddingBottom:"0.0em", marginTop:"0.9em", marginBottom:"0.0em"}}>
               <Message style = {{color: "black", background: "#ccc", fontSize:"1.1em", padding:"0.2em", margin:"0em"}}>
-                  Assign This Work Order to New Employees :
+                  {french? "Attribuer ce Travail Ordre à Nouveau Employés : " : "Assign This Work Order to New Employees :"}
               </Message>
          </Form.Field>
          <Menu vertical style={styles.DropdownMenu}>
