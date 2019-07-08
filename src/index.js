@@ -38,12 +38,12 @@ class Root extends React.Component {
       if (user) {
         const creationDate = new Date (user.metadata.creationTime);
         const creationTime = creationDate.getTime()/1000;
-        console.log ("creationTime " + creationTime) ;
-        console.log(user);
+        //console.log ("creationTime " + creationTime) ;
+        //console.log(user);
         const loginDate = new Date (user.metadata.lastSignInTime);
         //console.log ("loginDate = "  + loginDate);
         const loginTime = loginDate.getTime()/1000;
-        console.log ("loginTime " + loginTime) ;
+        //console.log ("loginTime " + loginTime) ;
 
         this.props.setUser(user);
 
@@ -51,7 +51,7 @@ class Root extends React.Component {
         if ( loginTime === creationTime ) {
            //this.props.history.push("/login");
            //this.props.clearUser();
-           console.log ("loginTime === createTime ") ;
+           //console.log ("loginTime === createTime ") ;
            //this.props.history.push("/modal");
            this.setState({ registering: true});
            firebase.auth().signOut()
@@ -60,12 +60,12 @@ class Root extends React.Component {
              .then(() => console.log("logout"));
 
         } else {
-           console.log("different time stamp");
+           //console.log("different time stamp");
            if (this.props.usertag) {
-                console.log("it is normal login process");
+                //console.log("it is normal login process");
                 this.props.history.push("/");
            } else {
-                console.log("browser is reloaded");
+                //console.log("browser is reloaded");
                 //this.props.history.push("/login");
                 firebase.auth().signOut()
                    //.then(() => this.props.history.push("/modal"));
@@ -77,17 +77,17 @@ class Root extends React.Component {
            }
         }
       } else {
-        console.log ("no user object");
+        //console.log ("no user object");
         if (this.state.registering) {
              console.log("registering");
              this.props.history.push("/modal");
              this.setState({ registering: false});
         }
         else {
-           console.log("not registering");
+           //console.log("not registering");
            this.props.history.push("/login");
         }
-        console.log("clearUser");
+        //console.log("clearUser");
         this.props.clearUser();
       }
     });
