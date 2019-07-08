@@ -812,89 +812,89 @@ content: <p> étapes:
         (7) sélectionnez «pas de commande» pour supprimer le lien du contrat avec le bon de travail
 </p>},
 {title:<h4>
-Cas 31: edit invoice </h4>,
+Cas 31: modifier la facture </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of invoice window;
-          (6) a popup window will show up to edit
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de la facture;
+        (6) une fenêtre popup apparaîtra pour éditer
 </p>},
 {title:<h4>
-Cas 32: link invoice to a work order </h4>,
+Cas 32: lier la facture à un bon de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of invoice window;
-          (6) a popup window will show up to edit;
-          (7) select an work order to link
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de la facture;
+        (6) une fenêtre contextuelle apparaîtra pour éditer;
+        (7) sélectionnez un ordre de travail à lier
 </p>},
 {title:<h4>
-Cas 33: remove link of invoice  from a work order </h4>,
+Cas 33: supprimer le lien de la facture d'un bon de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of invoice  window;
-          (6) a popup window will show up to edit;
-          (7) select “no order” to remove the link of invoice with work order
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de la facture;
+        (6) une fenêtre contextuelle apparaîtra pour éditer;
+        (7) sélectionnez «Aucune commande» pour supprimer le lien de facture avec le bon de travail.
 </p>},
 {title:<h4>
-Cas 34: edit payment </h4>,
+Cas 34: modifier le paiement </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of payment window;
-          (6) a popup window will show up to edit
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de paiement;
+        (6) une fenêtre popup apparaîtra pour éditer
 </p>},
 {title:<h4>
-Cas 35: link payment to a work order </h4>,
+Cas 35: lier le paiement à une commande de travail </h4>,
 content: <p>étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of payment window;
-          (6) a popup window will show up to edit;
-          (7) select an work order to link
+        (1) clients;
+        (2) sélectionnez Ordre de travail client;
+        (3) La colonne de gauche est la liste des clients;
+        (4) cliquez sur un nom de client;
+        (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de paiement;
+        (6) une fenêtre contextuelle apparaîtra pour éditer;
+        (7) sélectionnez un ordre de travail à lier
 </p>},
 {title:<h4>
-Cas 36: remove link of payment from a work order </h4>,
+Cas 36: supprimer le lien de paiement d'un bon de travail </h4>,
 content: <p>étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of payment window;
-          (6) a popup window will show up to edit;
-          (7) select “no order” to remove the link of payment with work order
+       (1) clients;
+       (2) sélectionnez Ordre de travail client;
+       (3) La colonne de gauche est la liste des clients;
+       (4) cliquez sur un nom de client;
+       (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de paiement;
+       (6) une fenêtre contextuelle apparaîtra pour éditer;
+       (7) sélectionnez «Pas de commande» pour supprimer le lien de paiement avec le bon de travail.
 </p>},
 {title:<h4>
-Cas 37: edit delivery </h4>,
+Cas 37: modifier la livraison </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of delivery window;
-          (6) a popup window will show up to edit;
+       (1) clients;
+       (2) sélectionnez Ordre de travail client;
+       (3) La colonne de gauche est la liste des clients;
+       (4) cliquez sur un nom de client;
+       (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de livraison;
+       (6) une fenêtre contextuelle apparaîtra pour éditer;
 </p>},
 {title:<h4>
-Cas 38: link delivery to a work order </h4>,
+Cas 38: lier la livraison à une commande de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of delivery window;
-          (6) a popup window will show up to edit;
-          (7) select an work order to link
+       (1) clients;
+       (2) sélectionnez Ordre de travail client;
+       (3) La colonne de gauche est la liste des clients;
+       (4) cliquez sur un nom de client;
+       (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de livraison;
+       (6) une fenêtre contextuelle apparaîtra pour éditer;
+       (7) sélectionnez un ordre de travail à lier
 </p>},
 {title:<h4>
 Cas 39: remove link of delivery  from a work order </h4>,
