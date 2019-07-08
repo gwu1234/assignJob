@@ -897,24 +897,24 @@ content: <p> étapes:
        (7) sélectionnez un ordre de travail à lier
 </p>},
 {title:<h4>
-Cas 39: remove link of delivery  from a work order </h4>,
+Cas 39: supprimer le lien de livraison d'un bon de travail </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select Client Work Order;
-          (3) Left Column is list of clients;
-          (4) click on a client name;
-          (5) click the edit button in the top right of delivery window;
-          (6) a popup window will show up to edit;
-          (7) select “no order” to remove the link of invoice with work order
+       (1) clients;
+       (2) sélectionnez Ordre de travail client;
+       (3) La colonne de gauche est la liste des clients;
+       (4) cliquez sur un nom de client;
+       (5) cliquez sur le bouton Modifier en haut à droite de la fenêtre de livraison;
+       (6) une fenêtre contextuelle apparaîtra pour éditer;
+       (7) sélectionnez «Aucune commande» pour supprimer le lien de facture avec le bon de travail.
 </p>},
 {title:<h4>
-Cas 40: view lead list </h4>,
+Cas 40: voir la liste des leads </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select leads;
-          (3) Left Column is list of leads;
-          (4) lead of  LEAD_POSITIVE  on top;
-          (5) lead of  LEAD_DECLINE on bottom
+           (1) clients;
+           (2) sélectionner des Leads;
+           (3) La colonne de gauche est la liste des Leads;
+           (4) leads de LEAD_POSITIVE sur le dessus;
+           (5) leads de LEAD_DECLINE en bas
 </p>},
 {title:<h4>
 Cas 41: lead status </h4>,
@@ -925,43 +925,43 @@ content: <p>          (1) LEAD_POSITIVE,
           (5) LEAD_DECLINE
 </p>},
 {title:<h4>
-Cas 42: edit lead </h4>,
+Cas 42: modifier une Lead </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select leads;
-          (3) Left Column is list of leads;
-          (4) click on a lead;
-          (5) click on a button on top right of Lead Contact Window;
-          (6) a popup window show up;
-          (7) edit lead contact, status, and assignment
+         (1) clients;
+         (2) sélectionner des leads;
+         (3) La colonne de gauche est la liste des leads;
+         (4) cliquez sur une lead;
+         (5) cliquez sur un bouton en haut à droite de la fenêtre Lead Contact;
+         (6) une fenêtre contextuelle apparaît;
+         (7) modifier le contact de LEAD_NEW, le statut et l'affectation
 </p>},
 {title:<h4>
-Cas 43: lead activity log </h4>,
+Cas 43: journal de lead activité  </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select leads;
-          (3) Left Column is list of leads;
-          (4) click on a lead;
-          (5) Lead Activity window is a list of activity logs;
-          (6) the top is the latest, the bottom is the oldest
+         (1) clients;
+         (2) sélectionner des leads;
+         (3) La colonne de gauche est la liste des leads;
+         (4) cliquez sur une lead;
+         (5) La fenêtre lead Activité est une liste de journaux d'activité.
+         (6) le haut est le dernier, le bas est le plus ancien
 </p>},
 {title:<h4>
-Cas 44: create a pdf quote for a lead </h4>,
+Cas 44: créer un devis pdf pour une lead </h4>,
 content: <p> étapes:
-          (1) Clients;
-          (2) select leads;
-          (3) Left Column is list of leads;
-          (4) click on a lead;
-          (5) fill the fields in the left column;
-          (6) click Save as PDF;
-          (7) a pdf file saved at directory Download;
-          (8) filename is companyName- followed by year, month, day and time
+        (1) clients;
+        (2) sélectionner leads;
+        (3) La colonne de gauche est la liste des leads;
+        (4) cliquez sur une lead;
+        (5) remplir les champs de la colonne de gauche;
+        (6) cliquez sur Enregistrer au format PDF;
+        (7) un fichier pdf enregistré dans le répertoire de téléchargement;
+        (8) le nom de fichier est companyName- suivi de l'année, du mois, du jour et de l'heure
 </p>},
 {title:<h4>
-Cas 45: display work orders  on map </h4>,
+Cas 45: afficher les ordres de travail sur la carte </h4>,
 content: <p> étapes:
           (1) MapView;
-          (2) select All Clients;
+          (2) select Toutes Les Clients;
           (3) symbols:
                 JOB_NEW:   Red Dot ,
                 JOB_PROGRESS: Blue Dot ,
@@ -969,10 +969,10 @@ content: <p> étapes:
                 JOB_NOT_ACTIVE: Yellow Dot ,
 </p>},
 {title:<h4>
-Cas 46: view details of  work orders on map </h4>,
+Cas 46: voir les détails des ordres de travail sur la carte </h4>,
 content: <p> étapes:
-          (1) mouse over a dot  for brief information such as name and address;
-          (2) click on a dot for more details
+        (1) survolez un point avec la souris pour obtenir des informations brèves telles que le nom et l'adresse;
+        (2) cliquez sur un point pour plus de détails
 </p>},
 {title:<h4>
 Cas 47: display all  employees on map </h4>,
