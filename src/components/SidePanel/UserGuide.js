@@ -1042,31 +1042,31 @@ content: <p>     étapes:
          (4) section pour chaque employé est une liste imbriquée de commandes de travail attribuées à cet employé;
 </p>},
 {title:<h4>
-Cas 53:  brief of assigned work order </h4>,
+Cas 53:  mémoire du bon de travail assigné</h4>,
 content: <p>     étapes:
-          (1) Company;
-          (2) select employee work order;
-          (3) all employees are listed and scrollable;
-          (4) section for each employee is a nested scrollable list of work orders assigned to this employee;
-          (5) the left column is brief introduction of assigned work order
+        (1) société;
+        (2) sélectionner l'ordre de travail d'un employé;
+        (3) tous les employés sont répertoriés et peuvent défiler;
+        (4) section pour chaque employé est une liste imbriquée de commandes de travail attribuées à cet employé;
+        (5) la colonne de gauche est une brève introduction du bon de travail attribué
 </p>},
 {title:<h4>
-Cas 54:  coworkers of assigned work order </h4>,
+Cas 54:  collaborateurs du bon de travail assigné </h4>,
 content: <p>     étapes:
-          (1) Company;
-          (2) select employee work order;
-          (3) all employees are listed and scrollable;
-          (4) section for each employee is a nested scrollable list of work orders assigned to this employee;
-          (5) the middle column is list of coworkers for assigned work order
+       (1) société;
+       (2) sélectionner l'ordre de travail d'un employé;
+       (3) tous les employés sont répertoriés et peuvent défiler;
+       (4) section pour chaque employé est une liste imbriquée de commandes de travail attribuées à cet employé;
+       (5) la colonne du milieu est la liste des collègues pour l'ordre de travail attribué
 </p>},
 {title:<h4>
-Cas 55:  deliveries of assigned work order </h4>,
+Cas 55:  livraisons du bon de travail assigné </h4>,
 content: <p>     étapes:
-          (1) Company;
-          (2) select employee work order;
-          (3) all employees are listed and scrollable;
-          (4) section for each employee is a nested scrollable list of work orders assigned to this employee;
-          (5) the righ column is list of deliveries for assigned work order
+       (1) société;
+       (2) sélectionner l'ordre de travail d'un employé;
+       (3) tous les employés sont répertoriés et peuvent défiler;
+       (4) section pour chaque employé est une liste imbriquée de commandes de travail attribuées à cet employé;
+       (5) la colonne de droite est la liste des livraisons pour l'ordre de travail attribué
 </p>}
 ];
 
