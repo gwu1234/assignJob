@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import firebase from "../../firebase";
-import { Button, Header, Icon, Modal, Form} from 'semantic-ui-react';
+import { Button, Header, Icon, Modal, Message} from 'semantic-ui-react';
 
 export default class NewUser extends Component {
   constructor(props) {
@@ -42,6 +42,9 @@ export default class NewUser extends Component {
         <Modal.Content style = {{fontSize: "1.2em", fontWeight: "normal", color:"black"}}>
            {content}
         </Modal.Content>
+        <Message style={{color:"green", fontSize:"1.1em", fontWeight:"bold", marginTop:"1em"}}>
+            duty2go@gmail.com
+        </Message>}
         <Modal.Actions>
         <Button color='black' size="small"
               onClick={() =>this.handleFrench()}
