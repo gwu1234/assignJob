@@ -5,6 +5,7 @@ import Geocode from "react-geocode";
 import { connect } from "react-redux";
 import {  setUserTag, setAdmin, setReposData, setBadAccess}
         from "../../actions";
+import NewUser from "./NewUser";
 
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -229,6 +230,9 @@ class Login extends React.Component {
           </Message>}
           <Message>
             Do not have an account? <Link to="/register">Register</Link>
+          </Message>
+          <Message>
+            new user ? <NewUser/>
           </Message>
         </Grid.Column>
       </Grid>
