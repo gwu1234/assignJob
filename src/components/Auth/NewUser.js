@@ -51,6 +51,11 @@ const content2 = french?
     ("This application works best for business based on residential houses, such as landscaping, \
       snow removing, fence repairing, grass mowing, house painting, house cleaning etc.");
 
+const content3 = french?
+    ("Guide de l'utilisateur sur Cadre/UserGuide une fois connecté")
+          :
+     ("User Guide at Setting/UserGuide once logged in");
+
     return (
       <Modal
           trigger={<Icon name='info circle' size ="large" onClick={() => this.handleOpen(true)} style={{position: 'relative', color:"black"}} />}
@@ -60,14 +65,17 @@ const content2 = french?
           style={{background: "#ccc"}}
       >
         <Header icon='info circle' content={title} style = {{fontSize: "1.2em", fontWeight: "bold", color:"black"}}/>
-        <Modal.Content style = {{fontSize: "1.2em", fontWeight: "normal", color:"black"}}>
+        <Modal.Content style = {{fontSize: "1.1em", fontWeight: "normal", color:"black", marginBottom:"4px", marginTop:"4px", paddingTop:"4px", paddingBottom: "4px"}}>
            {content}
         </Modal.Content>
-        <Message style={{color:"green", fontSize:"1.1em", fontWeight:"bold"}}>
+        <Message style={{color:"green", fontSize:"1.1em", fontWeight:"normal", marginTop:"4px", paddingTop:"4px", marginBottom:"4px", paddingButtom:"4px"}}>
             duty2go@gmail.com
-        </Message>}
-        <Modal.Content style = {{fontSize: "1.2em", fontWeight: "normal", color:"black"}}>
+        </Message>
+        <Modal.Content style={{color:"black", fontSize:"1.1em", fontWeight:"normal", marginTop:"4px", paddingTop:"4px", marginBottom:"0px", paddingButtom:"0px"}}>
            {content2}
+        </Modal.Content>
+        <Modal.Content style={{color:"black", fontSize:"1.1em", fontWeight:"normal", marginTop:"0px", paddingTop:"0px", marginBottom:"4px", paddingButtom:"4px"}}>
+           {content3}
         </Modal.Content>
         <Modal.Actions>
         <Button color='black' size="small"
