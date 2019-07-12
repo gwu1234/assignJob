@@ -162,7 +162,7 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
               //statusArray = [];
               //activeOrders = 0;
 
-              isActive = (isActive && isActive === "true")? true:false;
+              isActive = (isActive && (isActive === "true" || isActive === true))? true:false;
               isRepeat = (isRepeat && isRepeat === "true")? true:false;
               //repeatTimes = repeatTimes? parseInt(repeatTimes, 10) : 0;
               repeatTimes = repeatTimes? (repeatTimes !== "undefined" ?
@@ -172,6 +172,11 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
               // need to calculate deliveryTimes
               //console.log(orderKey);
               deliveryTimes = 0;
+
+              if (!isActive) {
+                 continue;
+              }
+
               for (var deliveryKey in deliverys) {
                  let {linkedOrderKey} = deliverys[deliveryKey];
                  //console.log(linkedOrderKey);
@@ -185,7 +190,7 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
 
               //console.log(deliveryTimes);
               let theStatus = JOB_NOT_ACTIVE;
-              if (isActive) {
+              //if (isActive) {
                   if (!isRepeat && deliveryTimes > 0) {
                      //status = JOB_DONE;
                      statusArray.push(JOB_DONE);
@@ -220,7 +225,7 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
                   activeOrders ++;
                   //orders.push (workorders[orderKey]);
                   orders.push ({...workorders[orderKey], orderStatus: theStatus});
-              }
+              //}
            }
 
            if (statusArray.length > 0) {
@@ -584,6 +589,13 @@ case actionTypes.SET_ASSIGNED_EMPLOYEE_VIEW:
                 let orderAssigned  = {};
                 let activeOrders = 0 ;
                 for (var orderkey in workorders) {
+
+                    let isActive = workorders[orderkey].isActive;
+                    isActive = (isActive && (isActive === "true" || isActive === true))? true:false;
+                    if (!isActive) {
+                       continue;
+                    }
+
                     let assignedEmployees = workorders[orderkey].assignedEmployees;
                     for (var employeekey in assignedEmployees) {
                         let coworkers = {};
