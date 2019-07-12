@@ -21,6 +21,13 @@ class AssignedEmployeeOrders extends React.Component {
 
       let assignedData = {};
       for (var orderkey in assignedOrders) {
+           //let isActive = assignedOrders[orderkey].isActive;
+           //isActive = isActive?(isActive===true? true: (isActive==="true"? true: false)): false;
+
+           //if (!isActive) {
+            //  continue;
+           //}
+
            const {clientKey, orderId, orderKey} = assignedOrders[orderkey];
 
            const contact = clientList[clientKey]["contact"];
@@ -33,6 +40,13 @@ class AssignedEmployeeOrders extends React.Component {
                            "clientAddress": address,
                          };
           //const order = clientList[clientKey]["workorders"][orderKey];
+
+           let isActive = order.isActive;
+           isActive = isActive?(isActive===true? true: (isActive==="true"? true: false)): false;
+
+           if (!isActive) {
+               continue;
+           }
 
            assignedData[orderkey] = {};
            assignedData[orderkey]["order"] = order;
