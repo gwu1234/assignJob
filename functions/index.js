@@ -84,7 +84,9 @@ feature: select all assigned workorders for an employee
                                 orderKey, usertag } = assignedEmployees[employeekey];
 
                            const {deliveryTimes,isActive,isRepeat,repeatTimes,work, photo} = workorders[orderkey];
-                           activeOrders ++;
+                           let isOrderActive = workorders[orderkey].isActive;
+                           if ( isOrderActive && (isOrderActive ==="true" || isOrderActive === true) )
+                                      activeOrders ++;
 
                            orderAssigned[orderkey] = {
                                   clientKey: clientKey,
