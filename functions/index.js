@@ -85,36 +85,37 @@ feature: select all assigned workorders for an employee
 
                            const {deliveryTimes,isActive,isRepeat,repeatTimes,work, photo} = workorders[orderkey];
                            let isOrderActive = workorders[orderkey].isActive;
-                           if ( isOrderActive && (isOrderActive ==="true" || isOrderActive === true) )
-                                      activeOrders ++;
+                           if ( isOrderActive && (isOrderActive ==="true" || isOrderActive === true) ) {
+                                activeOrders ++;
 
-                           orderAssigned[orderkey] = {
-                                  clientKey: clientKey,
-                                  employeeKey: employeeKey,
-                                  employeeName: employeeName,
-                                  orderId: orderId,
-                                  orderKey: orderKey,
-                                  usertag: usertag,
-                                  deliveryTimes: deliveryTimes,
-                                  isActive: isActive,
-                                  isRepeat: isRepeat,
-                                  repeatTimes: repeatTimes,
-                                  work: work,
-                                  photo: photo
-                           };
-                           orderAssigned[orderkey]["coworkers"] = {
-                                ...assignedEmployees,
-                                [employeekey]: null,
-                           };
+                                orderAssigned[orderkey] = {
+                                    clientKey: clientKey,
+                                    employeeKey: employeeKey,
+                                    employeeName: employeeName,
+                                    orderId: orderId,
+                                    orderKey: orderKey,
+                                    usertag: usertag,
+                                    deliveryTimes: deliveryTimes,
+                                    isActive: isActive,
+                                    isRepeat: isRepeat,
+                                    repeatTimes: repeatTimes,
+                                    work: work,
+                                    photo: photo
+                                };
+                                orderAssigned[orderkey]["coworkers"] = {
+                                     ...assignedEmployees,
+                                     [employeekey]: null,
+                               };
 
-                           let delivery4order = {};
-                           for (var deliverykey in deliverys) {
-                               if (deliverys[deliverykey].linkedOrderKey === orderkey) {
-                                    delivery4order[deliverykey] = deliverys[deliverykey];
-                               }
+                              let delivery4order = {};
+                              for (var deliverykey in deliverys) {
+                                 if (deliverys[deliverykey].linkedOrderKey === orderkey) {
+                                      delivery4order[deliverykey] = deliverys[deliverykey];
+                                 }
+                              }
+                              orderAssigned[orderkey]["deliverys"] = delivery4order;
                            }
-                           orderAssigned[orderkey]["deliverys"] = delivery4order;
-                       }
+                        }
                    }
                }
 
