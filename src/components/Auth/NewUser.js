@@ -38,7 +38,7 @@ export default class NewUser extends Component {
     "This application is based on Google cloud database and gps map.It manages clients, \
     leads, workorders, contracts, invoices, payments, deliveies, trucks.\
     It comes in three parts: management port for office desktop (Chrome is suggested), \
-    Apple app and Android app for employees.It supports both English and French. \
+    Apple app (Jobs2Go at Apple Store) and Android app (Duty2Go at Google Play) for employees.It supports both English and French. \
     We offer a free month for trial.You can start with registering and setting \
     up your own database,or you can contact us. We will set up a testing account and database for you.";
 
@@ -69,7 +69,7 @@ const content3 = french?
            {content}
         </Modal.Content>
         <Message style={{color:"green", fontSize:"1.1em", fontWeight:"normal", marginTop:"4px", paddingTop:"4px", marginBottom:"4px", paddingButtom:"4px"}}>
-            duty2go@gmail.com
+            duty2go@gmail.com, Duty2Go at Google Play, Jobs2Go at Apple Store
         </Message>
         <Modal.Content style={{color:"black", fontSize:"1.1em", fontWeight:"normal", marginTop:"4px", paddingTop:"4px", marginBottom:"0px", paddingButtom:"0px"}}>
            {content2}
